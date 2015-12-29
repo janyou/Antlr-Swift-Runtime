@@ -3,6 +3,7 @@
 
 #### Main change
 Serialize ATN to json files:  
-you must add \*LexerATN.json and \*ParserATN.json
+you must add generated \*LexerATN.json and \*ParserATN.json
  to `TARGETS`-`Build Phases`-`Copy Bundle Resources`
 
+(you can see `Test` project example  )
