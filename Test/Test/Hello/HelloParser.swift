@@ -10,9 +10,9 @@ public class HelloParser: Parser {
            }
            return decisionToDFA
      }()
-	internal let _sharedContextCache: PredictionContextCache = PredictionContextCache()
-	public let T__0=1, ID=2, WS=3
-	public let RULE_r = 0
+	internal static let _sharedContextCache: PredictionContextCache = PredictionContextCache()
+	public static let T__0=1, ID=2, WS=3
+	public static let RULE_r = 0
 	public static let ruleNames: [String] = [
 		"r"
 	]
@@ -70,16 +70,16 @@ public class HelloParser: Parser {
 	public override  init(_ input:TokenStream)throws {
 	    RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION)
 		try super.init(input)
-		_interp = ParserATNSimulator(self,HelloParser._ATN,HelloParser._decisionToDFA,_sharedContextCache)
+		_interp = ParserATNSimulator(self,HelloParser._ATN,HelloParser._decisionToDFA, HelloParser._sharedContextCache)
 	}
 	public  class RContext: ParserRuleContext {
 	    weak var host: HelloParser!
-		public func ID() -> TerminalNode? { return getToken(host.ID, 0) }
+		public func ID() -> TerminalNode? { return getToken(HelloParser.ID, 0) }
 		public convenience init(_ parent: ParserRuleContext?, _ invokingState: Int, _ host: HelloParser) {
 			self.init(parent, invokingState)
 			self.host = host
 		}
-		public override func getRuleIndex() -> Int { return host.RULE_r  }
+		public override func getRuleIndex() -> Int { return HelloParser.RULE_r  }
 		override
 		public func enterRule(listener: ParseTreeListener) {
 			if (listener is HelloListener) {
@@ -104,14 +104,16 @@ public class HelloParser: Parser {
 	}
 
 	public func r() throws -> RContext {
-		var _localctx: RContext = RContext(_ctx, getState(),self)
-		try enterRule(_localctx, 0,  RULE_r)
+		var _localctx: RContext = RContext(_ctx, getState(), self)
+		try enterRule(_localctx, 0,  HelloParser.RULE_r)
 		do {
 		 	try enterOuterAlt(_localctx, 1)
 		 	setState(2)
-		 	try match(T__0)
+		 	try match(HelloParser.T__0)
+
 		 	setState(3)
-		 	try match(ID)
+		 	try match(HelloParser.ID)
+
 
 		}
 		catch ANTLRException.Recognition(let  re ) {

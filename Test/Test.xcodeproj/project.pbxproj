@@ -10,18 +10,18 @@
 		F90690081C318A5C00AC6125 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90690071C318A5C00AC6125 /* AppDelegate.swift */; };
 		F906900A1C318A5C00AC6125 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F90690091C318A5C00AC6125 /* Assets.xcassets */; };
 		F906900D1C318A5C00AC6125 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F906900B1C318A5C00AC6125 /* MainMenu.xib */; };
-		F90690201C318A8600AC6125 /* Hello.tokens in Resources */ = {isa = PBXBuildFile; fileRef = F90690151C318A8600AC6125 /* Hello.tokens */; };
-		F90690211C318A8600AC6125 /* HelloBaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90690161C318A8600AC6125 /* HelloBaseListener.swift */; };
-		F90690221C318A8600AC6125 /* HelloBaseVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90690171C318A8600AC6125 /* HelloBaseVisitor.swift */; };
-		F90690231C318A8600AC6125 /* HelloLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90690181C318A8600AC6125 /* HelloLexer.swift */; };
-		F90690241C318A8600AC6125 /* HelloLexer.tokens in Resources */ = {isa = PBXBuildFile; fileRef = F90690191C318A8600AC6125 /* HelloLexer.tokens */; };
-		F90690251C318A8600AC6125 /* HelloLexerATN.json in Resources */ = {isa = PBXBuildFile; fileRef = F906901A1C318A8600AC6125 /* HelloLexerATN.json */; };
-		F90690261C318A8600AC6125 /* HelloListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F906901B1C318A8600AC6125 /* HelloListener.swift */; };
-		F90690271C318A8600AC6125 /* HelloParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F906901C1C318A8600AC6125 /* HelloParser.swift */; };
-		F90690281C318A8600AC6125 /* HelloParserATN.json in Resources */ = {isa = PBXBuildFile; fileRef = F906901D1C318A8600AC6125 /* HelloParserATN.json */; };
-		F90690291C318A8600AC6125 /* HelloVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F906901E1C318A8600AC6125 /* HelloVisitor.swift */; };
 		F906902A1C318A8600AC6125 /* HelloWalker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F906901F1C318A8600AC6125 /* HelloWalker.swift */; };
 		F906902C1C318B2000AC6125 /* TestHello.txt in Resources */ = {isa = PBXBuildFile; fileRef = F906902B1C318B2000AC6125 /* TestHello.txt */; };
+		F9992EA51C3C2059001E7C66 /* Hello.tokens in Resources */ = {isa = PBXBuildFile; fileRef = F9992E9B1C3C2059001E7C66 /* Hello.tokens */; };
+		F9992EA61C3C2059001E7C66 /* HelloBaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992E9C1C3C2059001E7C66 /* HelloBaseListener.swift */; };
+		F9992EA71C3C2059001E7C66 /* HelloBaseVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992E9D1C3C2059001E7C66 /* HelloBaseVisitor.swift */; };
+		F9992EA81C3C2059001E7C66 /* HelloLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992E9E1C3C2059001E7C66 /* HelloLexer.swift */; };
+		F9992EA91C3C2059001E7C66 /* HelloLexer.tokens in Resources */ = {isa = PBXBuildFile; fileRef = F9992E9F1C3C2059001E7C66 /* HelloLexer.tokens */; };
+		F9992EAA1C3C2059001E7C66 /* HelloLexerATN.json in Resources */ = {isa = PBXBuildFile; fileRef = F9992EA01C3C2059001E7C66 /* HelloLexerATN.json */; };
+		F9992EAB1C3C2059001E7C66 /* HelloListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992EA11C3C2059001E7C66 /* HelloListener.swift */; };
+		F9992EAC1C3C2059001E7C66 /* HelloParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992EA21C3C2059001E7C66 /* HelloParser.swift */; };
+		F9992EAD1C3C2059001E7C66 /* HelloParserATN.json in Resources */ = {isa = PBXBuildFile; fileRef = F9992EA31C3C2059001E7C66 /* HelloParserATN.json */; };
+		F9992EAE1C3C2059001E7C66 /* HelloVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992EA41C3C2059001E7C66 /* HelloVisitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,18 +30,18 @@
 		F90690091C318A5C00AC6125 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F906900C1C318A5C00AC6125 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		F906900E1C318A5C00AC6125 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F90690151C318A8600AC6125 /* Hello.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Hello.tokens; sourceTree = "<group>"; };
-		F90690161C318A8600AC6125 /* HelloBaseListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloBaseListener.swift; sourceTree = "<group>"; };
-		F90690171C318A8600AC6125 /* HelloBaseVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloBaseVisitor.swift; sourceTree = "<group>"; };
-		F90690181C318A8600AC6125 /* HelloLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloLexer.swift; sourceTree = "<group>"; };
-		F90690191C318A8600AC6125 /* HelloLexer.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HelloLexer.tokens; sourceTree = "<group>"; };
-		F906901A1C318A8600AC6125 /* HelloLexerATN.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = HelloLexerATN.json; sourceTree = "<group>"; };
-		F906901B1C318A8600AC6125 /* HelloListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloListener.swift; sourceTree = "<group>"; };
-		F906901C1C318A8600AC6125 /* HelloParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloParser.swift; sourceTree = "<group>"; };
-		F906901D1C318A8600AC6125 /* HelloParserATN.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = HelloParserATN.json; sourceTree = "<group>"; };
-		F906901E1C318A8600AC6125 /* HelloVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloVisitor.swift; sourceTree = "<group>"; };
 		F906901F1C318A8600AC6125 /* HelloWalker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloWalker.swift; sourceTree = "<group>"; };
 		F906902B1C318B2000AC6125 /* TestHello.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestHello.txt; sourceTree = "<group>"; };
+		F9992E9B1C3C2059001E7C66 /* Hello.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Hello.tokens; sourceTree = "<group>"; };
+		F9992E9C1C3C2059001E7C66 /* HelloBaseListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloBaseListener.swift; sourceTree = "<group>"; };
+		F9992E9D1C3C2059001E7C66 /* HelloBaseVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloBaseVisitor.swift; sourceTree = "<group>"; };
+		F9992E9E1C3C2059001E7C66 /* HelloLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloLexer.swift; sourceTree = "<group>"; };
+		F9992E9F1C3C2059001E7C66 /* HelloLexer.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HelloLexer.tokens; sourceTree = "<group>"; };
+		F9992EA01C3C2059001E7C66 /* HelloLexerATN.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = HelloLexerATN.json; sourceTree = "<group>"; };
+		F9992EA11C3C2059001E7C66 /* HelloListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloListener.swift; sourceTree = "<group>"; };
+		F9992EA21C3C2059001E7C66 /* HelloParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloParser.swift; sourceTree = "<group>"; };
+		F9992EA31C3C2059001E7C66 /* HelloParserATN.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = HelloParserATN.json; sourceTree = "<group>"; };
+		F9992EA41C3C2059001E7C66 /* HelloVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloVisitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,16 +88,16 @@
 		F90690141C318A8600AC6125 /* Hello */ = {
 			isa = PBXGroup;
 			children = (
-				F90690151C318A8600AC6125 /* Hello.tokens */,
-				F90690161C318A8600AC6125 /* HelloBaseListener.swift */,
-				F90690171C318A8600AC6125 /* HelloBaseVisitor.swift */,
-				F90690181C318A8600AC6125 /* HelloLexer.swift */,
-				F90690191C318A8600AC6125 /* HelloLexer.tokens */,
-				F906901A1C318A8600AC6125 /* HelloLexerATN.json */,
-				F906901B1C318A8600AC6125 /* HelloListener.swift */,
-				F906901C1C318A8600AC6125 /* HelloParser.swift */,
-				F906901D1C318A8600AC6125 /* HelloParserATN.json */,
-				F906901E1C318A8600AC6125 /* HelloVisitor.swift */,
+				F9992E9B1C3C2059001E7C66 /* Hello.tokens */,
+				F9992E9C1C3C2059001E7C66 /* HelloBaseListener.swift */,
+				F9992E9D1C3C2059001E7C66 /* HelloBaseVisitor.swift */,
+				F9992E9E1C3C2059001E7C66 /* HelloLexer.swift */,
+				F9992E9F1C3C2059001E7C66 /* HelloLexer.tokens */,
+				F9992EA01C3C2059001E7C66 /* HelloLexerATN.json */,
+				F9992EA11C3C2059001E7C66 /* HelloListener.swift */,
+				F9992EA21C3C2059001E7C66 /* HelloParser.swift */,
+				F9992EA31C3C2059001E7C66 /* HelloParserATN.json */,
+				F9992EA41C3C2059001E7C66 /* HelloVisitor.swift */,
 			);
 			path = Hello;
 			sourceTree = "<group>";
@@ -162,11 +162,11 @@
 			files = (
 				F906902C1C318B2000AC6125 /* TestHello.txt in Resources */,
 				F906900A1C318A5C00AC6125 /* Assets.xcassets in Resources */,
-				F90690281C318A8600AC6125 /* HelloParserATN.json in Resources */,
+				F9992EA51C3C2059001E7C66 /* Hello.tokens in Resources */,
+				F9992EA91C3C2059001E7C66 /* HelloLexer.tokens in Resources */,
 				F906900D1C318A5C00AC6125 /* MainMenu.xib in Resources */,
-				F90690251C318A8600AC6125 /* HelloLexerATN.json in Resources */,
-				F90690201C318A8600AC6125 /* Hello.tokens in Resources */,
-				F90690241C318A8600AC6125 /* HelloLexer.tokens in Resources */,
+				F9992EAD1C3C2059001E7C66 /* HelloParserATN.json in Resources */,
+				F9992EAA1C3C2059001E7C66 /* HelloLexerATN.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,14 +177,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9992EAB1C3C2059001E7C66 /* HelloListener.swift in Sources */,
+				F9992EAE1C3C2059001E7C66 /* HelloVisitor.swift in Sources */,
+				F9992EAC1C3C2059001E7C66 /* HelloParser.swift in Sources */,
+				F9992EA71C3C2059001E7C66 /* HelloBaseVisitor.swift in Sources */,
+				F9992EA61C3C2059001E7C66 /* HelloBaseListener.swift in Sources */,
+				F9992EA81C3C2059001E7C66 /* HelloLexer.swift in Sources */,
 				F90690081C318A5C00AC6125 /* AppDelegate.swift in Sources */,
-				F90690211C318A8600AC6125 /* HelloBaseListener.swift in Sources */,
-				F90690221C318A8600AC6125 /* HelloBaseVisitor.swift in Sources */,
-				F90690271C318A8600AC6125 /* HelloParser.swift in Sources */,
-				F90690291C318A8600AC6125 /* HelloVisitor.swift in Sources */,
-				F90690231C318A8600AC6125 /* HelloLexer.swift in Sources */,
 				F906902A1C318A8600AC6125 /* HelloWalker.swift in Sources */,
-				F90690261C318A8600AC6125 /* HelloListener.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +325,7 @@
 				F90690131C318A5C00AC6125 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

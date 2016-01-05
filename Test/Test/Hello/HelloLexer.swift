@@ -10,7 +10,7 @@ public class HelloLexer: Lexer {
            return decisionToDFA
      }()
 
-	internal let _sharedContextCache:PredictionContextCache = PredictionContextCache()
+	internal static let _sharedContextCache:PredictionContextCache = PredictionContextCache()
 	public static let T__0=1, ID=2, WS=3
 	public static let modeNames: [String] = [
 		"DEFAULT_MODE"
@@ -62,7 +62,7 @@ public class HelloLexer: Lexer {
 	public override init(_ input: CharStream) {
 	    RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION)
 		super.init(input)
-		_interp = LexerATNSimulator(self, HelloLexer._ATN, HelloLexer._decisionToDFA,_sharedContextCache)
+		_interp = LexerATNSimulator(self, HelloLexer._ATN, HelloLexer._decisionToDFA, HelloLexer._sharedContextCache)
 	}
 
 	override

@@ -1,5 +1,5 @@
 // Generated from Hello.g4 by ANTLR 4.5.1
-import Antlr4;
+import Antlr4
 
 /**
  * This interface defines a complete generic visitor for a parse tree produced
