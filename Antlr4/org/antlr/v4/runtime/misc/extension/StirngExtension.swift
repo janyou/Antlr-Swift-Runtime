@@ -162,7 +162,9 @@ public extension String {
             return self[range]
     }
     
-    
+    func charAt(index: Int) -> Character {
+        return [Character](characters)[index]
+    }
     
 }
 

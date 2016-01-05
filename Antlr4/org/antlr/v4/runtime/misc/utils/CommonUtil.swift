@@ -8,6 +8,22 @@
 
 import Foundation
 
+func errPrint(msg:String) {
+    fputs(msg+"\n", __stderrp)
+}
+
+func +(lhs: String, rhs: Int) -> String {
+    return lhs + String(rhs)
+}
+func +(lhs: Int, rhs: String) -> String {
+    return String(lhs) + rhs
+}
+func +(lhs: String, rhs: Token) -> String {
+    return lhs + rhs.description
+}
+func +(lhs: Token, rhs: String) -> String {
+    return lhs.description + rhs
+}
 infix operator >>> { associativity right precedence 160 }
 func >>>(lhs: Int32, rhs: Int32) -> Int32 {
     var left: UInt32,right: UInt32

@@ -30,7 +30,7 @@
  */
  
 //, Serializable
-public class CommonToken: WritableToken,CustomStringConvertible {
+public class CommonToken: WritableToken {
 	/**
 	 * An empty {@link org.antlr.v4.runtime.misc.Pair} which is used as the default value of
 	 * {@link #source} for tokens that do not have a source.
@@ -294,9 +294,9 @@ public class CommonToken: WritableToken,CustomStringConvertible {
 			txt = "<no text>"
 		}
         
+     
         
-        
-		return "[@\(getTokenIndex()),\(start):\(stop)=\(txt!)<\(type)>\(channelStr),\(line) :\(getCharPositionInLine())]"
+		return "[@\(getTokenIndex()),\(start):\(stop)='\(txt!)',<\(type)>\(channelStr),\(line):\(getCharPositionInLine())]"
 	}
     
     public var visited: Bool {

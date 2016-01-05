@@ -41,6 +41,7 @@ import Foundation
 public  class Lexer: Recognizer<LexerATNSimulator>
 	 , TokenSource
 {
+    public  static let EOF: Int = -1
 	public static  let DEFAULT_MODE: Int = 0
 	public static let MORE: Int = -2
 	public static let SKIP: Int = -3
@@ -168,7 +169,7 @@ public  class Lexer: Recognizer<LexerATNSimulator>
                     catch  ANTLRException.Recognition(let e) {
                        // let e = LexerNoViableAltException(self,input,startIndex,deadEndConfigs)
 						notifyListeners(e as! LexerNoViableAltException,recognizer: self)		// report error
-						try recover(e)
+						try recover(e as! LexerNoViableAltException)
 						ttype = Lexer.SKIP
 					}
 					if  try _input!.LA(1) == BufferedTokenStream.EOF  {
@@ -389,7 +390,7 @@ public  class Lexer: Recognizer<LexerATNSimulator>
 		return tokens
 	}
 
-	public func recover(e: LexerNoViableAltException)throws {
+	public func recover(e: LexerNoViableAltException) throws {
 		if  try _input!.LA(1) != BufferedTokenStream.EOF  {
 			// skip a char and try again
 			try getInterpreter().consume(_input!)

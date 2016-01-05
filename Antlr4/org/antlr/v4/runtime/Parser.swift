@@ -34,7 +34,8 @@
 //public abstract class Parser  :  Recognizer<Token, ParserATNSimulator> {
 import Foundation
  public   class Parser: Recognizer<ParserATNSimulator> {
-    public static var ConsoleError = true
+    public  static let EOF: Int = -1
+    public static var ConsoleError = true //false
 	public class TraceListener: ParseTreeListener {
         var host: Parser
         init(_ host: Parser) {
@@ -593,7 +594,7 @@ import Foundation
 	 */
 	public func consume()throws -> Token {
 		let o: Token = try getCurrentToken()
-		if o.getType() != EOF {
+		if o.getType() != Parser.EOF {
 			try getInputStream()!.consume()
 		}
 		let hasListener: Bool = _parseListeners != nil && !_parseListeners!.isEmpty && _ctx != nil
@@ -995,8 +996,9 @@ import Foundation
 				let dfa: DFA = self._interp!.decisionToDFA[d]
 				if  !dfa.states.isEmpty   {
 					if  seenOne  { print("") }
-					print ("Decision \(dfa.decision):")
-					 print(dfa.toString(self.getVocabulary()))
+					print("Decision \(dfa.decision):")
+                    
+                    print(dfa.toString(self.getVocabulary()), terminator: "")
 					seenOne = true
 				}
 			}

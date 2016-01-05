@@ -144,7 +144,9 @@ public class DFA: CustomStringConvertible{
 		synced (s0!) { [unowned self] in
 			// s0.edges is never null for a precedence DFA
 			if precedence >= self.s0!.edges!.count {
-                self.s0!.edges =  Array( self.s0!.edges![0..<precedence + 1])
+                let increase = [DFAState?](count: (precedence + 1 - self.s0!.edges!.count), repeatedValue: nil)
+                self.s0!.edges = self.s0!.edges + increase
+                    //Array( self.s0!.edges![0..<precedence + 1])
 				//s0.edges = Arrays.copyOf(s0.edges, precedence + 1);
 			}
 
@@ -178,9 +180,8 @@ public class DFA: CustomStringConvertible{
 	public func getStates() -> Array<DFAState> {
 		var result: Array<DFAState> = Array<DFAState>(states.keys)
         
-        result = result.sort{ $0.stateNumber > $1.stateNumber }
- 
-
+        result = result.sort{ $0.stateNumber < $1.stateNumber }
+        
 		return result
 	}
     

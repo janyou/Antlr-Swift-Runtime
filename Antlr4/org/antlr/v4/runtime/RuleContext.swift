@@ -284,4 +284,9 @@ public class RuleContext: RuleNode {
 		buf.append("]")
 		return buf.toString()
 	}
+    
+    public func castdown<T>(subType:T.Type) -> T {
+        return self as! T
+    }
+  
 }

@@ -96,7 +96,7 @@ public class DFAState: Hashable,CustomStringConvertible  {
 	 * {@link org.antlr.v4.runtime.atn.ParserATNSimulator#execATN} invocations immediately jumped doing
 	 * full context prediction if this field is true.
 	 */
-	public var requiresFullContext: Bool! = false
+	public var requiresFullContext: Bool = false
 
 	/** During SLL parsing, this is a list of predicates associated with the
 	 *  ATN configurations of the DFA state. When we have predicates,

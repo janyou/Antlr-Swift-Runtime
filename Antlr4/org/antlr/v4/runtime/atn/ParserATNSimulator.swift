@@ -468,7 +468,7 @@ public class ParserATNSimulator: ATNSimulator {
 				 
 			}
 
-			if  D!.requiresFullContext! && (mode != PredictionMode.SLL)  {
+			if  D!.requiresFullContext && (mode != PredictionMode.SLL)  {
 				// IF PREDS, MIGHT RESOLVE TO SINGLE ALT => SLL (or syntax error)
 				var conflictingAlts: BitSet = D!.configs.conflictingAlts!
 				if  D!.predicates != nil  {
@@ -1204,7 +1204,7 @@ public class ParserATNSimulator: ATNSimulator {
 		 *
 		 * From this, it is clear that NONE||anything==NONE.
 		 */
-		var altToPred: [SemanticContext?]? = [SemanticContext?]() //new SemanticContext[nalts + 1];
+		var altToPred: [SemanticContext?]? = [SemanticContext?](count: nalts + 1, repeatedValue: nil) //new SemanticContext[nalts + 1];
 		for c: ATNConfig in configs.configs {
 			if try ambigAlts.get(c.alt)  {
 				altToPred![c.alt] = SemanticContext.or(altToPred![c.alt], c.semanticContext)
@@ -1740,7 +1740,7 @@ public class ParserATNSimulator: ATNSimulator {
 									_ pt: PredicateTransition,
 									_ collectPredicates: Bool,
 									_ inContext: Bool,
-									_ fullCtx: Bool)throws -> ATNConfig
+									_ fullCtx: Bool)throws -> ATNConfig?
 	{
 		if  debug  {
 			print ("PRED (collectPredicates=\(collectPredicates)) \(pt.ruleIndex):\(pt.predIndex), ctx dependent=\(pt.isCtxDependent)")
@@ -1777,7 +1777,7 @@ public class ParserATNSimulator: ATNSimulator {
 		}
 
 		if  debug  { print ("config from pred transition=\(c)") }
-        return c!
+        return c 
 	}
 
 
@@ -1878,7 +1878,7 @@ public class ParserATNSimulator: ATNSimulator {
 	 *  "dead" code for a bit.
 	 */
 	public func dumpDeadEndConfigs(nvae: NoViableAltException) {
-		 print("dead end configs: ")
+		 errPrint("dead end configs: ")
 		for c: ATNConfig in nvae.getDeadEndConfigs()!.configs {
 			var trans: String = "no edges"
 			if  c.state.getNumberOfTransitions()>0  {
@@ -1893,7 +1893,7 @@ public class ParserATNSimulator: ATNSimulator {
 					trans = (not ? "~" : "") + "Set " + st.set.toString()
 				} }
 			}
-			 print( "\(c.toString( parser,   true)):\(trans)")
+			 errPrint( "\(c.toString( parser,   true)):\(trans)")
 		}
 	}
 

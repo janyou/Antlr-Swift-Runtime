@@ -114,7 +114,7 @@ public   class SemanticContext: Hashable,CustomStringConvertible{
         override
         public func eval<T: ATNSimulator>(parser: Recognizer<T>, _ parserCallStack: RuleContext) throws -> Bool {
             let localctx: RuleContext? = isCtxDependent ? parserCallStack : nil
-            return try parser.sempred(localctx!, ruleIndex, predIndex)
+            return try parser.sempred(localctx , ruleIndex, predIndex)
         }
         
         override
@@ -243,8 +243,9 @@ public   class SemanticContext: Hashable,CustomStringConvertible{
         override
         public var hashValue: Int {
             //MurmurHash.hashCode(opnds, AND.class.hashCode());
-            
-            return MurmurHash.hashCode(opnds, NSStringFromClass(AND.self).hashValue)
+            let seed = 1554547125
+            //NSStringFromClass(AND.self).hashValue
+            return MurmurHash.hashCode(opnds, seed)
         }
         
         /**

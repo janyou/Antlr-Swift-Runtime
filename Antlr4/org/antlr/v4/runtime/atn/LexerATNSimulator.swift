@@ -82,9 +82,8 @@ public class LexerATNSimulator: ATNSimulator {
 	internal var line: Int = 1
 
 	/** The index of the character relative to the beginning of the line 0..n-1 */
-	internal var charPositionInLine: Int = 0
-
-
+    internal var charPositionInLine: Int = 0
+    
 	public final var decisionToDFA: [DFA]
 	internal var mode: Int = Lexer.DEFAULT_MODE
 
@@ -160,7 +159,7 @@ public class LexerATNSimulator: ATNSimulator {
 		let startState: ATNState = atn.modeToStartState[mode]
 
 		if  LexerATNSimulator.debug  {
-			print(  "matchATN mode %d start: %s\n", mode, startState)
+			print(  "matchATN mode \(mode) start: \(startState)\n")
 		}
 
 		let old_mode: Int = mode
@@ -177,7 +176,7 @@ public class LexerATNSimulator: ATNSimulator {
 		let predict: Int = try execATN(input, next)
 
 		if  LexerATNSimulator.debug  {
-			print(  "DFA after matchATN: %s\n", decisionToDFA[old_mode].toLexerString())
+			print(  "DFA after matchATN: %@\n", decisionToDFA[old_mode].toLexerString())
 		}
 
 		return predict
@@ -186,7 +185,7 @@ public class LexerATNSimulator: ATNSimulator {
 	internal func execATN(input: CharStream, _ ds0: DFAState) throws -> Int {
 		//System.out.println("enter exec index "+input.index()+" from "+ds0.configs);
 		if  LexerATNSimulator.debug  {
-			print("start state closure=%s\n", ds0.configs)
+			print("start state closure=\(ds0.configs)\n")
 		}
 
 		if ds0.isAcceptState {
@@ -201,7 +200,7 @@ public class LexerATNSimulator: ATNSimulator {
 		while  true  { // while more work
 			if  LexerATNSimulator.debug  {
  
-                print( "execATN loop starting closure: %s\n", s.configs)
+                print( "execATN loop starting closure: \(s.configs)\n")
 			}
 
 			// As we move src->trg, src->trg, we keep track of the previous trg to
@@ -775,7 +774,7 @@ public class LexerATNSimulator: ATNSimulator {
 		let curChar: Int = try input.LA(1)
         if  String(Character(integerLiteral: curChar)) == "\n"  {
 			line++
-			charPositionInLine=0
+			charPositionInLine = 0
 		} else {
 			charPositionInLine++
 		}

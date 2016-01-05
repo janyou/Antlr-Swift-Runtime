@@ -18,7 +18,6 @@
 		F9A422001BCCC48100A9CD35 /* ATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421441BCCC48100A9CD35 /* ATN.swift */; };
 		F9A422011BCCC48100A9CD35 /* ATNConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421451BCCC48100A9CD35 /* ATNConfig.swift */; };
 		F9A422021BCCC48100A9CD35 /* ATNConfigSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421461BCCC48100A9CD35 /* ATNConfigSet.swift */; };
-		F9A422031BCCC48100A9CD35 /* ATNConfigSet2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421471BCCC48100A9CD35 /* ATNConfigSet2.swift */; };
 		F9A422041BCCC48100A9CD35 /* ATNDeserializationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421481BCCC48100A9CD35 /* ATNDeserializationOptions.swift */; };
 		F9A422051BCCC48100A9CD35 /* ATNDeserializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421491BCCC48100A9CD35 /* ATNDeserializer.swift */; };
 		F9A422071BCCC48100A9CD35 /* ATNSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A4214B1BCCC48100A9CD35 /* ATNSimulator.swift */; };
@@ -175,7 +174,6 @@
 		F9A424081BCCD8D300A9CD35 /* ATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421441BCCC48100A9CD35 /* ATN.swift */; };
 		F9A424091BCCD8D300A9CD35 /* ATNConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421451BCCC48100A9CD35 /* ATNConfig.swift */; };
 		F9A4240A1BCCD8D300A9CD35 /* ATNConfigSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421461BCCC48100A9CD35 /* ATNConfigSet.swift */; };
-		F9A4240B1BCCD8D300A9CD35 /* ATNConfigSet2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421471BCCC48100A9CD35 /* ATNConfigSet2.swift */; };
 		F9A4240C1BCCD8D300A9CD35 /* ATNDeserializationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421481BCCC48100A9CD35 /* ATNDeserializationOptions.swift */; };
 		F9A4240D1BCCD8D300A9CD35 /* ATNDeserializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421491BCCC48100A9CD35 /* ATNDeserializer.swift */; };
 		F9A4240E1BCCD8D300A9CD35 /* ATNSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A4214B1BCCC48100A9CD35 /* ATNSimulator.swift */; };
@@ -357,7 +355,6 @@
 		F9A421441BCCC48100A9CD35 /* ATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATN.swift; sourceTree = "<group>"; };
 		F9A421451BCCC48100A9CD35 /* ATNConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATNConfig.swift; sourceTree = "<group>"; };
 		F9A421461BCCC48100A9CD35 /* ATNConfigSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATNConfigSet.swift; sourceTree = "<group>"; };
-		F9A421471BCCC48100A9CD35 /* ATNConfigSet2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATNConfigSet2.swift; sourceTree = "<group>"; };
 		F9A421481BCCC48100A9CD35 /* ATNDeserializationOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATNDeserializationOptions.swift; sourceTree = "<group>"; };
 		F9A421491BCCC48100A9CD35 /* ATNDeserializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATNDeserializer.swift; sourceTree = "<group>"; };
 		F9A4214B1BCCC48100A9CD35 /* ATNSimulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATNSimulator.swift; sourceTree = "<group>"; };
@@ -655,7 +652,6 @@
 				F9A421441BCCC48100A9CD35 /* ATN.swift */,
 				F9A421451BCCC48100A9CD35 /* ATNConfig.swift */,
 				F9A421461BCCC48100A9CD35 /* ATNConfigSet.swift */,
-				F9A421471BCCC48100A9CD35 /* ATNConfigSet2.swift */,
 				F9A421481BCCC48100A9CD35 /* ATNDeserializationOptions.swift */,
 				F9A421491BCCC48100A9CD35 /* ATNDeserializer.swift */,
 				F9A4214B1BCCC48100A9CD35 /* ATNSimulator.swift */,
@@ -1130,7 +1126,6 @@
 				F9A422521BCCC48100A9CD35 /* DiagnosticErrorListener.swift in Sources */,
 				F9A4223B1BCCC48100A9CD35 /* RuleTransition.swift in Sources */,
 				F9A422651BCCC48100A9CD35 /* IntSet.swift in Sources */,
-				F9A422031BCCC48100A9CD35 /* ATNConfigSet2.swift in Sources */,
 				F9A422561BCCC48100A9CD35 /* IntStream.swift in Sources */,
 				F9A421F91BCCC48100A9CD35 /* ANTLRErrorStrategy.swift in Sources */,
 				F9A422291BCCC48100A9CD35 /* LoopEndState.swift in Sources */,
@@ -1152,7 +1147,6 @@
 				F9A424081BCCD8D300A9CD35 /* ATN.swift in Sources */,
 				F9A424091BCCD8D300A9CD35 /* ATNConfig.swift in Sources */,
 				F9A4240A1BCCD8D300A9CD35 /* ATNConfigSet.swift in Sources */,
-				F9A4240B1BCCD8D300A9CD35 /* ATNConfigSet2.swift in Sources */,
 				F9A4240C1BCCD8D300A9CD35 /* ATNDeserializationOptions.swift in Sources */,
 				F9A4240D1BCCD8D300A9CD35 /* ATNDeserializer.swift in Sources */,
 				F9A4240E1BCCD8D300A9CD35 /* ATNSimulator.swift in Sources */,

@@ -31,8 +31,8 @@
 
 import Foundation
 
-public   class Recognizer<ATNInterpreter: ATNSimulator>   {
-	public   let EOF: Int = -1
+public  class Recognizer<ATNInterpreter: ATNSimulator>   {
+	//public  static let EOF: Int = -1
     //TODO WeakKeyDictionary NSMapTable Dictionary
       private let tokenTypeMapCache: NSMapTable = NSMapTable.weakToWeakObjectsMapTable()
  

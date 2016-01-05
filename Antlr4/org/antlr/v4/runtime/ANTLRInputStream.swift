@@ -222,9 +222,10 @@ public class ANTLRInputStream: CharStream {
 		let start: Int = interval.a
 		var stop: Int = interval.b
 		if stop >= n { stop = n-1 }
+        let count = stop - start + 1;
 		if start >= n { return "" }
 
-		return String(data[start...stop])// String( Array(data[start...stop]))   //String(data, start, count);
+		return String(data[start..<(start+count)])// String( Array(data[start...stop]))   //String(data, start, count);
 	}
 
 	 

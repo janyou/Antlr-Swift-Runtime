@@ -62,7 +62,7 @@ public class ConsoleErrorListener: BaseErrorListener {
         )
 	{
         if  Parser.ConsoleError {
-		    print ("line \( line):\(charPositionInLine) \(msg)" )
+		    errPrint ("line \( line):\(charPositionInLine) \(msg)" )
         }
 	}
 

@@ -516,7 +516,9 @@ public class ATNDeserializer {
     }
     public func deserializeFromJson( jsonStr: String) -> ATN {
     // let jsonStr = Utils.readFile2String(jsonFileName)
-        
+        guard !jsonStr.isEmpty else {
+            fatalError("ATN Serialization is empty,Please include *LexerATN.json and  *ParserATN.json in TARGETS-Build Phases-Copy Bundle Resources")
+        }
         if let JSONData = jsonStr.dataUsingEncoding(NSUTF8StringEncoding) {
             do {
                 let JSON = try NSJSONSerialization.JSONObjectWithData(JSONData, options: NSJSONReadingOptions(rawValue: 0))

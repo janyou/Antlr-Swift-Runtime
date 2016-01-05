@@ -90,7 +90,7 @@ public class DiagnosticErrorListener: BaseErrorListener {
 			return
 		}
 
-		let format: String = "reportAmbiguity d=%s: ambigAlts=%s, input='%s'"
+		let format: String = "reportAmbiguity d=%@: ambigAlts=%@, input='%@'"
 		let decision: String = getDecisionDescription(recognizer, dfa)
 		let conflictingAlts: BitSet = try getConflictingAlts(ambigAlts, configs)
 		let text: String = try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
@@ -107,7 +107,7 @@ public class DiagnosticErrorListener: BaseErrorListener {
 											_ conflictingAlts: BitSet,
 											_ configs: ATNConfigSet)throws
 	{
-		let format: String = "reportAttemptingFullContext d=%s, input='%s'"
+		let format: String = "reportAttemptingFullContext d=%@, input='%@'"
 		let decision: String = getDecisionDescription(recognizer, dfa)
 		let text: String = try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
 		let message: String =  NSString(format: format, decision, text) as String
@@ -122,7 +122,7 @@ public class DiagnosticErrorListener: BaseErrorListener {
 										 _ prediction: Int,
 										 _ configs: ATNConfigSet)throws
 	{
-		let format: String = "reportContextSensitivity d=%s, input='%s'"
+		let format: String = "reportContextSensitivity d=%@, input='%@'"
 		let decision: String = getDecisionDescription(recognizer, dfa)
 		let text: String =  try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
 		let message: String =  NSString(format: format, decision, text) as String
@@ -144,7 +144,7 @@ public class DiagnosticErrorListener: BaseErrorListener {
 			return String (decision)
 		}
 
-		return  NSString(format: "%d (%s)", decision, ruleName) as String
+		return  NSString(format: "%d (%@)", decision, ruleName) as String
 	}
 
 	/**

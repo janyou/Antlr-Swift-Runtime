@@ -1081,9 +1081,9 @@ public class BitSet: Hashable,CustomStringConvertible  {
     public var description: String  {
         checkInvariants()
         
-        let numBits: Int = (wordsInUse > 128) ?
-            cardinality() : wordsInUse * BitSet.BITS_PER_WORD
-        let b: StringBuilder = StringBuilder(  string: String(6*numBits + 2))
+        //let numBits: Int = (wordsInUse > 128) ?
+           // cardinality() : wordsInUse * BitSet.BITS_PER_WORD
+        let b: StringBuilder = StringBuilder()
         b.append("{")
         do {
         var i: Int = try  nextSetBit(0)
@@ -1106,9 +1106,9 @@ public class BitSet: Hashable,CustomStringConvertible  {
     public func toString()throws -> String {
         checkInvariants()
         
-        let numBits: Int = (wordsInUse > 128) ?
-            cardinality() : wordsInUse * BitSet.BITS_PER_WORD
-        let b: StringBuilder = StringBuilder(  string: String(6*numBits + 2))
+        //let numBits: Int = (wordsInUse > 128) ?
+           // cardinality() : wordsInUse * BitSet.BITS_PER_WORD
+        let b: StringBuilder = StringBuilder()  //  string: String(6*numBits + 2)
         b.append("{")
         
         var i: Int = try nextSetBit(0)

@@ -138,19 +138,20 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
 		}
 		beginErrorCondition(recognizer)
         //TODO:  exception handler
-//		if ( e is NoViableAltException ) {
-//			reportNoViableAlternative(recognizer,  e as! NoViableAltException);
-//		}
-//		else { if ( e is InputMismatchException ) {
-//			reportInputMismatch(recognizer, e as! InputMismatchException);
-//		}
-//		else { if ( e is FailedPredicateException ) {
-//			reportFailedPredicate(recognizer, e as! FailedPredicateException);
-//		}
-//		else {
-//			 print("unknown recognition error type: "+    e.getClass().getName());
-//			recognizer.notifyErrorListeners(e.getOffendingToken(), e.getMessage(), e);
-//		} } }
+		if ( e is NoViableAltException ) {
+			try! reportNoViableAlternative(recognizer,  e as! NoViableAltException);
+		}
+		else { if ( e is InputMismatchException ) {
+			reportInputMismatch(recognizer, e as! InputMismatchException);
+		}
+		else { if ( e is FailedPredicateException ) {
+			reportFailedPredicate(recognizer, e as! FailedPredicateException);
+		}
+		else {
+			 errPrint("unknown recognition error type: " +  String(e.dynamicType));
+             let re = (e as! RecognitionException<ParserATNSimulator>)
+			recognizer.notifyErrorListeners(re.getOffendingToken(), re.message ?? "", e);
+		} } }
 	}
 
 	/**

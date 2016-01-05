@@ -39,6 +39,6 @@ public class LexerDFASerializer: DFASerializer {
 	override
 
 	internal func getEdgeLabel(i: Int) -> String {
-		return "'\(i)'"
+        return "'\(Character(integerLiteral: i))'"
 	}
 }

@@ -60,7 +60,7 @@ public class DFASerializer: CustomStringConvertible {
     public  var description: String {
         return toString() 
     }
-	 
+    
 	public func toString() -> String {
 		if  dfa.s0 == nil  { return "" }
 		let buf: StringBuilder = StringBuilder()
@@ -71,7 +71,7 @@ public class DFASerializer: CustomStringConvertible {
             {
                 n = s.edges!.count
             }
-			for  var i: Int=0; i<n; i++ {
+			for  var i: Int = 0; i < n; i++ {
 				let t: DFAState? = s.edges![i]
 				if  t != nil &&  t!.stateNumber != Int.max  {
 					buf.append(getStateString(s))
@@ -94,8 +94,9 @@ public class DFASerializer: CustomStringConvertible {
 
 	internal func getStateString(s: DFAState) -> String {
 		let n: Int = s.stateNumber
+     
         let s1 = s.isAcceptState ? ":" : ""
-        let s2 =  s.requiresFullContext! ? "^" : ""
+        let s2 =  s.requiresFullContext ? "^" : ""
 		let baseStateStr: String = s1 + "s" + String(n) + s2 
 		if  s.isAcceptState  {
             if  s.predicates != nil  {

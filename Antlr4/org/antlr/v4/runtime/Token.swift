@@ -35,7 +35,7 @@
  *  (so we can ignore tabs), token channel, index, and source from which
  *  we obtained this token.
  */
-public protocol Token: class  {
+public protocol Token: class,CustomStringConvertible  {
 	//let INVALID_TYPE : Int = 0;
 
     /** During lookahead operations, this "token" signifies we hit rule end ATN state
