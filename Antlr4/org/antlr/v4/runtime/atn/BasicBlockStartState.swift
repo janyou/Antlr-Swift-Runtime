@@ -29,15 +29,16 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /**
  *
  * @author Sam Harwell
  */
+
 public final class BasicBlockStartState: BlockStartState {
-	override
-	public func getStateType() -> Int {
-		return BlockStartState.BLOCK_START
-	}
+    override
+    public func getStateType() -> Int {
+        return BlockStartState.BLOCK_START
+    }
 }

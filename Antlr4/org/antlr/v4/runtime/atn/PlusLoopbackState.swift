@@ -29,15 +29,16 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /** Decision state for {@code A+} and {@code (A|B)+}.  It has two transitions:
  *  one to the loop back to start of the block and one to exit.
  */
+
 public final class PlusLoopbackState: DecisionState {
 
-	override
-	public func getStateType() -> Int {
-		return ATNState.PLUS_LOOP_BACK
-	}
+    override
+    public func getStateType() -> Int {
+        return ATNState.PLUS_LOOP_BACK
+    }
 }

@@ -29,18 +29,19 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /** The last node in the ATN for a rule, unless that rule is the start symbol.
  *  In that case, there is one transition to EOF. Later, we might encode
  *  references to all calls to this rule to compute FOLLOW sets for
  *  error handling.
  */
+
 public final class RuleStopState: ATNState {
 
-	override
-	public func getStateType() -> Int {
-		return ATNState.RULE_STOP
-	}
+    override
+    public func getStateType() -> Int {
+        return ATNState.RULE_STOP
+    }
 
 }

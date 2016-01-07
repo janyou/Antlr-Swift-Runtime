@@ -29,20 +29,6 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// package org.antlr.v4.runtime.dfa;
-
-// import org.antlr.v4.runtime.Token;
-// import org.antlr.v4.runtime.atn.ATN;
-// import org.antlr.v4.runtime.atn.ATNConfig;
-// import org.antlr.v4.runtime.atn.ATNConfigSet;
-// import org.antlr.v4.runtime.atn.LexerActionExecutor;
-// import org.antlr.v4.runtime.atn.ParserATNSimulator;
-// import org.antlr.v4.runtime.atn.SemanticContext;
-// import org.antlr.v4.runtime.misc.MurmurHash;
-
-// import java.util.Arrays;
-// import java.util.HashSet;
-// import java.util.Set;
 
 /** A DFA state represents a set of possible ATN configurations.
  *  As Aho, Sethi, Ullman p. 117 says "The DFA uses its state
@@ -68,95 +54,100 @@
  *  but with different ATN contexts (with same or different alts)
  *  meaning that state was reached via a different set of rule invocations.</p>
  */
-public class DFAState: Hashable,CustomStringConvertible  {
-	public var stateNumber: Int = -1
+
+public class DFAState: Hashable, CustomStringConvertible {
+    public var stateNumber: Int = -1
 
 
-	public var configs: ATNConfigSet = ATNConfigSet()
+    public var configs: ATNConfigSet = ATNConfigSet()
 
-	/** {@code edges[symbol]} points to target of symbol. Shift up by 1 so (-1)
-	 *  {@link org.antlr.v4.runtime.Token#EOF} maps to {@code edges[0]}.
-	 */
+    /** {@code edges[symbol]} points to target of symbol. Shift up by 1 so (-1)
+     *  {@link org.antlr.v4.runtime.Token#EOF} maps to {@code edges[0]}.
+     */
 
-	public var edges: [DFAState?]!
+    public var edges: [DFAState?]!
 
-	public var isAcceptState: Bool = false
+    public var isAcceptState: Bool = false
 
-	/** if accept state, what ttype do we match or alt do we predict?
-	 *  This is set to {@link org.antlr.v4.runtime.atn.ATN#INVALID_ALT_NUMBER} when {@link #predicates}{@code !=null} or
-	 *  {@link #requiresFullContext}.
-	 */
-	public var prediction: Int! = 0
+    /** if accept state, what ttype do we match or alt do we predict?
+     *  This is set to {@link org.antlr.v4.runtime.atn.ATN#INVALID_ALT_NUMBER} when {@link #predicates}{@code !=null} or
+     *  {@link #requiresFullContext}.
+     */
+    public var prediction: Int! = 0
 
-	public var lexerActionExecutor: LexerActionExecutor!
+    public var lexerActionExecutor: LexerActionExecutor!
 
-	/**
-	 * Indicates that this state was created during SLL prediction that
-	 * discovered a conflict between the configurations in the state. Future
-	 * {@link org.antlr.v4.runtime.atn.ParserATNSimulator#execATN} invocations immediately jumped doing
-	 * full context prediction if this field is true.
-	 */
-	public var requiresFullContext: Bool = false
+    /**
+     * Indicates that this state was created during SLL prediction that
+     * discovered a conflict between the configurations in the state. Future
+     * {@link org.antlr.v4.runtime.atn.ParserATNSimulator#execATN} invocations immediately jumped doing
+     * full context prediction if this field is true.
+     */
+    public var requiresFullContext: Bool = false
 
-	/** During SLL parsing, this is a list of predicates associated with the
-	 *  ATN configurations of the DFA state. When we have predicates,
-	 *  {@link #requiresFullContext} is {@code false} since full context prediction evaluates predicates
-	 *  on-the-fly. If this is not null, then {@link #prediction} is
-	 *  {@link org.antlr.v4.runtime.atn.ATN#INVALID_ALT_NUMBER}.
-	 *
-	 *  <p>We only use these for non-{@link #requiresFullContext} but conflicting states. That
-	 *  means we know from the context (it's $ or we don't dip into outer
-	 *  context) that it's an ambiguity not a conflict.</p>
-	 *
-	 *  <p>This list is computed by {@link org.antlr.v4.runtime.atn.ParserATNSimulator#predicateDFAState}.</p>
-	 */
+    /** During SLL parsing, this is a list of predicates associated with the
+     *  ATN configurations of the DFA state. When we have predicates,
+     *  {@link #requiresFullContext} is {@code false} since full context prediction evaluates predicates
+     *  on-the-fly. If this is not null, then {@link #prediction} is
+     *  {@link org.antlr.v4.runtime.atn.ATN#INVALID_ALT_NUMBER}.
+     *
+     *  <p>We only use these for non-{@link #requiresFullContext} but conflicting states. That
+     *  means we know from the context (it's $ or we don't dip into outer
+     *  context) that it's an ambiguity not a conflict.</p>
+     *
+     *  <p>This list is computed by {@link org.antlr.v4.runtime.atn.ParserATNSimulator#predicateDFAState}.</p>
+     */
 
-	public var predicates: [PredPrediction]?
+    public var predicates: [PredPrediction]?
 
-	/** Map a predicate to a predicted alternative. */
+    /** Map a predicate to a predicted alternative. */
+
     public class PredPrediction: CustomStringConvertible {
 
-		public var pred: SemanticContext // never null; at least SemanticContext.NONE
-		public var alt: Int
-		public init(_ pred: SemanticContext, _ alt: Int) {
-			self.alt = alt
-			self.pred = pred
-		}
-		 
- 
+        public var pred: SemanticContext
+        // never null; at least SemanticContext.NONE
+        public var alt: Int
+        public init(_ pred: SemanticContext, _ alt: Int) {
+            self.alt = alt
+            self.pred = pred
+        }
+
+
         public var description: String {
- 
-             return "(\(pred),\(alt))"
+
+            return "(\(pred),\(alt))"
 
         }
-	}
-
-	public init() {
     }
 
-	public init(_ stateNumber: Int) {
+    public init() {
+    }
+
+    public init(_ stateNumber: Int) {
         self.stateNumber = stateNumber
     }
 
-	public init(_ configs: ATNConfigSet) {
+    public init(_ configs: ATNConfigSet) {
         self.configs = configs
     }
 
-	/** Get the set of all alts mentioned by all ATN configurations in this
-	 *  DFA state.
-	 */
-	public func getAltSet() -> Set<Int>? {
-		var alts: Set<Int> = Set<Int>()
-		//if ( configs != nil ) {
-			for c: ATNConfig in configs.configs {
-				alts.insert(c.alt)
-			}
-		//}
-		if  alts.isEmpty { return nil }
-		return alts
-	}
+    /** Get the set of all alts mentioned by all ATN configurations in this
+     *  DFA state.
+     */
+    public func getAltSet() -> Set<Int>? {
+        var alts: Set<Int> = Set<Int>()
 
- 
+        for c: ATNConfig in configs.configs {
+            alts.insert(c.alt)
+        }
+
+        if alts.isEmpty {
+            return nil
+        }
+        return alts
+    }
+
+
     public var hashValue: Int {
         var hash: Int = MurmurHash.initialize(7)
         hash = MurmurHash.update(hash, configs.hashValue)
@@ -164,43 +155,42 @@ public class DFAState: Hashable,CustomStringConvertible  {
         return hash
     }
 
-	/**
-	 * Two {@link org.antlr.v4.runtime.dfa.DFAState} instances are equal if their ATN configuration sets
-	 * are the same. This method is used to see if a state already exists.
-	 *
-	 * <p>Because the number of alternatives and number of ATN configurations are
-	 * finite, there is a finite number of DFA states that can be processed.
-	 * This is necessary to show that the algorithm terminates.</p>
-	 *
-	 * <p>Cannot test the DFA state numbers here because in
-	 * {@link org.antlr.v4.runtime.atn.ParserATNSimulator#addDFAState} we need to know if any other state
-	 * exists that has this exact set of ATN configurations. The
-	 * {@link #stateNumber} is irrelevant.</p>
-	 */
- 
+    /**
+     * Two {@link org.antlr.v4.runtime.dfa.DFAState} instances are equal if their ATN configuration sets
+     * are the same. This method is used to see if a state already exists.
+     *
+     * <p>Because the number of alternatives and number of ATN configurations are
+     * finite, there is a finite number of DFA states that can be processed.
+     * This is necessary to show that the algorithm terminates.</p>
+     *
+     * <p>Cannot test the DFA state numbers here because in
+     * {@link org.antlr.v4.runtime.atn.ParserATNSimulator#addDFAState} we need to know if any other state
+     * exists that has this exact set of ATN configurations. The
+     * {@link #stateNumber} is irrelevant.</p>
+     */
+
     public var description: String {
         let buf: StringBuilder = StringBuilder()
         buf.append(stateNumber).append(":").append(configs)
-        if  isAcceptState  {
+        if isAcceptState {
             buf.append("=>")
-            if  predicates != nil  {
-                buf.append(predicates!.map({$0.description}))
-            }
-            else {
+            if predicates != nil {
+                buf.append(predicates!.map({ $0.description }))
+            } else {
                 buf.append(prediction)
             }
         }
         return buf.toString()
     }
-	 
- 
+
+
 }
 
-public func == (lhs: DFAState, rhs: DFAState) -> Bool {
-    
-    if  lhs === rhs  {
+public func ==(lhs: DFAState, rhs: DFAState) -> Bool {
+
+    if lhs === rhs {
         return true
     }
-    let sameSet: Bool = lhs.configs == rhs.configs 
+    let sameSet: Bool = lhs.configs == rhs.configs
     return sameSet
 }

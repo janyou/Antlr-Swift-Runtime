@@ -28,38 +28,38 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
- 
+
 
 /** The basic notion of a tree has a parent, a payload, and a list of children.
  *  It is the most abstract interface for all the trees used by ANTLR.
  */
+
 public protocol Tree: class {
-	/** The parent of this node. If the return value is null, then this
-	 *  node is the root of the tree.
-	 */
-	func getParent() -> Tree?
+    /** The parent of this node. If the return value is null, then this
+     *  node is the root of the tree.
+     */
+    func getParent() -> Tree?
 
-	/**
-	 * This method returns whatever object represents the data at this note. For
-	 * example, for parse trees, the payload can be a {@link org.antlr.v4.runtime.Token} representing
-	 * a leaf node or a {@link org.antlr.v4.runtime.RuleContext} object representing a rule
-	 * invocation. For abstract syntax trees (ASTs), this is a {@link org.antlr.v4.runtime.Token}
-	 * object.
-	 */
-	func getPayload() -> AnyObject
+    /**
+     * This method returns whatever object represents the data at this note. For
+     * example, for parse trees, the payload can be a {@link org.antlr.v4.runtime.Token} representing
+     * a leaf node or a {@link org.antlr.v4.runtime.RuleContext} object representing a rule
+     * invocation. For abstract syntax trees (ASTs), this is a {@link org.antlr.v4.runtime.Token}
+     * object.
+     */
+    func getPayload() -> AnyObject
 
-	/** If there are children, get the {@code i}th value indexed from 0. */
-	func getChild(i: Int) -> Tree?
+    /** If there are children, get the {@code i}th value indexed from 0. */
+    func getChild(i: Int) -> Tree?
 
-	/** How many children are there? If there is none, then this
-	 *  node represents a leaf node.
-	 */
-	func getChildCount() -> Int
+    /** How many children are there? If there is none, then this
+     *  node represents a leaf node.
+     */
+    func getChildCount() -> Int
 
-	/** Print out a whole tree, not just a node, in LISP format
-	 *  {@code (root child1 .. childN)}. Print just a node if this is a leaf.
-	 */
-	func toStringTree() -> String
-    
-    //func toString() -> String;  //added by janyou
+    /** Print out a whole tree, not just a node, in LISP format
+     *  {@code (root child1 .. childN)}. Print just a node if this is a leaf.
+     */
+    func toStringTree() -> String
+
 }

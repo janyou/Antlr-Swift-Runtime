@@ -29,35 +29,34 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
 
-public class MultiMap<K: Hashable,V>
-{
-    private var mapping = [K: Array<V>]()
-	public func map(key: K, _ value: V) {
-		var elementsForKey: Array<V>? = mapping[key]
-		if  elementsForKey == nil  {
-			elementsForKey = Array<V>()
-			mapping[key] = elementsForKey
-		}
-		elementsForKey?.append(value)
-	}
+public class MultiMap<K:Hashable, V> {
+    private var mapping = [K: Array < V>]()
+    public func map(key: K, _ value: V) {
+        var elementsForKey: Array<V>? = mapping[key]
+        if elementsForKey == nil {
+            elementsForKey = Array<V>()
+            mapping[key] = elementsForKey
+        }
+        elementsForKey?.append(value)
+    }
 
-	public func getPairs() -> Array<(K,V)> {
-		var pairs: Array<(K,V)> = Array<(K,V)>()
-		for key: K in mapping.keys {
-			for value: V in mapping[key]! {
-				pairs.append((key, value))
-			}
-		}
-		return pairs
-	}
-    
+    public func getPairs() -> Array<(K, V)> {
+        var pairs: Array<(K, V)> = Array<(K, V)>()
+        for key: K in mapping.keys {
+            for value: V in mapping[key]! {
+                pairs.append((key, value))
+            }
+        }
+        return pairs
+    }
+
     public func get(key: K) -> Array<(V)>? {
         return mapping[key]
     }
-    public func size( ) -> Int {
+
+    public func size() -> Int {
         return mapping.count
     }
-    
+
 }

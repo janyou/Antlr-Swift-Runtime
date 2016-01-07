@@ -32,32 +32,35 @@
  * This is an {@link org.antlr.v4.runtime.ANTLRInputStream} that is loaded from a file all at once
  * when you construct the object.
  */
-import  Foundation
+
+import Foundation
+
 public class ANTLRFileStream: ANTLRInputStream {
-	internal var fileName: String
+    internal var fileName: String
 
-	public convenience override init(_ fileName: String) { // throws; IOException
-		self.init(fileName, nil)
-	}
+    public convenience override init(_ fileName: String) {
+        // throws; IOException
+        self.init(fileName, nil)
+    }
 
-	public init(_ fileName: String, _ encoding: NSStringEncoding?) {
-		self.fileName = fileName
+    public init(_ fileName: String, _ encoding: NSStringEncoding?) {
+        self.fileName = fileName
         super.init()
-		load(fileName, encoding)
-	}
+        load(fileName, encoding)
+    }
 
-	public func load(fileName: String, _ encoding: NSStringEncoding?) {
+    public func load(fileName: String, _ encoding: NSStringEncoding?) {
         if encoding != nil {
             data = Utils.readFile(fileName, encoding!)
         } else {
-         data = Utils.readFile(fileName)
+            data = Utils.readFile(fileName)
         }
-		self.n = data.count
-	}
+        self.n = data.count
+    }
 
-	override
-	public func getSourceName() -> String {
-		return fileName
-	}
+    override
+    public func getSourceName() -> String {
+        return fileName
+    }
 
 }

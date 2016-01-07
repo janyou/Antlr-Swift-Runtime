@@ -91,130 +91,138 @@
 *
 * <embed src="images/OptionalNonGreedy.svg" type="image/svg+xml"/>
 */
-public   class ATNState: Hashable, CustomStringConvertible {
+
+public class ATNState: Hashable, CustomStringConvertible {
     public static let INITIAL_NUM_TRANSITIONS: Int = 4
-    
+
     // constants for serialization
-    public static  let INVALID_TYPE: Int = 0
-    public static  let BASIC: Int = 1
+    public static let INVALID_TYPE: Int = 0
+    public static let BASIC: Int = 1
     public static let RULE_START: Int = 2
-    public static  let BLOCK_START: Int = 3
-    public static  let PLUS_BLOCK_START: Int = 4
-    public static  let STAR_BLOCK_START: Int = 5
-    public static  let TOKEN_START: Int = 6
-    public static  let RULE_STOP: Int = 7
+    public static let BLOCK_START: Int = 3
+    public static let PLUS_BLOCK_START: Int = 4
+    public static let STAR_BLOCK_START: Int = 5
+    public static let TOKEN_START: Int = 6
+    public static let RULE_STOP: Int = 7
     public static let BLOCK_END: Int = 8
     public static let STAR_LOOP_BACK: Int = 9
     public static let STAR_LOOP_ENTRY: Int = 10
     public static let PLUS_LOOP_BACK: Int = 11
     public static let LOOP_END: Int = 12
-    
+
     public static let serializationNames: Array<String> =
-    //Collections.unmodifiableList(Arrays.asList(
+
     ["INVALID",
-        "BASIC",
-        "RULE_START",
-        "BLOCK_START",
-        "PLUS_BLOCK_START",
-        "STAR_BLOCK_START",
-        "TOKEN_START",
-        "RULE_STOP",
-        "BLOCK_END",
-        "STAR_LOOP_BACK",
-        "STAR_LOOP_ENTRY",
-        "PLUS_LOOP_BACK",
-        "LOOP_END"]
-    //));
-    
+     "BASIC",
+     "RULE_START",
+     "BLOCK_START",
+     "PLUS_BLOCK_START",
+     "STAR_BLOCK_START",
+     "TOKEN_START",
+     "RULE_STOP",
+     "BLOCK_END",
+     "STAR_LOOP_BACK",
+     "STAR_LOOP_ENTRY",
+     "PLUS_LOOP_BACK",
+     "LOOP_END"]
+
+
     public static let INVALID_STATE_NUMBER: Int = -1
-    
+
     /** Which ATN are we in? */
-   	public var atn: ATN? = nil
-    
-    public var stateNumber: Int =    INVALID_STATE_NUMBER
-    
-    public var ruleIndex: Int? // at runtime, we don't have Rule objects
-    
+    public var atn: ATN? = nil
+
+    public var stateNumber: Int = INVALID_STATE_NUMBER
+
+    public var ruleIndex: Int?
+    // at runtime, we don't have Rule objects
+
     public var epsilonOnlyTransitions: Bool = false
-    
+
     /** Track the transitions emanating from this ATN state. */
-    internal final var transitions: Array<Transition> = Array<Transition>( )
+    internal final var transitions: Array<Transition> = Array<Transition>()
     //Array<Transition>(INITIAL_NUM_TRANSITIONS);
-    
+
     /** Used to cache lookahead during parsing, not used during construction */
     public var nextTokenWithinRule: IntervalSet?
-    
-    
-    public var hashValue: Int { return stateNumber }
-    
-    
-    
+
+
+    public var hashValue: Int {
+        return stateNumber
+    }
+
+
     public func isNonGreedyExitState() -> Bool {
         return false
     }
-    
-    
+
+
     public func toString() -> String {
-        return String(stateNumber)
+        return description
     }
     public var description: String {
         //return "MyClass \(string)"
         return String(stateNumber)
     }
     public func getTransitions() -> [Transition] {
-        return   Array(transitions) //transitions.toArray(new, Transition[transitionscount]);
+        return Array(transitions)
     }
-    
+
     public func getNumberOfTransitions() -> Int {
         return transitions.count
     }
-    
+
     public func addTransition(e: Transition) {
         addTransition(transitions.count, e)
     }
-    
+
     public func addTransition(index: Int, _ e: Transition) {
         if transitions.isEmpty {
             epsilonOnlyTransitions = e.isEpsilon()
+        } else {
+            if epsilonOnlyTransitions != e.isEpsilon() {
+
+                print("ATN state %d has both epsilon and non-epsilon transitions.\n", String(stateNumber))
+                epsilonOnlyTransitions = false
+            }
         }
-        else { if epsilonOnlyTransitions != e.isEpsilon() {
-            
-            print("ATN state %d has both epsilon and non-epsilon transitions.\n", String(stateNumber))
-            epsilonOnlyTransitions = false
-            } }
         transitions.insert(e, atIndex: index)
-        
+
     }
-    
-    public func transition(i: Int) -> Transition { return transitions[i] }
-    
+
+    public func transition(i: Int) -> Transition {
+        return transitions[i]
+    }
+
     public func setTransition(i: Int, _ e: Transition) {
         transitions[i] = e
     }
-    
+
     public func removeTransition(index: Int) -> Transition {
-        
+
         return transitions.removeAtIndex(index)
     }
-    
+
     public func getStateType() -> Int {
         RuntimeException(__FUNCTION__ + " must be overridden")
         return 0
     }
-    
+
     public final func onlyHasEpsilonTransitions() -> Bool {
         return epsilonOnlyTransitions
     }
-    
-    public func setRuleIndex(ruleIndex: Int) { self.ruleIndex = ruleIndex }
+
+    public func setRuleIndex(ruleIndex: Int) {
+        self.ruleIndex = ruleIndex
+    }
 }
 
-public func ==(lhs: ATNState,rhs: ATNState) -> Bool {
+public func ==(lhs: ATNState, rhs: ATNState) -> Bool {
     if lhs === rhs {
         return true
     }
     // are these states same object?
-    return lhs.stateNumber==rhs.stateNumber
-    
+    return lhs.stateNumber == rhs.stateNumber
+
 }
  

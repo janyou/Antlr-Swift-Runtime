@@ -29,14 +29,15 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /** Terminal node of a simple {@code (a|b|c)} block. */
-public final class BlockEndState: ATNState {
-	public var startState: BlockStartState?
 
-	override
-	public func getStateType() -> Int {
-		return ATNState.BLOCK_END
-	}
+public final class BlockEndState: ATNState {
+    public var startState: BlockStartState?
+
+    override
+    public func getStateType() -> Int {
+        return ATNState.BLOCK_END
+    }
 }

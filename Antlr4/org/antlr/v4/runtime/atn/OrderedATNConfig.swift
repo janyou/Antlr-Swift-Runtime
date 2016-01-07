@@ -8,24 +8,22 @@
 
 import Foundation
 
-public class  OrderedATNConfig: LookupATNConfig {
+public class OrderedATNConfig: LookupATNConfig {
     override
     public var hashValue: Int {
-          return config.hashValue
+        return config.hashValue
     }
-    
-    
+
+
 }
 
 //useless
-public func  == (lhs: OrderedATNConfig,rhs: OrderedATNConfig) -> Bool{
-    
+public func ==(lhs: OrderedATNConfig, rhs: OrderedATNConfig) -> Bool {
+
     if lhs.config === rhs.config {
         return true
     }
-    
-    
-    
-    return lhs.config == rhs.config 
-    
+
+    return lhs.config == rhs.config
+
 }

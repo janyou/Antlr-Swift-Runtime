@@ -29,16 +29,17 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// package org.antlr.v4.runtime.atn;
+
 
 /**
  *
  * @author Sam Harwell
  */
-public  class AbstractPredicateTransition: Transition {
 
-	/*public  override init(_ target : ATNState) {
-		super.init(target);
-	}*/
+public class AbstractPredicateTransition: Transition {
+
+    /*public  override init(_ target : ATNState) {
+        super.init(target);
+    }*/
 
 }

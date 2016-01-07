@@ -29,16 +29,15 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
 
 public class LexerDFASerializer: DFASerializer {
-	public   init(_ dfa: DFA) {
-		super.init(dfa, Vocabulary.EMPTY_VOCABULARY)
-	}
+    public init(_ dfa: DFA) {
+        super.init(dfa, Vocabulary.EMPTY_VOCABULARY)
+    }
 
-	override
+    override
 
-	internal func getEdgeLabel(i: Int) -> String {
+    internal func getEdgeLabel(i: Int) -> String {
         return "'\(Character(integerLiteral: i))'"
-	}
+    }
 }

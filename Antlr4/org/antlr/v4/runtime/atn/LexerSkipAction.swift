@@ -29,10 +29,6 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// package org.antlr.v4.runtime.atn;
-
-// import org.antlr.v4.runtime.Lexer;
-// import org.antlr.v4.runtime.misc.MurmurHash;
 
 /**
  * Implements the {@code skip} lexer action by calling {@link org.antlr.v4.runtime.Lexer#skip}.
@@ -43,47 +39,48 @@
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerSkipAction: LexerAction,CustomStringConvertible   {
-	/**
-	 * Provides a singleton instance of this parameterless lexer action.
-	 */
-	public static let INSTANCE: LexerSkipAction = LexerSkipAction()
 
-	/**
-	 * Constructs the singleton instance of the lexer {@code skip} command.
-	 */
-	private override init() {
-	}
+public final class LexerSkipAction: LexerAction, CustomStringConvertible {
+    /**
+     * Provides a singleton instance of this parameterless lexer action.
+     */
+    public static let INSTANCE: LexerSkipAction = LexerSkipAction()
 
-	/**
-	 * {@inheritDoc}
-	 * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#SKIP}.
-	 */
-	 override 
-	public func getActionType() -> LexerActionType {
-		return LexerActionType.SKIP
-	}
+    /**
+     * Constructs the singleton instance of the lexer {@code skip} command.
+     */
+    private override init() {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * @return This method returns {@code false}.
-	 */
-	 override 
-	public func isPositionDependent() -> Bool {
-		return false
-	}
+    /**
+     * {@inheritDoc}
+     * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#SKIP}.
+     */
+    override
+    public func getActionType() -> LexerActionType {
+        return LexerActionType.SKIP
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>This action is implemented by calling {@link org.antlr.v4.runtime.Lexer#skip}.</p>
-	 */
-	 override
-	public func execute(lexer: Lexer) {
-		lexer.skip()
-	}
+    /**
+     * {@inheritDoc}
+     * @return This method returns {@code false}.
+     */
+    override
+    public func isPositionDependent() -> Bool {
+        return false
+    }
 
- 
+    /**
+     * {@inheritDoc}
+     *
+     * <p>This action is implemented by calling {@link org.antlr.v4.runtime.Lexer#skip}.</p>
+     */
+    override
+    public func execute(lexer: Lexer) {
+        lexer.skip()
+    }
+
+
     override
     public var hashValue: Int {
         var hash: Int = MurmurHash.initialize()
@@ -97,6 +94,6 @@ public final class LexerSkipAction: LexerAction,CustomStringConvertible   {
 }
 
 public func ==(lhs: LexerSkipAction, rhs: LexerSkipAction) -> Bool {
-    
-    return lhs  === rhs
+
+    return lhs === rhs
 }

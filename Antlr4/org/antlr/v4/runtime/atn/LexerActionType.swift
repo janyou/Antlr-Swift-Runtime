@@ -29,7 +29,7 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /**
  * Represents the serialization type of a {@link org.antlr.v4.runtime.atn.LexerAction}.
@@ -37,37 +37,38 @@
  * @author Sam Harwell
  * @since 4.2
  */
-public enum LexerActionType: Int  {
-	/**
-	 * The type of a {@link org.antlr.v4.runtime.atn.LexerChannelAction} action.
-	 */
-	case CHANNEL = 0
-	/**
-	 * The type of a {@link org.antlr.v4.runtime.atn.LexerCustomAction} action.
-	 */
-	case CUSTOM
-	/**
-	 * The type of a {@link org.antlr.v4.runtime.atn.LexerModeAction} action.
-	 */
-	case MODE
-	/**
-	 * The type of a {@link org.antlr.v4.runtime.atn.LexerMoreAction} action.
-	 */
-	case MORE
-	/**
-	 * The type of a {@link org.antlr.v4.runtime.atn.LexerPopModeAction} action.
-	 */
-	case POP_MODE
-	/**
-	 * The type of a {@link org.antlr.v4.runtime.atn.LexerPushModeAction} action.
-	 */
-	case PUSH_MODE
-	/**
-	 * The type of a {@link org.antlr.v4.runtime.atn.LexerSkipAction} action.
-	 */
-	case SKIP
-	/**
-	 * The type of a {@link org.antlr.v4.runtime.atn.LexerTypeAction} action.
-	 */
-	case TYPE
+
+public enum LexerActionType: Int {
+    /**
+     * The type of a {@link org.antlr.v4.runtime.atn.LexerChannelAction} action.
+     */
+    case CHANNEL = 0
+    /**
+     * The type of a {@link org.antlr.v4.runtime.atn.LexerCustomAction} action.
+     */
+    case CUSTOM
+    /**
+     * The type of a {@link org.antlr.v4.runtime.atn.LexerModeAction} action.
+     */
+    case MODE
+    /**
+     * The type of a {@link org.antlr.v4.runtime.atn.LexerMoreAction} action.
+     */
+    case MORE
+    /**
+     * The type of a {@link org.antlr.v4.runtime.atn.LexerPopModeAction} action.
+     */
+    case POP_MODE
+    /**
+     * The type of a {@link org.antlr.v4.runtime.atn.LexerPushModeAction} action.
+     */
+    case PUSH_MODE
+    /**
+     * The type of a {@link org.antlr.v4.runtime.atn.LexerSkipAction} action.
+     */
+    case SKIP
+    /**
+     * The type of a {@link org.antlr.v4.runtime.atn.LexerTypeAction} action.
+     */
+    case TYPE
 }

@@ -36,88 +36,89 @@
  * {@code <ID>}. These tokens are created for {@link org.antlr.v4.runtime.tree.pattern.TagChunk} chunks where the
  * tag corresponds to a lexer rule or token type.
  */
+
 public class TokenTagToken: CommonToken {
-	/**
-	 * This is the backing field for {@link #getTokenName}.
-	 */
+    /**
+     * This is the backing field for {@link #getTokenName}.
+     */
 
-	private let tokenName: String
-	/**
-	 * This is the backing field for {@link #getLabel}.
-	 */
+    private let tokenName: String
+    /**
+     * This is the backing field for {@link #getLabel}.
+     */
 
-	private let label: String?
+    private let label: String?
 
-	/**
-	 * Constructs a new instance of {@link org.antlr.v4.runtime.tree.pattern.TokenTagToken} for an unlabeled tag
-	 * with the specified token name and type.
-	 *
-	 * @param tokenName The token name.
-	 * @param type The token type.
-	 */
-	public convenience init(_ tokenName: String, _ type: Int) {
-		self.init(tokenName, type, nil)
-	}
+    /**
+     * Constructs a new instance of {@link org.antlr.v4.runtime.tree.pattern.TokenTagToken} for an unlabeled tag
+     * with the specified token name and type.
+     *
+     * @param tokenName The token name.
+     * @param type The token type.
+     */
+    public convenience init(_ tokenName: String, _ type: Int) {
+        self.init(tokenName, type, nil)
+    }
 
-	/**
-	 * Constructs a new instance of {@link org.antlr.v4.runtime.tree.pattern.TokenTagToken} with the specified
-	 * token name, type, and label.
-	 *
-	 * @param tokenName The token name.
-	 * @param type The token type.
-	 * @param label The label associated with the token tag, or {@code null} if
-	 * the token tag is unlabeled.
-	 */
-	public   init(_ tokenName: String, _ type: Int, _ label: String?) {
-	
-		self.tokenName = tokenName
-		self.label = label
-        	super.init(type)
-	}
+    /**
+     * Constructs a new instance of {@link org.antlr.v4.runtime.tree.pattern.TokenTagToken} with the specified
+     * token name, type, and label.
+     *
+     * @param tokenName The token name.
+     * @param type The token type.
+     * @param label The label associated with the token tag, or {@code null} if
+     * the token tag is unlabeled.
+     */
+    public init(_ tokenName: String, _ type: Int, _ label: String?) {
 
-	/**
-	 * Gets the token name.
-	 * @return The token name.
-	 */
+        self.tokenName = tokenName
+        self.label = label
+        super.init(type)
+    }
 
-	public final func getTokenName() -> String {
-		return tokenName
-	}
+    /**
+     * Gets the token name.
+     * @return The token name.
+     */
 
-	/**
-	 * Gets the label associated with the rule tag.
-	 *
-	 * @return The name of the label associated with the rule tag, or
-	 * {@code null} if this is an unlabeled rule tag.
-	 */
+    public final func getTokenName() -> String {
+        return tokenName
+    }
 
-	public final func getLabel() -> String? {
-		return label
-	}
+    /**
+     * Gets the label associated with the rule tag.
+     *
+     * @return The name of the label associated with the rule tag, or
+     * {@code null} if this is an unlabeled rule tag.
+     */
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The implementation for {@link org.antlr.v4.runtime.tree.pattern.TokenTagToken} returns the token tag
-	 * formatted with {@code <} and {@code >} delimiters.</p>
-	 */
-	override
-	public func getText() -> String {
-		if label != nil {
-			return "<" + label! + ":" + tokenName + ">"
-		}
+    public final func getLabel() -> String? {
+        return label
+    }
 
-		return "<" + tokenName + ">"
-	}
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The implementation for {@link org.antlr.v4.runtime.tree.pattern.TokenTagToken} returns the token tag
+     * formatted with {@code <} and {@code >} delimiters.</p>
+     */
+    override
+    public func getText() -> String {
+        if label != nil {
+            return "<" + label! + ":" + tokenName + ">"
+        }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The implementation for {@link org.antlr.v4.runtime.tree.pattern.TokenTagToken} returns a string of the form
-	 * {@code tokenName:type}.</p>
-	 */
- 
-   override
+        return "<" + tokenName + ">"
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The implementation for {@link org.antlr.v4.runtime.tree.pattern.TokenTagToken} returns a string of the form
+     * {@code tokenName:type}.</p>
+     */
+
+    override
     public var description: String {
         return tokenName + ":" + String(type)
     }

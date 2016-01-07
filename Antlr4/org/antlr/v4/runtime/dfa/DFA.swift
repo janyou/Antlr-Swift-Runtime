@@ -30,191 +30,200 @@
  */
 
 
-public class DFA: CustomStringConvertible{
-	/** A set of all DFA states. Use {@link java.util.Map} so we can get old state back
-	 *  ({@link java.util.Set} only allows you to see if it's there).
+public class DFA: CustomStringConvertible {
+    /** A set of all DFA states. Use {@link java.util.Map} so we can get old state back
+     *  ({@link java.util.Set} only allows you to see if it's there).
      */
 
-	public final var states: Dictionary<DFAState, DFAState?> = Dictionary<DFAState, DFAState?>()
+    public final var states: Dictionary<DFAState, DFAState?> = Dictionary<DFAState, DFAState?>()
 
-	public /*volatile*/ var s0: DFAState?
+    public /*volatile*/ var s0: DFAState?
 
-	public final var decision: Int
+    public final var decision: Int
 
-	/** From which ATN state did we create this DFA? */
+    /** From which ATN state did we create this DFA? */
 
-	public let atnStartState: DecisionState
+    public let atnStartState: DecisionState
 
-	/**
-	 * {@code true} if this DFA is for a precedence decision; otherwise,
-	 * {@code false}. This is the backing field for {@link #isPrecedenceDfa}.
-	 */
-	private final var precedenceDfa: Bool
+    /**
+     * {@code true} if this DFA is for a precedence decision; otherwise,
+     * {@code false}. This is the backing field for {@link #isPrecedenceDfa}.
+     */
+    private final var precedenceDfa: Bool
 
-	public convenience init(_ atnStartState: DecisionState) {
-		self.init(atnStartState, 0)
-	}
+    public convenience init(_ atnStartState: DecisionState) {
+        self.init(atnStartState, 0)
+    }
 
-	public init(_ atnStartState: DecisionState, _ decision: Int) {
-		self.atnStartState = atnStartState
-		self.decision = decision
+    public init(_ atnStartState: DecisionState, _ decision: Int) {
+        self.atnStartState = atnStartState
+        self.decision = decision
 
-		var precedenceDfa: Bool = false
-		if atnStartState is StarLoopEntryState {
-			if (atnStartState as! StarLoopEntryState).precedenceRuleDecision  {
-				precedenceDfa = true
-				let precedenceState: DFAState = DFAState(ATNConfigSet())
-				precedenceState.edges = [DFAState]() //new DFAState[0];
-				precedenceState.isAcceptState = false
-				precedenceState.requiresFullContext = false
-				self.s0 = precedenceState
-			}
-		}
+        var precedenceDfa: Bool = false
+        if atnStartState is StarLoopEntryState {
+            if (atnStartState as! StarLoopEntryState).precedenceRuleDecision {
+                precedenceDfa = true
+                let precedenceState: DFAState = DFAState(ATNConfigSet())
+                precedenceState.edges = [DFAState]() //new DFAState[0];
+                precedenceState.isAcceptState = false
+                precedenceState.requiresFullContext = false
+                self.s0 = precedenceState
+            }
+        }
 
-		self.precedenceDfa = precedenceDfa
-	}
+        self.precedenceDfa = precedenceDfa
+    }
 
-	/**
-	 * Gets whether this DFA is a precedence DFA. Precedence DFAs use a special
-	 * start state {@link #s0} which is not stored in {@link #states}. The
-	 * {@link org.antlr.v4.runtime.dfa.DFAState#edges} array for this start state contains outgoing edges
-	 * supplying individual start states corresponding to specific precedence
-	 * values.
-	 *
-	 * @return {@code true} if this is a precedence DFA; otherwise,
-	 * {@code false}.
-	 * @see org.antlr.v4.runtime.Parser#getPrecedence()
-	 */
-	public final func isPrecedenceDfa() -> Bool {
-		return precedenceDfa
-	}
+    /**
+     * Gets whether this DFA is a precedence DFA. Precedence DFAs use a special
+     * start state {@link #s0} which is not stored in {@link #states}. The
+     * {@link org.antlr.v4.runtime.dfa.DFAState#edges} array for this start state contains outgoing edges
+     * supplying individual start states corresponding to specific precedence
+     * values.
+     *
+     * @return {@code true} if this is a precedence DFA; otherwise,
+     * {@code false}.
+     * @see org.antlr.v4.runtime.Parser#getPrecedence()
+     */
+    public final func isPrecedenceDfa() -> Bool {
+        return precedenceDfa
+    }
 
-	/**
-	 * Get the start state for a specific precedence value.
-	 *
-	 * @param precedence The current precedence.
-	 * @return The start state corresponding to the specified precedence, or
-	 * {@code null} if no start state exists for the specified precedence.
-	 *
-	 * @throws IllegalStateException if this is not a precedence DFA.
-	 * @see #isPrecedenceDfa()
-	 */
-	////@SuppressWarnings("null")
-	public final func getPrecedenceStartState(precedence: Int)throws -> DFAState? {
-		if !isPrecedenceDfa() {
+    /**
+     * Get the start state for a specific precedence value.
+     *
+     * @param precedence The current precedence.
+     * @return The start state corresponding to the specified precedence, or
+     * {@code null} if no start state exists for the specified precedence.
+     *
+     * @throws IllegalStateException if this is not a precedence DFA.
+     * @see #isPrecedenceDfa()
+     */
+    ////@SuppressWarnings("null")
+    public final func getPrecedenceStartState(precedence: Int) throws -> DFAState? {
+        if !isPrecedenceDfa() {
             throw ANTLRError.IllegalState(msg: "Only precedence DFAs may contain a precedence start state.")
- 
-		}
 
-		// s0.edges is never null for a precedence DFA
-       // if (precedence < 0 || precedence >= s0!.edges!.count) {
-		if precedence < 0 || s0 == nil ||
-            s0!.edges == nil || precedence >= s0!.edges!.count {
-			return nil
-		}
+        }
 
-		return s0!.edges![precedence]
-	}
+        // s0.edges is never null for a precedence DFA
+        // if (precedence < 0 || precedence >= s0!.edges!.count) {
+        if precedence < 0 || s0 == nil ||
+                s0!.edges == nil || precedence >= s0!.edges!.count {
+            return nil
+        }
 
-	/**
-	 * Set the start state for a specific precedence value.
-	 *
-	 * @param precedence The current precedence.
-	 * @param startState The start state corresponding to the specified
-	 * precedence.
-	 *
-	 * @throws IllegalStateException if this is not a precedence DFA.
-	 * @see #isPrecedenceDfa()
-	 */
-	////@SuppressWarnings({"SynchronizeOnNonFinalField", "null"})
-	public final func setPrecedenceStartState(precedence: Int, _ startState: DFAState)throws {
-		if !isPrecedenceDfa() {
+        return s0!.edges![precedence]
+    }
+
+    /**
+     * Set the start state for a specific precedence value.
+     *
+     * @param precedence The current precedence.
+     * @param startState The start state corresponding to the specified
+     * precedence.
+     *
+     * @throws IllegalStateException if this is not a precedence DFA.
+     * @see #isPrecedenceDfa()
+     */
+    ////@SuppressWarnings({"SynchronizeOnNonFinalField", "null"})
+    public final func setPrecedenceStartState(precedence: Int, _ startState: DFAState) throws {
+        if !isPrecedenceDfa() {
             throw ANTLRError.IllegalState(msg: "Only precedence DFAs may contain a precedence start state.")
- 
-		}
+
+        }
 
         if precedence < 0 ||
-            s0 == nil ||
-            s0!.edges == nil  {
-			return
-		}
+                s0 == nil ||
+                s0!.edges == nil {
+            return
+        }
 
-		// synchronization on s0 here is ok. when the DFA is turned into a
-		// precedence DFA, s0 will be initialized once and not updated again
-		synced (s0!) { [unowned self] in
-			// s0.edges is never null for a precedence DFA
-			if precedence >= self.s0!.edges!.count {
+        // synchronization on s0 here is ok. when the DFA is turned into a
+        // precedence DFA, s0 will be initialized once and not updated again
+        synced(s0!) {
+            [unowned self] in
+            // s0.edges is never null for a precedence DFA
+            if precedence >= self.s0!.edges!.count {
                 let increase = [DFAState?](count: (precedence + 1 - self.s0!.edges!.count), repeatedValue: nil)
                 self.s0!.edges = self.s0!.edges + increase
-                    //Array( self.s0!.edges![0..<precedence + 1])
-				//s0.edges = Arrays.copyOf(s0.edges, precedence + 1);
-			}
+                //Array( self.s0!.edges![0..<precedence + 1])
+                //s0.edges = Arrays.copyOf(s0.edges, precedence + 1);
+            }
 
-			self.s0!.edges![precedence] = startState
-		}
-	}
-
-	/**
-	 * Sets whether this is a precedence DFA.
-	 *
-	 * @param precedenceDfa {@code true} if this is a precedence DFA; otherwise,
-	 * {@code false}
-	 *
-	 * @throws UnsupportedOperationException if {@code precedenceDfa} does not
-	 * match the value of {@link #isPrecedenceDfa} for the current DFA.
-	 *
-	 * @deprecated This method no longer performs any action.
-	 */
-	////@Deprecated
-	public final func setPrecedenceDfa(precedenceDfa: Bool)throws {
-		if precedenceDfa != isPrecedenceDfa() {
-            throw ANTLRError.UnsupportedOperation(msg: "The precedenceDfa field cannot change after a DFA is constructed.")
- 
-		}
-	}
-
-	/**
-	 * Return a list of all states in this DFA, ordered by state number.
-	 */
-
-	public func getStates() -> Array<DFAState> {
-		var result: Array<DFAState> = Array<DFAState>(states.keys)
-        
-        result = result.sort{ $0.stateNumber < $1.stateNumber }
-        
-		return result
-	}
-    
-    public var description: String{
-      return toString( Vocabulary.EMPTY_VOCABULARY)
+            self.s0!.edges![precedence] = startState
+        }
     }
-    
-	//override
-	public func toString() -> String { return toString(Vocabulary.EMPTY_VOCABULARY) }
 
-	/**
-	 * @deprecated Use {@link #toString(org.antlr.v4.runtime.Vocabulary)} instead.
-	 */
-	////@Deprecated
-	public func toString(tokenNames: [String?]?) -> String {
-		if  s0 == nil  { return "" }
-		let serializer: DFASerializer =  DFASerializer(self,tokenNames)
-		return serializer.toString()
-	}
+    /**
+     * Sets whether this is a precedence DFA.
+     *
+     * @param precedenceDfa {@code true} if this is a precedence DFA; otherwise,
+     * {@code false}
+     *
+     * @throws UnsupportedOperationException if {@code precedenceDfa} does not
+     * match the value of {@link #isPrecedenceDfa} for the current DFA.
+     *
+     * @deprecated This method no longer performs any action.
+     */
+    ////@Deprecated
+    public final func setPrecedenceDfa(precedenceDfa: Bool) throws {
+        if precedenceDfa != isPrecedenceDfa() {
+            throw ANTLRError.UnsupportedOperation(msg: "The precedenceDfa field cannot change after a DFA is constructed.")
 
-	public func toString(vocabulary: Vocabulary) -> String {
-		if s0 == nil {
-			return ""
-		}
+        }
+    }
 
-		let serializer: DFASerializer = DFASerializer(self, vocabulary)
-		return serializer.toString()
-	}
+    /**
+     * Return a list of all states in this DFA, ordered by state number.
+     */
 
-	public func toLexerString() -> String {
-		if  s0==nil  { return "" }
-		let serializer: DFASerializer = LexerDFASerializer(self)
-		return serializer.toString()
-	}
+    public func getStates() -> Array<DFAState> {
+        var result: Array<DFAState> = Array<DFAState>(states.keys)
+
+        result = result.sort {
+            $0.stateNumber < $1.stateNumber
+        }
+
+        return result
+    }
+
+    public var description: String {
+        return toString(Vocabulary.EMPTY_VOCABULARY)
+    }
+
+ 
+    public func toString() -> String {
+        return description
+    }
+
+    /**
+     * @deprecated Use {@link #toString(org.antlr.v4.runtime.Vocabulary)} instead.
+     */
+    ////@Deprecated
+    public func toString(tokenNames: [String?]?) -> String {
+        if s0 == nil {
+            return ""
+        }
+        let serializer: DFASerializer = DFASerializer(self, tokenNames)
+        return serializer.toString()
+    }
+
+    public func toString(vocabulary: Vocabulary) -> String {
+        if s0 == nil {
+            return ""
+        }
+
+        let serializer: DFASerializer = DFASerializer(self, vocabulary)
+        return serializer.toString()
+    }
+
+    public func toLexerString() -> String {
+        if s0 == nil {
+            return ""
+        }
+        let serializer: DFASerializer = LexerDFASerializer(self)
+        return serializer.toString()
+    }
 
 }

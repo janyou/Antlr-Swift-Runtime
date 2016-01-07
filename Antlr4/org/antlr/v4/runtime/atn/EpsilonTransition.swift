@@ -29,50 +29,50 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
 
-public final class EpsilonTransition: Transition ,CustomStringConvertible{
+public final class EpsilonTransition: Transition, CustomStringConvertible {
 
-	private let outermostPrecedenceReturnInside: Int
+    private let outermostPrecedenceReturnInside: Int
 
-	public convenience override init(_ target: ATNState) {
-		self.init(target, -1)
-	}
+    public convenience override init(_ target: ATNState) {
+        self.init(target, -1)
+    }
 
-	public   init(_ target: ATNState, _ outermostPrecedenceReturn: Int) {
-		
-		self.outermostPrecedenceReturnInside = outermostPrecedenceReturn
+    public init(_ target: ATNState, _ outermostPrecedenceReturn: Int) {
+
+        self.outermostPrecedenceReturnInside = outermostPrecedenceReturn
         super.init(target)
-	}
+    }
 
-	/**
-	 * @return the rule index of a precedence rule for which this transition is
-	 * returning from, where the precedence value is 0; otherwise, -1.
-	 *
-	 * @see org.antlr.v4.runtime.atn.ATNConfig#isPrecedenceFilterSuppressed()
-	 * @see org.antlr.v4.runtime.atn.ParserATNSimulator#applyPrecedenceFilter(org.antlr.v4.runtime.atn.ATNConfigSet)
-	 * @since 4.4.1
-	 */
-	public func outermostPrecedenceReturn() -> Int {
-		return outermostPrecedenceReturnInside
-	}
+    /**
+     * @return the rule index of a precedence rule for which this transition is
+     * returning from, where the precedence value is 0; otherwise, -1.
+     *
+     * @see org.antlr.v4.runtime.atn.ATNConfig#isPrecedenceFilterSuppressed()
+     * @see org.antlr.v4.runtime.atn.ParserATNSimulator#applyPrecedenceFilter(org.antlr.v4.runtime.atn.ATNConfigSet)
+     * @since 4.4.1
+     */
+    public func outermostPrecedenceReturn() -> Int {
+        return outermostPrecedenceReturnInside
+    }
 
-	override
-	public func getSerializationType() -> Int {
-		return Transition.EPSILON
-	}
+    override
+    public func getSerializationType() -> Int {
+        return Transition.EPSILON
+    }
 
-	override
-	public func isEpsilon() -> Bool { return true }
+    override
+    public func isEpsilon() -> Bool {
+        return true
+    }
 
-	override
-	public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
-		return false
-	}
+    override
+    public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
+        return false
+    }
 
- 
-    
+
     public var description: String {
-        return  "epsilon"
+        return "epsilon"
     }
 }

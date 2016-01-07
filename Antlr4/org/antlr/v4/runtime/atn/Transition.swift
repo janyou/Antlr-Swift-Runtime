@@ -42,79 +42,72 @@
 *  the states. We'll use the term Edge for the DFA to distinguish them from
 *  ATN transitions.</p>
 */
+
 import Foundation
-public   class Transition {
+
+public class Transition {
     // constants for serialization
-    public static let EPSILON: Int			= 1
-    public static let RANGE: Int			= 2
-    public static let RULE: Int			= 3
-    public static let PREDICATE: Int		= 4 // e.g., {isType(input.LT(1))}?
-    public static let ATOM: Int			= 5
-    public static let ACTION: Int			= 6
-    public static let SET: Int				= 7 // ~(A|B) or ~atom, wildcard, which convert to next 2
-    public static let NOT_SET: Int			= 8
-    public static let WILDCARD: Int		= 9
-    public static let PRECEDENCE: Int		= 10
-    
-    
+    public static let EPSILON: Int = 1
+    public static let RANGE: Int = 2
+    public static let RULE: Int = 3
+    public static let PREDICATE: Int = 4
+    // e.g., {isType(input.LT(1))}?
+    public static let ATOM: Int = 5
+    public static let ACTION: Int = 6
+    public static let SET: Int = 7
+    // ~(A|B) or ~atom, wildcard, which convert to next 2
+    public static let NOT_SET: Int = 8
+    public static let WILDCARD: Int = 9
+    public static let PRECEDENCE: Int = 10
+
+
     public let serializationNames: Array<String> =
-    //Collections.unmodifiableList(Arrays.asList(
+
     ["INVALID",
-        "EPSILON",
-        "RANGE",
-        "RULE",
-        "PREDICATE",
-        "ATOM",
-        "ACTION",
-        "SET",
-        "NOT_SET",
-        "WILDCARD",
-        "PRECEDENCE"]
-    //));
-    
+     "EPSILON",
+     "RANGE",
+     "RULE",
+     "PREDICATE",
+     "ATOM",
+     "ACTION",
+     "SET",
+     "NOT_SET",
+     "WILDCARD",
+     "PRECEDENCE"]
+
+
     public static let serializationTypes: Dictionary<String, Int> = [
-        
-        NSStringFromClass(EpsilonTransition.self): EPSILON,
-        NSStringFromClass(RangeTransition.self): RANGE,
-        NSStringFromClass(RuleTransition.self): RULE,
-        NSStringFromClass(PredicateTransition.self): PREDICATE,
-        NSStringFromClass(AtomTransition.self): ATOM,
-        NSStringFromClass(ActionTransition.self): ACTION,
-        NSStringFromClass(SetTransition.self): SET,
-        NSStringFromClass(NotSetTransition.self): NOT_SET,
-        NSStringFromClass(WildcardTransition.self): WILDCARD,
-        NSStringFromClass(PrecedencePredicateTransition.self): PRECEDENCE,
-        
-        
+
+            NSStringFromClass(EpsilonTransition.self): EPSILON,
+            NSStringFromClass(RangeTransition.self): RANGE,
+            NSStringFromClass(RuleTransition.self): RULE,
+            NSStringFromClass(PredicateTransition.self): PREDICATE,
+            NSStringFromClass(AtomTransition.self): ATOM,
+            NSStringFromClass(ActionTransition.self): ACTION,
+            NSStringFromClass(SetTransition.self): SET,
+            NSStringFromClass(NotSetTransition.self): NOT_SET,
+            NSStringFromClass(WildcardTransition.self): WILDCARD,
+            NSStringFromClass(PrecedencePredicateTransition.self): PRECEDENCE,
+
+
     ]
-    /*Collections.unmodifiableMap(Dictionary<Class<Transition>, Integer>() {{
-    put(EpsilonTransition.,class, EPSILON);
-    put(RangeTransition.class, RANGE);
-    put(RuleTransition.class, RULE);
-    put(PredicateTransition.class, PREDICATE);
-    put(AtomTransition.class, ATOM);
-    put(ActionTransition.class, ACTION);
-    put(SetTransition.class, SET);
-    put(NotSetTransition.class, NOT_SET);
-    put(WildcardTransition.class, WILDCARD);
-    put(PrecedencePredicateTransition.class, PRECEDENCE);
-    }});*/
-    
+
+
     /** The target of this transition. */
-    
+
     public var target: ATNState
-    
+
     init(_ target: ATNState) {
-        
-        
+
+
         self.target = target
     }
-    
+
     public func getSerializationType() -> Int {
         RuntimeException(__FUNCTION__ + " must be overridden")
         fatalError()
     }
-    
+
     /**
     * Determines if the transition is an "epsilon" transition.
     *
@@ -127,11 +120,13 @@ public   class Transition {
     public func isEpsilon() -> Bool {
         return false
     }
-    
-    
-    public func labelIntervalSet() throws -> IntervalSet? { return nil }
-    
-    public  func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
+
+
+    public func labelIntervalSet() throws -> IntervalSet? {
+        return nil
+    }
+
+    public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
         RuntimeException(__FUNCTION__ + " must be overridden")
         fatalError()
     }

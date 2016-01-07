@@ -28,7 +28,7 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
- 
+
 
 /**
  * This class represents profiling event information for a context sensitivity.
@@ -48,23 +48,23 @@
  *
  * @since 4.3
  */
+
 public class ContextSensitivityInfo: DecisionEventInfo {
-	/**
-	 * Constructs a new instance of the {@link org.antlr.v4.runtime.atn.ContextSensitivityInfo} class
-	 * with the specified detailed context sensitivity information.
-	 *
-	 * @param decision The decision number
-	 * @param configs The final configuration set containing the unique
-	 * alternative identified by full-context prediction
-	 * @param input The input token stream
-	 * @param startIndex The start index for the current prediction
-	 * @param stopIndex The index at which the context sensitivity was
-	 * identified during full-context prediction
-	 */
-	public   init(_ decision: Int,
-								  _ configs: ATNConfigSet,
-								  _ input: TokenStream, _ startIndex: Int, _ stopIndex: Int)
-	{
-		super.init( decision, configs, input, startIndex, stopIndex, true)
-	}
+    /**
+     * Constructs a new instance of the {@link org.antlr.v4.runtime.atn.ContextSensitivityInfo} class
+     * with the specified detailed context sensitivity information.
+     *
+     * @param decision The decision number
+     * @param configs The final configuration set containing the unique
+     * alternative identified by full-context prediction
+     * @param input The input token stream
+     * @param startIndex The start index for the current prediction
+     * @param stopIndex The index at which the context sensitivity was
+     * identified during full-context prediction
+     */
+    public init(_ decision: Int,
+                _ configs: ATNConfigSet,
+                _ input: TokenStream, _ startIndex: Int, _ stopIndex: Int) {
+        super.init(decision, configs, input, startIndex, stopIndex, true)
+    }
 }

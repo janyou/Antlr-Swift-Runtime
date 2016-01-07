@@ -29,7 +29,7 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /** TODO: this is old comment:
  *  A tree of semantic predicates from the grammar AST if label==SEMPRED.
@@ -37,39 +37,43 @@
  *  may have to combine a bunch of them as it collects predicates from
  *  multiple ATN configurations into a single DFA state.
  */
+
 public final class PredicateTransition: AbstractPredicateTransition {
-	public let ruleIndex: Int
-	public let predIndex: Int
-	public let  isCtxDependent: Bool  // e.g., $i ref in pred
+    public let ruleIndex: Int
+    public let predIndex: Int
+    public let isCtxDependent: Bool
+    // e.g., $i ref in pred
 
-	public   init(_ target: ATNState, _ ruleIndex: Int, _ predIndex: Int, _ isCtxDependent: Bool) {
-	
-		self.ruleIndex = ruleIndex
-		self.predIndex = predIndex
-		self.isCtxDependent = isCtxDependent
-        	super.init(target)
-	}
+    public init(_ target: ATNState, _ ruleIndex: Int, _ predIndex: Int, _ isCtxDependent: Bool) {
 
-	override
-	public func getSerializationType() -> Int {
-		return PredicateTransition.PREDICATE
-	}
+        self.ruleIndex = ruleIndex
+        self.predIndex = predIndex
+        self.isCtxDependent = isCtxDependent
+        super.init(target)
+    }
 
-	override
-	public func isEpsilon() -> Bool { return true }
+    override
+    public func getSerializationType() -> Int {
+        return PredicateTransition.PREDICATE
+    }
 
-	override
-	public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
-		return false
-	}
+    override
+    public func isEpsilon() -> Bool {
+        return true
+    }
+
+    override
+    public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
+        return false
+    }
 
     public func getPredicate() -> SemanticContext.Predicate {
-   		return SemanticContext.Predicate(ruleIndex, predIndex, isCtxDependent)
-   	}
+        return SemanticContext.Predicate(ruleIndex, predIndex, isCtxDependent)
+    }
 
-	 
-	public func toString() -> String {
-		return "pred_\(ruleIndex):\(predIndex)"
-	}
+
+    public func toString() -> String {
+        return "pred_\(ruleIndex):\(predIndex)"
+    }
 
 }

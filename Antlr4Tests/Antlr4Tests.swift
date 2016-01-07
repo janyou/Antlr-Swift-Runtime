@@ -3,7 +3,7 @@
 //  Antlr4Tests
 //
 //  Created by janyou on 15/10/13.
-//  Copyright © 2015年 jlabs. All rights reserved.
+//  Copyright © 2015  jlabs. All rights reserved.
 //
 
 import XCTest

@@ -3,7 +3,7 @@
 //  Exmples
 //
 //  Created by janyou on 15/12/26.
-//  Copyright © 2015年 jlabs. All rights reserved.
+//  Copyright © 2015  jlabs. All rights reserved.
 //
 
 import Foundation

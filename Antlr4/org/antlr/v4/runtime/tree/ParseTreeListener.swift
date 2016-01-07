@@ -29,7 +29,7 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /** This interface describes the minimal core of methods triggered
  *  by {@link org.antlr.v4.runtime.tree.ParseTreeWalker}. E.g.,
@@ -42,9 +42,13 @@
  *
  * 		https://github.com/antlr/antlr4/issues/841
  */
+
 public protocol ParseTreeListener: class {
-	func visitTerminal(node: TerminalNode)
-	func visitErrorNode(node: ErrorNode)
+    func visitTerminal(node: TerminalNode)
+
+    func visitErrorNode(node: ErrorNode)
+
     func enterEveryRule(ctx: ParserRuleContext) throws
+
     func exitEveryRule(ctx: ParserRuleContext) throws
 }

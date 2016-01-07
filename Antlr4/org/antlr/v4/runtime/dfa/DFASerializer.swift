@@ -29,85 +29,81 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// package org.antlr.v4.runtime.dfa;
-
-// import org.antlr.v4.runtime.Vocabulary;
-// import org.antlr.v4.runtime.VocabularyImpl;
-
-// import java.util.Arrays;
-// import java.util.List;
 
 /** A DFA walker that knows how to dump them to serialized strings. */
+
 public class DFASerializer: CustomStringConvertible {
 
-	private let dfa: DFA
+    private let dfa: DFA
 
-	private let vocabulary: Vocabulary
+    private let vocabulary: Vocabulary
 
-	/**
-	 * @deprecated Use {@link #DFASerializer(org.antlr.v4.runtime.dfa.DFA, org.antlr.v4.runtime.Vocabulary)} instead.
-	 */
-	//@Deprecated
-	public convenience init(_ dfa: DFA, _ tokenNames: [String?]?) {
-		self.init(dfa, Vocabulary.fromTokenNames(tokenNames))
-	}
-
-	public init(_ dfa: DFA, _ vocabulary: Vocabulary) {
-		self.dfa = dfa
-		self.vocabulary = vocabulary
-	}
-    
-    public  var description: String {
-        return toString() 
+    /**
+     * @deprecated Use {@link #DFASerializer(org.antlr.v4.runtime.dfa.DFA, org.antlr.v4.runtime.Vocabulary)} instead.
+     */
+    //@Deprecated
+    public convenience init(_ dfa: DFA, _ tokenNames: [String?]?) {
+        self.init(dfa, Vocabulary.fromTokenNames(tokenNames))
     }
-    
-	public func toString() -> String {
-		if  dfa.s0 == nil  { return "" }
-		let buf: StringBuilder = StringBuilder()
-		let states: Array<DFAState> = dfa.getStates()
-		for s: DFAState in states {
-			var n: Int = 0
-			if  s.edges != nil 
-            {
+
+    public init(_ dfa: DFA, _ vocabulary: Vocabulary) {
+        self.dfa = dfa
+        self.vocabulary = vocabulary
+    }
+
+    public var description: String {
+        if dfa.s0 == nil {
+            return ""
+        }
+        let buf: StringBuilder = StringBuilder()
+        let states: Array<DFAState> = dfa.getStates()
+        for s: DFAState in states {
+            var n: Int = 0
+            if s.edges != nil {
                 n = s.edges!.count
             }
-			for  var i: Int = 0; i < n; i++ {
-				let t: DFAState? = s.edges![i]
-				if  t != nil &&  t!.stateNumber != Int.max  {
-					buf.append(getStateString(s))
-					let label: String = getEdgeLabel(i)
-					buf.append("-").append(label).append("->").append(getStateString(t!)).append("\n")
-				}
-			}
-		}
-
-		let output: String = buf.toString()
-		if  output.length == 0  { return "" }
-		//return Utils.sortLinesInString(output);
-		return output
-	}
-
-	internal func getEdgeLabel(i: Int) -> String {
-		return vocabulary.getDisplayName(i - 1)
-	}
-
-
-	internal func getStateString(s: DFAState) -> String {
-		let n: Int = s.stateNumber
-     
-        let s1 = s.isAcceptState ? ":" : ""
-        let s2 =  s.requiresFullContext ? "^" : ""
-		let baseStateStr: String = s1 + "s" + String(n) + s2 
-		if  s.isAcceptState  {
-            if  s.predicates != nil  {
-                return baseStateStr + "=>\(s.predicates)"
+            for var i: Int = 0; i < n; i++ {
+                let t: DFAState? = s.edges![i]
+                if t != nil && t!.stateNumber != Int.max {
+                    buf.append(getStateString(s))
+                    let label: String = getEdgeLabel(i)
+                    buf.append("-").append(label).append("->").append(getStateString(t!)).append("\n")
+                }
             }
-            else {
+        }
+        
+        let output: String = buf.toString()
+        if output.length == 0 {
+            return ""
+        }
+        //return Utils.sortLinesInString(output);
+        return output
+ 
+    }
+
+    public func toString() -> String {
+        return description
+    }
+
+    internal func getEdgeLabel(i: Int) -> String {
+        return vocabulary.getDisplayName(i - 1)
+    }
+
+
+    internal func getStateString(s: DFAState) -> String {
+        let n: Int = s.stateNumber
+
+        let s1 = s.isAcceptState ? ":" : ""
+        let s2 = s.requiresFullContext ? "^" : ""
+        let baseStateStr: String = s1 + "s" + String(n) + s2
+        if s.isAcceptState {
+            if s.predicates != nil {
+                return baseStateStr + "=>\(s.predicates)"
+            } else {
                 return baseStateStr + "=>\(s.prediction)"
             }
-		}
-		else {
-			return baseStateStr
-		}
-	}
+        } else {
+            return baseStateStr
+        }
+    }
 }

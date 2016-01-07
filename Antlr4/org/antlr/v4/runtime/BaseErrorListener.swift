@@ -28,7 +28,7 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
- 
+
 
 /**
  * Provides an empty default implementation of {@link org.antlr.v4.runtime.ANTLRErrorListener}. The
@@ -37,46 +37,43 @@
  *
  * @author Sam Harwell
  */
+
 public class BaseErrorListener: ANTLRErrorListener {
-	 
-    public func syntaxError<T: ATNSimulator>(recognizer: Recognizer<T>,
-							_ offendingSymbol: AnyObject?,
-							_ line: Int,
-							_ charPositionInLine: Int,
-							_ msg: String,
-							_ e: AnyObject?//RecognitionException
-        )
-	{
-	}
 
-	 
-	public func reportAmbiguity(recognizer: Parser,
-								_ dfa: DFA,
-								_ startIndex: Int,
-								_ stopIndex: Int,
-								_ exact: Bool,
-								_ ambigAlts: BitSet,
-								_ configs: ATNConfigSet) throws
-	{
-	}
+    public func syntaxError<T:ATNSimulator>(recognizer: Recognizer<T>,
+                                            _ offendingSymbol: AnyObject?,
+                                            _ line: Int,
+                                            _ charPositionInLine: Int,
+                                            _ msg: String,
+                                            _ e: AnyObject?//RecognitionException
+    ) {
+    }
 
-	 
-	public func reportAttemptingFullContext(recognizer: Parser,
-											_ dfa: DFA,
-											_ startIndex: Int,
-											_ stopIndex: Int,
-											_ conflictingAlts: BitSet,
-											_ configs: ATNConfigSet)throws
-	{
-	}
 
-	 
-	public func reportContextSensitivity(recognizer: Parser,
-										 _ dfa: DFA,
-										 _ startIndex: Int,
-										 _ stopIndex: Int,
-										 _ prediction: Int,
-										 _ configs: ATNConfigSet)throws
-	{
-	}
+    public func reportAmbiguity(recognizer: Parser,
+                                _ dfa: DFA,
+                                _ startIndex: Int,
+                                _ stopIndex: Int,
+                                _ exact: Bool,
+                                _ ambigAlts: BitSet,
+                                _ configs: ATNConfigSet) throws {
+    }
+
+
+    public func reportAttemptingFullContext(recognizer: Parser,
+                                            _ dfa: DFA,
+                                            _ startIndex: Int,
+                                            _ stopIndex: Int,
+                                            _ conflictingAlts: BitSet,
+                                            _ configs: ATNConfigSet) throws {
+    }
+
+
+    public func reportContextSensitivity(recognizer: Parser,
+                                         _ dfa: DFA,
+                                         _ startIndex: Int,
+                                         _ stopIndex: Int,
+                                         _ prediction: Int,
+                                         _ configs: ATNConfigSet) throws {
+    }
 }

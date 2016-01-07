@@ -29,12 +29,6 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// package org.antlr.v4.runtime.atn;
-
-// import org.antlr.v4.runtime.CharStream;
-// import org.antlr.v4.runtime.Lexer;
-// import org.antlr.v4.runtime.Recognizer;
-// import org.antlr.v4.runtime.misc.MurmurHash;
 
 /**
  * Executes a custom lexer action by calling {@link org.antlr.v4.runtime.Recognizer#action} with the
@@ -49,79 +43,80 @@
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerCustomAction: LexerAction  {
-	private let ruleIndex: Int
-	private let actionIndex: Int
 
-	/**
-	 * Constructs a custom lexer action with the specified rule and action
-	 * indexes.
-	 *
-	 * @param ruleIndex The rule index to use for calls to
-	 * {@link org.antlr.v4.runtime.Recognizer#action}.
-	 * @param actionIndex The action index to use for calls to
-	 * {@link org.antlr.v4.runtime.Recognizer#action}.
-	 */
-	public init(_ ruleIndex: Int, _ actionIndex: Int) {
-		self.ruleIndex = ruleIndex
-		self.actionIndex = actionIndex
-	}
+public final class LexerCustomAction: LexerAction {
+    private let ruleIndex: Int
+    private let actionIndex: Int
 
-	/**
-	 * Gets the rule index to use for calls to {@link org.antlr.v4.runtime.Recognizer#action}.
-	 *
-	 * @return The rule index for the custom action.
-	 */
-	public func getRuleIndex() -> Int {
-		return ruleIndex
-	}
+    /**
+     * Constructs a custom lexer action with the specified rule and action
+     * indexes.
+     *
+     * @param ruleIndex The rule index to use for calls to
+     * {@link org.antlr.v4.runtime.Recognizer#action}.
+     * @param actionIndex The action index to use for calls to
+     * {@link org.antlr.v4.runtime.Recognizer#action}.
+     */
+    public init(_ ruleIndex: Int, _ actionIndex: Int) {
+        self.ruleIndex = ruleIndex
+        self.actionIndex = actionIndex
+    }
 
-	/**
-	 * Gets the action index to use for calls to {@link org.antlr.v4.runtime.Recognizer#action}.
-	 *
-	 * @return The action index for the custom action.
-	 */
-	public func getActionIndex() -> Int {
-		return actionIndex
-	}
+    /**
+     * Gets the rule index to use for calls to {@link org.antlr.v4.runtime.Recognizer#action}.
+     *
+     * @return The rule index for the custom action.
+     */
+    public func getRuleIndex() -> Int {
+        return ruleIndex
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#CUSTOM}.
-	 */
-	 
-	public override func getActionType() -> LexerActionType {
-		return LexerActionType.CUSTOM
-	}
+    /**
+     * Gets the action index to use for calls to {@link org.antlr.v4.runtime.Recognizer#action}.
+     *
+     * @return The action index for the custom action.
+     */
+    public func getActionIndex() -> Int {
+        return actionIndex
+    }
 
-	/**
-	 * Gets whether the lexer action is position-dependent. Position-dependent
-	 * actions may have different semantics depending on the {@link org.antlr.v4.runtime.CharStream}
-	 * index at the time the action is executed.
-	 *
-	 * <p>Custom actions are position-dependent since they may represent a
-	 * user-defined embedded action which makes calls to methods like
-	 * {@link org.antlr.v4.runtime.Lexer#getText}.</p>
-	 *
-	 * @return This method returns {@code true}.
-	 */
-	 override 
-	public func isPositionDependent() -> Bool {
-		return true
-	}
+    /**
+     * {@inheritDoc}
+     *
+     * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#CUSTOM}.
+     */
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>Custom actions are implemented by calling {@link org.antlr.v4.runtime.Lexer#action} with the
-	 * appropriate rule and action indexes.</p>
-	 */
-	 override 
-	public func execute(lexer: Lexer) throws {
-		try lexer.action(nil, ruleIndex, actionIndex)
-	}
- 
+    public override func getActionType() -> LexerActionType {
+        return LexerActionType.CUSTOM
+    }
+
+    /**
+     * Gets whether the lexer action is position-dependent. Position-dependent
+     * actions may have different semantics depending on the {@link org.antlr.v4.runtime.CharStream}
+     * index at the time the action is executed.
+     *
+     * <p>Custom actions are position-dependent since they may represent a
+     * user-defined embedded action which makes calls to methods like
+     * {@link org.antlr.v4.runtime.Lexer#getText}.</p>
+     *
+     * @return This method returns {@code true}.
+     */
+    override
+    public func isPositionDependent() -> Bool {
+        return true
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>Custom actions are implemented by calling {@link org.antlr.v4.runtime.Lexer#action} with the
+     * appropriate rule and action indexes.</p>
+     */
+    override
+    public func execute(lexer: Lexer) throws {
+        try lexer.action(nil, ruleIndex, actionIndex)
+    }
+
     override
     public var hashValue: Int {
         var hash: Int = MurmurHash.initialize()
@@ -130,14 +125,16 @@ public final class LexerCustomAction: LexerAction  {
         hash = MurmurHash.update(hash, actionIndex)
         return MurmurHash.finish(hash, 3)
     }
- 
+
 }
+
 public func ==(lhs: LexerCustomAction, rhs: LexerCustomAction) -> Bool {
-    
-    if lhs  === rhs {
+
+    if lhs === rhs {
         return true
     }
- 
-    
+
+
     return lhs.ruleIndex == rhs.ruleIndex
-        && lhs.actionIndex == rhs.actionIndex}
+            && lhs.actionIndex == rhs.actionIndex
+}

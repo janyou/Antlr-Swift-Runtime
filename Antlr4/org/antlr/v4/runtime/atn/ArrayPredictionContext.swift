@@ -30,80 +30,81 @@
 */
 
 
-
 public class ArrayPredictionContext: PredictionContext {
     /** Parent can be null only if full ctx mode and we make an array
     *  from {@link #EMPTY} and non-empty. We merge {@link #EMPTY} by using null parent and
     *  returnState == {@link #EMPTY_RETURN_STATE}.
     */
     public let parents: [PredictionContext?]
-    
+
     /** Sorted for merge, no duplicates; if present,
     *  {@link #EMPTY_RETURN_STATE} is always last.
     */
     public let returnStates: [Int]
-    
+
     public convenience init(_ a: SingletonPredictionContext) {
         if a.parent == nil {
             // print("parent is nil")
         }
         //self.init(new, PredictionContext[] {a.parent}, new, int[] {a.returnState});
-        self.init( [a.parent] ,  [a.returnState] )
+        self.init([a.parent], [a.returnState])
     }
-    
-    public  init(_ parents: [PredictionContext?], _ returnStates: [Int]) {
-        
+
+    public init(_ parents: [PredictionContext?], _ returnStates: [Int]) {
+
         self.parents = parents
         self.returnStates = returnStates
         super.init(PredictionContext.calculateHashCode(parents, returnStates))
     }
-    
+
     override
     public func isEmpty() -> Bool {
         // since EMPTY_RETURN_STATE can only appear in the last position, we
         // don't need to verify that size==1
-        return returnStates[0]==PredictionContext.EMPTY_RETURN_STATE
+        return returnStates[0] == PredictionContext.EMPTY_RETURN_STATE
     }
-    
+
     override
     public func size() -> Int {
         return returnStates.count
     }
-    
+
     override
     public func getParent(index: Int) -> PredictionContext? {
-        return parents[index] 
+        return parents[index]
     }
-    
+
     override
     public func getReturnState(index: Int) -> Int {
         return returnStates[index]
     }
-    
+
     //	@Override
     //	public int findReturnState(int returnState) {
     //		return Arrays.binarySearch(returnStates, returnState);
     //	}
-    
-    
-    
+
+
     override
     public var description: String {
-        if  isEmpty()  { return "[]" }
+        if isEmpty() {
+            return "[]"
+        }
         let buf: StringBuilder = StringBuilder()
         buf.append("[")
-        for  var i: Int=0; i<returnStates.count; i++ {
-            if  i>0  { buf.append(", ") }
-            if  returnStates[i] == PredictionContext.EMPTY_RETURN_STATE  {
+        for var i: Int = 0; i < returnStates.count; i++ {
+            if i > 0 {
+                buf.append(", ")
+            }
+            if returnStates[i] == PredictionContext.EMPTY_RETURN_STATE {
                 buf.append("$")
                 continue
             }
             buf.append(returnStates[i])
-            if  parents[i] != nil  {
+            if parents[i] != nil {
                 buf.append(" ")
                 buf.append(parents[i].debugDescription)
-            }
-            else {
+            } else {
                 buf.append("null")
             }
         }
@@ -113,15 +114,15 @@ public class ArrayPredictionContext: PredictionContext {
 }
 
 
-public func ==(lhs: ArrayPredictionContext,rhs: ArrayPredictionContext  ) -> Bool {
+public func ==(lhs: ArrayPredictionContext, rhs: ArrayPredictionContext) -> Bool {
     if lhs === rhs {
         return true
     }
     if lhs.hashValue != rhs.hashValue {
         return false
     }
-    
-   
-    return ArrayEquals(lhs.returnStates , rhs.returnStates)   && ArrayEquals(lhs.parents, rhs.parents)
- }
+
+
+    return ArrayEquals(lhs.returnStates, rhs.returnStates) && ArrayEquals(lhs.parents, rhs.parents)
+}
 

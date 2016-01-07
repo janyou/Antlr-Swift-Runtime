@@ -29,14 +29,15 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /** Mark the end of a * or + loop. */
-public final class LoopEndState: ATNState {
-	public var loopBackState: ATNState?
 
-	override
-	public func getStateType() -> Int {
-		return ATNState.LOOP_END
-	}
+public final class LoopEndState: ATNState {
+    public var loopBackState: ATNState?
+
+    override
+    public func getStateType() -> Int {
+        return ATNState.LOOP_END
+    }
 }

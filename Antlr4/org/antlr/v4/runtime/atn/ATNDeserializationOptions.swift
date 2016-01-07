@@ -35,66 +35,67 @@
  *
  * @author Sam Harwell
  */
+
 public class ATNDeserializationOptions {
- 
+
     static let defaultOptions: ATNDeserializationOptions = {
-        
-            let defaultOptions = ATNDeserializationOptions()
-            defaultOptions.makeReadOnly()
-            return defaultOptions
-        
+
+        let defaultOptions = ATNDeserializationOptions()
+        defaultOptions.makeReadOnly()
+        return defaultOptions
+
     }()
- 
-
-	private var readOnly: Bool =  false
-	private var verifyATN: Bool
-	private var generateRuleBypassTransitions: Bool
-
-	public init() {
-		self.verifyATN = true
-		self.generateRuleBypassTransitions = false
-	}
-
-	public init(_ options: ATNDeserializationOptions) {
-		self.verifyATN = options.verifyATN
-		self.generateRuleBypassTransitions = options.generateRuleBypassTransitions
-	}
 
 
-	public class func getDefaultOptions() -> ATNDeserializationOptions {
-		return defaultOptions
-	}
+    private var readOnly: Bool = false
+    private var verifyATN: Bool
+    private var generateRuleBypassTransitions: Bool
 
-	public final func isReadOnly() -> Bool {
-		return readOnly
-	}
+    public init() {
+        self.verifyATN = true
+        self.generateRuleBypassTransitions = false
+    }
 
-	public final func makeReadOnly() {
-		readOnly = true
-	}
+    public init(_ options: ATNDeserializationOptions) {
+        self.verifyATN = options.verifyATN
+        self.generateRuleBypassTransitions = options.generateRuleBypassTransitions
+    }
 
-	public final func isVerifyATN() -> Bool {
-		return verifyATN
-	}
 
-	public final func setVerifyATN(verifyATN: Bool)throws  {
-		 try throwIfReadOnly()
-		self.verifyATN = verifyATN
-	}
+    public class func getDefaultOptions() -> ATNDeserializationOptions {
+        return defaultOptions
+    }
 
-	public final func isGenerateRuleBypassTransitions() -> Bool {
-		return generateRuleBypassTransitions
-	}
+    public final func isReadOnly() -> Bool {
+        return readOnly
+    }
 
-	public final func setGenerateRuleBypassTransitions(generateRuleBypassTransitions: Bool)throws  {
-		 try throwIfReadOnly()
-		self.generateRuleBypassTransitions = generateRuleBypassTransitions
-	}
+    public final func makeReadOnly() {
+        readOnly = true
+    }
 
-	internal func throwIfReadOnly() throws  {
-		if isReadOnly() {
+    public final func isVerifyATN() -> Bool {
+        return verifyATN
+    }
+
+    public final func setVerifyATN(verifyATN: Bool) throws {
+        try throwIfReadOnly()
+        self.verifyATN = verifyATN
+    }
+
+    public final func isGenerateRuleBypassTransitions() -> Bool {
+        return generateRuleBypassTransitions
+    }
+
+    public final func setGenerateRuleBypassTransitions(generateRuleBypassTransitions: Bool) throws {
+        try throwIfReadOnly()
+        self.generateRuleBypassTransitions = generateRuleBypassTransitions
+    }
+
+    internal func throwIfReadOnly() throws {
+        if isReadOnly() {
             throw ANTLRError.IllegalState(msg: "This object is readonly")
-            
-		}
-	}
+
+        }
+    }
 }

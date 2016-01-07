@@ -29,7 +29,7 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /**
  * This class extends {@link org.antlr.v4.runtime.BufferedTokenStream} with functionality to filter
@@ -55,91 +55,104 @@
  * such a rule will not be available as part of the token stream, regardless of
  * channel.</p>
  */
+
 public class CommonTokenStream: BufferedTokenStream {
-	/**
-	 * Specifies the channel to use for filtering tokens.
-	 *
-	 * <p>
-	 * The default value is {@link org.antlr.v4.runtime.Token#DEFAULT_CHANNEL}, which matches the
-	 * default channel assigned to tokens created by the lexer.</p>
-	 */
+    /**
+     * Specifies the channel to use for filtering tokens.
+     *
+     * <p>
+     * The default value is {@link org.antlr.v4.runtime.Token#DEFAULT_CHANNEL}, which matches the
+     * default channel assigned to tokens created by the lexer.</p>
+     */
     internal var channel: Int = CommonToken.DEFAULT_CHANNEL
 
-	/**
-	 * Constructs a new {@link org.antlr.v4.runtime.CommonTokenStream} using the specified token
-	 * source and the default token channel ({@link org.antlr.v4.runtime.Token#DEFAULT_CHANNEL}).
-	 *
-	 * @param tokenSource The token source.
-	 */
-    public   override init(_ tokenSource: TokenSource) {
+    /**
+     * Constructs a new {@link org.antlr.v4.runtime.CommonTokenStream} using the specified token
+     * source and the default token channel ({@link org.antlr.v4.runtime.Token#DEFAULT_CHANNEL}).
+     *
+     * @param tokenSource The token source.
+     */
+    public override init(_ tokenSource: TokenSource) {
         super.init(tokenSource)
     }
 
-	/**
-	 * Constructs a new {@link org.antlr.v4.runtime.CommonTokenStream} using the specified token
-	 * source and filtering tokens to the specified channel. Only tokens whose
-	 * {@link org.antlr.v4.runtime.Token#getChannel} matches {@code channel} or have the
-	 * {@link org.antlr.v4.runtime.Token#getType} equal to {@link org.antlr.v4.runtime.Token#EOF} will be returned by the
-	 * token stream lookahead methods.
-	 *
-	 * @param tokenSource The token source.
-	 * @param channel The channel to use for filtering tokens.
-	 */
+    /**
+     * Constructs a new {@link org.antlr.v4.runtime.CommonTokenStream} using the specified token
+     * source and filtering tokens to the specified channel. Only tokens whose
+     * {@link org.antlr.v4.runtime.Token#getChannel} matches {@code channel} or have the
+     * {@link org.antlr.v4.runtime.Token#getType} equal to {@link org.antlr.v4.runtime.Token#EOF} will be returned by the
+     * token stream lookahead methods.
+     *
+     * @param tokenSource The token source.
+     * @param channel The channel to use for filtering tokens.
+     */
     public convenience init(_ tokenSource: TokenSource, _ channel: Int) {
         self.init(tokenSource)
         self.channel = channel
     }
 
-	override
-	internal func adjustSeekIndex(i: Int)throws -> Int {
-		return try nextTokenOnChannel(i, channel)
-	}
+    override
+    internal func adjustSeekIndex(i: Int) throws -> Int {
+        return try nextTokenOnChannel(i, channel)
+    }
 
     override
     internal func LB(k: Int) throws -> Token? {
-        if  k==0 || (p-k)<0  { return nil }
+        if k == 0 || (p - k) < 0 {
+            return nil
+        }
 
         var i: Int = p
         var n: Int = 1
         // find k good tokens looking backwards
-        while  n<=k  {
+        while n <= k {
             // skip off-channel tokens
-           try i = previousTokenOnChannel(i - 1, channel)
+            try i = previousTokenOnChannel(i - 1, channel)
             n++
         }
-        if  i<0  { return nil }
+        if i < 0 {
+            return nil
+        }
         return tokens[i]
     }
 
     override
     public func LT(k: Int) throws -> Token? {
         //System.out.println("enter LT("+k+")");
-       try lazyInit()
-        if  k == 0  { return nil }
-        if  k < 0  { return try LB(-k) }
+        try lazyInit()
+        if k == 0 {
+            return nil
+        }
+        if k < 0 {
+            return try LB(-k)
+        }
         var i: Int = p
         var n: Int = 1 // we know tokens[p] is a good one
         // find k good tokens
-        while  n<k  {
+        while n < k {
             // skip off-channel tokens, but make sure to not look past EOF
-			if try sync(i + 1) {
-				i = try nextTokenOnChannel(i + 1, channel)
-			}
+            if try sync(i + 1) {
+                i = try nextTokenOnChannel(i + 1, channel)
+            }
             n++
         }
 //		if ( i>range ) range = i;
         return tokens[i]
     }
 
-	/** Count EOF just once. */
-	public func getNumberOfOnChannelTokens() throws -> Int {
-		var n: Int = 0
-		try fill()
-		for  var i: Int = 0; i < tokens.count; i++ {
-			let t: Token = tokens[i]
-			if  t.getChannel()==channel  { n++ }
-			if  t.getType()==CommonToken.EOF  { break }
-		}
-		return n
-	}
+    /** Count EOF just once. */
+    public func getNumberOfOnChannelTokens() throws -> Int {
+        var n: Int = 0
+        try fill()
+        for var i: Int = 0; i < tokens.count; i++ {
+            let t: Token = tokens[i]
+            if t.getChannel() == channel {
+                n++
+            }
+            if t.getType() == CommonToken.EOF {
+                break
+            }
+        }
+        return n
+    }
 }

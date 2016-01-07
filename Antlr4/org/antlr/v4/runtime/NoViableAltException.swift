@@ -28,59 +28,60 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
- 
+
 
 /** Indicates that the parser could not decide which of two or more paths
  *  to take based upon the remaining input. It tracks the starting token
  *  of the offending input and also knows where the parser was
  *  in the various paths when the error. Reported by reportNoViableAlternative()
  */
+
 public class NoViableAltException: RecognitionException<ParserATNSimulator> {
-	/** Which configurations did we try at input.index() that couldn't match input.LT(1)? */
+    /** Which configurations did we try at input.index() that couldn't match input.LT(1)? */
 
-	private final var deadEndConfigs: ATNConfigSet?
+    private final var deadEndConfigs: ATNConfigSet?
 
-	/** The token object at the start index; the input stream might
-	 * 	not be buffering tokens so get a reference to it. (At the
-	 *  time the error occurred, of course the stream needs to keep a
-	 *  buffer all of the tokens but later we might not have access to those.)
-	 */
+    /** The token object at the start index; the input stream might
+     * 	not be buffering tokens so get a reference to it. (At the
+     *  time the error occurred, of course the stream needs to keep a
+     *  buffer all of the tokens but later we might not have access to those.)
+     */
 
-	private final var startToken: Token
+    private final var startToken: Token
 
-	public convenience init(_ recognizer: Parser?)throws { // LL(1) error
-		self.init(recognizer,
-			 recognizer!.getInputStream()!,
-			 try recognizer!.getCurrentToken(),
-			 try recognizer!.getCurrentToken(),
-			 nil,
-			 recognizer!._ctx)
-	}
+    public convenience init(_ recognizer: Parser?) throws {
+        // LL(1) error
+        self.init(recognizer,
+                recognizer!.getInputStream()!,
+                try recognizer!.getCurrentToken(),
+                try recognizer!.getCurrentToken(),
+                nil,
+                recognizer!._ctx)
+    }
 
-	public   init(_ recognizer: Parser?,
-								_ input: IntStream,
-								_ startToken: Token,
-								_ offendingToken: Token,
-								_ deadEndConfigs: ATNConfigSet?,
-								_ ctx: ParserRuleContext?)
-	{
-		
-		self.deadEndConfigs = deadEndConfigs
-		self.startToken = startToken
+    public init(_ recognizer: Parser?,
+                _ input: IntStream,
+                _ startToken: Token,
+                _ offendingToken: Token,
+                _ deadEndConfigs: ATNConfigSet?,
+                _ ctx: ParserRuleContext?) {
+
+        self.deadEndConfigs = deadEndConfigs
+        self.startToken = startToken
 
         // as? Recognizer<AnyObject, ATNSimulator>
-        super.init(recognizer , input, ctx)
+        super.init(recognizer, input, ctx)
         self.setOffendingToken(offendingToken)
-	}
+    }
 
 
-	public func getStartToken() -> Token {
-		return startToken
-	}
+    public func getStartToken() -> Token {
+        return startToken
+    }
 
 
-	public func getDeadEndConfigs() -> ATNConfigSet? {
-		return deadEndConfigs
-	}
+    public func getDeadEndConfigs() -> ATNConfigSet? {
+        return deadEndConfigs
+    }
 
 }

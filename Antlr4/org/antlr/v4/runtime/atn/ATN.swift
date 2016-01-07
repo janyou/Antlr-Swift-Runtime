@@ -29,9 +29,7 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
 
-/** */
 public class ATN {
 	public static let INVALID_ALT_NUMBER: Int = 0
 
@@ -174,7 +172,7 @@ public class ATN {
 		}
 
 		var ctx: RuleContext? = context
-        //TODO  s may be nil
+        //TODO:  s may be nil
 		let s: ATNState = states[stateNumber]!
 		var following: IntervalSet = try nextTokens(s)
 		if !following.contains(CommonToken.EPSILON) {

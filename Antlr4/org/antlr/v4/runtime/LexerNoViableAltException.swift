@@ -30,47 +30,46 @@
  */
 
 
+public class LexerNoViableAltException: RecognitionException<LexerATNSimulator>, CustomStringConvertible {
+    /** Matching attempted at what input index? */
+    private final var startIndex: Int
 
-public class LexerNoViableAltException: RecognitionException<LexerATNSimulator> ,CustomStringConvertible {
-	/** Matching attempted at what input index? */
-	private final var startIndex: Int
+    /** Which configurations did we try at input.index() that couldn't match input.LA(1)? */
+    private final var deadEndConfigs: ATNConfigSet
 
-	/** Which configurations did we try at input.index() that couldn't match input.LA(1)? */
-	private final var deadEndConfigs: ATNConfigSet
-    
-    public init(  _ lexer: Lexer?,
-        _ input: CharStream,
-        _ startIndex: Int,
-        _ deadEndConfigs: ATNConfigSet) {
-            let ctx: ParserRuleContext? = nil
-            self.startIndex = startIndex
-            self.deadEndConfigs = deadEndConfigs
-            super.init(lexer  , input as IntStream, ctx)
-            
+    public init(_ lexer: Lexer?,
+                _ input: CharStream,
+                _ startIndex: Int,
+                _ deadEndConfigs: ATNConfigSet) {
+        let ctx: ParserRuleContext? = nil
+        self.startIndex = startIndex
+        self.deadEndConfigs = deadEndConfigs
+        super.init(lexer, input as IntStream, ctx)
+
     }
 
-	public func getStartIndex() -> Int {
-		return startIndex
-	}
+    public func getStartIndex() -> Int {
+        return startIndex
+    }
 
 
-	public func getDeadEndConfigs() -> ATNConfigSet {
-		return deadEndConfigs
-	}
+    public func getDeadEndConfigs() -> ATNConfigSet {
+        return deadEndConfigs
+    }
 
-	//override
+    //override
 //	public func getInputStream() -> CharStream {
 //		return super.getInputStream() as! CharStream;
 //	}
 
- 
-    public var description: String {
-		var symbol: String = ""
-		if startIndex >= 0 && startIndex < getInputStream().size() {
-			symbol = (getInputStream() as! CharStream) .getText(Interval.of(startIndex,startIndex))
-			symbol = Utils.escapeWhitespace(symbol, false)
-		}
 
-		return  "\(LexerNoViableAltException.self)('\(symbol)')"
+    public var description: String {
+        var symbol: String = ""
+        if startIndex >= 0 && startIndex < getInputStream().size() {
+            symbol = (getInputStream() as! CharStream) .getText(Interval.of(startIndex, startIndex))
+            symbol = Utils.escapeWhitespace(symbol, false)
+        }
+
+        return "\(LexerNoViableAltException.self)('\(symbol)')"
     }
 }

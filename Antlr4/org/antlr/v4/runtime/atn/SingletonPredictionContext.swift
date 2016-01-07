@@ -29,54 +29,54 @@
 *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// package org.antlr.v4.runtime.atn;
+
 
 public class SingletonPredictionContext: PredictionContext {
     public let parent: PredictionContext?
     public let returnState: Int
-    
+
     init(_ parent: PredictionContext?, _ returnState: Int) {
-        
+
         //TODO assert
         //assert ( returnState=ATNState.INVALID_STATE_NUMBER,"Expected: returnState!/=ATNState.INVALID_STATE_NUMBER");
         self.parent = parent
         self.returnState = returnState
-        
-        
+
+
         super.init(parent != nil ? PredictionContext.calculateHashCode(parent!, returnState) : PredictionContext.calculateEmptyHashCode())
     }
-    
+
     public class func create(parent: PredictionContext?, _ returnState: Int) -> SingletonPredictionContext {
-        if  returnState == PredictionContext.EMPTY_RETURN_STATE && parent == nil  {
+        if returnState == PredictionContext.EMPTY_RETURN_STATE && parent == nil {
             // someone can pass in the bits of an array ctx that mean $
             return PredictionContext.EMPTY
         }
         return SingletonPredictionContext(parent, returnState)
     }
-    
+
     override
     public func size() -> Int {
         return 1
     }
-    
+
     override
     public func getParent(index: Int) -> PredictionContext? {
-        assert ( index == 0,"Expected: index==0")
+        assert(index == 0, "Expected: index==0")
         return parent
     }
-    
+
     override
     public func getReturnState(index: Int) -> Int {
-        assert ( index == 0,"Expected: index==0")
+        assert(index == 0, "Expected: index==0")
         return returnState
     }
-    
-    
+
+
     override
     public var description: String {
         let up: String = parent != nil ? parent!.description : ""
-        if  up.length==0  {
-            if  returnState == PredictionContext.EMPTY_RETURN_STATE  {
+        if up.length == 0 {
+            if returnState == PredictionContext.EMPTY_RETURN_STATE {
                 return "$"
             }
             return String(returnState)
@@ -86,23 +86,22 @@ public class SingletonPredictionContext: PredictionContext {
 }
 
 
-public func ==(lhs: SingletonPredictionContext,rhs: SingletonPredictionContext) -> Bool{
+public func ==(lhs: SingletonPredictionContext, rhs: SingletonPredictionContext) -> Bool {
     if lhs.hashValue != rhs.hashValue {
         return false
     }
     var parentCompare = false
-    if (lhs.parent == nil ) && (rhs.parent == nil ){
+    if (lhs.parent == nil) && (rhs.parent == nil) {
         parentCompare = true
-    } else if lhs.parent == nil  {
+    } else if lhs.parent == nil {
         parentCompare = false
-    }  else if rhs.parent == nil  {
+    } else if rhs.parent == nil {
         parentCompare = false
-    }else{
+    } else {
         parentCompare = (lhs.parent! == rhs.parent!)
     }
-    
-    
-    
+
+
     return lhs.returnState == rhs.returnState && parentCompare
 }
 

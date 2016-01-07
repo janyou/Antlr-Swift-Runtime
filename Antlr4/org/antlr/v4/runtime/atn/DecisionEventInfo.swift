@@ -29,7 +29,7 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /**
  * This is the base class for gathering detailed information about prediction
@@ -46,55 +46,55 @@
  *
  * @since 4.3
  */
+
 public class DecisionEventInfo {
-	/**
-	 * The invoked decision number which this event is related to.
-	 *
-	 * @see org.antlr.v4.runtime.atn.ATN#decisionToState
-	 */
-	public  let decision: Int
+    /**
+     * The invoked decision number which this event is related to.
+     *
+     * @see org.antlr.v4.runtime.atn.ATN#decisionToState
+     */
+    public let decision: Int
 
-	/**
-	 * The configuration set containing additional information relevant to the
-	 * prediction state when the current event occurred, or {@code null} if no
-	 * additional information is relevant or available.
-	 */
-	public  let configs: ATNConfigSet?
+    /**
+     * The configuration set containing additional information relevant to the
+     * prediction state when the current event occurred, or {@code null} if no
+     * additional information is relevant or available.
+     */
+    public let configs: ATNConfigSet?
 
-	/**
-	 * The input token stream which is being parsed.
-	 */
-	public  let input: TokenStream
+    /**
+     * The input token stream which is being parsed.
+     */
+    public let input: TokenStream
 
-	/**
-	 * The token index in the input stream at which the current prediction was
-	 * originally invoked.
-	 */
-	public  let startIndex: Int
+    /**
+     * The token index in the input stream at which the current prediction was
+     * originally invoked.
+     */
+    public let startIndex: Int
 
-	/**
-	 * The token index in the input stream at which the current event occurred.
-	 */
-	public  let stopIndex: Int
+    /**
+     * The token index in the input stream at which the current event occurred.
+     */
+    public let stopIndex: Int
 
-	/**
-	 * {@code true} if the current event occurred during LL prediction;
-	 * otherwise, {@code false} if the input occurred during SLL prediction.
-	 */
-	public  let fullCtx: Bool
+    /**
+     * {@code true} if the current event occurred during LL prediction;
+     * otherwise, {@code false} if the input occurred during SLL prediction.
+     */
+    public let fullCtx: Bool
 
-	public init(_ decision: Int,
-							 _ configs: ATNConfigSet?,
-							 _ input: TokenStream,
-        _ startIndex: Int,
-        _ stopIndex: Int,
-							 _ fullCtx: Bool)
-	{
-		self.decision = decision
-		self.fullCtx = fullCtx
-		self.stopIndex = stopIndex
-		self.input = input
-		self.startIndex = startIndex
-		self.configs = configs
-	}
+    public init(_ decision: Int,
+                _ configs: ATNConfigSet?,
+                _ input: TokenStream,
+                _ startIndex: Int,
+                _ stopIndex: Int,
+                _ fullCtx: Bool) {
+        self.decision = decision
+        self.fullCtx = fullCtx
+        self.stopIndex = stopIndex
+        self.input = input
+        self.startIndex = startIndex
+        self.configs = configs
+    }
 }

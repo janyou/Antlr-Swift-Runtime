@@ -39,52 +39,48 @@
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerMoreAction: LexerAction,CustomStringConvertible  {
-	/**
-	 * Provides a singleton instance of this parameterless lexer action.
-	 */
-	public static let INSTANCE: LexerMoreAction = LexerMoreAction()
 
-	/**
-	 * Constructs the singleton instance of the lexer {@code more} command.
-	 */
-	private override init() {
-	}
+public final class LexerMoreAction: LexerAction, CustomStringConvertible {
+    /**
+     * Provides a singleton instance of this parameterless lexer action.
+     */
+    public static let INSTANCE: LexerMoreAction = LexerMoreAction()
 
-	/**
-	 * {@inheritDoc}
-	 * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#MORE}.
-	 */
-	 override
-	public func getActionType() -> LexerActionType {
-		return LexerActionType.MORE
-	}
+    /**
+     * Constructs the singleton instance of the lexer {@code more} command.
+     */
+    private override init() {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * @return This method returns {@code false}.
-	 */
-	 override
-	public func isPositionDependent() -> Bool {
-		return false
-	}
+    /**
+     * {@inheritDoc}
+     * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#MORE}.
+     */
+    override
+    public func getActionType() -> LexerActionType {
+        return LexerActionType.MORE
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>This action is implemented by calling {@link org.antlr.v4.runtime.Lexer#more}.</p>
-	 */
-	 override
-	public func execute(lexer: Lexer) {
-		lexer.more()
-	}
+    /**
+     * {@inheritDoc}
+     * @return This method returns {@code false}.
+     */
+    override
+    public func isPositionDependent() -> Bool {
+        return false
+    }
 
-	/*override
-	public func hashCode() -> Int {
-		var hash : Int = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType().ordinal());
-		return MurmurHash.finish(hash, 1);
-	}*/
+    /**
+     * {@inheritDoc}
+     *
+     * <p>This action is implemented by calling {@link org.antlr.v4.runtime.Lexer#more}.</p>
+     */
+    override
+    public func execute(lexer: Lexer) {
+        lexer.more()
+    }
+
+
     override
     public var hashValue: Int {
         var hash: Int = MurmurHash.initialize()
@@ -92,16 +88,16 @@ public final class LexerMoreAction: LexerAction,CustomStringConvertible  {
         return MurmurHash.finish(hash, 1)
 
     }
-	 
-     
+
+
     public var description: String {
         return "more"
     }
 }
 
 public func ==(lhs: LexerMoreAction, rhs: LexerMoreAction) -> Bool {
-  
-        return lhs  === rhs
-     
-    
+
+    return lhs === rhs
+
+
 }

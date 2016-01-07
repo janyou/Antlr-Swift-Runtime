@@ -9,30 +9,29 @@
 import Foundation
 
 
-extension NSUUID  {
+extension NSUUID {
 
-    public  convenience init(mostSigBits: Int64,leastSigBits: Int64) {
+    public convenience init(mostSigBits: Int64, leastSigBits: Int64) {
         let uuid: String = ""
         self.init(UUIDString: uuid)!
     }
-    
-    private func toUUID(mostSigBits: Int64, _ leastSigBits: Int64) -> String{
-    
-    return (digits(mostSigBits >> 32, 8) + "-" +
-    digits(mostSigBits >> 16, 4) + "-" +
-    digits(mostSigBits, 4) + "-" +
-    digits(leastSigBits >> 48, 4) + "-" +
-    digits(leastSigBits, 12))
+
+    private func toUUID(mostSigBits: Int64, _ leastSigBits: Int64) -> String {
+
+        return (digits(mostSigBits >> 32, 8) + "-" +
+                digits(mostSigBits >> 16, 4) + "-" +
+                digits(mostSigBits, 4) + "-" +
+                digits(leastSigBits >> 48, 4) + "-" +
+                digits(leastSigBits, 12))
     }
-    
-    private func digits(val: Int64,_ digits: Int) -> String {
+
+    private func digits(val: Int64, _ digits: Int) -> String {
         let hi = Int64(1) << Int64(digits * 4)
-        let  intLiteral = hi | (val & (hi - 1))
+        let intLiteral = hi | (val & (hi - 1))
         let s: String = String(Character(UnicodeScalar(UInt32(intLiteral))))
-        return s[1..<s.length]
-       // return s.substringFromIndex(1)
+        return s[1 ..< s.length]
+        // return s.substringFromIndex(1)
     }
-    
-    
- 
+
+
 }

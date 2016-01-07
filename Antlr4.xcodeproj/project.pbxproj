@@ -147,8 +147,6 @@
 		F9A4229A1BCCC48100A9CD35 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421E31BCCC48100A9CD35 /* Tree.swift */; };
 		F9A4229B1BCCC48100A9CD35 /* Trees.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421E41BCCC48100A9CD35 /* Trees.swift */; };
 		F9A422A91BCCC48100A9CD35 /* UnbufferedTokenStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421F31BCCC48100A9CD35 /* UnbufferedTokenStream.swift */; };
-		F9A422AA1BCCC48100A9CD35 /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421F41BCCC48100A9CD35 /* Vocabulary.swift */; };
-		F9A422AB1BCCC48100A9CD35 /* VocabularyImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421F51BCCC48100A9CD35 /* VocabularyImpl.swift */; };
 		F9A422AC1BCCC48100A9CD35 /* VocabularySingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421F61BCCC48100A9CD35 /* VocabularySingle.swift */; };
 		F9A422AD1BCCC48100A9CD35 /* WritableToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421F71BCCC48100A9CD35 /* WritableToken.swift */; };
 		F9A422C01BCCC7E400A9CD35 /* BitSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422AE1BCCC7E400A9CD35 /* BitSet.swift */; };
@@ -322,8 +320,6 @@
 		F9A4249D1BCCD8D700A9CD35 /* TokenStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421C31BCCC48100A9CD35 /* TokenStream.swift */; };
 		F9A4249E1BCCD8D700A9CD35 /* TokenStreamRewriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421C41BCCC48100A9CD35 /* TokenStreamRewriter.swift */; };
 		F9A4249F1BCCD8D700A9CD35 /* UnbufferedTokenStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421F31BCCC48100A9CD35 /* UnbufferedTokenStream.swift */; };
-		F9A424A01BCCD8D700A9CD35 /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421F41BCCC48100A9CD35 /* Vocabulary.swift */; };
-		F9A424A11BCCD8D700A9CD35 /* VocabularyImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421F51BCCC48100A9CD35 /* VocabularyImpl.swift */; };
 		F9A424A21BCCD8D700A9CD35 /* VocabularySingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421F61BCCC48100A9CD35 /* VocabularySingle.swift */; };
 		F9A424A31BCCD8D700A9CD35 /* WritableToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421F71BCCC48100A9CD35 /* WritableToken.swift */; };
 		F9A424AB1BCD348C00A9CD35 /* Antlr4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A424AA1BCD348C00A9CD35 /* Antlr4Tests.swift */; };
@@ -484,8 +480,6 @@
 		F9A421E31BCCC48100A9CD35 /* Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
 		F9A421E41BCCC48100A9CD35 /* Trees.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trees.swift; sourceTree = "<group>"; };
 		F9A421F31BCCC48100A9CD35 /* UnbufferedTokenStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnbufferedTokenStream.swift; sourceTree = "<group>"; };
-		F9A421F41BCCC48100A9CD35 /* Vocabulary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
-		F9A421F51BCCC48100A9CD35 /* VocabularyImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularyImpl.swift; sourceTree = "<group>"; };
 		F9A421F61BCCC48100A9CD35 /* VocabularySingle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularySingle.swift; sourceTree = "<group>"; };
 		F9A421F71BCCC48100A9CD35 /* WritableToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WritableToken.swift; sourceTree = "<group>"; };
 		F9A422AE1BCCC7E400A9CD35 /* BitSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BitSet.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -634,8 +628,6 @@
 				F9A421C31BCCC48100A9CD35 /* TokenStream.swift */,
 				F9A421C41BCCC48100A9CD35 /* TokenStreamRewriter.swift */,
 				F9A421F31BCCC48100A9CD35 /* UnbufferedTokenStream.swift */,
-				F9A421F41BCCC48100A9CD35 /* Vocabulary.swift */,
-				F9A421F51BCCC48100A9CD35 /* VocabularyImpl.swift */,
 				F9A421F61BCCC48100A9CD35 /* VocabularySingle.swift */,
 				F9A421F71BCCC48100A9CD35 /* WritableToken.swift */,
 			);
@@ -988,7 +980,6 @@
 				F9A4227A1BCCC48100A9CD35 /* Token.swift in Sources */,
 				F9A422371BCCC48100A9CD35 /* ProfilingATNSimulator.swift in Sources */,
 				F9A4227D1BCCC48100A9CD35 /* TokenStream.swift in Sources */,
-				F9A422AA1BCCC48100A9CD35 /* Vocabulary.swift in Sources */,
 				F9A4223D1BCCC48100A9CD35 /* SetTransition.swift in Sources */,
 				F9A4221B1BCCC48100A9CD35 /* LexerATNSimulator.swift in Sources */,
 				F9A422271BCCC48100A9CD35 /* LookupATNConfig.swift in Sources */,
@@ -1056,7 +1047,6 @@
 				F9A422221BCCC48100A9CD35 /* LexerPushModeAction.swift in Sources */,
 				F9A422931BCCC48100A9CD35 /* TagChunk.swift in Sources */,
 				F9A4224A1BCCC48100A9CD35 /* CommonTokenFactory.swift in Sources */,
-				F9A422AB1BCCC48100A9CD35 /* VocabularyImpl.swift in Sources */,
 				F9A4227C1BCCC48100A9CD35 /* TokenSource.swift in Sources */,
 				F9A422481BCCC48100A9CD35 /* CharStream.swift in Sources */,
 				F9A422681BCCC48100A9CD35 /* MultiMap.swift in Sources */,
@@ -1295,8 +1285,6 @@
 				F9A4249D1BCCD8D700A9CD35 /* TokenStream.swift in Sources */,
 				F9A4249E1BCCD8D700A9CD35 /* TokenStreamRewriter.swift in Sources */,
 				F9A4249F1BCCD8D700A9CD35 /* UnbufferedTokenStream.swift in Sources */,
-				F9A424A01BCCD8D700A9CD35 /* Vocabulary.swift in Sources */,
-				F9A424A11BCCD8D700A9CD35 /* VocabularyImpl.swift in Sources */,
 				F9A424A21BCCD8D700A9CD35 /* VocabularySingle.swift in Sources */,
 				F9A424A31BCCD8D700A9CD35 /* WritableToken.swift in Sources */,
 			);

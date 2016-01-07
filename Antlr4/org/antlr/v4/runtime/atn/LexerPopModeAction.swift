@@ -29,7 +29,7 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /**
  * Implements the {@code popMode} lexer action by calling {@link org.antlr.v4.runtime.Lexer#popMode}.
@@ -40,69 +40,54 @@
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerPopModeAction: LexerAction,CustomStringConvertible  {
-	/**
-	 * Provides a singleton instance of this parameterless lexer action.
-	 */
-	public static let INSTANCE: LexerPopModeAction = LexerPopModeAction()
 
-	/**
-	 * Constructs the singleton instance of the lexer {@code popMode} command.
-	 */
-	private override init() {
-	}
+public final class LexerPopModeAction: LexerAction, CustomStringConvertible {
+    /**
+     * Provides a singleton instance of this parameterless lexer action.
+     */
+    public static let INSTANCE: LexerPopModeAction = LexerPopModeAction()
 
-	/**
-	 * {@inheritDoc}
-	 * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#POP_MODE}.
-	 */
-	 override 
-	public func getActionType() -> LexerActionType {
-		return LexerActionType.POP_MODE
-	}
+    /**
+     * Constructs the singleton instance of the lexer {@code popMode} command.
+     */
+    private override init() {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * @return This method returns {@code false}.
-	 */
-	 
-	public override func isPositionDependent() -> Bool {
-		return false
-	}
+    /**
+     * {@inheritDoc}
+     * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#POP_MODE}.
+     */
+    override
+    public func getActionType() -> LexerActionType {
+        return LexerActionType.POP_MODE
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>This action is implemented by calling {@link org.antlr.v4.runtime.Lexer#popMode}.</p>
-	 */
-	 
-	public override func execute(lexer: Lexer)throws {
-		try lexer.popMode()
-	}
+    /**
+     * {@inheritDoc}
+     * @return This method returns {@code false}.
+     */
 
-/*	override
-	public func hashCode() -> Int {
-		var hash : Int = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType().ordinal());
-		return MurmurHash.finish(hash, 1);
-	}
+    public override func isPositionDependent() -> Bool {
+        return false
+    }
 
-	override
-	////@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-	public func equals(obj : AnyObject) -> Bool {
-		return obj as! String == self;
-	}
+    /**
+     * {@inheritDoc}
+     *
+     * <p>This action is implemented by calling {@link org.antlr.v4.runtime.Lexer#popMode}.</p>
+     */
 
-	override
-	public func toString() -> String {
-		return "popMode";
-	}*/
+    public override func execute(lexer: Lexer) throws {
+        try lexer.popMode()
+    }
+
+
     override
     public var hashValue: Int {
         var hash: Int = MurmurHash.initialize()
         hash = MurmurHash.update(hash, getActionType().rawValue)
         return MurmurHash.finish(hash, 1)
-        
+
     }
     public var description: String {
         return "popMode"
@@ -110,8 +95,8 @@ public final class LexerPopModeAction: LexerAction,CustomStringConvertible  {
 }
 
 public func ==(lhs: LexerPopModeAction, rhs: LexerPopModeAction) -> Bool {
-    
-    return lhs  === rhs
-    
-    
+
+    return lhs === rhs
+
+
 }

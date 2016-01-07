@@ -29,13 +29,14 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /** The block that begins a closure loop. */
+
 public final class StarBlockStartState: BlockStartState {
 
-	override
-	public func getStateType() -> Int {
-		return ATNState.STAR_BLOCK_START
-	}
+    override
+    public func getStateType() -> Int {
+        return ATNState.STAR_BLOCK_START
+    }
 }

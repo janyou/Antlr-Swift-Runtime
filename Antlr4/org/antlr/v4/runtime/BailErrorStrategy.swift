@@ -59,6 +59,7 @@
  *
  * @see org.antlr.v4.runtime.Parser#setErrorHandler(org.antlr.v4.runtime.ANTLRErrorStrategy)
  */
+
 public class BailErrorStrategy: DefaultErrorStrategy {
     /** Instead of recovering from exception {@code e}, re-throw it wrapped
      *  in a {@link org.antlr.v4.runtime.misc.ParseCancellationException} so it is not caught by the
@@ -67,29 +68,29 @@ public class BailErrorStrategy: DefaultErrorStrategy {
      */
     override
     public func recover(recognizer: Parser, _ e: AnyObject) throws {
-		for  var context: ParserRuleContext? = recognizer.getContext(); context != nil; context = (context!.getParent() as! ParserRuleContext ) {
-			context!.exception = e
-		}
+        for var context: ParserRuleContext? = recognizer.getContext(); context != nil; context = (context!.getParent() as! ParserRuleContext) {
+            context!.exception = e
+        }
 
-        throw  ANTLRException.Recognition(e: e)  //ANTLRException. /* throw ParseCancellationException(e); */
+        throw  ANTLRException.Recognition(e: e)
     }
 
     /** Make sure we don't attempt to recover inline; if the parser
      *  successfully recovers, it won't throw an exception.
      */
     override
-    public func recoverInline(recognizer: Parser) throws -> Token // RecognitionException
-    {
-		let e: InputMismatchException = try InputMismatchException(recognizer)
-		for  var context: ParserRuleContext? = recognizer.getContext(); context != nil; context = (context!.getParent() as! ParserRuleContext) {
-			context!.exception = e
-		}
+    public func recoverInline(recognizer: Parser) throws -> Token {
+        let e: InputMismatchException = try InputMismatchException(recognizer)
+        for var context: ParserRuleContext? = recognizer.getContext(); context != nil; context = (context!.getParent() as! ParserRuleContext) {
+            context!.exception = e
+        }
         throw  ANTLRException.Recognition(e: e)
- 
+
     }
 
     /** Make sure we don't attempt to recover from problems in subrules. */
     override
-    public func sync(recognizer: Parser) { }
-    
+    public func sync(recognizer: Parser) {
+    }
+
 }

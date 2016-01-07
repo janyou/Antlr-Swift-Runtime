@@ -32,36 +32,36 @@
 
 
 /** A transition containing a set of values. */
-public class SetTransition: Transition,CustomStringConvertible {
+
+public class SetTransition: Transition, CustomStringConvertible {
     public final var set: IntervalSet
-    
+
     // TODO (sam): should we really allow null here?
-    public   init(_ target: ATNState,   _ set: IntervalSet)   {
-        
-        //		if ( set == nil ) {
-        //            self.set  = try IntervalSet.of(CommonToken.INVALID_TYPE);
-        //        }
-        self.set = set 
+    public init(_ target: ATNState, _ set: IntervalSet) {
+
+        self.set = set
         super.init(target)
     }
-    
+
     override
     public func getSerializationType() -> Int {
         return Transition.SET
     }
-    
+
     override
     ////old label()
-    public func labelIntervalSet() -> IntervalSet { return set }
-    
+    public func labelIntervalSet() -> IntervalSet {
+        return set
+    }
+
     override
     public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
         return set.contains(symbol)
     }
-    
-    public var description: String{
+
+    public var description: String {
         return set.description
     }
-    
-    
+
+
 }

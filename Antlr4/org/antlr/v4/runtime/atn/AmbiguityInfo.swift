@@ -60,10 +60,11 @@
 *
 * @since 4.3
 */
+
 public class AmbiguityInfo: DecisionEventInfo {
     /** The set of alternative numbers for this decision event that lead to a valid parse. */
     public var ambigAlts: BitSet
-    
+
     /**
     * Constructs a new instance of the {@link org.antlr.v4.runtime.atn.AmbiguityInfo} class with the
     * specified detailed ambiguity information.
@@ -80,14 +81,13 @@ public class AmbiguityInfo: DecisionEventInfo {
     * prediction; otherwise, {@code false} if the ambiguity was identified
     * during SLL prediction
     */
-    public   init(_ decision: Int,
-        _ configs: ATNConfigSet,
-        _ ambigAlts: BitSet,
-        _ input: TokenStream, _ startIndex: Int, _ stopIndex: Int,
-        _ fullCtx: Bool)
-    {
+    public init(_ decision: Int,
+                _ configs: ATNConfigSet,
+                _ ambigAlts: BitSet,
+                _ input: TokenStream, _ startIndex: Int, _ stopIndex: Int,
+                _ fullCtx: Bool) {
         self.ambigAlts = ambigAlts
         super.init(decision, configs, input, startIndex, stopIndex, fullCtx)
-        
+
     }
 }

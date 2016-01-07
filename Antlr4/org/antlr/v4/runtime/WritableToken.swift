@@ -29,18 +29,17 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
 
 public protocol WritableToken: Token {
-	func setText(text: String)
+    func setText(text: String)
 
-	func setType(ttype: Int)
+    func setType(ttype: Int)
 
-	func setLine(line: Int)
+    func setLine(line: Int)
 
-	func setCharPositionInLine(pos: Int)
+    func setCharPositionInLine(pos: Int)
 
-	func setChannel(channel: Int)
+    func setChannel(channel: Int)
 
-	func setTokenIndex(index: Int)
+    func setTokenIndex(index: Int)
 }

@@ -51,123 +51,122 @@
  *
  * @author Sam Harwell
  */
+
 import Foundation
+
 public class DiagnosticErrorListener: BaseErrorListener {
-	/**
-	 * When {@code true}, only exactly known ambiguities are reported.
-	 */
-	internal final var exactOnly: Bool
+    /**
+     * When {@code true}, only exactly known ambiguities are reported.
+     */
+    internal final var exactOnly: Bool
 
-	/**
-	 * Initializes a new instance of {@link org.antlr.v4.runtime.DiagnosticErrorListener} which only
-	 * reports exact ambiguities.
-	 */
-	public convenience override init() {
-		self.init(true)
-	}
+    /**
+     * Initializes a new instance of {@link org.antlr.v4.runtime.DiagnosticErrorListener} which only
+     * reports exact ambiguities.
+     */
+    public convenience override init() {
+        self.init(true)
+    }
 
-	/**
-	 * Initializes a new instance of {@link org.antlr.v4.runtime.DiagnosticErrorListener}, specifying
-	 * whether all ambiguities or only exact ambiguities are reported.
-	 *
-	 * @param exactOnly {@code true} to report only exact ambiguities, otherwise
-	 * {@code false} to report all ambiguities.
-	 */
-	public init(_ exactOnly: Bool) {
-		self.exactOnly = exactOnly
-	}
+    /**
+     * Initializes a new instance of {@link org.antlr.v4.runtime.DiagnosticErrorListener}, specifying
+     * whether all ambiguities or only exact ambiguities are reported.
+     *
+     * @param exactOnly {@code true} to report only exact ambiguities, otherwise
+     * {@code false} to report all ambiguities.
+     */
+    public init(_ exactOnly: Bool) {
+        self.exactOnly = exactOnly
+    }
 
-	override
-	public func reportAmbiguity(recognizer: Parser,
-								_ dfa: DFA,
-								_ startIndex: Int,
-								_ stopIndex: Int,
-								_ exact: Bool,
-								_ ambigAlts: BitSet,
-								_ configs: ATNConfigSet)throws
-	{
-		if exactOnly && !exact {
-			return
-		}
+    override
+    public func reportAmbiguity(recognizer: Parser,
+                                _ dfa: DFA,
+                                _ startIndex: Int,
+                                _ stopIndex: Int,
+                                _ exact: Bool,
+                                _ ambigAlts: BitSet,
+                                _ configs: ATNConfigSet) throws {
+        if exactOnly && !exact {
+            return
+        }
 
-		let format: String = "reportAmbiguity d=%@: ambigAlts=%@, input='%@'"
-		let decision: String = getDecisionDescription(recognizer, dfa)
-		let conflictingAlts: BitSet = try getConflictingAlts(ambigAlts, configs)
-		let text: String = try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
- 
+        let format: String = "reportAmbiguity d=%@: ambigAlts=%@, input='%@'"
+        let decision: String = getDecisionDescription(recognizer, dfa)
+        let conflictingAlts: BitSet = try getConflictingAlts(ambigAlts, configs)
+        let text: String = try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
+
         let message: String = NSString(format: format, decision, conflictingAlts.description, text) as String
-		try recognizer.notifyErrorListeners(message)
-	}
+        try recognizer.notifyErrorListeners(message)
+    }
 
-	override
-	public func reportAttemptingFullContext(recognizer: Parser,
-											_ dfa: DFA,
-											_ startIndex: Int,
-											_ stopIndex: Int,
-											_ conflictingAlts: BitSet,
-											_ configs: ATNConfigSet)throws
-	{
-		let format: String = "reportAttemptingFullContext d=%@, input='%@'"
-		let decision: String = getDecisionDescription(recognizer, dfa)
-		let text: String = try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
-		let message: String =  NSString(format: format, decision, text) as String
-		try recognizer.notifyErrorListeners(message)
-	}
+    override
+    public func reportAttemptingFullContext(recognizer: Parser,
+                                            _ dfa: DFA,
+                                            _ startIndex: Int,
+                                            _ stopIndex: Int,
+                                            _ conflictingAlts: BitSet,
+                                            _ configs: ATNConfigSet) throws {
+        let format: String = "reportAttemptingFullContext d=%@, input='%@'"
+        let decision: String = getDecisionDescription(recognizer, dfa)
+        let text: String = try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
+        let message: String = NSString(format: format, decision, text) as String
+        try recognizer.notifyErrorListeners(message)
+    }
 
-	override
-	public func reportContextSensitivity(recognizer: Parser,
-										 _ dfa: DFA,
-										 _ startIndex: Int,
-										 _ stopIndex: Int,
-										 _ prediction: Int,
-										 _ configs: ATNConfigSet)throws
-	{
-		let format: String = "reportContextSensitivity d=%@, input='%@'"
-		let decision: String = getDecisionDescription(recognizer, dfa)
-		let text: String =  try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
-		let message: String =  NSString(format: format, decision, text) as String
-		try recognizer.notifyErrorListeners(message)
-	}
+    override
+    public func reportContextSensitivity(recognizer: Parser,
+                                         _ dfa: DFA,
+                                         _ startIndex: Int,
+                                         _ stopIndex: Int,
+                                         _ prediction: Int,
+                                         _ configs: ATNConfigSet) throws {
+        let format: String = "reportContextSensitivity d=%@, input='%@'"
+        let decision: String = getDecisionDescription(recognizer, dfa)
+        let text: String = try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
+        let message: String = NSString(format: format, decision, text) as String
+        try recognizer.notifyErrorListeners(message)
+    }
 
-	internal func getDecisionDescription(recognizer: Parser, _ dfa: DFA) -> String {
-		let decision: Int = dfa.decision
-		let ruleIndex: Int = dfa.atnStartState.ruleIndex!
+    internal func getDecisionDescription(recognizer: Parser, _ dfa: DFA) -> String {
+        let decision: Int = dfa.decision
+        let ruleIndex: Int = dfa.atnStartState.ruleIndex!
 
-		var ruleNames: [String] = recognizer.getRuleNames()
-		if ruleIndex < 0 || ruleIndex >= ruleNames.count {
-			return String(decision)
-		}
+        var ruleNames: [String] = recognizer.getRuleNames()
+        if ruleIndex < 0 || ruleIndex >= ruleNames.count {
+            return String(decision)
+        }
 
-		let ruleName: String = ruleNames[ruleIndex]
-		//if (ruleName == nil || ruleName.isEmpty()) {
-        if   ruleName.isEmpty  {
-			return String (decision)
-		}
+        let ruleName: String = ruleNames[ruleIndex]
+        //if (ruleName == nil || ruleName.isEmpty()) {
+        if ruleName.isEmpty {
+            return String(decision)
+        }
 
-		return  NSString(format: "%d (%@)", decision, ruleName) as String
-	}
+        return NSString(format: "%d (%@)", decision, ruleName) as String
+    }
 
-	/**
-	 * Computes the set of conflicting or ambiguous alternatives from a
-	 * configuration set, if that information was not already provided by the
-	 * parser.
-	 *
-	 * @param reportedAlts The set of conflicting or ambiguous alternatives, as
-	 * reported by the parser.
-	 * @param configs The conflicting or ambiguous configuration set.
-	 * @return Returns {@code reportedAlts} if it is not {@code null}, otherwise
-	 * returns the set of alternatives represented in {@code configs}.
-	 */
-	internal func getConflictingAlts(reportedAlts: BitSet?, _ configs: ATNConfigSet)throws -> BitSet {
-		if reportedAlts != nil {
-			return reportedAlts!
-		}
+    /**
+     * Computes the set of conflicting or ambiguous alternatives from a
+     * configuration set, if that information was not already provided by the
+     * parser.
+     *
+     * @param reportedAlts The set of conflicting or ambiguous alternatives, as
+     * reported by the parser.
+     * @param configs The conflicting or ambiguous configuration set.
+     * @return Returns {@code reportedAlts} if it is not {@code null}, otherwise
+     * returns the set of alternatives represented in {@code configs}.
+     */
+    internal func getConflictingAlts(reportedAlts: BitSet?, _ configs: ATNConfigSet) throws -> BitSet {
+        if reportedAlts != nil {
+            return reportedAlts!
+        }
 
-		let result: BitSet = BitSet()
-		for config: ATNConfig in configs.configs {
-			try result.set(config.alt)
-		}
+        let result: BitSet = BitSet()
+        for config: ATNConfig in configs.configs {
+            try result.set(config.alt)
+        }
 
-		return result
-	}
+        return result
+    }
 }

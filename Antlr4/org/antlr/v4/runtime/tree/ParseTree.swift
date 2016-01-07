@@ -29,11 +29,6 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// package org.antlr.v4.runtime.tree;
-
-// import org.antlr.v4.runtime.Parser;
-// import org.antlr.v4.runtime.RuleContext;
-// import org.antlr.v4.runtime.Token;
 
 /** An interface to access the tree of {@link org.antlr.v4.runtime.RuleContext} objects created
  *  during a parse that makes the data structure look like a simple parse tree.
@@ -43,75 +38,76 @@
  *  <p>The payload is either a {@link org.antlr.v4.runtime.Token} or a {@link org.antlr.v4.runtime.RuleContext} object.</p>
  */
 //public protocol ParseTree : SyntaxTree {
-public class ParseTree: SyntaxTree ,CustomStringConvertible  {
-   
+
+public class ParseTree: SyntaxTree, CustomStringConvertible {
+
     // the following methods narrow the return type; they are not additional methods
-	
-	//func getParent() -> ParseTree?;
-	
-	//func getChild(i : Int) -> ParseTree?;
 
-	/** The {@link org.antlr.v4.runtime.tree.ParseTreeVisitor} needs a double dispatch method. */
-    
-   public func accept<T> (visitor: ParseTreeVisitor<T>  ) -> T? {
-         RuntimeException(" must overriden !")
-         fatalError()
+    //func getParent() -> ParseTree?
+
+    //func getChild(i : Int) -> ParseTree?
+
+    /** The {@link org.antlr.v4.runtime.tree.ParseTreeVisitor} needs a double dispatch method. */
+
+    public func accept<T>(visitor: ParseTreeVisitor<T>) -> T? {
+        RuntimeException(" must overriden !")
+        fatalError()
     }
 
-	/** Return the combined text of all leaf nodes. Does not get any
-	 *  off-channel tokens (if any) so won't return whitespace and
-	 *  comments if they are sent to parser on hidden channel.
-	 */
-   public func getText() -> String {
-         RuntimeException(" must overriden !")
+    /** Return the combined text of all leaf nodes. Does not get any
+     *  off-channel tokens (if any) so won't return whitespace and
+     *  comments if they are sent to parser on hidden channel.
+     */
+    public func getText() -> String {
+        RuntimeException(" must overriden !")
         return ""
     }
-	/** Specialize toStringTree so that it can print out more information
-	 * 	based upon the parser.
-	 */
-   public func toStringTree(parser: Parser) -> String {
-         RuntimeException(" must overriden !")
+    /** Specialize toStringTree so that it can print out more information
+     * 	based upon the parser.
+     */
+    public func toStringTree(parser: Parser) -> String {
+        RuntimeException(" must overriden !")
         return ""
-        
+
     }
-    
-    
-    //---------------------
-    public func getSourceInterval() -> Interval{
-        RuntimeException(" must overriden !")
-        fatalError()
-    }
-    
-    
-    public func getParent() -> Tree?{
+
+
+    public func getSourceInterval() -> Interval {
         RuntimeException(" must overriden !")
         fatalError()
     }
 
-    public func getPayload() -> AnyObject{
-        RuntimeException(" must overriden !")
-        fatalError()
-    }
-    
-    public func getChild(i: Int) -> Tree?{
+
+    public func getParent() -> Tree? {
         RuntimeException(" must overriden !")
         fatalError()
     }
 
- 
-    public func getChildCount() -> Int{
-        RuntimeException(" must overriden !")
-        fatalError()
-    }
-    public func toStringTree() -> String{
+    public func getPayload() -> AnyObject {
         RuntimeException(" must overriden !")
         fatalError()
     }
 
-    
-    public var description: String{
+    public func getChild(i: Int) -> Tree? {
         RuntimeException(" must overriden !")
         fatalError()
     }
- 
+
+
+    public func getChildCount() -> Int {
+        RuntimeException(" must overriden !")
+        fatalError()
+    }
+
+    public func toStringTree() -> String {
+        RuntimeException(" must overriden !")
+        fatalError()
+    }
+
+
+    public var description: String {
+        RuntimeException(" must overriden !")
+        fatalError()
+    }
+
 }

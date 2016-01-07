@@ -29,46 +29,47 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
 
 public class ParseTreeWalker {
     public static let DEFAULT = ParseTreeWalker()
-    public init(){
-        
-    }
-    public func walk(listener: ParseTreeListener, _ t: ParseTree)throws {
-		if  t is ErrorNode {
-			listener.visitErrorNode(t as! ErrorNode)
-			return
-		}
-		else { if  t is TerminalNode {
-			listener.visitTerminal(t as! TerminalNode)
-			return
-		} }
-		let r: RuleNode = t as! RuleNode
-         try enterRule(listener, r)
-        let n: Int = r.getChildCount()
-        for  var i: Int = 0; i<n; i++ {
-         try   walk(listener, r.getChild(i) as! ParseTree)
-        }
-		 try exitRule(listener, r)
+    public init() {
+
     }
 
-	/**
-	 * The discovery of a rule node, involves sending two events: the generic
-	 * {@link org.antlr.v4.runtime.tree.ParseTreeListener#enterEveryRule} and a
-	 * {@link org.antlr.v4.runtime.RuleContext}-specific event. First we trigger the generic and then
-	 * the rule specific. We to them in reverse order upon finishing the node.
-	 */
-    internal func enterRule(listener: ParseTreeListener, _ r: RuleNode)throws  {
-		let ctx: ParserRuleContext = r.getRuleContext() as! ParserRuleContext
+    public func walk(listener: ParseTreeListener, _ t: ParseTree) throws {
+        if t is ErrorNode {
+            listener.visitErrorNode(t as! ErrorNode)
+            return
+        } else {
+            if t is TerminalNode {
+                listener.visitTerminal(t as! TerminalNode)
+                return
+            }
+        }
+        let r: RuleNode = t as! RuleNode
+        try enterRule(listener, r)
+        let n: Int = r.getChildCount()
+        for var i: Int = 0; i < n; i++ {
+            try   walk(listener, r.getChild(i) as! ParseTree)
+        }
+        try exitRule(listener, r)
+    }
+
+    /**
+     * The discovery of a rule node, involves sending two events: the generic
+     * {@link org.antlr.v4.runtime.tree.ParseTreeListener#enterEveryRule} and a
+     * {@link org.antlr.v4.runtime.RuleContext}-specific event. First we trigger the generic and then
+     * the rule specific. We to them in reverse order upon finishing the node.
+     */
+    internal func enterRule(listener: ParseTreeListener, _ r: RuleNode) throws {
+        let ctx: ParserRuleContext = r.getRuleContext() as! ParserRuleContext
         try listener.enterEveryRule(ctx)
-		ctx.enterRule(listener)
+        ctx.enterRule(listener)
     }
 
     internal func exitRule(listener: ParseTreeListener, _ r: RuleNode) throws {
-		let ctx: ParserRuleContext = r.getRuleContext() as! ParserRuleContext
-		ctx.exitRule(listener)
+        let ctx: ParserRuleContext = r.getRuleContext() as! ParserRuleContext
+        ctx.exitRule(listener)
         try listener.exitEveryRule(ctx)
     }
 }

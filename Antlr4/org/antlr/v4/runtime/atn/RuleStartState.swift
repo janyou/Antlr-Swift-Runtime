@@ -29,14 +29,14 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
 
 public final class RuleStartState: ATNState {
-	public var stopState: RuleStopState?
-	public var isPrecedenceRule: Bool = false //Synonymous with rule being left recursive; consider renaming.
+    public var stopState: RuleStopState?
+    public var isPrecedenceRule: Bool = false
+    //Synonymous with rule being left recursive; consider renaming.
 
-	override
-	public func getStateType() -> Int {
-		return ATNState.RULE_START
-	}
+    override
+    public func getStateType() -> Int {
+        return ATNState.RULE_START
+    }
 }

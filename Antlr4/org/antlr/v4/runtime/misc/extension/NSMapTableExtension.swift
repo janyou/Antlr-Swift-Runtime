@@ -8,12 +8,16 @@
 
 import Foundation
 
-extension  NSMapTable {
-    
+extension NSMapTable {
+
     public subscript(key: AnyObject?) -> AnyObject? {
-        get { return objectForKey(key) }
-        set { setObject(newValue, forKey: key) }
+        get {
+            return objectForKey(key)
+        }
+        set {
+            setObject(newValue, forKey: key)
+        }
     }
-    
-   
+
+
 }

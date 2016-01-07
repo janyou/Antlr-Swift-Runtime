@@ -29,17 +29,18 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /**
  *
  * @author Sam Harwell
  */
+
 public final class BasicState: ATNState {
 
-	override
-	public func getStateType() -> Int {
-		return ATNState.BASIC
-	}
+    override
+    public func getStateType() -> Int {
+        return ATNState.BASIC
+    }
 
 }

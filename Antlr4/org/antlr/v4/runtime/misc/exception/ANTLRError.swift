@@ -7,13 +7,13 @@
 //
 
 import Foundation
-enum ANTLRError: ErrorType{
-    case NullPointer(msg: String)  /* throw NullPointerException("listener cannot be null."); */
-    case UnsupportedOperation(msg: String)   /* throw UnsupportedOperationException("there is no serialized ATN"); */
-    case IndexOutOfBounds(msg: String)     /*throw IndexOutOfBoundsException("get("+i+") outside buffer:*/
-    case IllegalState(msg: String) /* throw IllegalStateException("cannot consume EOF"); */
-    case IllegalArgument(msg: String) /* throw IllegalArgumentException("cannot seek to negative index " + index); */
-    case NegativeArraySize(msg: String)
-    case ParseCancellation //throw ParseCancellationException(e);
-   // case noViableAlt
+
+enum ANTLRError: ErrorType {
+    case NullPointer(msg:String)
+    case UnsupportedOperation(msg:String)
+    case IndexOutOfBounds(msg:String)
+    case IllegalState(msg:String)
+    case IllegalArgument(msg:String)
+    case NegativeArraySize(msg:String)
+    case ParseCancellation
 }

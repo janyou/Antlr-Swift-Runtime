@@ -29,46 +29,47 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /**
  *
  * @author Sam Harwell
  */
-public final class PrecedencePredicateTransition: AbstractPredicateTransition ,CustomStringConvertible{
-	public final var precedence: Int
 
-	public   init(_ target: ATNState, _ precedence: Int) {
-		
-		self.precedence = precedence
+public final class PrecedencePredicateTransition: AbstractPredicateTransition, CustomStringConvertible {
+    public final var precedence: Int
+
+    public init(_ target: ATNState, _ precedence: Int) {
+
+        self.precedence = precedence
         super.init(target)
-	}
+    }
 
-	override
-	public func getSerializationType() -> Int {
-		return Transition.PRECEDENCE
-	}
+    override
+    public func getSerializationType() -> Int {
+        return Transition.PRECEDENCE
+    }
 
-	override
-	public func isEpsilon() -> Bool {
-		return true
-	}
+    override
+    public func isEpsilon() -> Bool {
+        return true
+    }
 
-	override
-	public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
-		return false
-	}
+    override
+    public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
+        return false
+    }
 
-	public func getPredicate() -> SemanticContext.PrecedencePredicate {
-		return SemanticContext.PrecedencePredicate(precedence)
-	}
-    
+    public func getPredicate() -> SemanticContext.PrecedencePredicate {
+        return SemanticContext.PrecedencePredicate(precedence)
+    }
+
     public var description: String {
         return "\(precedence)  >= _p"
     }
-	 
-	public func toString() -> String {
-		return "\(precedence)  >= _p"
-	}
+
+    public func toString() -> String {
+        return description
+    }
 
 }

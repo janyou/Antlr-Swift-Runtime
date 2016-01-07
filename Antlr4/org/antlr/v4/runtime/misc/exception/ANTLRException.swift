@@ -8,13 +8,8 @@
 
 
 import Foundation
-public enum  ANTLRException: ErrorType{
-   //- case  LexerNoViableAlt( e:  LexerNoViableAltException)
-   // case  ParseCancellationException
-    case  CannotInvokeStartRule
-   // case  StartRuleDoesNotConsumeFullPattern
-    case  Recognition(e: AnyObject) //RecognitionException
-    //-case  NoViableAlt(e:  NoViableAltException)
-    //-case  InputMismatch (e: InputMismatchException)
-    //-case FailedPredicate (e: FailedPredicateException)
+
+public enum ANTLRException: ErrorType {
+    case CannotInvokeStartRule
+    case Recognition(e:AnyObject)
 }

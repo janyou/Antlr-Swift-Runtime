@@ -30,32 +30,32 @@
  */
 
 
-
 public class EmptyPredictionContext: SingletonPredictionContext {
-	public   init() {
-		super.init(nil, PredictionContext.EMPTY_RETURN_STATE)
-	}
+    public init() {
+        super.init(nil, PredictionContext.EMPTY_RETURN_STATE)
+    }
 
-	override
-	public func isEmpty() -> Bool { return true }
+    override
+    public func isEmpty() -> Bool {
+        return true
+    }
 
-	override
-	public func size() -> Int {
-		return 1
-	}
+    override
+    public func size() -> Int {
+        return 1
+    }
 
-	override
-	public func getParent(index: Int) -> PredictionContext? {
-		return nil
-	}
+    override
+    public func getParent(index: Int) -> PredictionContext? {
+        return nil
+    }
 
-	override
-	public func getReturnState(index: Int) -> Int {
-		return returnState
-	}
+    override
+    public func getReturnState(index: Int) -> Int {
+        return returnState
+    }
 
- 
- 
+
     override
     public var description: String {
         return "$"
@@ -63,10 +63,10 @@ public class EmptyPredictionContext: SingletonPredictionContext {
 }
 
 
-public func ==(lhs: EmptyPredictionContext,rhs: EmptyPredictionContext) -> Bool{
-    if lhs === rhs  {
+public func ==(lhs: EmptyPredictionContext, rhs: EmptyPredictionContext) -> Bool {
+    if lhs === rhs {
         return true
     }
-    
+
     return false
 }

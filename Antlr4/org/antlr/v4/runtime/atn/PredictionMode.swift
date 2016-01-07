@@ -36,6 +36,7 @@
 * utility methods for analyzing configuration sets for conflicts and/or
 * ambiguities.
 */
+
 public enum PredictionMode {
     /**
     * The SLL(*) prediction mode. This prediction mode ignores the current
@@ -96,31 +97,31 @@ public enum PredictionMode {
     * behavior for syntactically-incorrect inputs.</p>
     */
     case LL_EXACT_AMBIG_DETECTION
-    
+
     /** A Map that uses just the state and the stack context as the key. */
- 
-    
+
+
     public final class AltAndContextATNConfig: Hashable {
-        
+
         public let config: ATNConfig
-        public init(_ old: ATNConfig) { // dup
+        public init(_ old: ATNConfig) {
+            // dup
             config = old
         }
         public var hashValue: Int {
-            
+
             var hashCode: Int = MurmurHash.initialize(7)
             hashCode = MurmurHash.update(hashCode, config.state.stateNumber)
             hashCode = MurmurHash.update(hashCode, config.context)
             hashCode = MurmurHash.finish(hashCode, 2)
             return hashCode
-            
+
         }
-        
-        
+
+
     }
-    
- 
-    
+
+
     /**
     * Computes the SLL prediction termination condition.
     *
@@ -213,7 +214,7 @@ public enum PredictionMode {
     * the configurations to strip out all of the predicates so that a standard
     * {@link org.antlr.v4.runtime.atn.ATNConfigSet} will merge everything ignoring predicates.</p>
     */
-    public static func hasSLLConflictTerminatingPrediction(mode: PredictionMode, var _ configs: ATNConfigSet)throws -> Bool {
+    public static func hasSLLConflictTerminatingPrediction(mode: PredictionMode, var _ configs: ATNConfigSet) throws -> Bool {
         /* Configs in rule stop states indicate reaching the end of the decision
         * rule (local context) or end of start rule (full context). If all
         * configs meet this condition, then none of the configurations is able
@@ -222,35 +223,33 @@ public enum PredictionMode {
         if allConfigsInRuleStopStates(configs) {
             return true
         }
-        
+
         // pure SLL mode parsing
-        if  mode == PredictionMode.SLL  {
+        if mode == PredictionMode.SLL {
             // Don't bother with combining configs from different semantic
             // contexts if we can fail over to full LL; costs more time
             // since we'll often fail over anyway.
-            if  configs.hasSemanticContext  {
+            if configs.hasSemanticContext {
                 // dup configs, tossing out semantic predicates
                 let dup: ATNConfigSet = ATNConfigSet()
                 for var c: ATNConfig in configs.configs {
-                    c = ATNConfig(c,SemanticContext.NONE)
+                    c = ATNConfig(c, SemanticContext.NONE)
                     try dup.add(c)
                 }
                 configs = dup
             }
             // now we have combined contexts for configs with dissimilar preds
         }
-        
+
         // pure SLL or combined SLL+LL mode parsing
-        
+
         let altsets: Array<BitSet> = try getConflictingAltSubsets(configs)
-        //        let b1 = hasConflictingAltSet(altsets)
-        //        let b2 =  !hasStateAssociatedWithOneAlt(configs)
-        //
+
         let heuristic: Bool =
-        try hasConflictingAltSet(altsets) &&   !hasStateAssociatedWithOneAlt(configs)
+        try hasConflictingAltSet(altsets) && !hasStateAssociatedWithOneAlt(configs)
         return heuristic
     }
-    
+
     /**
     * Checks if any configuration in {@code configs} is in a
     * {@link org.antlr.v4.runtime.atn.RuleStopState}. Configurations meeting this condition have reached
@@ -267,10 +266,10 @@ public enum PredictionMode {
                 return true
             }
         }
-        
+
         return false
     }
-    
+
     /**
     * Checks if all configurations in {@code configs} are in a
     * {@link org.antlr.v4.runtime.atn.RuleStopState}. Configurations meeting this condition have reached
@@ -287,10 +286,10 @@ public enum PredictionMode {
                 return false
             }
         }
-        
+
         return true
     }
-    
+
     /**
     * Full LL prediction termination.
     *
@@ -435,7 +434,7 @@ public enum PredictionMode {
     public static func resolvesToJustOneViableAlt(altsets: Array<BitSet>) throws -> Int {
         return try  getSingleViableAlt(altsets)
     }
-    
+
     /**
     * Determines if every alternative subset in {@code altsets} contains more
     * than one alternative.
@@ -447,7 +446,7 @@ public enum PredictionMode {
     public static func allSubsetsConflict(altsets: Array<BitSet>) -> Bool {
         return !hasNonConflictingAltSet(altsets)
     }
-    
+
     /**
     * Determines if any single alternative subset in {@code altsets} contains
     * exactly one alternative.
@@ -458,13 +457,13 @@ public enum PredictionMode {
     */
     public static func hasNonConflictingAltSet(altsets: Array<BitSet>) -> Bool {
         for alts: BitSet in altsets {
-            if  alts.cardinality()==1  {
+            if alts.cardinality() == 1 {
                 return true
             }
         }
         return false
     }
-    
+
     /**
     * Determines if any single alternative subset in {@code altsets} contains
     * more than one alternative.
@@ -475,13 +474,13 @@ public enum PredictionMode {
     */
     public static func hasConflictingAltSet(altsets: Array<BitSet>) -> Bool {
         for alts: BitSet in altsets {
-            if  alts.cardinality()>1  {
+            if alts.cardinality() > 1 {
                 return true
             }
         }
         return false
     }
-    
+
     /**
     * Determines if every alternative subset in {@code altsets} is equivalent.
     *
@@ -490,16 +489,17 @@ public enum PredictionMode {
     * others, otherwise {@code false}
     */
     public static func allSubsetsEqual(altsets: Array<BitSet>) -> Bool {
- 
+
         let first: BitSet = altsets[0]
-        for   it in altsets
-        {
-            if  it != first   { return false }
-            
+        for it in altsets {
+            if it != first {
+                return false
+            }
+
         }
         return true
     }
-    
+
     /**
     * Returns the unique alternative predicted by all alternative subsets in
     * {@code altsets}. If no such alternative exists, this method returns
@@ -507,12 +507,14 @@ public enum PredictionMode {
     *
     * @param altsets a collection of alternative subsets
     */
-    public static func getUniqueAlt(altsets: Array<BitSet>)throws -> Int {
+    public static func getUniqueAlt(altsets: Array<BitSet>) throws -> Int {
         let all: BitSet = getAlts(altsets)
-        if  all.cardinality()==1  { return try all.nextSetBit(0) }
+        if all.cardinality() == 1 {
+            return try all.nextSetBit(0)
+        }
         return ATN.INVALID_ALT_NUMBER
     }
-    
+
     /**
     * Gets the complete set of represented alternatives for a collection of
     * alternative subsets. This method returns the union of each {@link java.util.BitSet}
@@ -528,16 +530,16 @@ public enum PredictionMode {
         }
         return all
     }
-    
+
     /** Get union of all alts from configs. @since 4.5.1 */
-    public static func getAlts(configs: ATNConfigSet)throws -> BitSet {
+    public static func getAlts(configs: ATNConfigSet) throws -> BitSet {
         let alts: BitSet = BitSet()
         for config: ATNConfig in configs.configs {
             try alts.set(config.alt)
         }
         return alts
     }
-    
+
     /**
     * This function gets the conflicting alt subsets from a configuration set.
     * For each configuration {@code c} in {@code configs}:
@@ -547,21 +549,21 @@ public enum PredictionMode {
     * alt and not pred
     * </pre>
     */
-    public static func getConflictingAltSubsets(configs: ATNConfigSet)throws -> Array<BitSet> {
-        var configToAlts: Dictionary<AltAndContextATNConfig,BitSet> = Dictionary<AltAndContextATNConfig,BitSet>()
+    public static func getConflictingAltSubsets(configs: ATNConfigSet) throws -> Array<BitSet> {
+        var configToAlts: Dictionary<AltAndContextATNConfig, BitSet> = Dictionary<AltAndContextATNConfig, BitSet>()
         for c: ATNConfig in configs.configs {
-            
+
             var alts: BitSet? = configToAlts[AltAndContextATNConfig(c)]
-            if  alts == nil  {
+            if alts == nil {
                 alts = BitSet()
-                configToAlts[AltAndContextATNConfig(c)] =  alts 
+                configToAlts[AltAndContextATNConfig(c)] = alts
             }
-            
+
             try alts!.set(c.alt)
         }
         return Array(configToAlts.values)
     }
-    
+
     /**
     * Get a map from state to alt subset from a configuration set. For each
     * configuration {@code c} in {@code configs}:
@@ -570,60 +572,58 @@ public enum PredictionMode {
     * map[c.{@link org.antlr.v4.runtime.atn.ATNConfig#state state}] U= c.{@link org.antlr.v4.runtime.atn.ATNConfig#alt alt}
     * </pre>
     */
-    public static func getStateToAltMap(configs: ATNConfigSet)throws -> Dictionary<ATNState, BitSet> {
+    public static func getStateToAltMap(configs: ATNConfigSet) throws -> Dictionary<ATNState, BitSet> {
         var m: Dictionary<ATNState, BitSet> = Dictionary<ATNState, BitSet>()
         for c: ATNConfig in configs.configs {
             var alts: BitSet? = m[c.state]
-            if  alts == nil  {
+            if alts == nil {
                 alts = BitSet()
-                m[c.state] = alts 
+                m[c.state] = alts
             }
-            
+
             try alts!.set(c.alt)
         }
         return m
     }
-    
-    public static func hasStateAssociatedWithOneAlt(configs: ATNConfigSet)throws -> Bool {
+
+    public static func hasStateAssociatedWithOneAlt(configs: ATNConfigSet) throws -> Bool {
         let x: Dictionary<ATNState, BitSet> = try getStateToAltMap(configs)
         for alts: BitSet in x.values {
-            
-            if  alts.cardinality() == 1  {
+
+            if alts.cardinality() == 1 {
                 return true
             }
         }
         return false
     }
-    
-    public static func getSingleViableAlt(altsets: Array<BitSet>)throws -> Int {
+
+    public static func getSingleViableAlt(altsets: Array<BitSet>) throws -> Int {
         let viableAlts: BitSet = BitSet()
         for alts: BitSet in altsets {
             let minAlt: Int = try alts.nextSetBit(0)
             try viableAlts.set(minAlt)
-            if  viableAlts.cardinality()>1  { // more than 1 viable alt
+            if viableAlts.cardinality() > 1 {
+                // more than 1 viable alt
                 return ATN.INVALID_ALT_NUMBER
             }
         }
         return try viableAlts.nextSetBit(0)
     }
-    
+
 }
 
 
-
 public func ==(lhs: PredictionMode.AltAndContextATNConfig, rhs: PredictionMode.AltAndContextATNConfig) -> Bool {
-    
-    
+
     if lhs.config === rhs.config {
         return true
     }
-    
-    
-    
+
+
     let same: Bool =
-    lhs.config.state.stateNumber == rhs.config.state.stateNumber  &&
-        lhs.config.context == rhs.config.context
-    
+    lhs.config.state.stateNumber == rhs.config.state.stateNumber &&
+            lhs.config.context == rhs.config.context
+
     return same
-    
+
 }

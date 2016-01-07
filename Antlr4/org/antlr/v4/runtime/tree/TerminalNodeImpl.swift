@@ -31,58 +31,74 @@
 
 
 public class TerminalNodeImpl: TerminalNode {
-	public var symbol: Token
-	public var parent: ParseTree?
+    public var symbol: Token
+    public var parent: ParseTree?
 
-	public init(_ symbol: Token) {	self.symbol = symbol	}
-
-	 
-	public override func getChild(i: Int) -> Tree? {return nil}
-
-	override
-	public func getSymbol() -> Token? {return symbol}
-
-	 override
-	public func getParent() -> Tree? { return parent }
-
-	 override
-	public func getPayload() -> AnyObject { return symbol }
-
-	 override
-	public func getSourceInterval() -> Interval {
-		//if   symbol == nil   { return Interval.INVALID; }
-
-		let tokenIndex: Int = symbol.getTokenIndex()
-		return Interval(tokenIndex, tokenIndex)
-	}
-
-	 override
-	public func getChildCount() -> Int { return 0 }
-
- 
-    override
- 
-    public func accept<T> (visitor: ParseTreeVisitor<T>  ) -> T? {
-       return visitor.visitTerminal(self)
+    public init(_ symbol: Token) {
+        self.symbol = symbol
     }
-	override
-	public func getText() -> String { return (symbol.getText())! }
 
-	 override
-	public func toStringTree(parser: Parser) -> String {
-		return description
-	}
 
-	 override
-	 public var description: String {
-            //TODO: symbol == nil?
-           //if    symbol == nil   {return "<nil>"; }
-			if  symbol.getType() == CommonToken.EOF  { return "<EOF>" }
-			return symbol.getText()!
-	}
+    public override func getChild(i: Int) -> Tree? {
+        return nil
+    }
 
-	 override
-	public func toStringTree() -> String {
-		return description
-	}
+    override
+    public func getSymbol() -> Token? {
+        return symbol
+    }
+
+    override
+    public func getParent() -> Tree? {
+        return parent
+    }
+
+    override
+    public func getPayload() -> AnyObject {
+        return symbol
+    }
+
+    override
+    public func getSourceInterval() -> Interval {
+        //if   symbol == nil   { return Interval.INVALID; }
+
+        let tokenIndex: Int = symbol.getTokenIndex()
+        return Interval(tokenIndex, tokenIndex)
+    }
+
+    override
+    public func getChildCount() -> Int {
+        return 0
+    }
+
+
+    override
+    public func accept<T>(visitor: ParseTreeVisitor<T>) -> T? {
+        return visitor.visitTerminal(self)
+    }
+
+    override
+    public func getText() -> String {
+        return (symbol.getText())!
+    }
+
+    override
+    public func toStringTree(parser: Parser) -> String {
+        return description
+    }
+
+    override
+    public var description: String {
+        //TODO: symbol == nil?
+        //if    symbol == nil   {return "<nil>"; }
+        if symbol.getType() == CommonToken.EOF {
+            return "<EOF>"
+        }
+        return symbol.getText()!
+    }
+
+    override
+    public func toStringTree() -> String {
+        return description
+    }
 }

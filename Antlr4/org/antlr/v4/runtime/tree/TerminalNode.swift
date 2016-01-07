@@ -29,10 +29,6 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// package org.antlr.v4.runtime.tree;
-
-// import org.antlr.v4.runtime.Token;
-//public protocol TerminalNode : ParseTree {
 public class TerminalNode: ParseTree {
     public func getSymbol() -> Token? {
         RuntimeException(" must overriden !")

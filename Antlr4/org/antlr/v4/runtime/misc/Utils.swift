@@ -31,84 +31,95 @@
 
 
 import Foundation
+
 public class Utils {
- 
-	public class func escapeWhitespace(s: String, _ escapeSpaces: Bool) -> String {
-		let buf: StringBuilder = StringBuilder()
-		for c: Character in s.characters {
-            if  c==" " && escapeSpaces  { buf.append("\u{00B7}") }
-			else { if  c=="\t"  { buf.append("\\t") }
-			else { if  c=="\n"  { buf.append("\\n") }
-			else { if  c=="\r"  { buf.append("\\r") }
-			else { buf.append(String(c)) } } } }
-		}
-		return buf.toString()
-	}
 
- 
+    public class func escapeWhitespace(s: String, _ escapeSpaces: Bool) -> String {
+        let buf: StringBuilder = StringBuilder()
+        for c: Character in s.characters {
+            if c == " " && escapeSpaces {
+                buf.append("\u{00B7}")
+            } else {
+                if c == "\t" {
+                    buf.append("\\t")
+                } else {
+                    if c == "\n" {
+                        buf.append("\\n")
+                    } else {
+                        if c == "\r" {
+                            buf.append("\\r")
+                        } else {
+                            buf.append(String(c))
+                        }
+                    }
+                }
+            }
+        }
+        return buf.toString()
+    }
 
-	public class func writeFile(fileName: String, _ content: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding)    {
-		 
+
+    public class func writeFile(fileName: String, _ content: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) {
+
         //writing
         do {
             try content.writeToFile(fileName, atomically: false, encoding: encoding)
-        }
-        catch {
+        } catch {
             /* error handling here */
             RuntimeException(" write file fail \(error)")
         }
-    
-    }
- 
 
-	public class func readFile(fileName: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> [Character]  {
- 
-        
+    }
+
+
+    public class func readFile(fileName: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> [Character] {
+
+
         let path = NSBundle.mainBundle().pathForResource(fileName, ofType: nil)
         if path == nil {
             return [Character]()
         }
-        
+
         var fileContents: String? = nil
         do {
             fileContents = try String(contentsOfFile: path!, encoding: encoding)
         } catch _ as NSError {
             return [Character]()
         }
-        
-        
-		return  Array(fileContents!.characters)
-	}
-    
-        public class func readFile2String(fileName: String,   _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> String  {
-            let path = NSBundle.mainBundle().pathForResource(fileName, ofType: nil)
-            if path == nil {
-                return ""
-            }
-            
-            var fileContents: String?  = nil
-            do {
-                fileContents = try String(contentsOfFile: path!, encoding: encoding)
-            } catch _ as NSError {
-                return ""
-            }
-            
-    
-    
-            return  fileContents ?? ""
+
+
+        return Array(fileContents!.characters)
+    }
+
+    public class func readFile2String(fileName: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> String {
+        let path = NSBundle.mainBundle().pathForResource(fileName, ofType: nil)
+        if path == nil {
+            return ""
         }
-    public class func readFile2StringByPath(path: String,   _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> String  {
-  
-        //let path = fileName.stringByExpandingTildeInPath
+
         var fileContents: String? = nil
         do {
-            fileContents = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding )  as String          //try String(contentsOfFile: path!, encoding: encoding)
+            fileContents = try String(contentsOfFile: path!, encoding: encoding)
         } catch _ as NSError {
             return ""
         }
-        
-        
-        return  fileContents ?? ""
+
+
+
+        return fileContents ?? ""
     }
- 
+
+    public class func readFile2StringByPath(path: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> String {
+
+        //let path = fileName.stringByExpandingTildeInPath
+        var fileContents: String? = nil
+        do {
+            fileContents = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding) as String          //try String(contentsOfFile: path!, encoding: encoding)
+        } catch _ as NSError {
+            return ""
+        }
+
+        return fileContents ?? ""
+    }
+
 }

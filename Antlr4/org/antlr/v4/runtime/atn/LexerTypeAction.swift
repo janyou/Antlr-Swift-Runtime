@@ -29,10 +29,6 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// package org.antlr.v4.runtime.atn;
-
-// import org.antlr.v4.runtime.Lexer;
-// import org.antlr.v4.runtime.misc.MurmurHash;
 
 /**
  * Implements the {@code type} lexer action by calling {@link org.antlr.v4.runtime.Lexer#setType}
@@ -41,61 +37,63 @@
  * @author Sam Harwell
  * @since 4.2
  */
-public class LexerTypeAction: LexerAction,CustomStringConvertible   {
-	private final var type: Int
 
-	/**
-	 * Constructs a new {@code type} action with the specified token type value.
-	 * @param type The type to assign to the token using {@link org.antlr.v4.runtime.Lexer#setType}.
-	 */
-	public init(_ type: Int) {
-		self.type = type
-	}
+public class LexerTypeAction: LexerAction, CustomStringConvertible {
+    private final var type: Int
 
-	/**
-	 * Gets the type to assign to a token created by the lexer.
-	 * @return The type to assign to a token created by the lexer.
-	 */
-	public func getType() -> Int {
-		return type
-	}
+    /**
+     * Constructs a new {@code type} action with the specified token type value.
+     * @param type The type to assign to the token using {@link org.antlr.v4.runtime.Lexer#setType}.
+     */
+    public init(_ type: Int) {
+        self.type = type
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#TYPE}.
-	 */
-	 
-	public override func getActionType() -> LexerActionType {
-		return LexerActionType.TYPE
-	}
+    /**
+     * Gets the type to assign to a token created by the lexer.
+     * @return The type to assign to a token created by the lexer.
+     */
+    public func getType() -> Int {
+        return type
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * @return This method returns {@code false}.
-	 */
-	 override 
-	public func isPositionDependent() -> Bool {
-		return false
-	}
+    /**
+     * {@inheritDoc}
+     * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#TYPE}.
+     */
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>This action is implemented by calling {@link org.antlr.v4.runtime.Lexer#setType} with the
-	 * value provided by {@link #getType}.</p>
-	 */
-	 
-	public override func execute(lexer: Lexer) {
-		lexer.setType(type)
-	}
+    public override func getActionType() -> LexerActionType {
+        return LexerActionType.TYPE
+    }
 
- 
+    /**
+     * {@inheritDoc}
+     * @return This method returns {@code false}.
+     */
+    override
+    public func isPositionDependent() -> Bool {
+        return false
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>This action is implemented by calling {@link org.antlr.v4.runtime.Lexer#setType} with the
+     * value provided by {@link #getType}.</p>
+     */
+
+    public override func execute(lexer: Lexer) {
+        lexer.setType(type)
+    }
+
+
     override
     public var hashValue: Int {
         var hash: Int = MurmurHash.initialize()
         hash = MurmurHash.update(hash, getActionType().rawValue)
         hash = MurmurHash.update(hash, type)
-        return MurmurHash.finish(hash, 2)    }
+        return MurmurHash.finish(hash, 2)
+    }
     public var description: String {
         return "type(\(type))"
     }
@@ -103,10 +101,10 @@ public class LexerTypeAction: LexerAction,CustomStringConvertible   {
 }
 
 public func ==(lhs: LexerTypeAction, rhs: LexerTypeAction) -> Bool {
-    
-    if lhs  === rhs {
+
+    if lhs === rhs {
         return true
     }
-    
+
     return lhs.type == rhs.type
 }

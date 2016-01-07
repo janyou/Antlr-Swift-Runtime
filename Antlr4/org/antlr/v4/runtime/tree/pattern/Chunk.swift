@@ -29,7 +29,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /**
  * A chunk is either a token tag, a rule tag, or a span of literal text within a
@@ -42,5 +42,6 @@
  * chunks are converted to {@link org.antlr.v4.runtime.tree.pattern.RuleTagToken}, {@link org.antlr.v4.runtime.tree.pattern.TokenTagToken}, or the
  * regular tokens of the text surrounding the tags.</p>
  */
+
 public class Chunk {
 }

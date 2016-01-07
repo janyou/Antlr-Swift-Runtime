@@ -52,245 +52,263 @@
  *  group values such as this aggregate.  The getters/setters are there to
  *  satisfy the superclass interface.
  */
+
 public class ParserRuleContext: RuleContext {
     public var visited = false
-	/** If we are debugging or building a parse tree for a visitor,
-	 *  we need to track all of the tokens and rule invocations associated
-	 *  with this rule's context. This is empty for parsing w/o tree constr.
-	 *  operation because we don't the need to track the details about
-	 *  how we parse this rule.
-	 */
-	public var children: Array<ParseTree>?
+    /** If we are debugging or building a parse tree for a visitor,
+     *  we need to track all of the tokens and rule invocations associated
+     *  with this rule's context. This is empty for parsing w/o tree constr.
+     *  operation because we don't the need to track the details about
+     *  how we parse this rule.
+     */
+    public var children: Array<ParseTree>?
 
-	/** For debugging/tracing purposes, we want to track all of the nodes in
-	 *  the ATN traversed by the parser for a particular rule.
-	 *  This list indicates the sequence of ATN nodes used to match
-	 *  the elements of the children list. This list does not include
-	 *  ATN nodes and other rules used to match rule invocations. It
-	 *  traces the rule invocation node itself but nothing inside that
-	 *  other rule's ATN submachine.
-	 *
-	 *  There is NOT a one-to-one correspondence between the children and
-	 *  states list. There are typically many nodes in the ATN traversed
-	 *  for each element in the children list. For example, for a rule
-	 *  invocation there is the invoking state and the following state.
-	 *
-	 *  The parser setState() method updates field s and adds it to this list
-	 *  if we are debugging/tracing.
+    /** For debugging/tracing purposes, we want to track all of the nodes in
+     *  the ATN traversed by the parser for a particular rule.
+     *  This list indicates the sequence of ATN nodes used to match
+     *  the elements of the children list. This list does not include
+     *  ATN nodes and other rules used to match rule invocations. It
+     *  traces the rule invocation node itself but nothing inside that
+     *  other rule's ATN submachine.
+     *
+     *  There is NOT a one-to-one correspondence between the children and
+     *  states list. There are typically many nodes in the ATN traversed
+     *  for each element in the children list. For example, for a rule
+     *  invocation there is the invoking state and the following state.
+     *
+     *  The parser setState() method updates field s and adds it to this list
+     *  if we are debugging/tracing.
      *
      *  This does not trace states visited during prediction.
-	 */
+     */
 //	public List<Integer> states;
 
-	public var start: Token?, stop: Token?
+    public var start: Token?, stop: Token?
 
-	/**
-	 * The exception that forced this rule to return. If the rule successfully
-	 * completed, this is {@code null}.
-	 */
-    public var exception: AnyObject!   //RecognitionException<ATNSimulator>!;
+    /**
+     * The exception that forced this rule to return. If the rule successfully
+     * completed, this is {@code null}.
+     */
+    public var exception: AnyObject!
+    //RecognitionException<ATNSimulator>!;
 
-	public override init() { super.init()}
+    public override init() {
+        super.init()
+    }
 
-	/** COPY a ctx (I'm deliberately not using copy constructor) to avoid
-	 *  confusion with creating node with parent. Does not copy children.
-	 */
-	public func copyFrom(ctx: ParserRuleContext) {
-		self.parent = ctx.parent
-		self.invokingState = ctx.invokingState
+    /** COPY a ctx (I'm deliberately not using copy constructor) to avoid
+     *  confusion with creating node with parent. Does not copy children.
+     */
+    public func copyFrom(ctx: ParserRuleContext) {
+        self.parent = ctx.parent
+        self.invokingState = ctx.invokingState
 
-		self.start = ctx.start
-		self.stop = ctx.stop
-	}
+        self.start = ctx.start
+        self.stop = ctx.stop
+    }
 
-	public   init(_ parent: ParserRuleContext?, _ invokingStateNumber: Int) {
-		super.init(parent, invokingStateNumber)
-	}
+    public init(_ parent: ParserRuleContext?, _ invokingStateNumber: Int) {
+        super.init(parent, invokingStateNumber)
+    }
 
-	// Double dispatch methods for listeners
+    // Double dispatch methods for listeners
 
-	public func enterRule(listener: ParseTreeListener) { }
-	public func exitRule(listener: ParseTreeListener) { }
+    public func enterRule(listener: ParseTreeListener) {
+    }
 
-	/** Does not set parent link; other add methods do that */
-	public func addChild(t: TerminalNode) -> TerminalNode {
-		if  children == nil  {
+    public func exitRule(listener: ParseTreeListener) {
+    }
+
+    /** Does not set parent link; other add methods do that */
+    public func addChild(t: TerminalNode) -> TerminalNode {
+        if children == nil {
             children = Array<ParseTree>()
         }
-		children!.append(t)
-		return t
-	}
+        children!.append(t)
+        return t
+    }
 
-	public func addChild(ruleInvocation: RuleContext) -> RuleContext {
-		if  children == nil  { children = Array<ParseTree>() }
-		children!.append(ruleInvocation)
-		return ruleInvocation
-	}
+    public func addChild(ruleInvocation: RuleContext) -> RuleContext {
+        if children == nil {
+            children = Array<ParseTree>()
+        }
+        children!.append(ruleInvocation)
+        return ruleInvocation
+    }
 
-	/** Used by enterOuterAlt to toss out a RuleContext previously added as
-	 *  we entered a rule. If we have # label, we will need to remove
-	 *  generic ruleContext object.
- 	 */
-	public func removeLastChild() {
-		if  children != nil  {
+    /** Used by enterOuterAlt to toss out a RuleContext previously added as
+     *  we entered a rule. If we have # label, we will need to remove
+     *  generic ruleContext object.
+      */
+    public func removeLastChild() {
+        if children != nil {
             children!.removeLast()
-         
-			//children.remove(children.size()-1);
-		}
-	}
+
+            //children.remove(children.size()-1);
+        }
+    }
 
 //	public void trace(int s) {
 //		if ( states==null ) states = new ArrayList<Integer>();
 //		states.add(s);
 //	}
 
-	public func addChild(matchedToken: Token) -> TerminalNode {
-		let t: TerminalNodeImpl = TerminalNodeImpl(matchedToken)
-		addChild(t)
-		t.parent = self
-		return t
-	}
+    public func addChild(matchedToken: Token) -> TerminalNode {
+        let t: TerminalNodeImpl = TerminalNodeImpl(matchedToken)
+        addChild(t)
+        t.parent = self
+        return t
+    }
 
-	public func addErrorNode(badToken: Token) -> ErrorNode {
-		let t: ErrorNode  = ErrorNode(badToken)
-		addChild(t)
-		t.parent = self
-		return t
-	}
+    public func addErrorNode(badToken: Token) -> ErrorNode {
+        let t: ErrorNode = ErrorNode(badToken)
+        addChild(t)
+        t.parent = self
+        return t
+    }
 
-	override
-	/** Override to make type more specific */
-	public func getParent() -> Tree? {
-		return super.getParent()  
-	}
+    override
+    /** Override to make type more specific */
+    public func getParent() -> Tree? {
+        return super.getParent()
+    }
 
-	override
-	public func getChild(i: Int) -> Tree? {
-		return (children != nil && i >= 0 && i < children!.count) ? children![i] : nil
-	}
- 
-    public  func getChild<T: ParseTree>( ctxType: T.Type, i: Int) -> T? {
-		if  children == nil || i < 0 || i >= children!.count  {
-			return nil
-		}
+    override
+    public func getChild(i: Int) -> Tree? {
+        return (children != nil && i >= 0 && i < children!.count) ? children![i] : nil
+    }
 
-		var j: Int = -1 // what element have we found with ctxType?
-		for o: ParseTree in children! {
-            	//if ( ctxType.isInstance(o) ) {
-			 if  o is T  {
-				j++
-				if  j == i  {
-					return o as?  T//ctxType.cast(o);
-				}
-			}
-		}
-		return nil
-	}
+    public func getChild<T:ParseTree>(ctxType: T.Type, i: Int) -> T? {
+        if children == nil || i < 0 || i >= children!.count {
+            return nil
+        }
 
-	public func getToken(ttype: Int, _ i: Int) -> TerminalNode? {
-		if  children==nil || i < 0 || i >= children!.count  {
-			return nil
-		}
+        var j: Int = -1 // what element have we found with ctxType?
+        for o: ParseTree in children! {
+            //if ( ctxType.isInstance(o) ) {
+            if o is T {
+                j++
+                if j == i {
+                    return o as? T//ctxType.cast(o);
+                }
+            }
+        }
+        return nil
+    }
 
-		var j: Int = -1 // what token with ttype have we found?
-		for o: ParseTree in children! {
-			if  o is TerminalNode  {
-				let tnode: TerminalNode = o as! TerminalNode
-				let symbol: Token = tnode.getSymbol()!
-				if  symbol.getType()==ttype  {
-					j++
-					if  j == i  {
-						return tnode
-					}
-				}
-			}
-		}
+    public func getToken(ttype: Int, _ i: Int) -> TerminalNode? {
+        if children == nil || i < 0 || i >= children!.count {
+            return nil
+        }
 
-		return nil
-	}
+        var j: Int = -1 // what token with ttype have we found?
+        for o: ParseTree in children! {
+            if o is TerminalNode {
+                let tnode: TerminalNode = o as! TerminalNode
+                let symbol: Token = tnode.getSymbol()!
+                if symbol.getType() == ttype {
+                    j++
+                    if j == i {
+                        return tnode
+                    }
+                }
+            }
+        }
 
-	public func getTokens(ttype: Int) -> Array<TerminalNode> {
-		if  children == nil  {
-			return Array<TerminalNode> ()
-		}
+        return nil
+    }
 
-		var tokens: Array<TerminalNode>? = nil
-		for o: ParseTree in children! {
-			if  o is TerminalNode  {
-				let tnode: TerminalNode = o as! TerminalNode
-				let symbol: Token = tnode.getSymbol()!
-				if  symbol.getType()==ttype  {
-					if  tokens==nil  {
-						tokens = Array<TerminalNode>()
-					}
-					tokens?.append(tnode)
-				}
-			}
-		}
+    public func getTokens(ttype: Int) -> Array<TerminalNode> {
+        if children == nil {
+            return Array<TerminalNode>()
+        }
 
-		if  tokens == nil  {
-			  return Array<TerminalNode> ()
-		}
+        var tokens: Array<TerminalNode>? = nil
+        for o: ParseTree in children! {
+            if o is TerminalNode {
+                let tnode: TerminalNode = o as! TerminalNode
+                let symbol: Token = tnode.getSymbol()!
+                if symbol.getType() == ttype {
+                    if tokens == nil {
+                        tokens = Array<TerminalNode>()
+                    }
+                    tokens?.append(tnode)
+                }
+            }
+        }
 
-		return tokens!
-	}
-    public  func getRuleContext<T: ParserRuleContext>(ctxType: T.Type, _ i: Int) -> T? {
- 
-       return  getChild( ctxType,i: i)
-	}
- public  func getRuleContexts<T: ParserRuleContext>( ctxType: T.Type) -> Array<T> {
- 
-		if  children == nil  {
-			return  Array<T>()//Collections.emptyList();
-		}
+        if tokens == nil {
+            return Array<TerminalNode>()
+        }
 
-		var contexts: Array<T>? = nil
-		for o: ParseTree in children! {
-			if  o is T  {
-				if  contexts == nil  {
-					contexts = Array<T>()
-				}
+        return tokens!
+    }
+
+    public func getRuleContext<T:ParserRuleContext>(ctxType: T.Type, _ i: Int) -> T? {
+
+        return getChild(ctxType, i: i)
+    }
+
+    public func getRuleContexts<T:ParserRuleContext>(ctxType: T.Type) -> Array<T> {
+
+        if children == nil {
+            return Array<T>()//Collections.emptyList();
+        }
+
+        var contexts: Array<T>? = nil
+        for o: ParseTree in children! {
+            if o is T {
+                if contexts == nil {
+                    contexts = Array<T>()
+                }
                 contexts!.append(o as! T)
-				//contexts.(ctxType.cast(o));
-			}
-		}
+                //contexts.(ctxType.cast(o));
+            }
+        }
 
-		if  contexts == nil  {
-			return Array<T>() //Collections.emptyList();
-		}
+        if contexts == nil {
+            return Array<T>() //Collections.emptyList();
+        }
 
-		return contexts!
-	}
+        return contexts!
+    }
 
-	override
-	public func getChildCount() -> Int { return children != nil ? children!.count : 0 }
+    override
+    public func getChildCount() -> Int {
+        return children != nil ? children!.count : 0
+    }
 
-	override
-	public func getSourceInterval() -> Interval {
-		if  start == nil || stop == nil  {
-            return Interval.INVALID }
-		return Interval.of(start!.getTokenIndex(), stop!.getTokenIndex())
-	}
+    override
+    public func getSourceInterval() -> Interval {
+        if start == nil || stop == nil {
+            return Interval.INVALID
+        }
+        return Interval.of(start!.getTokenIndex(), stop!.getTokenIndex())
+    }
 
-	/**
-	 * Get the initial token in this context.
-	 * Note that the range from start to stop is inclusive, so for rules that do not consume anything
-	 * (for example, zero length or error productions) this token may exceed stop.
-	 */
-	public func getStart() -> Token? { return start }
-	/**
-	 * Get the final token in this context.
-	 * Note that the range from start to stop is inclusive, so for rules that do not consume anything
-	 * (for example, zero length or error productions) this token may precede start.
-	 */
-	public func getStop() -> Token? { return stop }
+    /**
+     * Get the initial token in this context.
+     * Note that the range from start to stop is inclusive, so for rules that do not consume anything
+     * (for example, zero length or error productions) this token may exceed stop.
+     */
+    public func getStart() -> Token? {
+        return start
+    }
+    /**
+     * Get the final token in this context.
+     * Note that the range from start to stop is inclusive, so for rules that do not consume anything
+     * (for example, zero length or error productions) this token may precede start.
+     */
+    public func getStop() -> Token? {
+        return stop
+    }
 
     /** Used for rule context info debugging during parse-time, not so much for ATN debugging */
     public func toInfoString(recognizer: Parser) -> String {
         var rules: Array<String> = recognizer.getRuleInvocationStack(self)
-       // Collections.reverse(rules);
+        // Collections.reverse(rules);
         rules = rules.reverse()
-        return"ParserRuleContext\(rules){start= + \(start), stop=\(stop)}"
- 
+        return "ParserRuleContext\(rules){start= + \(start), stop=\(stop)}"
+
     }
 }

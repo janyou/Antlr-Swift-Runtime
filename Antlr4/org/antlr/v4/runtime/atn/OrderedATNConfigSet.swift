@@ -34,13 +34,14 @@
  *
  * @author Sam Harwell
  */
+
 public class OrderedATNConfigSet: ATNConfigSet {
 
-	public init() {
+    public init() {
         super.init(true)
-		self.configLookup =  LookupDictionary(type: LookupDictionaryType.Ordered)
-            //Dictionary<Int,[OrderedATNConfig]> ()    //Set<OrderedATNConfig>()  //LexerConfigHashSet();
-	}
+        self.configLookup = LookupDictionary(type: LookupDictionaryType.Ordered)
 
- 
+    }
+
+
 }

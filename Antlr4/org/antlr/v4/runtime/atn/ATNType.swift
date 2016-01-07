@@ -29,23 +29,24 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 
 /**
  * Represents the type of recognizer an ATN applies to.
  *
  * @author Sam Harwell
  */
+
 public enum ATNType: Int {
 
-	/**
-	 * A lexer grammar.
-	 */
-	case LEXER = 0
-	
-	/**
-	 * A parser grammar.
-	 */
-	case PARSER
+    /**
+     * A lexer grammar.
+     */
+    case LEXER = 0
+
+    /**
+     * A parser grammar.
+     */
+    case PARSER
 
 }

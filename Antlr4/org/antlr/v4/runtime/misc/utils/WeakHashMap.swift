@@ -1,5 +1,3 @@
-
-
 import ObjectiveC
 
 //http://stackoverflow.com/questions/28670796/can-i-hook-when-a-weakly-referenced-object-of-arbitrary-type-is-freed
@@ -13,38 +11,52 @@ OBJC_ASSOCIATION_COPY = 01403
 };
 */
 // helper class to notify deallocation
+
 class DeallocWatcher {
     let notify: () -> Void
-    init(_ notify: () -> Void) { self.notify = notify }
-    deinit { notify() }
+    init(_ notify: () -> Void) {
+        self.notify = notify
+    }
+    deinit {
+        notify()
+    }
 }
-class WeakBox<E: AnyObject> {
+
+class WeakBox<E:AnyObject> {
     weak var raw: E!
-    init(  _ raw: E) { self.raw = raw }
+    init(_ raw: E) {
+        self.raw = raw
+    }
 }
-class WeakHashMap<Key: Hashable, Value: AnyObject> {
-    
-    private var mapping = [Key: WeakBox<Value>]()
-    
+
+class WeakHashMap<Key:Hashable, Value:AnyObject> {
+
+    private var mapping = [Key: WeakBox < Value>]()
+
     subscript(key: Key) -> Value? {
-        get { return mapping[key]?.raw }
+        get {
+            return mapping[key]?.raw
+        }
         set {
             if let o = newValue {
                 // Add helper to associated objects.
                 // When `o` is deallocated, `watcher` is also deallocated.
                 // So, `watcher.deinit()` will get called.
-                let watcher = DeallocWatcher { [unowned self] in self.mapping[key] = nil }
-                objc_setAssociatedObject(o, unsafeAddressOf(self), watcher,  (objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+                let watcher = DeallocWatcher {
+                    [unowned self] in self.mapping[key] = nil
+                }
+                objc_setAssociatedObject(o, unsafeAddressOf(self), watcher, (objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC))
                 mapping[key] = WeakBox(o)
-            }
-            else {
+            } else {
                 mapping[key] = nil
             }
         }
     }
-    
-    var count: Int { return mapping.count }
-    
+
+    var count: Int {
+        return mapping.count
+    }
+
     deinit {
         // cleanup
         for e in self.mapping.values {

@@ -28,14 +28,15 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
- 
+
 
 /** This signifies any kind of mismatched input exceptions such as
  *  when the current input does not match the expected token.
  */
+
 public class InputMismatchException: RecognitionException<ParserATNSimulator> {
-	public   init(_ recognizer: Parser)throws {
-		super.init(recognizer, recognizer.getInputStream()!, recognizer._ctx)
-		self.setOffendingToken(try recognizer.getCurrentToken())
-	}
+    public init(_ recognizer: Parser) throws {
+        super.init(recognizer, recognizer.getInputStream()!, recognizer._ctx)
+        self.setOffendingToken(try recognizer.getCurrentToken())
+    }
 }

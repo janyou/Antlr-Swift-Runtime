@@ -10,16 +10,19 @@ import Foundation
 
 public struct Stack<T> {
     var items = [T]()
-   public mutating func push(item: T) {
+    public mutating func push(item: T) {
         items.append(item)
     }
-   public mutating func pop() -> T {
+
+    public mutating func pop() -> T {
         return items.removeLast()
     }
-   public mutating func clear()  {
+
+    public mutating func clear() {
         return items.removeAll()
     }
-    public  func peek() -> T? {
+
+    public func peek() -> T? {
         return items.last
     }
     public var isEmpty: Bool {

@@ -45,95 +45,96 @@
  *
  * <p>TODO: what to do about lexers</p>
  */
+
 public protocol ANTLRErrorStrategy {
-	/**
-	 * Reset the error handler state for the specified {@code recognizer}.
-	 * @param recognizer the parser instance
-	 */
-	func reset(recognizer: Parser)
+    /**
+     * Reset the error handler state for the specified {@code recognizer}.
+     * @param recognizer the parser instance
+     */
+    func reset(recognizer: Parser)
 
-	/**
-	 * This method is called when an unexpected symbol is encountered during an
-	 * inline match operation, such as {@link org.antlr.v4.runtime.Parser#match}. If the error
-	 * strategy successfully recovers from the match failure, this method
-	 * returns the {@link org.antlr.v4.runtime.Token} instance which should be treated as the
-	 * successful result of the match.
-	 *
+    /**
+     * This method is called when an unexpected symbol is encountered during an
+     * inline match operation, such as {@link org.antlr.v4.runtime.Parser#match}. If the error
+     * strategy successfully recovers from the match failure, this method
+     * returns the {@link org.antlr.v4.runtime.Token} instance which should be treated as the
+     * successful result of the match.
+     *
    * <p>This method handles the consumption of any tokens - the caller should
-	 * <b>not</b> call {@link org.antlr.v4.runtime.Parser#consume} after a successful recovery.</p>
-	 *
-	 * <p>Note that the calling code will not report an error if this method
-	 * returns successfully. The error strategy implementation is responsible
-	 * for calling {@link org.antlr.v4.runtime.Parser#notifyErrorListeners} as appropriate.</p>
-	 *
-	 * @param recognizer the parser instance
-	 * @throws org.antlr.v4.runtime.RecognitionException if the error strategy was not able to
-	 * recover from the unexpected input symbol
-	 */
-	func recoverInline(recognizer: Parser) throws -> Token // RecognitionException;
+     * <b>not</b> call {@link org.antlr.v4.runtime.Parser#consume} after a successful recovery.</p>
+     *
+     * <p>Note that the calling code will not report an error if this method
+     * returns successfully. The error strategy implementation is responsible
+     * for calling {@link org.antlr.v4.runtime.Parser#notifyErrorListeners} as appropriate.</p>
+     *
+     * @param recognizer the parser instance
+     * @throws org.antlr.v4.runtime.RecognitionException if the error strategy was not able to
+     * recover from the unexpected input symbol
+     */
+    func recoverInline(recognizer: Parser) throws -> Token // RecognitionException;
 
-	/**
-	 * This method is called to recover from exception {@code e}. This method is
-	 * called after {@link #reportError} by the default exception handler
-	 * generated for a rule method.
-	 *
-	 * @see #reportError
-	 *
-	 * @param recognizer the parser instance
-	 * @param e the recognition exception to recover from
-	 * @throws org.antlr.v4.runtime.RecognitionException if the error strategy could not recover from
-	 * the recognition exception
-	 */
-	func recover(recognizer: Parser, _ e: AnyObject) throws // RecognitionException;
+    /**
+     * This method is called to recover from exception {@code e}. This method is
+     * called after {@link #reportError} by the default exception handler
+     * generated for a rule method.
+     *
+     * @see #reportError
+     *
+     * @param recognizer the parser instance
+     * @param e the recognition exception to recover from
+     * @throws org.antlr.v4.runtime.RecognitionException if the error strategy could not recover from
+     * the recognition exception
+     */
+    func recover(recognizer: Parser, _ e: AnyObject) throws // RecognitionException;
 
-	/**
-	 * This method provides the error handler with an opportunity to handle
-	 * syntactic or semantic errors in the input stream before they result in a
-	 * {@link org.antlr.v4.runtime.RecognitionException}.
-	 *
-	 * <p>The generated code currently contains calls to {@link #sync} after
-	 * entering the decision state of a closure block ({@code (...)*} or
-	 * {@code (...)+}).</p>
-	 *
-	 * <p>For an implementation based on Jim Idle's "magic sync" mechanism, see
-	 * {@link org.antlr.v4.runtime.DefaultErrorStrategy#sync}.</p>
-	 *
-	 * @see org.antlr.v4.runtime.DefaultErrorStrategy#sync
-	 *
-	 * @param recognizer the parser instance
-	 * @throws org.antlr.v4.runtime.RecognitionException if an error is detected by the error
-	 * strategy but cannot be automatically recovered at the current state in
-	 * the parsing process
-	 */
-	func sync(recognizer: Parser) throws // RecognitionException;
+    /**
+     * This method provides the error handler with an opportunity to handle
+     * syntactic or semantic errors in the input stream before they result in a
+     * {@link org.antlr.v4.runtime.RecognitionException}.
+     *
+     * <p>The generated code currently contains calls to {@link #sync} after
+     * entering the decision state of a closure block ({@code (...)*} or
+     * {@code (...)+}).</p>
+     *
+     * <p>For an implementation based on Jim Idle's "magic sync" mechanism, see
+     * {@link org.antlr.v4.runtime.DefaultErrorStrategy#sync}.</p>
+     *
+     * @see org.antlr.v4.runtime.DefaultErrorStrategy#sync
+     *
+     * @param recognizer the parser instance
+     * @throws org.antlr.v4.runtime.RecognitionException if an error is detected by the error
+     * strategy but cannot be automatically recovered at the current state in
+     * the parsing process
+     */
+    func sync(recognizer: Parser) throws // RecognitionException;
 
-	/**
-	 * Tests whether or not {@code recognizer} is in the process of recovering
-	 * from an error. In error recovery mode, {@link org.antlr.v4.runtime.Parser#consume} adds
-	 * symbols to the parse tree by calling
-	 * {@link org.antlr.v4.runtime.ParserRuleContext#addErrorNode(org.antlr.v4.runtime.Token)} instead of
-	 * {@link org.antlr.v4.runtime.ParserRuleContext#addChild(org.antlr.v4.runtime.Token)}.
-	 *
-	 * @param recognizer the parser instance
-	 * @return {@code true} if the parser is currently recovering from a parse
-	 * error, otherwise {@code false}
-	 */
-	func inErrorRecoveryMode(recognizer: Parser) -> Bool
+    /**
+     * Tests whether or not {@code recognizer} is in the process of recovering
+     * from an error. In error recovery mode, {@link org.antlr.v4.runtime.Parser#consume} adds
+     * symbols to the parse tree by calling
+     * {@link org.antlr.v4.runtime.ParserRuleContext#addErrorNode(org.antlr.v4.runtime.Token)} instead of
+     * {@link org.antlr.v4.runtime.ParserRuleContext#addChild(org.antlr.v4.runtime.Token)}.
+     *
+     * @param recognizer the parser instance
+     * @return {@code true} if the parser is currently recovering from a parse
+     * error, otherwise {@code false}
+     */
+    func inErrorRecoveryMode(recognizer: Parser) -> Bool
 
-	/**
-	 * This method is called by when the parser successfully matches an input
-	 * symbol.
-	 *
-	 * @param recognizer the parser instance
-	 */
-	func reportMatch(recognizer: Parser)
+    /**
+     * This method is called by when the parser successfully matches an input
+     * symbol.
+     *
+     * @param recognizer the parser instance
+     */
+    func reportMatch(recognizer: Parser)
 
-	/**
-	 * Report any kind of {@link org.antlr.v4.runtime.RecognitionException}. This method is called by
-	 * the default exception handler generated for a rule method.
-	 *
-	 * @param recognizer the parser instance
-	 * @param e the recognition exception to report
-	 */
-	func reportError(recognizer: Parser, _ e: AnyObject)
+    /**
+     * Report any kind of {@link org.antlr.v4.runtime.RecognitionException}. This method is called by
+     * the default exception handler generated for a rule method.
+     *
+     * @param recognizer the parser instance
+     * @param e the recognition exception to report
+     */
+    func reportError(recognizer: Parser, _ e: AnyObject)
 }

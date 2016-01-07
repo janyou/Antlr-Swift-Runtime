@@ -34,36 +34,36 @@
  *
  * @author Sam Harwell
  */
-public class ConsoleErrorListener: BaseErrorListener {
-	/**
-	 * Provides a default instance of {@link org.antlr.v4.runtime.ConsoleErrorListener}.
-	 */
-	public static let INSTANCE: ConsoleErrorListener = ConsoleErrorListener()
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * This implementation prints messages to {@link System#err} containing the
-	 * values of {@code line}, {@code charPositionInLine}, and {@code msg} using
-	 * the following format.</p>
-	 *
-	 * <pre>
-	 * line <em>line</em>:<em>charPositionInLine</em> <em>msg</em>
-	 * </pre>
-	 */
-	override
-    public func syntaxError<T: ATNSimulator>(recognizer: Recognizer<T>,
-							_ offendingSymbol: AnyObject?,
-							_ line: Int,
-							_ charPositionInLine: Int,
-							_ msg: String,
-							_ e: AnyObject?//RecognitionException
-        )
-	{
-        if  Parser.ConsoleError {
-		    errPrint ("line \( line):\(charPositionInLine) \(msg)" )
+public class ConsoleErrorListener: BaseErrorListener {
+    /**
+     * Provides a default instance of {@link org.antlr.v4.runtime.ConsoleErrorListener}.
+     */
+    public static let INSTANCE: ConsoleErrorListener = ConsoleErrorListener()
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>
+     * This implementation prints messages to {@link System#err} containing the
+     * values of {@code line}, {@code charPositionInLine}, and {@code msg} using
+     * the following format.</p>
+     *
+     * <pre>
+     * line <em>line</em>:<em>charPositionInLine</em> <em>msg</em>
+     * </pre>
+     */
+    override
+    public func syntaxError<T:ATNSimulator>(recognizer: Recognizer<T>,
+                                            _ offendingSymbol: AnyObject?,
+                                            _ line: Int,
+                                            _ charPositionInLine: Int,
+                                            _ msg: String,
+                                            _ e: AnyObject?//RecognitionException
+    ) {
+        if Parser.ConsoleError {
+            errPrint("line \(line):\(charPositionInLine) \(msg)")
         }
-	}
+    }
 
 }
