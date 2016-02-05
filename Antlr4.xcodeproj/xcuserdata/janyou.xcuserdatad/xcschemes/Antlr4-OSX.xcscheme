@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F9A421251BCCC35000A9CD35"
+               BlueprintIdentifier = "F9A424A71BCD348C00A9CD35"
                BuildableName = "Antlr4Tests.xctest"
                BlueprintName = "Antlr4Tests"
                ReferencedContainer = "container:Antlr4.xcodeproj">

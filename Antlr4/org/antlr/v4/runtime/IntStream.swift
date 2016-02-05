@@ -48,7 +48,7 @@
  * </ul>
  */
 
-public protocol IntStream {
+public protocol IntStream: class {
     /**
      * The value returned by {@link #LA LA()} when the end of the stream is
      * reached.
