@@ -115,7 +115,7 @@ public class TokenStreamRewriter {
     public let MIN_TOKEN_INDEX: Int = 0
     
     // Define the rewrite operation hierarchy
-
+    
     
     public class RewriteOperation: CustomStringConvertible {
         /** What index into rewrites List are we? */
@@ -198,7 +198,7 @@ public class TokenStreamRewriter {
     
     
     public final class RewriteOperationArray{
-        public var array: Array<RewriteOperation?> =  Array<RewriteOperation?>()
+        public final var array: Array<RewriteOperation?> = Array<RewriteOperation?>()
         public init(){
             array.reserveCapacity(TokenStreamRewriter.PROGRAM_INIT_SIZE)
         }
@@ -461,6 +461,7 @@ public class TokenStreamRewriter {
                 }
             }
         }
+        
         return buf.toString()
     }
     
@@ -520,8 +521,8 @@ public class TokenStreamRewriter {
         for i in 0..<rewritesCount {
             if let rop: ReplaceOp = rewrites[i] as? ReplaceOp {
                 // Wipe prior inserts within range
-                let inserts: Array<InsertBeforeOp> = getKindOfOps(rewrites, InsertBeforeOp.self, i)
-                for iop: InsertBeforeOp in inserts {
+                getKindOfOps(&rewrites, InsertBeforeOp.self, i){
+                    (iop:InsertBeforeOp,inout rewrites: Array<RewriteOperation?>)  in
                     if iop.index == rop.index {
                         // E.g., insert before 2, delete 2..2; update replace
                         // text to include insert before, kill insert
@@ -535,12 +536,12 @@ public class TokenStreamRewriter {
                     }
                 }
                 // Drop any prior replaces contained within
-                let prevReplaces: Array<ReplaceOp> = getKindOfOps(rewrites, ReplaceOp.self, i)
-                for prevRop: ReplaceOp in prevReplaces {
+                try getKindOfOps(&rewrites, ReplaceOp.self, i){
+                    (prevRop: ReplaceOp,inout rewrites: Array<RewriteOperation?>) throws  in
                     if prevRop.index >= rop.index && prevRop.lastIndex <= rop.lastIndex {
                         // delete replace as it's a no-op.
                         rewrites[prevRop.instructionIndex] = nil
-                        continue
+                        return//continue
                     }
                     // throw exception unless disjoint or identical
                     let disjoint: Bool =
@@ -570,8 +571,8 @@ public class TokenStreamRewriter {
         for i in 0..<rewritesCount {
             if let iop: InsertBeforeOp = rewrites[i] as? InsertBeforeOp {
                 // combine current insert with prior if any at same index
-                let prevInserts: Array<InsertBeforeOp> = getKindOfOps(rewrites, InsertBeforeOp.self, i)
-                for prevIop: InsertBeforeOp in prevInserts {
+                getKindOfOps(&rewrites, InsertBeforeOp.self, i){
+                    (prevIop: InsertBeforeOp,inout rewrites: Array<RewriteOperation?>)   in
                     if prevIop.index == iop.index {
                         // combine objects
                         // convert to strings...we're in process of toString'ing
@@ -582,12 +583,13 @@ public class TokenStreamRewriter {
                     }
                 }
                 // look for replaces where iop.index is in range; error
-                let prevReplaces: Array<ReplaceOp> = getKindOfOps(rewrites, ReplaceOp.self, i)
-                for rop: ReplaceOp in prevReplaces {
+                try getKindOfOps(&rewrites, ReplaceOp.self, i){
+                    (rop: ReplaceOp,inout rewrites: Array<RewriteOperation?>) throws in
                     if iop.index == rop.index {
                         rop.text = catOpText(iop.text, rop.text)
                         rewrites[i] = nil    // delete current insert
-                        continue
+                        // continue
+                        return
                     }
                     if iop.index >= rop.index && iop.index <= rop.lastIndex {
                         throw ANTLRError.IllegalArgument(msg: "insert op " + iop.description + " within boundaries of previous " + rop.description)
@@ -613,24 +615,23 @@ public class TokenStreamRewriter {
     static func catOpText(a: AnyObject?, _ b: AnyObject?) -> String {
         let x: String = a?.description ?? ""
         let y: String = b?.description ?? ""
-
+        
         return x + y
     }
     
     /** Get all operations before an index of a particular kind */
-    static  func getKindOfOps<T: RewriteOperation>(rewrites: Array<RewriteOperation?>, _ kind: T.Type, _ before: Int) ->  Array<T> {
-        var ops: Array<T> = Array<T>()
-        let length =  min(before,rewrites.count)
-        ops.reserveCapacity(length)
+    static  func getKindOfOps<T: RewriteOperation>(inout rewrites: Array<RewriteOperation?>, _ kind: T.Type, _ before: Int,@noescape handler:(T,inout rewrites: Array<RewriteOperation?>) throws -> Void) rethrows  {
         
+        let length =  min(before,rewrites.count)
         for i in 0..<length {
             if let op: RewriteOperation = rewrites[i] {
                 if op is T {
-                    ops.append(op as! T)
+                    try handler(op as! T,rewrites: &rewrites)
                 }
             }
         }
         
-        return ops
+        
     }
+    
 }
