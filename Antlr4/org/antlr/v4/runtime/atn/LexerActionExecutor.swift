@@ -84,7 +84,7 @@ public class LexerActionExecutor: Hashable {
      * @return A {@link org.antlr.v4.runtime.atn.LexerActionExecutor} for executing the combine actions
      * of {@code lexerActionExecutor} and {@code lexerAction}.
      */
-    public class func append(lexerActionExecutor: LexerActionExecutor?, _ lexerAction: LexerAction) -> LexerActionExecutor {
+    public static func append(lexerActionExecutor: LexerActionExecutor?, _ lexerAction: LexerAction) -> LexerActionExecutor {
         if lexerActionExecutor == nil {
             return LexerActionExecutor([lexerAction])
         }
@@ -127,7 +127,8 @@ public class LexerActionExecutor: Hashable {
      */
     public func fixOffsetBeforeMatch(offset: Int) -> LexerActionExecutor {
         var updatedLexerActions: [LexerAction]? = nil
-        for var i: Int = 0; i < lexerActions.count; i++ {
+        let length = lexerActions.count
+        for i in 0..<length {
             if lexerActions[i].isPositionDependent() && !(lexerActions[i] is LexerIndexedCustomAction) {
                 if updatedLexerActions == nil {
                     updatedLexerActions = lexerActions   //lexerActions.clone();
@@ -214,7 +215,8 @@ public func ==(lhs: LexerActionExecutor, rhs: LexerActionExecutor) -> Bool {
     if lhs.lexerActions.count != rhs.lexerActions.count {
         return false
     }
-    for var i = 0; i < lhs.lexerActions.count; i++ {
+    let length = lhs.lexerActions.count
+    for i in 0..<length {
         if !(lhs.lexerActions[i] == rhs.lexerActions[i]) {
             return false
         }

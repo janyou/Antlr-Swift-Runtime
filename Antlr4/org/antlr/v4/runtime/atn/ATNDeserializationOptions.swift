@@ -62,7 +62,7 @@ public class ATNDeserializationOptions {
     }
 
 
-    public class func getDefaultOptions() -> ATNDeserializationOptions {
+    public static func getDefaultOptions() -> ATNDeserializationOptions {
         return defaultOptions
     }
 

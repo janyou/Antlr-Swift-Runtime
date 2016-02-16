@@ -59,7 +59,7 @@ public class LookupDictionary {
     public func getOrAdd(config: ATNConfig) -> ATNConfig {
 
         let h = hash(config)
-        var configList = cache[h]
+        let configList = cache[h]
         if configList != nil {
             for c in configList! {
                 if equal(c, config) {
@@ -71,7 +71,8 @@ public class LookupDictionary {
         if configList == nil {
             cache[h] = [config]
         } else {
-            configList?.append(config)
+            cache[h]!.append(config)
+            //configList?.append(config)
         }
 
         return config

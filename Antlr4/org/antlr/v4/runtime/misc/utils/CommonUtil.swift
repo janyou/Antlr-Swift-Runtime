@@ -166,7 +166,7 @@ public func ArrayEquals<T:Equatable>(a: [T], _ a2: [T]) -> Bool {
 
     let length = a.count
 
-    for var i = 0; i < length; i++ {
+    for i in 0..<length {
         let o1 = a[i]
         let o2 = a2[i]
 
@@ -188,7 +188,7 @@ public func ArrayEquals<T:Equatable>(a: [T?], _ a2: [T?]) -> Bool {
 
     let length = a.count
 
-    for var i = 0; i < length; i++ {
+    for i in 0..<length {
         let o1 = a[i]
         let o2 = a2[i]
 

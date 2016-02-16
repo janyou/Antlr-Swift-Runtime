@@ -46,7 +46,7 @@ public class SingletonPredictionContext: PredictionContext {
         super.init(parent != nil ? PredictionContext.calculateHashCode(parent!, returnState) : PredictionContext.calculateEmptyHashCode())
     }
 
-    public class func create(parent: PredictionContext?, _ returnState: Int) -> SingletonPredictionContext {
+    public static func create(parent: PredictionContext?, _ returnState: Int) -> SingletonPredictionContext {
         if returnState == PredictionContext.EMPTY_RETURN_STATE && parent == nil {
             // someone can pass in the bits of an array ctx that mean $
             return PredictionContext.EMPTY
@@ -87,7 +87,13 @@ public class SingletonPredictionContext: PredictionContext {
 
 
 public func ==(lhs: SingletonPredictionContext, rhs: SingletonPredictionContext) -> Bool {
+    if lhs === rhs {
+        return true
+    }
     if lhs.hashValue != rhs.hashValue {
+        return false
+    }
+    if lhs.returnState != rhs.returnState {
         return false
     }
     var parentCompare = false
@@ -101,8 +107,7 @@ public func ==(lhs: SingletonPredictionContext, rhs: SingletonPredictionContext)
         parentCompare = (lhs.parent! == rhs.parent!)
     }
 
-
-    return lhs.returnState == rhs.returnState && parentCompare
+    return parentCompare
 }
 
 

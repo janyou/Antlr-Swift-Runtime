@@ -191,7 +191,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
      * then EOF was reached before {@code n} tokens could be added.
      */
     internal func fill(n: Int) throws -> Int {
-        for var i: Int = 0; i < n; i++ {
+        for i in 0..<n {
             if self.n > 0 && tokens[self.n - 1].getType() == CommonToken.EOF {
                 return i
             }
@@ -325,7 +325,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
         let b: Int = stop - bufferStartIndex
 
         let buf: StringBuilder = StringBuilder()
-        for var i: Int = a; i <= b; i++ {
+        for i in a...b {
             let t: Token = tokens[i]
             buf.append(t.getText()!)
         }

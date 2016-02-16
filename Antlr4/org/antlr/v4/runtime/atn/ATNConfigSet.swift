@@ -161,8 +161,7 @@ public class ATNConfigSet: Hashable, CustomStringConvertible {
         }
 
         //added by janyou
-
-        checkparentnull(merged)
+        //checkparentnull(merged)
 
         existing.context = merged // replace context; no need to alt mapping
         return true

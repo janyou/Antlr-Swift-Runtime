@@ -76,7 +76,7 @@ public class InterpreterRuleContext: ParserRuleContext {
      *  stack to a {@link org.antlr.v4.runtime.InterpreterRuleContext} tree.
      *  Return {@link null} if {@code ctx} is null.
      */
-    public class func fromParserRuleContext(ctx: ParserRuleContext?) -> InterpreterRuleContext? {
+    public static func fromParserRuleContext(ctx: ParserRuleContext?) -> InterpreterRuleContext? {
         if ctx == nil {
             return nil
         }

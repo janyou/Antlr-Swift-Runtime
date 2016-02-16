@@ -104,7 +104,7 @@ public class RuntimeMetaData {
      * @return The currently executing version of the ANTLR 4 library
      */
 
-    public class func getRuntimeVersion() -> String {
+    public static func getRuntimeVersion() -> String {
         return RuntimeMetaData.VERSION
     }
 
@@ -166,7 +166,7 @@ public class RuntimeMetaData {
      * compiled against. This should always be passed using a direct reference
      * to {@link #VERSION}.
      */
-    public class func checkVersion(generatingToolVersion: String, _ compileTimeVersion: String) {
+    public static func checkVersion(generatingToolVersion: String, _ compileTimeVersion: String) {
         let runtimeVersion: String = RuntimeMetaData.VERSION
         var runtimeConflictsWithGeneratingTool: Bool = false
         var runtimeConflictsWithCompileTimeTool: Bool = false
@@ -198,7 +198,7 @@ public class RuntimeMetaData {
      * @return A string of the form <em>major</em>.<em>minor</em> containing
      * only the major and minor components of the version string.
      */
-    public class func getMajorMinorVersion(version: String) -> String {
+    public static func getMajorMinorVersion(version: String) -> String {
         let firstDot: Int = version.indexOf(".")
         let secondDot: Int = firstDot >= 0 ? version.indexOf(".", startIndex: firstDot + 1) : -1
         let firstDash: Int = version.indexOf("-")

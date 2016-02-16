@@ -83,7 +83,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     /** Convert a {@link org.antlr.v4.runtime.RuleContext} tree to a {@link org.antlr.v4.runtime.atn.PredictionContext} graph.
      *  Return {@link #EMPTY} if {@code outerContext} is empty or null.
      */
-    public class func fromRuleContext(atn: ATN, var _ outerContext: RuleContext?) -> PredictionContext {
+    public static func fromRuleContext(atn: ATN, var _ outerContext: RuleContext?) -> PredictionContext {
         if (outerContext == nil) {
             outerContext = RuleContext.EMPTY
         }
@@ -123,7 +123,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
 
     /** This means only the {@link #EMPTY} context is in set. */
     public func isEmpty() -> Bool {
-        return self == PredictionContext.EMPTY
+        return self === PredictionContext.EMPTY
     }
 
     public func hasEmptyPath() -> Bool {
@@ -135,13 +135,13 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     }
 
 
-    class func calculateEmptyHashCode() -> Int {
+    static func calculateEmptyHashCode() -> Int {
         var hash: Int = MurmurHash.initialize(INITIAL_HASH)
         hash = MurmurHash.finish(hash, 0)
         return hash
     }
 
-    class func calculateHashCode(parent: PredictionContext?, _ returnState: Int) -> Int {
+    static func calculateHashCode(parent: PredictionContext?, _ returnState: Int) -> Int {
         var hash: Int = MurmurHash.initialize(INITIAL_HASH)
         hash = MurmurHash.update(hash, parent)
         hash = MurmurHash.update(hash, returnState)
@@ -149,7 +149,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
         return hash
     }
 
-    class func calculateHashCode(parents: [PredictionContext?], _ returnStates: [Int]) -> Int {
+    static func calculateHashCode(parents: [PredictionContext?], _ returnStates: [Int]) -> Int {
         var hash: Int = MurmurHash.initialize(INITIAL_HASH)
 
         for parent: PredictionContext? in parents {
@@ -165,7 +165,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     }
 
     // dispatch
-    public class func merge(
+    public static func merge(
             var a: PredictionContext,
             var _ b: PredictionContext,
             _ rootIsWildcard: Bool,
@@ -234,7 +234,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
      * otherwise false to indicate a full-context merge
      * @param mergeCache
      */
-    public class func mergeSingletons(
+    public static func mergeSingletons(
             a: SingletonPredictionContext,
             _ b: SingletonPredictionContext,
             _ rootIsWildcard: Bool,
@@ -245,10 +245,12 @@ public class PredictionContext: Hashable, CustomStringConvertible {
         if (mergeCache != nil) {
             var previous: PredictionContext? = mergeCache!.get(a, b)
             if previous != nil {
+               // print("get \(previous)")
                 return previous!
             }
             previous = mergeCache!.get(b, a)
             if previous != nil {
+               // print("get \(previous)")
                 return previous!
             }
         }
@@ -265,10 +267,10 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             // a == b
             let parent: PredictionContext = merge(a.parent!, b.parent!, rootIsWildcard, mergeCache);
             // if parent is same as existing a or b parent or reduced to a parent, return it
-            if (parent == a.parent!) {
+            if (parent === a.parent!) {
                 return a
             } // ax + bx = ax, if a=b
-            if (parent == b.parent!) {
+            if (parent === b.parent!) {
                 return b
             } // ax + bx = bx, if a=b
             // else: ax + ay = a'[x,y]
@@ -285,7 +287,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             // see if we can collapse parents due to $+x parents if local ctx
             var singleParent: PredictionContext? = nil;
             //added by janyou
-            if a == b || (a.parent != nil && a.parent! == b.parent) {
+            if a === b || (a.parent != nil && a.parent! == b.parent) {
                 // ax + bx = [a,b]x
                 singleParent = a.parent
             }
@@ -364,21 +366,21 @@ public class PredictionContext: Hashable, CustomStringConvertible {
      * @param rootIsWildcard {@code true} if this is a local-context merge,
      * otherwise false to indicate a full-context merge
      */
-    public class func mergeRoot(a: SingletonPredictionContext,
+    public static func mergeRoot(a: SingletonPredictionContext,
                                 _ b: SingletonPredictionContext,
                                 _ rootIsWildcard: Bool) -> PredictionContext? {
         if (rootIsWildcard) {
-            if (a == PredictionContext.EMPTY) {
+            if (a === PredictionContext.EMPTY) {
                 return PredictionContext.EMPTY
             }  // * + b = *
-            if (b == PredictionContext.EMPTY) {
+            if (b === PredictionContext.EMPTY) {
                 return PredictionContext.EMPTY
             }  // a + * = *
         } else {
-            if (a == PredictionContext.EMPTY && b == PredictionContext.EMPTY) {
+            if (a === PredictionContext.EMPTY && b === PredictionContext.EMPTY) {
                 return PredictionContext.EMPTY
             } // $ + $ = $
-            if (a == PredictionContext.EMPTY) {
+            if (a === PredictionContext.EMPTY) {
                 // $ + x = [$,x]
                 let payloads: [Int] = [b.returnState, EMPTY_RETURN_STATE]
                 let parents: [PredictionContext?] = [b.parent, nil]
@@ -386,7 +388,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                 ArrayPredictionContext(parents, payloads)
                 return joined;
             }
-            if (b == PredictionContext.EMPTY) {
+            if (b === PredictionContext.EMPTY) {
                 // x + $ = [$,x] ($ is always first if present)
                 let payloads: [Int] = [a.returnState, EMPTY_RETURN_STATE]
                 let parents: [PredictionContext?] = [a.parent, nil]
@@ -417,7 +419,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
      * {@link org.antlr.v4.runtime.atn.SingletonPredictionContext}.<br>
      * <embed src="images/ArrayMerge_EqualTop.svg" type="image/svg+xml"/></p>
      */
-    public class func mergeArrays(
+    public static func mergeArrays(
             a: ArrayPredictionContext,
             _ b: ArrayPredictionContext,
             _ rootIsWildcard: Bool,
@@ -426,10 +428,12 @@ public class PredictionContext: Hashable, CustomStringConvertible {
         if (mergeCache != nil) {
             var previous: PredictionContext? = mergeCache!.get(a, b)
             if (previous != nil) {
+                //print("get \(previous)")
                 return previous!
             }
             previous = mergeCache!.get(b, a)
             if (previous != nil) {
+                //print("get \(previous)")
                 return previous!
             }
         }
@@ -546,25 +550,28 @@ public class PredictionContext: Hashable, CustomStringConvertible {
      * Make pass over all <em>M</em> {@code parents}; merge any {@code equals()}
      * ones.
      */
-    internal class func combineCommonParents(inout parents: [PredictionContext?]) {
+    internal static func combineCommonParents(inout parents: [PredictionContext?]) {
         var uniqueParents: Dictionary<PredictionContext, PredictionContext> =
         Dictionary<PredictionContext, PredictionContext>()
-
-        for var p: Int = 0; p < parents.count; p++ {
-            let parent: PredictionContext? = parents[p]
-            if parent != nil && !uniqueParents.keys.contains(parent!) {
-                // don't replace
-                uniqueParents[parent!] = parent
+        let length = parents.count
+        for p in 0..<length {
+            if let parent: PredictionContext = parents[p] {
+               // if !uniqueParents.keys.contains(parent) {
+                if uniqueParents[parent] == nil {
+                    uniqueParents[parent] = parent  // don't replace
+                }
             }
         }
 
-        for var p: Int = 0; p < parents.count; p++ {
-            parents[p] = (parents[p] == nil) ? nil : uniqueParents[parents[p]!]
+        for p in 0..<length {
+            if let parent: PredictionContext = parents[p] {
+                parents[p] = uniqueParents[parent]
+            }
         }
 
     }
 
-    public class func toDOTString(context: PredictionContext?) -> String {
+    public static func toDOTString(context: PredictionContext?) -> String {
         if (context == nil) {
             return ""
         }
@@ -593,7 +600,8 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             buf.append(" [shape=box, label=\"")
             buf.append("[")
             var first: Bool = true
-            for inv: Int in arr.returnStates {
+            let returnStates = arr.returnStates
+            for inv: Int in returnStates {
                 if (!first) {
                     buf.append(", ")
                 }
@@ -609,10 +617,11 @@ public class PredictionContext: Hashable, CustomStringConvertible {
         }
 
         for current: PredictionContext in nodes {
-            if (current == EMPTY) {
+            if (current === EMPTY) {
                 continue
             }
-            for var i: Int = 0; i < current.size(); i++ {
+            let length = current.size()
+            for i in 0..<length {
                 if (current.getParent(i) == nil) {
                     continue
                 }
@@ -633,7 +642,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     }
 
     // From Sam
-    public class func getCachedContext(
+    public static func getCachedContext(
             context: PredictionContext,
             _ contextCache: PredictionContextCache,
             inout _ visited: Dictionary<PredictionContext, PredictionContext>) -> PredictionContext {
@@ -654,14 +663,16 @@ public class PredictionContext: Hashable, CustomStringConvertible {
 
         var changed: Bool = false
         var parents: [PredictionContext?] = [PredictionContext?](count: context.size(), repeatedValue: nil)
-        for var i: Int = 0; i < parents.count; i++ {
+        let length = parents.count
+        for i in 0..<length {
             //added by janyou
             if context.getParent(i) == nil {
                 return context
             }
 
             let parent: PredictionContext = getCachedContext(context.getParent(i)!, contextCache, &visited)
-            if (changed || parent != context.getParent(i)) {
+            //modified by janyou != !==
+            if (changed || parent !== context.getParent(i)) {
                 if (!changed) {
                     parents = [PredictionContext?](count: context.size(), repeatedValue: nil)
                     for var j: Int = 0; j < context.size(); j++ {
@@ -703,7 +714,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
 
 
     // ter's recursive version of Sam's getAllNodes()
-    public class func getAllContextNodes(context: PredictionContext) -> Array<PredictionContext> {
+    public static func getAllContextNodes(context: PredictionContext) -> Array<PredictionContext> {
         var nodes: Array<PredictionContext> = Array<PredictionContext>()
         var visited: Dictionary<PredictionContext, PredictionContext> =
         Dictionary<PredictionContext, PredictionContext>()
@@ -711,15 +722,17 @@ public class PredictionContext: Hashable, CustomStringConvertible {
         return nodes
     }
 
-    public class func getAllContextNodes_(context: PredictionContext?,
+    public static func getAllContextNodes_(context: PredictionContext?,
                                           inout _ nodes: Array<PredictionContext>,
                                           inout _ visited: Dictionary<PredictionContext, PredictionContext>) {
-        if (context == nil || visited.keys.contains(context!)) {
+        //if (context == nil || visited.keys.contains(context!)) {
+        if  context == nil || visited[context!] != nil   {
             return
         }
         visited[context!] = context!
         nodes.append(context!)
-        for var i: Int = 0; i < context!.size(); i++ {
+        let length = context!.size()
+        for i in 0..<length {
             getAllContextNodes_(context!.getParent(i), &nodes, &visited)
         }
     }
@@ -745,7 +758,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             var stateNumber: Int = currentState
             let localBuffer: StringBuilder = StringBuilder()
             localBuffer.append("[")
-            while !p.isEmpty() && p != stop {
+            while !p.isEmpty() && p !== stop {
                 var index: Int = 0
                 if (p.size() > 0) {
                     var bits: Int = 1

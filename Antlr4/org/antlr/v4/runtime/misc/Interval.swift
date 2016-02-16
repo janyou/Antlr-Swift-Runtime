@@ -59,7 +59,7 @@ public class Interval: Hashable {
      *  Interval object with a..a in it.  On Java.g4, 218623 IntervalSets
      *  have a..a (set with 1 element).
      */
-    public class func of(a: Int, _ b: Int) -> Interval {
+    public static func of(a: Int, _ b: Int) -> Interval {
         // cache just a..a
         if a != b || a < 0 || a > INTERVAL_POOL_MAX_VALUE {
             return Interval(a, b)

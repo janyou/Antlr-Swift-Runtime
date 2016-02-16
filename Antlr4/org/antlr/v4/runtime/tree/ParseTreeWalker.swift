@@ -49,7 +49,7 @@ public class ParseTreeWalker {
         let r: RuleNode = t as! RuleNode
         try enterRule(listener, r)
         let n: Int = r.getChildCount()
-        for var i: Int = 0; i < n; i++ {
+        for i in 0..<n {
             try   walk(listener, r.getChild(i) as! ParseTree)
         }
         try exitRule(listener, r)

@@ -87,7 +87,8 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
             [unowned self] in
             if result == nil {
                 result = Dictionary<String, Int>()
-                for var i: Int = 0; i < self.getATN().maxTokenType; i++ {
+                let length = self.getATN().maxTokenType
+                for i in 0..<length {
                     let literalName: String? = vocabulary.getLiteralName(i)
                     if literalName != nil {
                         result![literalName!] = i

@@ -801,7 +801,7 @@ public class ParserATNSimulator: ATNSimulator {
             }
 
             let n: Int = c.state.getNumberOfTransitions()
-            for var ti: Int = 0; ti < n; ti++ {
+            for ti in 0..<n {
                 // for each transition
                 let trans: Transition = c.state.transition(ti)
                 let target: ATNState? = getReachableTarget(trans, t)
@@ -949,8 +949,8 @@ public class ParserATNSimulator: ATNSimulator {
 
         let initialContext: PredictionContext = PredictionContext.fromRuleContext(atn, ctx)
         let configs: ATNConfigSet = ATNConfigSet(fullCtx)
-
-        for var i: Int = 0; i < p.getNumberOfTransitions(); i++ {
+        let length = p.getNumberOfTransitions()
+        for i in 0..<length {
             let target: ATNState = p.transition(i).target
             let c: ATNConfig = ATNConfig(target, i + 1, initialContext)
             var closureBusy: Set<ATNConfig> = Set<ATNConfig>()
@@ -1207,7 +1207,7 @@ public class ParserATNSimulator: ATNSimulator {
         }
 
         var nPredAlts: Int = 0
-        for var i: Int = 1; i <= nalts; i++ {
+        for i in 1...nalts {
             if altToPred![i] == nil {
                 altToPred![i] = SemanticContext.NONE
             } else {
@@ -1236,7 +1236,8 @@ public class ParserATNSimulator: ATNSimulator {
                                           _ altToPred: [SemanticContext?]) throws -> [DFAState.PredPrediction]? {
         var pairs: Array<DFAState.PredPrediction> = Array<DFAState.PredPrediction>()
         var containsPredicate: Bool = false
-        for var i: Int = 1; i < altToPred.count; i++ {
+        let length = altToPred.count
+        for i in 1..<length {
             let pred: SemanticContext? = altToPred[i]
 
             // unpredicated is indicated by SemanticContext.NONE
@@ -1477,8 +1478,8 @@ public class ParserATNSimulator: ATNSimulator {
             // We hit rule end. If we have context info, use it
             // run thru all possible stack tops in ctx
             if !config.context!.isEmpty() {
-
-                for var i: Int = 0; i < config.context!.size(); i++ {
+                let length = config.context!.size()
+                for i in 0..<length {
                     if config.context!.getReturnState(i) == PredictionContext.EMPTY_RETURN_STATE {
                         if fullCtx {
                             try   configs.add(ATNConfig(config, config.state, PredictionContext.EMPTY), mergeCache)
@@ -1551,8 +1552,8 @@ public class ParserATNSimulator: ATNSimulator {
             // both epsilon transitions and non-epsilon transitions.
             //            if ( debug ) print("added config "+configs);
         }
-
-        for var i: Int = 0; i < p.getNumberOfTransitions(); i++ {
+        let length = p.getNumberOfTransitions()
+        for i in 0..<length {
             let t: Transition = p.transition(i)
             let continueCollecting: Bool =
             !(t is ActionTransition) && collectPredicates
@@ -1894,7 +1895,7 @@ public class ParserATNSimulator: ATNSimulator {
                 configs, outerContext)
     }
 
-    internal class func getUniqueAlt(configs: ATNConfigSet) -> Int {
+    internal static func getUniqueAlt(configs: ATNConfigSet) -> Int {
         var alt: Int = ATN.INVALID_ALT_NUMBER
         for c: ATNConfig in configs.configs {
             if alt == ATN.INVALID_ALT_NUMBER {

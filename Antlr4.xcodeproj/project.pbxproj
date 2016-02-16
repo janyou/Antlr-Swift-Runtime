@@ -1410,6 +1410,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jlabs.Antlr4;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_DISABLE_SAFETY_CHECKS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Debug;
@@ -1430,6 +1431,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jlabs.Antlr4;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_DISABLE_SAFETY_CHECKS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;

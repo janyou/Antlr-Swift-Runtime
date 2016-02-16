@@ -86,14 +86,14 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
 
     /** Create a set with a single element, el. */
 
-    public class func of(a: Int) throws -> IntervalSet {
+    public static func of(a: Int) throws -> IntervalSet {
         let s: IntervalSet = try IntervalSet()
         try s.add(a)
         return s
     }
 
     /** Create a set with all ints within range [a..b] (inclusive) */
-    public class func of(a: Int, _ b: Int) throws -> IntervalSet {
+    public static func of(a: Int, _ b: Int) throws -> IntervalSet {
         let s: IntervalSet = try IntervalSet()
         try s.add(a, b)
         return s
@@ -139,7 +139,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
         }
         // find position in list
         // Use iterators as we modify list in place
-
+        
         for var i = 0; i < intervals.count; i++ {
 
             let r: Interval = intervals[i]
@@ -206,7 +206,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
             let other: IntervalSet = set as! IntervalSet
             // walk set and add each interval
             let n: Int = other.intervals.count
-            for var i: Int = 0; i < n; i++ {
+            for i in 0..<n {
                 let I: Interval = other.intervals[i]
                 try self.add(I.a, I.b)
             }
@@ -427,7 +427,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
 
     public func contains(el: Int) -> Bool {
         let n: Int = intervals.count
-        for var i: Int = 0; i < n; i++ {
+        for i in 0..<n {
             let I: Interval = intervals[i]
             let a: Int = I.a
             let b: Int = I.b
@@ -624,7 +624,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
             if a == b {
                 buf.append(elementName(vocabulary, a))
             } else {
-                for var i: Int = a; i <= b; i++ {
+                for i in a...b {
                     if i > a {
                         buf.append(", ")
                     }
@@ -668,7 +668,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
             let firstInterval: Interval = self.intervals[0]
             return firstInterval.b - firstInterval.a + 1
         }
-        for var i: Int = 0; i < numIntervals; i++ {
+        for i in 0..<numIntervals {
             let I: Interval = intervals[i]
             n += (I.b - I.a + 1)
         }
@@ -679,7 +679,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
     public func toIntegerList() -> Array<Int> {
         var values: Array<Int> = Array<Int>()
         let n: Int = intervals.count
-        for var i: Int = 0; i < n; i++ {
+        for i in 0..<n {
             let I: Interval = intervals[i]
             let a: Int = I.a
             let b: Int = I.b
@@ -694,7 +694,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
     public func toList() -> Array<Int> {
         var values: Array<Int> = Array<Int>()
         let n: Int = intervals.count
-        for var i: Int = 0; i < n; i++ {
+        for i in 0..<n {
             let I: Interval = intervals[i]
             let a: Int = I.a
             let b: Int = I.b
@@ -749,7 +749,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
             throw ANTLRError.IllegalState(msg: "can't alter readonly IntervalSet")
         }
         let n: Int = intervals.count
-        for var i: Int = 0; i < n; i++ {
+        for i in 0..<n {
             let I: Interval = intervals[i]
             let a: Int = I.a
             let b: Int = I.b

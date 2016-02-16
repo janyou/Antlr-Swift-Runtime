@@ -137,7 +137,7 @@ public class ATNSimulator {
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#deserialize} instead.
      */
     ////@Deprecated
-    public class func deserialize(data: [Character]) throws -> ATN {
+    public static func deserialize(data: [Character]) throws -> ATN {
         return try ATNDeserializer().deserialize(data)
     }
 
@@ -145,7 +145,7 @@ public class ATNSimulator {
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#checkCondition(boolean)} instead.
      */
     ////@Deprecated
-    public class func checkCondition(condition: Bool) throws {
+    public static func checkCondition(condition: Bool) throws {
         try ATNDeserializer().checkCondition(condition)
     }
 
@@ -153,7 +153,7 @@ public class ATNSimulator {
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#checkCondition(boolean, String)} instead.
      */
     ////@Deprecated
-    public class func checkCondition(condition: Bool, _ message: String) throws {
+    public static func checkCondition(condition: Bool, _ message: String) throws {
         try ATNDeserializer().checkCondition(condition, message)
     }
 
@@ -194,7 +194,7 @@ public class ATNSimulator {
      */
     ////@Deprecated
 
-    public class func edgeFactory(atn: ATN,
+    public static func edgeFactory(atn: ATN,
                                   _ type: Int, _ src: Int, _ trg: Int,
                                   _ arg1: Int, _ arg2: Int, _ arg3: Int,
                                   _ sets: Array<IntervalSet>) throws -> Transition {
@@ -205,7 +205,7 @@ public class ATNSimulator {
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#stateFactory} instead.
      */
     ////@Deprecated
-    public class func stateFactory(type: Int, _ ruleIndex: Int) throws -> ATNState {
+    public static func stateFactory(type: Int, _ ruleIndex: Int) throws -> ATNState {
         return try ATNDeserializer().stateFactory(type, ruleIndex)!
     }
 

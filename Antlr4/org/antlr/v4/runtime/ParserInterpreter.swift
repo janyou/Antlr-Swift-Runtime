@@ -112,14 +112,16 @@ public class ParserInterpreter: Parser {
         self.grammarFileName = grammarFileName
         self.atn = atn
         self.tokenNames = [String]()//    new String[atn.maxTokenType];
-        for var i: Int = 0; i < tokenNames.count; i++ {
+        let length = tokenNames.count
+        for i in 0..<length {
             tokenNames[i] = vocabulary.getDisplayName(i)
         }
 
         self.ruleNames = ruleNames
         self.vocabulary = vocabulary
         self.decisionToDFA = [DFA]() //new DFA[atn.getNumberOfDecisions()];
-        for var i: Int = 0; i < decisionToDFA.count; i++ {
+        let decisionToDFALength = decisionToDFA.count
+        for i in 0..<decisionToDFALength {
             decisionToDFA[i] = DFA(atn.getDecisionState(i)!, i)
         }
 

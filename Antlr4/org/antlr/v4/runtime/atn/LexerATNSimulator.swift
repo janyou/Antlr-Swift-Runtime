@@ -351,7 +351,7 @@ public class LexerATNSimulator: ATNSimulator {
             }
 
             let n: Int = c.state.getNumberOfTransitions()
-            for var ti: Int = 0; ti < n; ti++ {
+            for ti in 0..<n {
                 // for each transition
                 let trans: Transition = c.state.transition(ti)
                 let target: ATNState? = getReachableTarget(trans, t)
@@ -409,7 +409,8 @@ public class LexerATNSimulator: ATNSimulator {
                                     _ p: ATNState) throws -> ATNConfigSet {
         let initialContext: PredictionContext = PredictionContext.EMPTY
         let configs: ATNConfigSet = OrderedATNConfigSet()
-        for var i: Int = 0; i < p.getNumberOfTransitions(); i++ {
+        let length = p.getNumberOfTransitions()
+        for i in 0..<length {
             let target: ATNState = p.transition(i).target
             let c: LexerATNConfig = LexerATNConfig(target, i + 1, initialContext)
             try closure(input, c, configs, false, false, false)
@@ -454,7 +455,8 @@ public class LexerATNSimulator: ATNSimulator {
             }
 
             if config.context != nil && !config.context!.isEmpty() {
-                for var i: Int = 0; i < config.context!.size(); i++ {
+                let length = config.context!.size()
+                for i in 0..<length {
                     if config.context!.getReturnState(i) != PredictionContext.EMPTY_RETURN_STATE {
                         let newContext: PredictionContext = config.context!.getParent(i)! // "pop" return state
                         let returnState: ATNState? = atn.states[config
@@ -476,7 +478,8 @@ public class LexerATNSimulator: ATNSimulator {
         }
 
         let p: ATNState = config.state
-        for var i: Int = 0; i < p.getNumberOfTransitions(); i++ {
+        let length = p.getNumberOfTransitions()
+        for i in 0..<length {
             let t: Transition = p.transition(i)
             let c: LexerATNConfig? = try getEpsilonTarget(input, config, t, configs, speculative, treatEofAsEpsilon)
             if c != nil {

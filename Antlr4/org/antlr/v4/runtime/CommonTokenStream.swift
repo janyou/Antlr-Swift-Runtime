@@ -144,7 +144,8 @@ public class CommonTokenStream: BufferedTokenStream {
     public func getNumberOfOnChannelTokens() throws -> Int {
         var n: Int = 0
         try fill()
-        for var i: Int = 0; i < tokens.count; i++ {
+        let length = tokens.count
+        for i in 0..<length {
             let t: Token = tokens[i]
             if t.getChannel() == channel {
                 n++

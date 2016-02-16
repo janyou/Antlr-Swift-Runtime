@@ -110,14 +110,15 @@ public class Vocabulary: Hashable {
     * @return A {@link org.antlr.v4.runtime.Vocabulary} instance which uses {@code tokenNames} for
     * the display names of tokens.
     */
-    public class func fromTokenNames(tokenNames: [String?]?) -> Vocabulary {
+    public static func fromTokenNames(tokenNames: [String?]?) -> Vocabulary {
         if tokenNames == nil || tokenNames!.count == 0 {
             return EMPTY_VOCABULARY
         }
 
         var literalNames: [String?] = tokenNames!// Arrays.copyOf(tokenNames, tokenNames.length);
         var symbolicNames: [String?] = tokenNames!
-        for var i: Int = 0; i < tokenNames!.count; i++ {
+        let length = tokenNames!.count
+        for i in 0..<length {
             let tokenName: String? = tokenNames![i]
             if tokenName == nil {
                 continue

@@ -81,7 +81,7 @@ public class LexerATNConfig: ATNConfig {
         super.init(c, state, context, c.semanticContext)
     }
 
-    private class func checkNonGreedyDecision(source: LexerATNConfig, _ target: ATNState) -> Bool {
+    private static func checkNonGreedyDecision(source: LexerATNConfig, _ target: ATNState) -> Bool {
         return source.passedThroughNonGreedyDecision
                 || target is DecisionState && (target as! DecisionState).nonGreedy
     }

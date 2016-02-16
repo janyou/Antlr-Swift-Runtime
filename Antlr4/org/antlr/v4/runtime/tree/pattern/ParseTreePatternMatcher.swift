@@ -340,7 +340,7 @@ public class ParseTreePatternMatcher {
             }
 
             let n: Int = r1.getChildCount()
-            for var i: Int = 0; i < n; i++ {
+            for i in 0..<n {
                 let childMatch: ParseTree? =
                 try matchImpl(r1.getChild(i) as! ParseTree, patternTree.getChild(i) as! ParseTree, labels)
                 if childMatch != nil {
@@ -458,7 +458,7 @@ public class ParseTreePatternMatcher {
         }
 
         let ntags: Int = starts.count
-        for var i: Int = 0; i < ntags; i++ {
+        for i in 0..<ntags {
             if starts[i] != stops[i] {
                 throw ANTLRError.IllegalArgument(msg: "tag delimiters out of order in pattern: " + pattern)
 
@@ -477,7 +477,7 @@ public class ParseTreePatternMatcher {
             let text: String = pattern[0 ..< starts[0]] //; substring(0, starts.get(0));
             chunks.append(TextChunk(text))
         }
-        for var i: Int = 0; i < ntags; i++ {
+        for i in 0..<ntags {
             // copy inside of <tag>
             let tag: String = pattern[starts[i] + start.length ..< stops[i]]  // pattern.substring(starts.get(i) + start.length(), stops.get(i));
             var ruleOrToken: String = tag
@@ -504,7 +504,8 @@ public class ParseTreePatternMatcher {
         }
 
         // strip out the escape sequences from text chunks but not tags
-        for var i: Int = 0; i < chunks.count; i++ {
+        let length = chunks.count
+        for i in 0..<length {
             let c: Chunk = chunks[i]
             if c is TextChunk {
                 let tc: TextChunk = c as! TextChunk

@@ -152,12 +152,13 @@ public class RuleContext: RuleNode {
      */
 
     public override func getText() -> String {
-        if getChildCount() == 0 {
+        let length = getChildCount()
+        if length == 0 {
             return ""
         }
 
         let builder: StringBuilder = StringBuilder()
-        for var i: Int = 0; i < getChildCount(); i++ {
+        for i in 0..<length {
             builder.append((getChild(i) as! ParseTree).getText())
         }
 

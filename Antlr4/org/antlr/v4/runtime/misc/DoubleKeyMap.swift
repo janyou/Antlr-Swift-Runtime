@@ -36,7 +36,7 @@
  *  map; avoids mem creation.
  */
 
-public class DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
+public final class DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
     var data: Dictionary<Key1, Dictionary<Key2, Value>> = Dictionary<Key1, Dictionary<Key2, Value>>()
 
     public func put(k1: Key1, _ k2: Key2, _ v: Value) -> Value? {
@@ -58,7 +58,9 @@ public class DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
         if data2 == nil {
             return nil
         }
-        return data2![k2]
+        let value = data2![k2]
+       // print("value = \(value)")
+        return value
     }
 
     public func get(k1: Key1) -> Dictionary<Key2, Value>? {

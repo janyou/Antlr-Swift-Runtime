@@ -89,7 +89,7 @@ public class BitSet: Hashable, CustomStringConvertible {
     /**
     * Given a bit index, return word index containing it.
     */
-    private class func wordIndex(bitIndex: Int) -> Int {
+    private static func wordIndex(bitIndex: Int) -> Int {
         return bitIndex >> ADDRESS_BITS_PER_WORD
     }
 
@@ -221,7 +221,7 @@ public class BitSet: Hashable, CustomStringConvertible {
     /**
     * Checks that fromIndex ... toIndex is a valid range of bit indices.
     */
-    private class func checkRange(fromIndex: Int, _ toIndex: Int) throws {
+    private static func checkRange(fromIndex: Int, _ toIndex: Int) throws {
         if fromIndex < 0 {
             throw ANTLRError.IndexOutOfBounds(msg: "fromIndex < 0: \(fromIndex)")
 
@@ -295,7 +295,8 @@ public class BitSet: Hashable, CustomStringConvertible {
             words[startWordIndex] ^= firstWordMask
 
             // Handle intermediate words, if any
-            for var i: Int = startWordIndex + 1; i < endWordIndex; i++ {
+            let start = startWordIndex + 1
+            for i in start..<endWordIndex {
                 words[i] ^= BitSet.WORD_MASK
             }
 
@@ -379,7 +380,8 @@ public class BitSet: Hashable, CustomStringConvertible {
             words[startWordIndex] |= firstWordMask
 
             // Handle intermediate words, if any
-            for var i: Int = startWordIndex + 1; i < endWordIndex; i++ {
+            let start = startWordIndex + 1
+            for i in start..<endWordIndex {
                 words[i] = BitSet.WORD_MASK
             }
 
@@ -475,7 +477,8 @@ public class BitSet: Hashable, CustomStringConvertible {
             words[startWordIndex] &= ~firstWordMask
 
             // Handle intermediate words, if any
-            for var i: Int = startWordIndex + 1; i < endWordIndex; i++ {
+            let start = startWordIndex + 1
+            for i in start..<endWordIndex {
                 words[i] = 0
             }
 
@@ -628,7 +631,7 @@ public class BitSet: Hashable, CustomStringConvertible {
         }
     }
 
-    public class func numberOfTrailingZeros(i: Int64) -> Int {
+    public static func numberOfTrailingZeros(i: Int64) -> Int {
         // HD, Figure 5-14
         var x: Int32, y: Int32
         if i == 0 {
@@ -794,7 +797,7 @@ public class BitSet: Hashable, CustomStringConvertible {
         }
     }
 
-    public class func numberOfLeadingZeros(i: Int64) -> Int {
+    public static func numberOfLeadingZeros(i: Int64) -> Int {
         // HD, Figure 5-6
         if i == 0 {
             return 64
@@ -879,13 +882,13 @@ public class BitSet: Hashable, CustomStringConvertible {
     */
     public func cardinality() -> Int {
         var sum: Int = 0
-        for var i: Int = 0; i < wordsInUse; i++ {
+        for i in 0..<wordsInUse {
             sum += BitSet.bitCount(words[i])
         }
         return sum
     }
 
-    public class func bitCount(var i: Int64) -> Int {
+    public static func bitCount(var i: Int64) -> Int {
         // HD, Figure 5-14
         i = i - ((i >>> 1) & 0x5555555555555555)
         i = (i & 0x3333333333333333) + ((i >>> 2) & 0x3333333333333333)
@@ -916,7 +919,7 @@ public class BitSet: Hashable, CustomStringConvertible {
         }
 
         // Perform logical AND on words in common
-        for var i: Int = 0; i < wordsInUse; i++ {
+        for i in 0..<wordsInUse {
             words[i] &= set.words[i]
         }
 
@@ -946,7 +949,7 @@ public class BitSet: Hashable, CustomStringConvertible {
         }
 
         // Perform logical OR on words in common
-        for var i: Int = 0; i < wordsInCommon; i++ {
+        for i in 0..<wordsInCommon {
             words[i] |= set.words[i]
         }
 
@@ -983,7 +986,7 @@ public class BitSet: Hashable, CustomStringConvertible {
         }
 
         // Perform logical XOR on words in common
-        for var i: Int = 0; i < wordsInCommon; i++ {
+        for i in 0..<wordsInCommon {
             words[i] ^= set.words[i]
         }
 
@@ -1141,7 +1144,8 @@ public func ==(lhs: BitSet, rhs: BitSet) -> Bool {
     }
 
     // Check words in use by both BitSets
-    for var i: Int = 0; i < lhs.wordsInUse; i++ {
+    let length = lhs.wordsInUse
+    for i in 0..<length {
         if lhs.words[i] != rhs.words[i] {
             return false
         }

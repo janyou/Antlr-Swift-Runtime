@@ -64,7 +64,8 @@ public class LexerInterpreter: Lexer {
         self.atn = atn
         self.tokenNames = [String?]()
         //new String[atn.maxTokenType];
-        for var i: Int = 0; i < tokenNames!.count; i++ {
+        let length = tokenNames!.count
+        for i in 0..<length {
             tokenNames![i] = vocabulary.getDisplayName(i)
         }
 
@@ -73,7 +74,8 @@ public class LexerInterpreter: Lexer {
         self.vocabulary = vocabulary
 
         self._decisionToDFA = [DFA]() //new DFA[atn.getNumberOfDecisions()];
-        for var i: Int = 0; i < _decisionToDFA.count; i++ {
+        let _decisionToDFALength = _decisionToDFA.count
+        for i in 0..<_decisionToDFALength {
             _decisionToDFA[i] = DFA(atn.getDecisionState(i)!, i)
         }
         super.init()

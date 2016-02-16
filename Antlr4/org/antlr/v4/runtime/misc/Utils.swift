@@ -34,7 +34,7 @@ import Foundation
 
 public class Utils {
 
-    public class func escapeWhitespace(s: String, _ escapeSpaces: Bool) -> String {
+    public static func escapeWhitespace(s: String, _ escapeSpaces: Bool) -> String {
         let buf: StringBuilder = StringBuilder()
         for c: Character in s.characters {
             if c == " " && escapeSpaces {
@@ -59,7 +59,7 @@ public class Utils {
     }
 
 
-    public class func writeFile(fileName: String, _ content: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) {
+    public static func writeFile(fileName: String, _ content: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) {
 
         //writing
         do {
@@ -72,7 +72,7 @@ public class Utils {
     }
 
 
-    public class func readFile(fileName: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> [Character] {
+    public static func readFile(fileName: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> [Character] {
 
 
         let path = NSBundle.mainBundle().pathForResource(fileName, ofType: nil)
@@ -91,7 +91,7 @@ public class Utils {
         return Array(fileContents!.characters)
     }
 
-    public class func readFile2String(fileName: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> String {
+    public static func readFile2String(fileName: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> String {
         let path = NSBundle.mainBundle().pathForResource(fileName, ofType: nil)
         if path == nil {
             return ""
@@ -109,7 +109,7 @@ public class Utils {
         return fileContents ?? ""
     }
 
-    public class func readFile2StringByPath(path: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> String {
+    public static func readFile2StringByPath(path: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> String {
 
         //let path = fileName.stringByExpandingTildeInPath
         var fileContents: String? = nil

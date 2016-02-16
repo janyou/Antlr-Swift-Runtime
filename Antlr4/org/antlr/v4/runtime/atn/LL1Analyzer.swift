@@ -201,7 +201,8 @@ public class LL1Analyzer {
 
             if ctx != PredictionContext.EMPTY {
                 // run thru all possible stack tops in ctx
-                for var i: Int = 0; i < ctx!.size(); i++ {
+                let length = ctx!.size()
+                for i in 0..<length {
                     var returnState: ATNState = atn.states[(ctx!.getReturnState(i))]!
 
 
@@ -222,7 +223,7 @@ public class LL1Analyzer {
         }
 
         var n: Int = s.getNumberOfTransitions()
-        for var i: Int = 0; i < n; i++ {
+        for i in 0..<n {
             var t: Transition = s.transition(i)
             if t.dynamicType === RuleTransition.self {
                 if try calledRuleStack.get((t as! RuleTransition).target.ruleIndex!) {

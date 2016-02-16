@@ -62,7 +62,7 @@ public class DFASerializer: CustomStringConvertible {
             if s.edges != nil {
                 n = s.edges!.count
             }
-            for var i: Int = 0; i < n; i++ {
+            for i in 0..<n {
                 let t: DFAState? = s.edges![i]
                 if t != nil && t!.stateNumber != Int.max {
                     buf.append(getStateString(s))

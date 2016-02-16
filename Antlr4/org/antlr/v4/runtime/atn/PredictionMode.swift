@@ -98,30 +98,7 @@ public enum PredictionMode {
     */
     case LL_EXACT_AMBIG_DETECTION
 
-    /** A Map that uses just the state and the stack context as the key. */
-
-
-    public final class AltAndContextATNConfig: Hashable {
-
-        public let config: ATNConfig
-        public init(_ old: ATNConfig) {
-            // dup
-            config = old
-        }
-        public var hashValue: Int {
-
-            var hashCode: Int = MurmurHash.initialize(7)
-            hashCode = MurmurHash.update(hashCode, config.state.stateNumber)
-            hashCode = MurmurHash.update(hashCode, config.context)
-            hashCode = MurmurHash.finish(hashCode, 2)
-            return hashCode
-
-        }
-
-
-    }
-
-
+    
     /**
     * Computes the SLL prediction termination condition.
     *
@@ -549,14 +526,26 @@ public enum PredictionMode {
     * alt and not pred
     * </pre>
     */
+    private static func configHash(stateNumber: Int,_ context: PredictionContext?) -> Int{
+        
+        var hashCode: Int = MurmurHash.initialize(7)
+        hashCode = MurmurHash.update(hashCode, stateNumber)
+        hashCode = MurmurHash.update(hashCode, context)
+        hashCode = MurmurHash.finish(hashCode, 2)
+        
+        return hashCode
+        
+    }
     public static func getConflictingAltSubsets(configs: ATNConfigSet) throws -> Array<BitSet> {
-        var configToAlts: Dictionary<AltAndContextATNConfig, BitSet> = Dictionary<AltAndContextATNConfig, BitSet>()
+        let length = configs.configs.count
+        var configToAlts: Dictionary<Int, BitSet> = Dictionary<Int, BitSet>(minimumCapacity: length)
+    
         for c: ATNConfig in configs.configs {
-
-            var alts: BitSet? = configToAlts[AltAndContextATNConfig(c)]
+            let hash = configHash(c.state.stateNumber, c.context)
+            var alts: BitSet? = configToAlts[hash]
             if alts == nil {
                 alts = BitSet()
-                configToAlts[AltAndContextATNConfig(c)] = alts
+                configToAlts[hash] = alts
             }
 
             try alts!.set(c.alt)
@@ -612,18 +601,3 @@ public enum PredictionMode {
 
 }
 
-
-public func ==(lhs: PredictionMode.AltAndContextATNConfig, rhs: PredictionMode.AltAndContextATNConfig) -> Bool {
-
-    if lhs.config === rhs.config {
-        return true
-    }
-
-
-    let same: Bool =
-    lhs.config.state.stateNumber == rhs.config.state.stateNumber &&
-            lhs.config.context == rhs.config.context
-
-    return same
-
-}

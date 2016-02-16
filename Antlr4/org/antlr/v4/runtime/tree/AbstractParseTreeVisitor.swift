@@ -66,7 +66,8 @@ public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
     public override func visitChildren(node: RuleNode) -> T? {
         var result: T? = defaultResult()
         let n: Int = node.getChildCount()
-        for var i: Int = 0; i < n; i++ {
+
+        for i in 0..<n {
             if !shouldVisitNextChild(node, result) {
                 break
             }

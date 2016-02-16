@@ -86,7 +86,7 @@ public class FailedPredicateException: RecognitionException<ParserATNSimulator> 
 	}
 
 
-	private class func formatMessage(predicate: String, _ message: String?) -> String {
+	private static func formatMessage(predicate: String, _ message: String?) -> String {
 		if message != nil {
 			return message!
 		}

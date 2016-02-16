@@ -68,7 +68,7 @@ public class ProfilingATNSimulator: ParserATNSimulator {
                 parser.getInterpreter().sharedContextCache!)
 
         numDecisions = atn.decisionToState.count
-        for var i: Int = 0; i < numDecisions; i++ {
+        for i in 0..<numDecisions {
             decisions[i] = DecisionInfo(i)
         }
 
