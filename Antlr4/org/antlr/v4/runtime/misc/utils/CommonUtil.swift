@@ -157,7 +157,40 @@ public func toUUID(data: [Character], _ offset: Int) -> NSUUID {
     //TODO:NSUUID(mostSigBits, leastSigBits);
     return NSUUID(mostSigBits: mostSigBits, leastSigBits: leastSigBits)
 }
-
+public func == <Element : Equatable>(
+    lhs: Array<Element?>, rhs: Array<Element?>
+    ) -> Bool {
+        let lhsCount = lhs.count
+        if lhsCount != rhs.count {
+            return false
+        }
+        
+        // Test referential equality.
+        if lhsCount == 0 || lhs._buffer.identity == rhs._buffer.identity {
+            return true
+        }
+        
+        var streamLHS = lhs.generate()
+        var streamRHS = rhs.generate()
+        
+        var nextLHS = streamLHS.next()
+        while nextLHS != nil {
+            let nextRHS = streamRHS.next()
+            if nextLHS == nil && nextRHS != nil {
+                return false
+            }
+            else if nextRHS == nil && nextLHS != nil {
+                return false
+            }
+            else if nextLHS! != nextRHS! {
+                return false
+            }
+            nextLHS = streamLHS.next()
+        }
+        
+        return true
+        
+}
 public func ArrayEquals<T:Equatable>(a: [T], _ a2: [T]) -> Bool {
 
     if a2.count != a.count {

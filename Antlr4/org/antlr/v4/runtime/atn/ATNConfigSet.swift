@@ -53,33 +53,33 @@ public class ATNConfigSet: Hashable, CustomStringConvertible {
     *  fields; in particular, conflictingAlts is set after
     *  we've made this readonly.
     */
-    internal var readonly: Bool = false
+    internal final var readonly: Bool = false
 
     /**
     * All configs but hashed by (s, i, _, pi) not including context. Wiped out
     * when we go readonly as this set becomes a DFA state.
     */
-    public var configLookup: LookupDictionary
+    public final var configLookup: LookupDictionary
 
     /** Track the elements as they are added to the set; supports get(i) */
-    public var configs: Array<ATNConfig> = Array<ATNConfig>()
+    public final var configs: Array<ATNConfig> = Array<ATNConfig>()
 
     // TODO: these fields make me pretty uncomfortable but nice to pack up info together, saves recomputation
     // TODO: can we track conflicts as they are added to save scanning configs later?
-    public var uniqueAlt: Int = 0
+    public final var uniqueAlt: Int = 0
     //TODO no default
     /** Currently this is only used when we detect SLL conflict; this does
     *  not necessarily represent the ambiguous alternatives. In fact,
     *  I should also point out that this seems to include predicated alternatives
     *  that have predicates that evaluate to false. Computed in computeTargetState().
     */
-    internal var conflictingAlts: BitSet?
+    internal final var conflictingAlts: BitSet?
 
     // Used in parser and lexer. In lexer, it indicates we hit a pred
     // while computing a closure operation.  Don't make a DFA state from this.
-    public var hasSemanticContext: Bool = false
+    public final var hasSemanticContext: Bool = false
     //TODO no default
-    public var dipsIntoOuterContext: Bool = false
+    public final var dipsIntoOuterContext: Bool = false
     //TODO no default
 
     /** Indicates that this configuration set is part of a full context
@@ -109,7 +109,8 @@ public class ATNConfigSet: Hashable, CustomStringConvertible {
 
     //override
     public func add(config: ATNConfig) throws -> Bool {
-        return try add(config, nil)
+        var mergeCache : DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>? = nil
+        return try add(config, &mergeCache)
     }
 
     /**
@@ -124,7 +125,7 @@ public class ATNConfigSet: Hashable, CustomStringConvertible {
     */
     public func add(
             config: ATNConfig,
-            _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) throws -> Bool {
+            inout _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) throws -> Bool {
         if readonly {
             throw ANTLRError.IllegalState(msg: "This set is readonly")
 
@@ -147,7 +148,7 @@ public class ATNConfigSet: Hashable, CustomStringConvertible {
         let rootIsWildcard: Bool = !fullCtx
 
         let merged: PredictionContext =
-        PredictionContext.merge(existing.context!, config.context!, rootIsWildcard, mergeCache)
+        PredictionContext.merge(existing.context!, config.context!, rootIsWildcard, &mergeCache)
 
         // no need to check for existing.context, config.context in cache
         // since only way to create new graphs is "call rule" and here. We

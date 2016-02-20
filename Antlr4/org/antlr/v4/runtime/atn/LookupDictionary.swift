@@ -13,7 +13,7 @@ public enum LookupDictionaryType: Int {
     case Ordered
 }
 
-public class LookupDictionary {
+public struct LookupDictionary {
     private var type: LookupDictionaryType
     private var cache: Dictionary<Int, [ATNConfig]> = Dictionary<Int, [ATNConfig]>()
 
@@ -56,7 +56,7 @@ public class LookupDictionary {
         }
     }
 
-    public func getOrAdd(config: ATNConfig) -> ATNConfig {
+    public mutating func getOrAdd(config: ATNConfig) -> ATNConfig {
 
         let h = hash(config)
         let configList = cache[h]
@@ -97,7 +97,7 @@ public class LookupDictionary {
 
     }
 
-    public func removeAll() {
+    public mutating func removeAll() {
         cache.removeAll()
     }
 

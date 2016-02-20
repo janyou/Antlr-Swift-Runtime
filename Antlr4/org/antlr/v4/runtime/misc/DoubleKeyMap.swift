@@ -36,10 +36,10 @@
  *  map; avoids mem creation.
  */
 
-public final class DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
-    var data: Dictionary<Key1, Dictionary<Key2, Value>> = Dictionary<Key1, Dictionary<Key2, Value>>()
+public struct DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
+    private var data: Dictionary<Key1, Dictionary<Key2, Value>> = Dictionary<Key1, Dictionary<Key2, Value>>()
 
-    public func put(k1: Key1, _ k2: Key2, _ v: Value) -> Value? {
+    public mutating func put(k1: Key1, _ k2: Key2, _ v: Value) -> Value? {
         var data2: Dictionary<Key2, Value>? = data[k1]
         var prev: Value? = nil
         if data2 == nil {

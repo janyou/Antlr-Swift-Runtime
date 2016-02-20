@@ -37,7 +37,8 @@ public class Interval: Hashable {
 
     public static let INVALID: Interval = Interval(-1, -2)
 
-    static var cache: Dictionary<Int, Interval> = Dictionary<Int, Interval>()
+    //static var cache: Dictionary<Int, Interval> = Dictionary<Int, Interval>()
+    static var cache: Array<Interval?> = Array<Interval?>(count: INTERVAL_POOL_MAX_VALUE + 1, repeatedValue: nil)
     // new; Interval[INTERVAL_POOL_MAX_VALUE+1];
 
     public var a: Int

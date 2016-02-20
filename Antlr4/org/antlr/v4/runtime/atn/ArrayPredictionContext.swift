@@ -123,8 +123,9 @@ public func ==(lhs: ArrayPredictionContext, rhs: ArrayPredictionContext) -> Bool
     if lhs.hashValue != rhs.hashValue {
         return false
     }
+    
+     return lhs.returnStates == rhs.returnStates && lhs.parents == rhs.parents
 
-
-    return ArrayEquals(lhs.returnStates, rhs.returnStates) && ArrayEquals(lhs.parents, rhs.parents)
+//return ArrayEquals(lhs.returnStates, rhs.returnStates) && ArrayEquals(lhs.parents, rhs.parents)
 }
 

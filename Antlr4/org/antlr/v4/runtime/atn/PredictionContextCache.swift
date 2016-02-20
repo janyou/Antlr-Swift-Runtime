@@ -35,7 +35,7 @@
  *  can be used for both lexers and parsers.
  */
 
-public class PredictionContextCache {
+public final class PredictionContextCache {
     //internal final var
     var cache: Dictionary<PredictionContext, PredictionContext> =
     Dictionary<PredictionContext, PredictionContext>()

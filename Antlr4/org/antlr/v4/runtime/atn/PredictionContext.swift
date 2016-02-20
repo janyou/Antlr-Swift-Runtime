@@ -169,7 +169,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             var a: PredictionContext,
             var _ b: PredictionContext,
             _ rootIsWildcard: Bool,
-            _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
+            inout _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
         // assert ( a != nil && b != nil,"Expected: a!=null&&b!=null");
         //assert ( a!=nil && b!=nil,"Expected: a!=null&&b!=null"); // must be empty context, never null
         // share same graph if both same
@@ -182,7 +182,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
         if (a is SingletonPredictionContext && b is SingletonPredictionContext) {
             return mergeSingletons(a as! SingletonPredictionContext,
                     b as! SingletonPredictionContext,
-                    rootIsWildcard, mergeCache)
+                    rootIsWildcard, &mergeCache)
         }
 
         // At least one of a or b is array
@@ -204,7 +204,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             b = ArrayPredictionContext(b as! SingletonPredictionContext)
         }
         return mergeArrays(a as! ArrayPredictionContext, b as! ArrayPredictionContext,
-                rootIsWildcard, mergeCache)
+                rootIsWildcard, &mergeCache)
     }
 
     /**
@@ -238,7 +238,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             a: SingletonPredictionContext,
             _ b: SingletonPredictionContext,
             _ rootIsWildcard: Bool,
-            _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
+            inout _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
         if a is EmptyPredictionContext {
             // print("parenet is null")
         }
@@ -265,7 +265,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
 
         if (a.returnState == b.returnState) {
             // a == b
-            let parent: PredictionContext = merge(a.parent!, b.parent!, rootIsWildcard, mergeCache);
+            let parent: PredictionContext = merge(a.parent!, b.parent!, rootIsWildcard, &mergeCache);
             // if parent is same as existing a or b parent or reduced to a parent, return it
             if (parent === a.parent!) {
                 return a
@@ -423,7 +423,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             a: ArrayPredictionContext,
             _ b: ArrayPredictionContext,
             _ rootIsWildcard: Bool,
-            _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
+            inout _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
 
         if (mergeCache != nil) {
             var previous: PredictionContext? = mergeCache!.get(a, b)
@@ -464,7 +464,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                 } else {
                     // ax+ay -> a'[x,y]
                     let mergedParent: PredictionContext =
-                    merge(a_parent!, b_parent!, rootIsWildcard, mergeCache)
+                    merge(a_parent!, b_parent!, rootIsWildcard, &mergeCache)
                     mergedParents[k] = mergedParent
                     mergedReturnStates[k] = payload
                 }

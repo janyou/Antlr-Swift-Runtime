@@ -281,7 +281,7 @@ public class ParserATNSimulator: ATNSimulator {
      *  the merge if we ever see a and b again.  Note that (b,a)&rarr;c should
      *  also be examined during cache lookup.
      */
-    internal var mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?
+    internal final var mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?
 
     // LAME globals to avoid parameters!!!!! I need these down deep in predTransition
     internal var _input: TokenStream!
@@ -808,7 +808,7 @@ public class ParserATNSimulator: ATNSimulator {
 
 
                 if target != nil {
-                    try intermediate.add(ATNConfig(c, target!), mergeCache)
+                    try intermediate.add(ATNConfig(c, target!), &mergeCache)
                 }
             }
         }
@@ -887,7 +887,7 @@ public class ParserATNSimulator: ATNSimulator {
         if skippedStopStates != nil && (!fullCtx || !PredictionMode.hasConfigInRuleStopState(reach!)) {
             assert(!skippedStopStates!.isEmpty, "Expected: !skippedStopStates.isEmpty()")
             for c: ATNConfig in skippedStopStates! {
-                try reach!.add(c, mergeCache)
+                try reach!.add(c, &mergeCache)
             }
         }
 
@@ -925,7 +925,7 @@ public class ParserATNSimulator: ATNSimulator {
         let result: ATNConfigSet = ATNConfigSet(configs.fullCtx)
         for config: ATNConfig in configs.configs {
             if config.state is RuleStopState {
-                try result.add(config, mergeCache)
+                try result.add(config,&mergeCache)
                 continue
             }
 
@@ -933,7 +933,7 @@ public class ParserATNSimulator: ATNSimulator {
                 let nextTokens: IntervalSet = try  atn.nextTokens(config.state)
                 if nextTokens.contains(CommonToken.EPSILON) {
                     let endOfRuleState: ATNState = atn.ruleToStopState[config.state.ruleIndex!]
-                    try result.add(ATNConfig(config, endOfRuleState), mergeCache)
+                    try result.add(ATNConfig(config, endOfRuleState), &mergeCache)
                 }
             }
         }
@@ -1145,9 +1145,9 @@ public class ParserATNSimulator: ATNSimulator {
 
             statesFromAlt1[config.state.stateNumber] = config.context
             if updatedContext != config.semanticContext {
-                try configSet.add(ATNConfig(config, updatedContext!), mergeCache)
+                try configSet.add(ATNConfig(config, updatedContext!), &mergeCache)
             } else {
-                try configSet.add(config, mergeCache)
+                try configSet.add(config,&mergeCache)
             }
         }
 
@@ -1169,7 +1169,7 @@ public class ParserATNSimulator: ATNSimulator {
                 }
             }
 
-            try configSet.add(config, mergeCache)
+            try configSet.add(config, &mergeCache)
         }
 
         return configSet
@@ -1482,7 +1482,7 @@ public class ParserATNSimulator: ATNSimulator {
                 for i in 0..<length {
                     if config.context!.getReturnState(i) == PredictionContext.EMPTY_RETURN_STATE {
                         if fullCtx {
-                            try   configs.add(ATNConfig(config, config.state, PredictionContext.EMPTY), mergeCache)
+                            try   configs.add(ATNConfig(config, config.state, PredictionContext.EMPTY), &mergeCache)
                             continue
                         } else {
                             // we have no context info, just chase follow links (if greedy)
@@ -1517,7 +1517,7 @@ public class ParserATNSimulator: ATNSimulator {
                 return
             } else if fullCtx {
                 // reached end of start rule
-                try configs.add(config, mergeCache)
+                try configs.add(config,&mergeCache)
                 // print(5)
                 return
             } else {
@@ -1547,7 +1547,7 @@ public class ParserATNSimulator: ATNSimulator {
         let p: ATNState = config.state
         // optimization
         if !p.onlyHasEpsilonTransitions() {
-            try configs.add(config, mergeCache)
+            try configs.add(config, &mergeCache)
             // make sure to not return here, because EOF transitions can act as
             // both epsilon transitions and non-epsilon transitions.
             //            if ( debug ) print("added config "+configs);
