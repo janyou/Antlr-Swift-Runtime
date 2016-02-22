@@ -112,7 +112,7 @@ import Foundation
 public class TokenStreamRewriter {
     public let DEFAULT_PROGRAM_NAME: String = "default"
     public static let PROGRAM_INIT_SIZE: Int = 100
-    public let MIN_TOKEN_INDEX: Int = 0
+    public static let MIN_TOKEN_INDEX: Int = 0
     
     // Define the rewrite operation hierarchy
     public class RewriteOperation: CustomStringConvertible {
@@ -195,11 +195,24 @@ public class TokenStreamRewriter {
     }
     
     public class RewriteOperationArray{
-        public final var rewrites: Array<RewriteOperation?> = Array<RewriteOperation?>()
+        private final var rewrites: Array<RewriteOperation?> = Array<RewriteOperation?>()
         public init(){
             rewrites.reserveCapacity(TokenStreamRewriter.PROGRAM_INIT_SIZE)
         }
+        final func append(op: RewriteOperation){
+            op.instructionIndex = rewrites.count
+            rewrites.append(op)
+        }
         
+        final func rollback(instructionIndex: Int) {
+              rewrites = Array(rewrites[TokenStreamRewriter.MIN_TOKEN_INDEX ..< instructionIndex])
+        }
+        final var count: Int{
+            return rewrites.count
+        }
+        final var isEmpty: Bool{
+            return rewrites.isEmpty
+        }
         /** We need to combine operations and report invalid operations (like
          *  overlapping replaces that are not completed nested). Inserts to
          *  same index need to be combined etc...  Here are the cases:
@@ -249,7 +262,7 @@ public class TokenStreamRewriter {
          *
          *  Return a map from token index to operation.
          */
-         final func reduceToSingleOperationPerIndex() throws -> Dictionary<Int, RewriteOperation> {
+        final func reduceToSingleOperationPerIndex() throws -> Dictionary<Int, RewriteOperation> {
             
             let rewritesCount = rewrites.count
             // WALK REPLACES
@@ -360,7 +373,7 @@ public class TokenStreamRewriter {
             return m
         }
         
-         final func catOpText(a: String?, _ b: String?) -> String {
+        final func catOpText(a: String?, _ b: String?) -> String {
             let x: String = a ?? ""
             let y: String = b ?? ""
             
@@ -381,7 +394,7 @@ public class TokenStreamRewriter {
             }
             return op
         }
-
+        
     }
     
     /** Our source stream */
@@ -406,7 +419,7 @@ public class TokenStreamRewriter {
     public final func getTokenStream() -> TokenStream {
         return tokens
     }
-
+    
     public func rollback(instructionIndex: Int) {
         rollback(DEFAULT_PROGRAM_NAME, instructionIndex)
     }
@@ -418,7 +431,7 @@ public class TokenStreamRewriter {
     public func rollback(programName: String, _ instructionIndex: Int) {
         let program: RewriteOperationArray? = programs[programName]
         if program != nil {
-            program!.rewrites = Array( program!.rewrites[MIN_TOKEN_INDEX ..< instructionIndex])
+            program!.rollback(instructionIndex)
         }
     }
     
@@ -428,7 +441,7 @@ public class TokenStreamRewriter {
     
     /** Reset the program so that no instructions exist */
     public func deleteProgram(programName: String) {
-        rollback(programName, MIN_TOKEN_INDEX)
+        rollback(programName, TokenStreamRewriter.MIN_TOKEN_INDEX)
     }
     
     public func insertAfter(t: Token, _ text: String) {
@@ -463,9 +476,8 @@ public class TokenStreamRewriter {
     public func insertBefore(programName: String, _ index: Int, _ text: String) {
         let op: RewriteOperation = InsertBeforeOp(index, text, tokens)
         let rewritesArray: RewriteOperationArray = getProgram(programName)
-        op.instructionIndex = rewritesArray.rewrites.count
-        rewritesArray.rewrites.append(op)
-    }
+        rewritesArray.append(op)
+     }
     
     public func replace(index: Int, _ text: String) throws {
         try replace(DEFAULT_PROGRAM_NAME, index, index, text)
@@ -489,8 +501,8 @@ public class TokenStreamRewriter {
         }
         let op: RewriteOperation = ReplaceOp(from, to, text, tokens)
         let rewritesArray: RewriteOperationArray = getProgram(programName)
-        op.instructionIndex = rewritesArray.rewrites.count
-        rewritesArray.rewrites.append(op)
+        rewritesArray.append(op)
+ 
     }
     
     public func replace(programName: String, _ from: Token, _ to: Token, _ text: String?) throws {
@@ -597,7 +609,7 @@ public class TokenStreamRewriter {
             start = 0
         }
         
-        if rewrites == nil || rewrites!.rewrites.isEmpty {
+        if rewrites == nil || rewrites!.isEmpty {
             return try tokens.getText(interval) // no instructions to execute
         }
         let buf: StringBuilder = StringBuilder()
@@ -639,4 +651,4 @@ public class TokenStreamRewriter {
         return buf.toString()
     }
     
-   }
+}
