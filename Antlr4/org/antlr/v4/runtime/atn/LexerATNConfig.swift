@@ -129,17 +129,30 @@ public func ==(lhs: LexerATNConfig, rhs: LexerATNConfig) -> Bool {
         return false
     }
 
+
+    
+    if lhs.state.stateNumber != rhs.state.stateNumber {
+        return false
+    }
+    if lhs.alt != rhs.alt {
+        return false
+    }
+    
+    if lhs.isPrecedenceFilterSuppressed() != rhs.isPrecedenceFilterSuppressed() {
+        return false
+    }
+    
     if lhs.getLexerActionExecutor() == nil && rhs.getLexerActionExecutor() != nil {
         return false
     } else if lhs.getLexerActionExecutor() != nil && rhs.getLexerActionExecutor() == nil {
         return false
     } else if lhs.getLexerActionExecutor() == nil && rhs.getLexerActionExecutor() == nil {
-
+        
     } else if !(lhs.getLexerActionExecutor()! == rhs.getLexerActionExecutor()!) {
         return false
     }
-
-
+    
+    
     var contextCompare = false
 
     if lhs.context == nil && rhs.context == nil {
@@ -151,10 +164,10 @@ public func ==(lhs: LexerATNConfig, rhs: LexerATNConfig) -> Bool {
     } else {
         contextCompare = (lhs.context! == rhs.context!)
     }
-    return lhs.state.stateNumber == rhs.state.stateNumber
-            && lhs.alt == rhs.alt
-            && contextCompare
-            && lhs.semanticContext == rhs.semanticContext
-            && lhs.isPrecedenceFilterSuppressed() == rhs.isPrecedenceFilterSuppressed()
-
+    
+    if !contextCompare{
+        return false
+    }
+    
+    return  lhs.semanticContext == rhs.semanticContext
 }

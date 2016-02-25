@@ -53,14 +53,12 @@ public struct DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
         return prev
     }
 
-    public func get(k1: Key1, _ k2: Key2) -> Value? {
-        var data2: Dictionary<Key2, Value>? = data[k1]
-        if data2 == nil {
-            return nil
+    public  func get(k1: Key1, _ k2: Key2) -> Value? {
+        if let data2 = data[k1] {
+            return data2[k2]
         }
-        let value = data2![k2]
-       // print("value = \(value)")
-        return value
+            return nil
+ 
     }
 
     public func get(k1: Key1) -> Dictionary<Key2, Value>? {

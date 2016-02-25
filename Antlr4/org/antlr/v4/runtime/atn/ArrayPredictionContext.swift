@@ -32,59 +32,60 @@
 
 public class ArrayPredictionContext: PredictionContext {
     /** Parent can be null only if full ctx mode and we make an array
-    *  from {@link #EMPTY} and non-empty. We merge {@link #EMPTY} by using null parent and
-    *  returnState == {@link #EMPTY_RETURN_STATE}.
-    */
-    public let parents: [PredictionContext?]
-
+     *  from {@link #EMPTY} and non-empty. We merge {@link #EMPTY} by using null parent and
+     *  returnState == {@link #EMPTY_RETURN_STATE}.
+     */
+    public final var parents: [PredictionContext?]
+    
     /** Sorted for merge, no duplicates; if present,
-    *  {@link #EMPTY_RETURN_STATE} is always last.
-    */
-    public let returnStates: [Int]
-
+     *  {@link #EMPTY_RETURN_STATE} is always last.
+     */
+    public final let returnStates: [Int]
+    
     public convenience init(_ a: SingletonPredictionContext) {
-        if a.parent == nil {
-            // print("parent is nil")
-        }
+//        if a.parent == nil {
+//            // print("parent is nil")
+//        }
         //self.init(new, PredictionContext[] {a.parent}, new, int[] {a.returnState});
-        self.init([a.parent], [a.returnState])
+        let parents = [a.parent]
+        self.init(parents, [a.returnState])
     }
-
+    
     public init(_ parents: [PredictionContext?], _ returnStates: [Int]) {
-
+        
         self.parents = parents
         self.returnStates = returnStates
         super.init(PredictionContext.calculateHashCode(parents, returnStates))
     }
-
+    
     override
     public func isEmpty() -> Bool {
         // since EMPTY_RETURN_STATE can only appear in the last position, we
         // don't need to verify that size==1
         return returnStates[0] == PredictionContext.EMPTY_RETURN_STATE
     }
-
+    
     override
     public func size() -> Int {
         return returnStates.count
     }
-
+    
     override
     public func getParent(index: Int) -> PredictionContext? {
         return parents[index]
     }
-
+    
     override
     public func getReturnState(index: Int) -> Int {
         return returnStates[index]
     }
-
+    
     //	@Override
     //	public int findReturnState(int returnState) {
     //		return Arrays.binarySearch(returnStates, returnState);
     //	}
-
-
+    
+    
     override
     public var description: String {
         if isEmpty() {
@@ -93,7 +94,7 @@ public class ArrayPredictionContext: PredictionContext {
         let buf: StringBuilder = StringBuilder()
         buf.append("[")
         let length = returnStates.count
-
+        
         for i in 0..<length {
             if i > 0 {
                 buf.append(", ")
@@ -113,6 +114,27 @@ public class ArrayPredictionContext: PredictionContext {
         buf.append("]")
         return buf.toString()
     }
+    
+    internal final func combineCommonParents() {
+        var uniqueParents: Dictionary<PredictionContext, PredictionContext> =
+        Dictionary<PredictionContext, PredictionContext>()
+        let length = parents.count
+        for p in 0..<length {
+            if let parent: PredictionContext = parents[p] {
+                // if !uniqueParents.keys.contains(parent) {
+                if uniqueParents[parent] == nil {
+                    uniqueParents[parent] = parent  // don't replace
+                }
+            }
+        }
+        
+        for p in 0..<length {
+            if let parent: PredictionContext = parents[p] {
+                parents[p] = uniqueParents[parent]
+            }
+        }
+        
+    }
 }
 
 
@@ -124,8 +146,8 @@ public func ==(lhs: ArrayPredictionContext, rhs: ArrayPredictionContext) -> Bool
         return false
     }
     
-     return lhs.returnStates == rhs.returnStates && lhs.parents == rhs.parents
-
-//return ArrayEquals(lhs.returnStates, rhs.returnStates) && ArrayEquals(lhs.parents, rhs.parents)
+    // return lhs.returnStates == rhs.returnStates && lhs.parents == rhs.parents
+    
+    return ArrayEquals(lhs.returnStates, rhs.returnStates) && ArrayEquals(lhs.parents, rhs.parents)
 }
 

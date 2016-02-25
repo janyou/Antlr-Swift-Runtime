@@ -32,8 +32,8 @@
 
 
 public class SingletonPredictionContext: PredictionContext {
-    public let parent: PredictionContext?
-    public let returnState: Int
+    public final let parent: PredictionContext?
+    public final let returnState: Int
 
     init(_ parent: PredictionContext?, _ returnState: Int) {
 
@@ -99,9 +99,7 @@ public func ==(lhs: SingletonPredictionContext, rhs: SingletonPredictionContext)
     var parentCompare = false
     if (lhs.parent == nil) && (rhs.parent == nil) {
         parentCompare = true
-    } else if lhs.parent == nil {
-        parentCompare = false
-    } else if rhs.parent == nil {
+    } else if lhs.parent == nil || rhs.parent == nil  {
         parentCompare = false
     } else {
         parentCompare = (lhs.parent! == rhs.parent!)

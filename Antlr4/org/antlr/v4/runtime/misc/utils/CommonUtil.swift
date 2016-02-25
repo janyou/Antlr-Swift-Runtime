@@ -136,11 +136,10 @@ public func RuntimeException(message: String = "", file: String = __FILE__, func
 }
 
 
-//class
 public func toInt(c: Character) -> Int {
     return c.unicodeValue
 }
-//class
+ 
 public func toInt32(data: [Character], _ offset: Int) -> Int {
     return data[offset].unicodeValue | (data[offset + 1].unicodeValue << 16)
 }
@@ -192,18 +191,14 @@ public func == <Element : Equatable>(
         
 }
 public func ArrayEquals<T:Equatable>(a: [T], _ a2: [T]) -> Bool {
-
+    
     if a2.count != a.count {
         return false
     }
 
     let length = a.count
-
     for i in 0..<length {
-        let o1 = a[i]
-        let o2 = a2[i]
-
-        if o1 != o2 {
+        if a[i] != a2[i] {
             return false
         }
 
@@ -222,22 +217,17 @@ public func ArrayEquals<T:Equatable>(a: [T?], _ a2: [T?]) -> Bool {
     let length = a.count
 
     for i in 0..<length {
-        let o1 = a[i]
-        let o2 = a2[i]
-
-        if o1 == nil && o2 != nil {
+        if a[i] == nil && a2[i] != nil {
             return false
         }
-        if o2 == nil && o1 != nil {
+        if a2[i] == nil && a[i] != nil {
             return false
         }
-
-        if o2 != nil && o1 != nil && o1! != o2! {
+        if a2[i] != nil && a[i] != nil && a[i]! != a2[i]! {
             return false
         }
-
-
     }
 
     return true
 }
+

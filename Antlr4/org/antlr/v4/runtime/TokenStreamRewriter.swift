@@ -205,7 +205,7 @@ public class TokenStreamRewriter {
         }
         
         final func rollback(instructionIndex: Int) {
-              rewrites = Array(rewrites[TokenStreamRewriter.MIN_TOKEN_INDEX ..< instructionIndex])
+            rewrites = Array(rewrites[TokenStreamRewriter.MIN_TOKEN_INDEX ..< instructionIndex])
         }
         final var count: Int{
             return rewrites.count
@@ -282,10 +282,13 @@ public class TokenStreamRewriter {
                         // E.g., insert before 2, delete 2..2; update replace
                         // text to include insert before, kill insert
                         rewrites[rewrites[j]!.instructionIndex] = nil
-                        rewrites[i]!.text = (rewrites[j]!.text ?? "") + (rewrites[i]!.text ?? "")
+                        
+                        rewrites[i]!.text = catOpText(rewrites[j]?.text, rewrites[i]!.text)
+                        
                     } else if rewrites[j]!.index > rewrites[i]!.index && rewrites[j]!.index <= rewrites[i]!.lastIndex {
                         // delete insert as it's a no-op.
                         rewrites[rewrites[j]!.instructionIndex] = nil
+                        //print("set nil j:\(j)")
                         
                     }
                 }
@@ -310,7 +313,7 @@ public class TokenStreamRewriter {
                         rewrites[rewrites[j]!.instructionIndex] = nil // kill first delete
                         rewrites[i]!.index = min(rewrites[j]!.index, rewrites[i]!.index)
                         rewrites[i]!.lastIndex = max(rewrites[j]!.lastIndex, rewrites[i]!.lastIndex)
-                        print("new rop " + rewrites[i]!.description)
+                        //print("new rop " + rewrites[i]!.description)
                     } else if !disjoint && !same {
                         throw ANTLRError.IllegalArgument(msg: "replace op boundaries of " + rewrites[i]!.description + " overlap with previous " + rewrites[j]!.description)
                         
@@ -337,7 +340,7 @@ public class TokenStreamRewriter {
                         // combine objects
                         // convert to strings...we're in process of toString'ing
                         // whole token buffer so no lazy eval issue with any templates
-                        rewrites[i]!.text = catOpText(rewrites[i]!.text!, rewrites[j]!.text!)
+                        rewrites[i]!.text = catOpText(rewrites[i]!.text, rewrites[j]?.text)
                         // delete redundant prior insert
                         rewrites[rewrites[j]!.instructionIndex] = nil
                     }
@@ -346,13 +349,12 @@ public class TokenStreamRewriter {
                 // look for replaces where iop.index is in range; error
                 let ropIndexList = getKindOfOps(&rewrites, ReplaceOp.self, i)
                 for j in ropIndexList  {
-                    
-                    if rewrites[i]!.index == rewrites[j]!.index {
-                        rewrites[j]!.text = catOpText(rewrites[i]!.text, rewrites[j]!.text)
+                    if  rewrites[i] != nil && rewrites[i]!.index == rewrites[j]!.index {
+                        rewrites[j]!.text = catOpText(rewrites[i]!.text, rewrites[j]?.text)
                         rewrites[i] = nil    // delete current insert
                         continue
                     }
-                    if rewrites[i]!.index >= rewrites[j]!.index && rewrites[i]!.index <= rewrites[j]!.lastIndex {
+                    if rewrites[i] != nil && rewrites[i]!.index >= rewrites[j]!.index && rewrites[i]!.index <= rewrites[j]!.lastIndex {
                         throw ANTLRError.IllegalArgument(msg: "insert op " + rewrites[i]!.description + " within boundaries of previous " + rewrites[j]!.description)
                         
                     }
@@ -477,7 +479,7 @@ public class TokenStreamRewriter {
         let op: RewriteOperation = InsertBeforeOp(index, text, tokens)
         let rewritesArray: RewriteOperationArray = getProgram(programName)
         rewritesArray.append(op)
-     }
+    }
     
     public func replace(index: Int, _ text: String) throws {
         try replace(DEFAULT_PROGRAM_NAME, index, index, text)
@@ -502,7 +504,7 @@ public class TokenStreamRewriter {
         let op: RewriteOperation = ReplaceOp(from, to, text, tokens)
         let rewritesArray: RewriteOperationArray = getProgram(programName)
         rewritesArray.append(op)
- 
+        
     }
     
     public func replace(programName: String, _ from: Token, _ to: Token, _ text: String?) throws {

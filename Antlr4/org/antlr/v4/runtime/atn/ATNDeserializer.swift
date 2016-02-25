@@ -260,8 +260,8 @@ public class ATNDeserializer {
         let nmodes: Int = toInt(data[p++])
         for _ in 0..<nmodes {
             let s: Int = toInt(data[p++])
-
-            atn.modeToStartState.append(atn.states[s] as! TokensStartState)
+            atn.appendModeToStartState(atn.states[s] as! TokensStartState)
+            //atn.modeToStartState.append(atn.states[s] as! TokensStartState)
         }
 
         //
@@ -373,7 +373,8 @@ public class ATNDeserializer {
         for i in 1...ndecisions {
             let s: Int = toInt(data[p++])
             let decState: DecisionState = atn.states[s] as! DecisionState
-            atn.decisionToState.append(decState)
+            atn.appendDecisionToState(decState)
+            //atn.decisionToState.append(decState)
             decState.decision = i - 1
         }
 
@@ -675,7 +676,8 @@ public class ATNDeserializer {
         //for  var i : Int=0; i<nmodes; i++ {
         for stateNumber in modeToStartState {
             let s: Int = stateNumber
-            atn.modeToStartState.append(atn.states[s] as! TokensStartState)
+            atn.appendModeToStartState(atn.states[s] as! TokensStartState)
+            //atn.modeToStartState.append(atn.states[s] as! TokensStartState)
         }
 
 
@@ -805,7 +807,8 @@ public class ATNDeserializer {
         for i in 0..<length {
             let s: Int = ndecisions[i]
             let decState: DecisionState = atn.states[s] as! DecisionState
-            atn.decisionToState.append(decState)
+            atn.appendDecisionToState(decState)
+            //atn.decisionToState.append(decState)
             decState.decision = i
         }
 

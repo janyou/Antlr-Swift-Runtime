@@ -231,6 +231,18 @@ public func ==(lhs: ATNConfig, rhs: ATNConfig) -> Bool {
  
 
     }
+    
+    if lhs.state.stateNumber != rhs.state.stateNumber {
+        return false
+    }
+    if lhs.alt != rhs.alt {
+        return false
+    }
+    
+    if lhs.isPrecedenceFilterSuppressed() != rhs.isPrecedenceFilterSuppressed() {
+        return false
+    }
+    
     var contextCompare = false
 
     if lhs.context == nil && rhs.context == nil {
@@ -242,10 +254,11 @@ public func ==(lhs: ATNConfig, rhs: ATNConfig) -> Bool {
     } else {
         contextCompare = (lhs.context! == rhs.context!)
     }
-    return lhs.state.stateNumber == rhs.state.stateNumber
-            && lhs.alt == rhs.alt
-            && contextCompare
-            && lhs.semanticContext == rhs.semanticContext
-            && lhs.isPrecedenceFilterSuppressed() == rhs.isPrecedenceFilterSuppressed()
+    
+    if !contextCompare {
+        return false
+    }
+    
+    return  lhs.semanticContext == rhs.semanticContext
 
 }

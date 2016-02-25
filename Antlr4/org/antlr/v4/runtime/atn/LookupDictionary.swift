@@ -59,20 +59,17 @@ public struct LookupDictionary {
     public mutating func getOrAdd(config: ATNConfig) -> ATNConfig {
 
         let h = hash(config)
-        let configList = cache[h]
-        if configList != nil {
-            for c in configList! {
-                if equal(c, config) {
-                    return c
+        
+        if let configList = cache[h] {
+            let length = configList.count
+            for i in 0..<length {
+                if equal(configList[i], config) {
+                    return configList[i]
                 }
             }
-        }
-
-        if configList == nil {
-            cache[h] = [config]
-        } else {
             cache[h]!.append(config)
-            //configList?.append(config)
+        } else {
+            cache[h] = [config]
         }
 
         return config
