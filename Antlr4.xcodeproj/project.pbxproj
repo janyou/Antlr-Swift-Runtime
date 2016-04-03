@@ -154,7 +154,7 @@
 		F9A422C11BCCC7E400A9CD35 /* ANTLRError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B01BCCC7E400A9CD35 /* ANTLRError.swift */; };
 		F9A422C21BCCC7E400A9CD35 /* ANTLRException.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B11BCCC7E400A9CD35 /* ANTLRException.swift */; };
 		F9A422C31BCCC7E400A9CD35 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B31BCCC7E400A9CD35 /* ArrayExtension.swift */; };
-		F9A422C41BCCC7E400A9CD35 /* CharacterEextension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B41BCCC7E400A9CD35 /* CharacterEextension.swift */; };
+		F9A422C41BCCC7E400A9CD35 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B41BCCC7E400A9CD35 /* CharacterExtension.swift */; };
 		F9A422C51BCCC7E400A9CD35 /* IntStreamExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B51BCCC7E400A9CD35 /* IntStreamExtension.swift */; };
 		F9A422C61BCCC7E400A9CD35 /* NSMapTableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B61BCCC7E400A9CD35 /* NSMapTableExtension.swift */; };
 		F9A422C71BCCC7E400A9CD35 /* NSUUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B71BCCC7E400A9CD35 /* NSUUIDExtension.swift */; };
@@ -244,7 +244,7 @@
 		F9A424501BCCD8D400A9CD35 /* ANTLRError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B01BCCC7E400A9CD35 /* ANTLRError.swift */; };
 		F9A424511BCCD8D400A9CD35 /* ANTLRException.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B11BCCC7E400A9CD35 /* ANTLRException.swift */; };
 		F9A424521BCCD8D400A9CD35 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B31BCCC7E400A9CD35 /* ArrayExtension.swift */; };
-		F9A424531BCCD8D500A9CD35 /* CharacterEextension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B41BCCC7E400A9CD35 /* CharacterEextension.swift */; };
+		F9A424531BCCD8D500A9CD35 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B41BCCC7E400A9CD35 /* CharacterExtension.swift */; };
 		F9A424541BCCD8D500A9CD35 /* IntStreamExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B51BCCC7E400A9CD35 /* IntStreamExtension.swift */; };
 		F9A424551BCCD8D500A9CD35 /* NSMapTableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B61BCCC7E400A9CD35 /* NSMapTableExtension.swift */; };
 		F9A424561BCCD8D500A9CD35 /* NSUUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B71BCCC7E400A9CD35 /* NSUUIDExtension.swift */; };
@@ -488,7 +488,7 @@
 		F9A422B01BCCC7E400A9CD35 /* ANTLRError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ANTLRError.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9A422B11BCCC7E400A9CD35 /* ANTLRException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ANTLRException.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9A422B31BCCC7E400A9CD35 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
-		F9A422B41BCCC7E400A9CD35 /* CharacterEextension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CharacterEextension.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F9A422B41BCCC7E400A9CD35 /* CharacterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CharacterExtension.swift; sourceTree = "<group>"; };
 		F9A422B51BCCC7E400A9CD35 /* IntStreamExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = IntStreamExtension.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9A422B61BCCC7E400A9CD35 /* NSMapTableExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NSMapTableExtension.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9A422B71BCCC7E400A9CD35 /* NSUUIDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NSUUIDExtension.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -793,7 +793,7 @@
 			isa = PBXGroup;
 			children = (
 				F9A422B31BCCC7E400A9CD35 /* ArrayExtension.swift */,
-				F9A422B41BCCC7E400A9CD35 /* CharacterEextension.swift */,
+				F9A422B41BCCC7E400A9CD35 /* CharacterExtension.swift */,
 				F9A422B51BCCC7E400A9CD35 /* IntStreamExtension.swift */,
 				F9A422B61BCCC7E400A9CD35 /* NSMapTableExtension.swift */,
 				F9A422B71BCCC7E400A9CD35 /* NSUUIDExtension.swift */,
@@ -1078,7 +1078,7 @@
 				F9A4220C1BCCC48100A9CD35 /* BasicState.swift in Sources */,
 				F9A4220B1BCCC48100A9CD35 /* BasicBlockStartState.swift in Sources */,
 				F9A4225A1BCCC48100A9CD35 /* ListTokenSource.swift in Sources */,
-				F9A422C41BCCC7E400A9CD35 /* CharacterEextension.swift in Sources */,
+				F9A422C41BCCC7E400A9CD35 /* CharacterExtension.swift in Sources */,
 				F9A4221C1BCCC48100A9CD35 /* LexerChannelAction.swift in Sources */,
 				F9A422C61BCCC7E400A9CD35 /* NSMapTableExtension.swift in Sources */,
 				F9A4227B1BCCC48100A9CD35 /* TokenFactory.swift in Sources */,
@@ -1212,7 +1212,7 @@
 				F9A424501BCCD8D400A9CD35 /* ANTLRError.swift in Sources */,
 				F9A424511BCCD8D400A9CD35 /* ANTLRException.swift in Sources */,
 				F9A424521BCCD8D400A9CD35 /* ArrayExtension.swift in Sources */,
-				F9A424531BCCD8D500A9CD35 /* CharacterEextension.swift in Sources */,
+				F9A424531BCCD8D500A9CD35 /* CharacterExtension.swift in Sources */,
 				F9A424541BCCD8D500A9CD35 /* IntStreamExtension.swift in Sources */,
 				F9A424551BCCD8D500A9CD35 /* NSMapTableExtension.swift in Sources */,
 				F9A424561BCCD8D500A9CD35 /* NSUUIDExtension.swift in Sources */,
