@@ -96,7 +96,9 @@ public class TerminalNodeImpl: TerminalNode {
         }
         return symbol.getText()!
     }
-
+    public override var debugDescription: String {
+        return description
+    }
     override
     public func toStringTree() -> String {
         return description

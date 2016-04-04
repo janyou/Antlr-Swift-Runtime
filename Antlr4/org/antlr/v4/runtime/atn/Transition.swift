@@ -95,7 +95,7 @@ public class Transition {
 
     /** The target of this transition. */
 
-    public var target: ATNState
+    public final var target: ATNState
 
     init(_ target: ATNState) {
 

@@ -646,7 +646,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     public static func getCachedContext(
         context: PredictionContext,
         _ contextCache: PredictionContextCache,
-        inout _ visited: Dictionary<PredictionContext, PredictionContext>) -> PredictionContext {
+        _ visited: HashMap<PredictionContext, PredictionContext>) -> PredictionContext {
             if (context.isEmpty()) {
                 return context
             }
@@ -671,7 +671,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                     return context
                 }
                 
-                let parent: PredictionContext = getCachedContext(context.getParent(i)!, contextCache, &visited)
+                let parent: PredictionContext = getCachedContext(context.getParent(i)!, contextCache, visited)
                 //modified by janyou != !==
                 if (changed || parent !== context.getParent(i)) {
                     if (!changed) {
@@ -717,15 +717,15 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     // ter's recursive version of Sam's getAllNodes()
     public static func getAllContextNodes(context: PredictionContext) -> Array<PredictionContext> {
         var nodes: Array<PredictionContext> = Array<PredictionContext>()
-        var visited: Dictionary<PredictionContext, PredictionContext> =
-        Dictionary<PredictionContext, PredictionContext>()
-        getAllContextNodes_(context, &nodes, &visited)
+        let visited: HashMap<PredictionContext, PredictionContext> =
+        HashMap<PredictionContext, PredictionContext>()
+        getAllContextNodes_(context, &nodes, visited)
         return nodes
     }
     
     public static func getAllContextNodes_(context: PredictionContext?,
         inout _ nodes: Array<PredictionContext>,
-        inout _ visited: Dictionary<PredictionContext, PredictionContext>) {
+        _ visited: HashMap<PredictionContext, PredictionContext>) {
             //if (context == nil || visited.keys.contains(context!)) {
             if  context == nil || visited[context!] != nil   {
                 return
@@ -734,7 +734,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             nodes.append(context!)
             let length = context!.size()
             for i in 0..<length {
-                getAllContextNodes_(context!.getParent(i), &nodes, &visited)
+                getAllContextNodes_(context!.getParent(i), &nodes, visited)
             }
     }
     

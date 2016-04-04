@@ -253,7 +253,10 @@ public class RuleContext: RuleNode {
         let p2: RuleContext? = nil
         return toString(p1, p2)
     }
-
+    
+     public override var debugDescription: String {
+         return description
+    }
 
     public final func toString<T:ATNSimulator>(recog: Recognizer<T>) -> String {
         return toString(recog, ParserRuleContext.EMPTY)

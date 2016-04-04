@@ -104,9 +104,9 @@ public class DFAState: Hashable, CustomStringConvertible {
     
     public class PredPrediction: CustomStringConvertible {
         
-        public var pred: SemanticContext
+        public final var pred: SemanticContext
         // never null; at least SemanticContext.NONE
-        public var alt: Int
+        public final var alt: Int
         public init(_ pred: SemanticContext, _ alt: Int) {
             self.alt = alt
             self.pred = pred

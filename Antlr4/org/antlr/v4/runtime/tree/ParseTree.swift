@@ -39,7 +39,7 @@
  */
 //public protocol ParseTree : SyntaxTree {
 
-public class ParseTree: SyntaxTree, CustomStringConvertible {
+public class ParseTree: SyntaxTree, CustomStringConvertible , CustomDebugStringConvertible  {
 
     // the following methods narrow the return type; they are not additional methods
 
@@ -109,5 +109,9 @@ public class ParseTree: SyntaxTree, CustomStringConvertible {
         RuntimeException(" must overriden !")
         fatalError()
     }
-
+    
+    public var debugDescription: String {
+        RuntimeException(" must overriden !")
+        fatalError()
+    }
 }

@@ -1,34 +1,33 @@
 /*
- * [The "BSD license"]
- *  Copyright (c) 2012 Terence Parr
- *  Copyright (c) 2012 Sam Harwell
- *  Copyright (c) 2015 Janyou
- *  All rights reserved.
- *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions
- *  are met:
- *
- *  1. Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *  2. Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *  3. The name of the author may not be used to endorse or promote products
- *     derived from this software without specific prior written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- *  IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- *  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- *  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
- *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- *  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+* [The "BSD license"]
+*  Copyright (c) 2012 Terence Parr
+*  Copyright (c) 2012 Sam Harwell
+*  Copyright (c) 2015 Janyou
+*  All rights reserved.
+*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
+*  are met:
+*
+*  1. Redistributions of source code must retain the above copyright
+*     notice, this list of conditions and the following disclaimer.
+*  2. Redistributions in binary form must reproduce the above copyright
+*     notice, this list of conditions and the following disclaimer in the
+*     documentation and/or other materials provided with the distribution.
+*  3. The name of the author may not be used to endorse or promote products
+*     derived from this software without specific prior written permission.
+*
+*  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+*  IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+*  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+*  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+*  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+*  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+*  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+*  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 
 /** A tuple: (ATN state, predicted alt, syntactic, semantic context).
  *  The syntactic context is a graph-structured stack node whose
@@ -37,6 +36,7 @@
  *  the tree of semantic predicates encountered before reaching
  *  an ATN state.
  */
+ 
 
 public class ATNConfig: Hashable, CustomStringConvertible {
     /**
@@ -44,13 +44,13 @@ public class ATNConfig: Hashable, CustomStringConvertible {
      * {@link #isPrecedenceFilterSuppressed} property as a bit within the
      * existing {@link #reachesIntoOuterContext} field.
      */
-    private let SUPPRESS_PRECEDENCE_FILTER: Int = 0x40000000
+    private final let SUPPRESS_PRECEDENCE_FILTER: Int = 0x40000000
 
     /** The ATN state associated with this configuration */
-    public let state: ATNState
+    public final let state: ATNState
 
     /** What alt (or lexer rule) is predicted by this configuration */
-    public let alt: Int
+    public final let alt: Int
 
     /** The stack of invoking states leading to the rule/states associated
      *  with this config.  We track only those contexts pushed during
@@ -85,7 +85,7 @@ public class ATNConfig: Hashable, CustomStringConvertible {
     //=0 intital by janyou
 
 
-    public let semanticContext: SemanticContext
+    public final let semanticContext: SemanticContext
 
     public init(_ old: ATNConfig) {
         // dup
@@ -177,7 +177,7 @@ public class ATNConfig: Hashable, CustomStringConvertible {
         return hashCode
 
     }
-   
+
     public func toString() -> String {
         return description
     }
@@ -228,21 +228,21 @@ public func ==(lhs: ATNConfig, rhs: ATNConfig) -> Bool {
         } }*/
     if (lhs is LexerATNConfig) && (rhs is LexerATNConfig) {
         return (lhs as! LexerATNConfig) == (rhs as! LexerATNConfig)
- 
+
 
     }
-    
+
     if lhs.state.stateNumber != rhs.state.stateNumber {
         return false
     }
     if lhs.alt != rhs.alt {
         return false
     }
-    
+
     if lhs.isPrecedenceFilterSuppressed() != rhs.isPrecedenceFilterSuppressed() {
         return false
     }
-    
+
     var contextCompare = false
 
     if lhs.context == nil && rhs.context == nil {
@@ -254,11 +254,11 @@ public func ==(lhs: ATNConfig, rhs: ATNConfig) -> Bool {
     } else {
         contextCompare = (lhs.context! == rhs.context!)
     }
-    
+
     if !contextCompare {
         return false
     }
-    
+
     return  lhs.semanticContext == rhs.semanticContext
 
 }

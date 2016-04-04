@@ -37,13 +37,14 @@
  */
 
 public struct DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
-    private var data: Dictionary<Key1, Dictionary<Key2, Value>> = Dictionary<Key1, Dictionary<Key2, Value>>()
-
+    private var data: HashMap<Key1, HashMap<Key2, Value>> = HashMap<Key1, HashMap<Key2, Value>>()
+ 
     public mutating func put(k1: Key1, _ k2: Key2, _ v: Value) -> Value? {
-        var data2: Dictionary<Key2, Value>? = data[k1]
+ 
+        var data2 = data[k1]
         var prev: Value? = nil
         if data2 == nil {
-            data2 = Dictionary<Key2, Value>()
+            data2 = HashMap<Key2, Value>()
 
         } else {
             prev = data2![k2]
@@ -54,6 +55,7 @@ public struct DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
     }
 
     public  func get(k1: Key1, _ k2: Key2) -> Value? {
+ 
         if let data2 = data[k1] {
             return data2[k2]
         }
@@ -61,30 +63,30 @@ public struct DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
  
     }
 
-    public func get(k1: Key1) -> Dictionary<Key2, Value>? {
+    public func get(k1: Key1) -> HashMap<Key2, Value>? {
         return data[k1]
     }
 
-    /** Get all values associated with primary key */
-    public func values(k1: Key1) -> LazyMapCollection<[Key2:Value], Value>? {
-        let data2: Dictionary<Key2, Value>? = data[k1]
-        if data2 == nil {
-            return nil
-        }
-        return data2!.values
-    }
-
-    /** get all primary keys */
-    public func keySet() -> LazyMapCollection<Dictionary<Key1, Dictionary<Key2, Value>>, Key1> {
-        return data.keys
-    }
-
-    /** get all secondary keys associated with a primary key */
-    public func keySet(k1: Key1) -> LazyMapCollection<[Key2:Value], Key2>? {
-        let data2: Dictionary<Key2, Value>? = data[k1]
-        if data2 == nil {
-            return nil
-        }
-        return data2!.keys
-    }
+//    /** Get all values associated with primary key */
+//    public func values(k1: Key1) -> LazyMapCollection<[Key2:Value], Value>? {
+//        let data2: Dictionary<Key2, Value>? = data[k1]
+//        if data2 == nil {
+//            return nil
+//        }
+//        return data2!.values
+//    }
+//
+//    /** get all primary keys */
+//    public func keySet() -> LazyMapCollection<Dictionary<Key1, Dictionary<Key2, Value>>, Key1> {
+//        return data.keys
+//    }
+//
+//    /** get all secondary keys associated with a primary key */
+//    public func keySet(k1: Key1) -> LazyMapCollection<[Key2:Value], Key2>? {
+//        let data2: Dictionary<Key2, Value>? = data[k1]
+//        if data2 == nil {
+//            return nil
+//        }
+//        return data2!.keys
+//    }
 }
