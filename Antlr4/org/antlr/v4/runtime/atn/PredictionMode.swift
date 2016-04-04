@@ -523,14 +523,15 @@ public enum PredictionMode {
      * map[c.{@link org.antlr.v4.runtime.atn.ATNConfig#state state}] U= c.{@link org.antlr.v4.runtime.atn.ATNConfig#alt alt}
      * </pre>
      */
-    public static func getStateToAltMap(configs: ATNConfigSet) throws -> Dictionary<ATNState, BitSet> {
+    public static func getStateToAltMap(configs: ATNConfigSet) throws -> HashMap<ATNState, BitSet> {
  
         return try configs.getStateToAltMap()
     }
 
     public static func hasStateAssociatedWithOneAlt(configs: ATNConfigSet) throws -> Bool {
-        let x: Dictionary<ATNState, BitSet> = try getStateToAltMap(configs)
-        for alts: BitSet in x.values {
+        let x: HashMap<ATNState, BitSet> = try getStateToAltMap(configs)
+        let values = x.values
+        for alts: BitSet in values {
 
             if alts.cardinality() == 1 {
                 return true

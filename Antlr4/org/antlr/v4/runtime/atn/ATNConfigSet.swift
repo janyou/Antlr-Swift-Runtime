@@ -177,8 +177,9 @@ public class ATNConfigSet: Hashable, CustomStringConvertible {
     }
     
     public final func getStates() -> Set<ATNState> {
-        var states: Set<ATNState> = Set<ATNState>()
+        
         let length = configs.count
+        var states: Set<ATNState> = Set<ATNState>(minimumCapacity: length)
         for i in 0..<length {
             states.insert(configs[i].state)
         }
@@ -346,7 +347,7 @@ public class ATNConfigSet: Hashable, CustomStringConvertible {
     }
     public final func getConflictingAltSubsets() throws -> Array<BitSet> {
         let length = configs.count
-        var configToAlts: Dictionary<Int, BitSet> = Dictionary<Int, BitSet>(minimumCapacity: length)
+        let configToAlts: HashMap<Int, BitSet> = HashMap<Int, BitSet>(count: length)
         
         for i in 0..<length {
             let hash = configHash(configs[i].state.stateNumber, configs[i].context)
@@ -360,11 +361,11 @@ public class ATNConfigSet: Hashable, CustomStringConvertible {
         }
         
         
-        return Array(configToAlts.values)
+        return configToAlts.values
     }
-    public final func getStateToAltMap() throws -> Dictionary<ATNState, BitSet> {
+    public final func getStateToAltMap() throws -> HashMap<ATNState, BitSet> {
         let length = configs.count
-        var m: Dictionary<ATNState, BitSet> = Dictionary<ATNState, BitSet>(minimumCapacity: length)
+        let m: HashMap<ATNState, BitSet> = HashMap<ATNState, BitSet>(count: length) //minimumCapacity: length)
         
         for i in 0..<length {
             var alts: BitSet? = m[configs[i].state]
@@ -456,9 +457,10 @@ public class ATNConfigSet: Hashable, CustomStringConvertible {
         return result
     }
     public final func applyPrecedenceFilter(inout mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?,_ parser: Parser,_ _outerContext: ParserRuleContext!) throws -> ATNConfigSet {
-        var statesFromAlt1: Dictionary<Int, PredictionContext> = Dictionary<Int, PredictionContext>()
+
         let configSet: ATNConfigSet = ATNConfigSet(fullCtx)
         let length = configs.count
+        let statesFromAlt1: HashMap<Int, PredictionContext> = HashMap<Int, PredictionContext>(count: length)
         for i in 0..<length {
             // handle alt 1 first
             if configs[i].alt != 1 {

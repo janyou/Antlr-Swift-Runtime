@@ -405,7 +405,7 @@ public class LexerATNSimulator: ATNSimulator {
     }
     
     
-    internal func computeStartState(input: CharStream,
+    final func computeStartState(input: CharStream,
         _ p: ATNState) throws -> ATNConfigSet {
             let initialContext: PredictionContext = PredictionContext.EMPTY
             let configs: ATNConfigSet = OrderedATNConfigSet()
@@ -428,7 +428,7 @@ public class LexerATNSimulator: ATNSimulator {
      * @return {@code true} if an accept state is reached, otherwise
      * {@code false}.
      */
-    internal func closure(input: CharStream, _ config: LexerATNConfig, _ configs: ATNConfigSet, var _ currentAltReachedAcceptState: Bool, _ speculative: Bool, _ treatEofAsEpsilon: Bool) throws -> Bool {
+    final func closure(input: CharStream, _ config: LexerATNConfig, _ configs: ATNConfigSet, var _ currentAltReachedAcceptState: Bool, _ speculative: Bool, _ treatEofAsEpsilon: Bool) throws -> Bool {
         if LexerATNSimulator.debug {
             print("closure(" + config.toString(recog, true) + ")")
         }
@@ -492,7 +492,7 @@ public class LexerATNSimulator: ATNSimulator {
     
     // side-effect: can alter configs.hasSemanticContext
     
-    internal func getEpsilonTarget(input: CharStream,
+    final func getEpsilonTarget(input: CharStream,
         _ config: LexerATNConfig,
         _ t: Transition,
         _ configs: ATNConfigSet,
@@ -606,7 +606,7 @@ public class LexerATNSimulator: ATNSimulator {
      * @return {@code true} if the specified predicate evaluates to
      * {@code true}.
      */
-    internal func evaluatePredicate(input: CharStream, _ ruleIndex: Int, _ predIndex: Int, _ speculative: Bool) throws -> Bool {
+    final func evaluatePredicate(input: CharStream, _ ruleIndex: Int, _ predIndex: Int, _ speculative: Bool) throws -> Bool {
         // assume true if no recognizer was provided
         if recog == nil {
             return true
@@ -635,7 +635,7 @@ public class LexerATNSimulator: ATNSimulator {
         
     }
     
-    internal func captureSimState(settings: SimState,
+    final func captureSimState(settings: SimState,
         _ input: CharStream,
         _ dfaState: DFAState) {
             settings.index = input.index()
@@ -645,7 +645,7 @@ public class LexerATNSimulator: ATNSimulator {
     }
     
     
-    internal func addDFAEdge(from: DFAState,
+    final func addDFAEdge(from: DFAState,
         _ t: Int,
         _ q: ATNConfigSet) -> DFAState {
             /* leading to this call, ATNConfigSet.hasSemanticContext is used as a
@@ -673,7 +673,7 @@ public class LexerATNSimulator: ATNSimulator {
             return to
     }
     
-    internal func addDFAEdge(p: DFAState, _ t: Int, _ q: DFAState) {
+    final func addDFAEdge(p: DFAState, _ t: Int, _ q: DFAState) {
         if t < LexerATNSimulator.MIN_DFA_EDGE || t > LexerATNSimulator.MAX_DFA_EDGE {
             // Only track edges within the DFA bounds
             return
@@ -699,7 +699,7 @@ public class LexerATNSimulator: ATNSimulator {
      traversing the DFA, we will know which rule to accept.
      */
     
-    internal func addDFAState(configs: ATNConfigSet) -> DFAState {
+    final func addDFAState(configs: ATNConfigSet) -> DFAState {
         /* the lexer evaluates predicates on-the-fly; by this point configs
         * should not contain any configurations with unevaluated predicates.
         */

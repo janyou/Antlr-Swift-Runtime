@@ -124,12 +124,12 @@ public class ATNSimulator {
 
         //TODO: synced (sharedContextCache!)
         //synced (sharedContextCache!) {
-        var visited: Dictionary<PredictionContext, PredictionContext> =
-        Dictionary<PredictionContext, PredictionContext>()
+        let visited: HashMap<PredictionContext, PredictionContext> =
+        HashMap<PredictionContext, PredictionContext>()
 
         return PredictionContext.getCachedContext(context,
                 sharedContextCache!,
-                &visited)
+                visited)
         //}
     }
 

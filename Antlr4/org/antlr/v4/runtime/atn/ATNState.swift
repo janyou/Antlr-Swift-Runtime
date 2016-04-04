@@ -130,21 +130,21 @@ public class ATNState: Hashable, CustomStringConvertible {
     public static let INVALID_STATE_NUMBER: Int = -1
     
     /** Which ATN are we in? */
-    public var atn: ATN? = nil
+    public final var atn: ATN? = nil
     
-    public var stateNumber: Int = INVALID_STATE_NUMBER
+    public final var stateNumber: Int = INVALID_STATE_NUMBER
     
-    public var ruleIndex: Int?
+    public final var ruleIndex: Int?
     // at runtime, we don't have Rule objects
     
-    public var epsilonOnlyTransitions: Bool = false
+    public final var epsilonOnlyTransitions: Bool = false
     
     /** Track the transitions emanating from this ATN state. */
     internal final var transitions: Array<Transition> = Array<Transition>()
     //Array<Transition>(INITIAL_NUM_TRANSITIONS);
     
     /** Used to cache lookahead during parsing, not used during construction */
-    public var nextTokenWithinRule: IntervalSet?
+    public final var nextTokenWithinRule: IntervalSet?
     
     
     public var hashValue: Int {
@@ -164,19 +164,19 @@ public class ATNState: Hashable, CustomStringConvertible {
         //return "MyClass \(string)"
         return String(stateNumber)
     }
-    public func getTransitions() -> [Transition] {
+    public final func getTransitions() -> [Transition] {
         return transitions
     }
     
-    public func getNumberOfTransitions() -> Int {
+    public final func getNumberOfTransitions() -> Int {
         return transitions.count
     }
     
-    public func addTransition(e: Transition) {
+    public final func addTransition(e: Transition) {
         addTransition(transitions.count, e)
     }
     
-    public func addTransition(index: Int, _ e: Transition) {
+    public final func addTransition(index: Int, _ e: Transition) {
         if transitions.isEmpty {
             epsilonOnlyTransitions = e.isEpsilon()
         } else {
@@ -190,15 +190,15 @@ public class ATNState: Hashable, CustomStringConvertible {
         
     }
     
-    public func transition(i: Int) -> Transition {
+    public final func transition(i: Int) -> Transition {
         return transitions[i]
     }
     
-    public func setTransition(i: Int, _ e: Transition) {
+    public final func setTransition(i: Int, _ e: Transition) {
         transitions[i] = e
     }
     
-    public func removeTransition(index: Int) -> Transition {
+    public final func removeTransition(index: Int) -> Transition {
         
         return transitions.removeAtIndex(index)
     }
@@ -212,7 +212,7 @@ public class ATNState: Hashable, CustomStringConvertible {
         return epsilonOnlyTransitions
     }
     
-    public func setRuleIndex(ruleIndex: Int) {
+    public final func setRuleIndex(ruleIndex: Int) {
         self.ruleIndex = ruleIndex
     }
 }

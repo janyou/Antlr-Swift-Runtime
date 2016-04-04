@@ -41,7 +41,7 @@ public final class RuleTransition: Transition {
     public final var precedence: Int
 
     /** What node to begin computations following ref to rule */
-    public var followState: ATNState
+    public final var followState: ATNState
 
     /**
      * @deprecated Use

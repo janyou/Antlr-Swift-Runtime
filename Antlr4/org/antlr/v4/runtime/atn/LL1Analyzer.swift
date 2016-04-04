@@ -57,9 +57,10 @@ public class LL1Analyzer {
         if s == nil {
             return nil
         }
-
-        var look: [IntervalSet?] = [IntervalSet?]()   //new IntervalSet[s.getNumberOfTransitions()];
-        for var alt: Int = 0; alt < s!.getNumberOfTransitions(); alt++ {
+        let length = s!.getNumberOfTransitions()
+        var look: [IntervalSet?] = [IntervalSet?](count: length, repeatedValue: nil)
+        //new IntervalSet[s.getNumberOfTransitions()];
+        for alt in 0..<length {
             look[alt] = try IntervalSet()
             var lookBusy: Set<ATNConfig> = Set<ATNConfig>()
             let seeThruPreds: Bool = false // fail to get lookahead upon pred

@@ -59,24 +59,24 @@ public class ArrayPredictionContext: PredictionContext {
     }
     
     override
-    public func isEmpty() -> Bool {
+    final public func isEmpty() -> Bool {
         // since EMPTY_RETURN_STATE can only appear in the last position, we
         // don't need to verify that size==1
         return returnStates[0] == PredictionContext.EMPTY_RETURN_STATE
     }
     
     override
-    public func size() -> Int {
+    final public func size() -> Int {
         return returnStates.count
     }
     
     override
-    public func getParent(index: Int) -> PredictionContext? {
+    final public func getParent(index: Int) -> PredictionContext? {
         return parents[index]
     }
     
     override
-    public func getReturnState(index: Int) -> Int {
+    final public func getReturnState(index: Int) -> Int {
         return returnStates[index]
     }
     
@@ -116,9 +116,10 @@ public class ArrayPredictionContext: PredictionContext {
     }
     
     internal final func combineCommonParents() {
-        var uniqueParents: Dictionary<PredictionContext, PredictionContext> =
-        Dictionary<PredictionContext, PredictionContext>()
+
         let length = parents.count
+        let uniqueParents: HashMap<PredictionContext, PredictionContext> =
+        HashMap<PredictionContext, PredictionContext>(count: length)
         for p in 0..<length {
             if let parent: PredictionContext = parents[p] {
                 // if !uniqueParents.keys.contains(parent) {
