@@ -72,22 +72,16 @@ public class Utils {
     }
 
 
-    public static func readFile(fileName: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> [Character] {
-
-
-        let path = NSBundle.mainBundle().pathForResource(fileName, ofType: nil)
-        if path == nil {
-            return [Character]()
-        }
-
+    public static func readFile(path: String, _ encoding: NSStringEncoding = NSUTF8StringEncoding) -> [Character] {
+        
         var fileContents: String? = nil
+        
         do {
-            fileContents = try String(contentsOfFile: path!, encoding: encoding)
+            fileContents = try String(contentsOfFile: path, encoding: encoding)
         } catch _ as NSError {
             return [Character]()
         }
-
-
+        
         return Array(fileContents!.characters)
     }
 

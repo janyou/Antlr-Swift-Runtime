@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Character: IntegerLiteralConvertible {
+extension Character {
 
     //"1" -> 1 "2"  -> 2
     var integerValue: Int {

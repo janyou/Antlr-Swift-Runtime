@@ -19,14 +19,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             //            let chars :CharStream  =   ANTLRInputStream(text)
             //            let lexer =   HelloLexer(chars)
             
+            let textFileName = "TestHello.txt"
             
-            let lexer =  HelloLexer( ANTLRFileStream("TestHello.txt"))
-            let tokens =  CommonTokenStream(lexer)
-            let parser = try HelloParser(tokens)
-            
-            let tree = try parser.r()
-            let walker = ParseTreeWalker()
-            try walker.walk(HelloWalker(),tree)
+            if let textFilePath = NSBundle.mainBundle().pathForResource(textFileName, ofType: nil) {
+                let lexer =  HelloLexer(ANTLRFileStream(textFilePath))
+                let tokens =  CommonTokenStream(lexer)
+                let parser = try HelloParser(tokens)
+                
+                let tree = try parser.r()
+                let walker = ParseTreeWalker()
+                try walker.walk(HelloWalker(),tree)
+            } else {
+                print("error occur: can not open \(textFileName)")
+            }
             
         }catch ANTLRException.CannotInvokeStartRule {
             print("error occur: CannotInvokeStartRule")
