@@ -5,7 +5,8 @@ public class HelloParser: Parser {
 
 	internal static var _decisionToDFA: [DFA] = {
           var decisionToDFA = [DFA]()
-          for var i: Int = 0; i < HelloParser._ATN.getNumberOfDecisions(); i++ {
+          let length = HelloParser._ATN.getNumberOfDecisions()
+          for i in 0..<length {
             decisionToDFA.append(DFA(HelloParser._ATN.getDecisionState(i)!, i))
            }
            return decisionToDFA
@@ -30,18 +31,17 @@ public class HelloParser: Parser {
 	 */
 	//@Deprecated
 	public let tokenNames: [String?]? = {
-	    var tokenNames = [String?]()
-
-		for  var i : Int = 0; i < _SYMBOLIC_NAMES.count; i++ {
+	    let length = _SYMBOLIC_NAMES.count
+	    var tokenNames = [String?](count: length, repeatedValue: nil)
+		for i in 0..<length {
 			var name = VOCABULARY.getLiteralName(i)
 			if name == nil {
 				name = VOCABULARY.getSymbolicName(i)
 			}
-
 			if name == nil {
 				name = "<INVALID>"
 			}
-			 tokenNames.append(name)
+			tokenNames[i] = name
 		}
 		return tokenNames
 	}()
@@ -50,7 +50,6 @@ public class HelloParser: Parser {
 	public func getTokenNames() -> [String?]? {
 		return tokenNames
 	}
-
 
 	override
 	public func getGrammarFileName() -> String { return "Hello.g4" }
@@ -65,58 +64,51 @@ public class HelloParser: Parser {
 	public func getATN() -> ATN { return HelloParser._ATN }
 
 	public override func getVocabulary() -> Vocabulary {
-	        return HelloParser.VOCABULARY;
+	    return HelloParser.VOCABULARY
 	}
+
 	public override  init(_ input:TokenStream)throws {
 	    RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION)
 		try super.init(input)
 		_interp = ParserATNSimulator(self,HelloParser._ATN,HelloParser._decisionToDFA, HelloParser._sharedContextCache)
 	}
 	public  class RContext: ParserRuleContext {
-	    weak var host: HelloParser!
 		public func ID() -> TerminalNode? { return getToken(HelloParser.ID, 0) }
-		public convenience init(_ parent: ParserRuleContext?, _ invokingState: Int, _ host: HelloParser) {
-			self.init(parent, invokingState)
-			self.host = host
-		}
-		public override func getRuleIndex() -> Int { return HelloParser.RULE_r  }
+		public override func getRuleIndex() -> Int { return HelloParser.RULE_r }
 		override
 		public func enterRule(listener: ParseTreeListener) {
-			if (listener is HelloListener) {
+			if listener is HelloListener {
 			 	(listener as! HelloListener).enterR(self)
 			}
 		}
 		override
 		public func exitRule(listener: ParseTreeListener) {
-			if (listener is HelloListener) {
+			if listener is HelloListener {
 			 	(listener as! HelloListener).exitR(self)
 			}
 		}
 		override
 		public func accept<T>(visitor: ParseTreeVisitor<T>) -> T? {
-			if ( visitor is HelloVisitor ){
-			     return (visitor as! (HelloVisitor<T>)).visitR(self)
+			if visitor is HelloVisitor {
+			     return (visitor as! HelloVisitor<T>).visitR(self)
 			}
 			else {
-			      return visitor.visitChildren(self)
+			     return visitor.visitChildren(self)
 			}
 		}
 	}
-
 	public func r() throws -> RContext {
-		var _localctx: RContext = RContext(_ctx, getState(), self)
-		try enterRule(_localctx, 0,  HelloParser.RULE_r)
+		var _localctx: RContext = RContext(_ctx, getState())
+		try enterRule(_localctx, 0, HelloParser.RULE_r)
 		do {
 		 	try enterOuterAlt(_localctx, 1)
 		 	setState(2)
 		 	try match(HelloParser.T__0)
-
 		 	setState(3)
 		 	try match(HelloParser.ID)
 
-
 		}
-		catch ANTLRException.Recognition(let  re ) {
+		catch ANTLRException.Recognition(let re) {
 			_localctx.exception = re
 			_errHandler.reportError(self, re)
 			try _errHandler.recover(self, re)
@@ -127,6 +119,6 @@ public class HelloParser: Parser {
 		return _localctx
 	}
 
-   public static let _serializedATN : String = Utils.readFile2String( "HelloParserATN.json")
+   public static let _serializedATN : String = HelloParserATN().jsonString
    public static let _ATN: ATN = ATNDeserializer().deserializeFromJson(_serializedATN)
 }

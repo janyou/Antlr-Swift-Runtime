@@ -4,7 +4,8 @@ import Antlr4
 public class HelloLexer: Lexer {
 	internal static var _decisionToDFA: [DFA] = {
           var decisionToDFA = [DFA]()
-          for var i: Int = 0; i < HelloLexer._ATN.getNumberOfDecisions(); i++ {
+          let length = HelloLexer._ATN.getNumberOfDecisions()
+          for i in 0..<length {
           	    decisionToDFA.append(DFA(HelloLexer._ATN.getDecisionState(i)!, i))
           }
            return decisionToDFA
@@ -33,18 +34,17 @@ public class HelloLexer: Lexer {
 	 */
 	//@Deprecated
 	public let tokenNames: [String?]? = {
-	    var tokenNames = [String?]()
-
-		for  var i : Int = 0; i < _SYMBOLIC_NAMES.count; i++ {
+	    let length = _SYMBOLIC_NAMES.count
+	    var tokenNames = [String?](count: length, repeatedValue: nil)
+		for i in 0..<length {
 			var name = VOCABULARY.getLiteralName(i)
 			if name == nil {
 				name = VOCABULARY.getSymbolicName(i)
 			}
-
 			if name == nil {
 				name = "<INVALID>"
 			}
-			 tokenNames.append(name)
+			tokenNames[i] = name
 		}
 		return tokenNames
 	}()
@@ -53,7 +53,6 @@ public class HelloLexer: Lexer {
 	public func getTokenNames() -> [String?]? {
 		return tokenNames
 	}
-
 
     public override func getVocabulary() -> Vocabulary {
         return HelloLexer.VOCABULARY
@@ -80,7 +79,7 @@ public class HelloLexer: Lexer {
 	override
 	public func getATN() -> ATN { return HelloLexer._ATN }
 
-    public static let _serializedATN: String = Utils.readFile2String("HelloLexerATN.json")
+    public static let _serializedATN: String = HelloLexerATN().jsonString
 	public static let _ATN: ATN = ATNDeserializer().deserializeFromJson(_serializedATN)
 
 }

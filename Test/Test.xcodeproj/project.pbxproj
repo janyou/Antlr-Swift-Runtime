@@ -12,16 +12,16 @@
 		F906900D1C318A5C00AC6125 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F906900B1C318A5C00AC6125 /* MainMenu.xib */; };
 		F906902A1C318A8600AC6125 /* HelloWalker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F906901F1C318A8600AC6125 /* HelloWalker.swift */; };
 		F906902C1C318B2000AC6125 /* TestHello.txt in Resources */ = {isa = PBXBuildFile; fileRef = F906902B1C318B2000AC6125 /* TestHello.txt */; };
-		F9992EA51C3C2059001E7C66 /* Hello.tokens in Resources */ = {isa = PBXBuildFile; fileRef = F9992E9B1C3C2059001E7C66 /* Hello.tokens */; };
-		F9992EA61C3C2059001E7C66 /* HelloBaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992E9C1C3C2059001E7C66 /* HelloBaseListener.swift */; };
-		F9992EA71C3C2059001E7C66 /* HelloBaseVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992E9D1C3C2059001E7C66 /* HelloBaseVisitor.swift */; };
-		F9992EA81C3C2059001E7C66 /* HelloLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992E9E1C3C2059001E7C66 /* HelloLexer.swift */; };
-		F9992EA91C3C2059001E7C66 /* HelloLexer.tokens in Resources */ = {isa = PBXBuildFile; fileRef = F9992E9F1C3C2059001E7C66 /* HelloLexer.tokens */; };
-		F9992EAA1C3C2059001E7C66 /* HelloLexerATN.json in Resources */ = {isa = PBXBuildFile; fileRef = F9992EA01C3C2059001E7C66 /* HelloLexerATN.json */; };
-		F9992EAB1C3C2059001E7C66 /* HelloListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992EA11C3C2059001E7C66 /* HelloListener.swift */; };
-		F9992EAC1C3C2059001E7C66 /* HelloParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992EA21C3C2059001E7C66 /* HelloParser.swift */; };
-		F9992EAD1C3C2059001E7C66 /* HelloParserATN.json in Resources */ = {isa = PBXBuildFile; fileRef = F9992EA31C3C2059001E7C66 /* HelloParserATN.json */; };
-		F9992EAE1C3C2059001E7C66 /* HelloVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9992EA41C3C2059001E7C66 /* HelloVisitor.swift */; };
+		F984B3591CB4AD88004C31FB /* HelloLexerATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = F984B34F1CB4AD88004C31FB /* HelloLexerATN.swift */; };
+		F984B35A1CB4AD88004C31FB /* HelloParserATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = F984B3501CB4AD88004C31FB /* HelloParserATN.swift */; };
+		F984B35B1CB4AD88004C31FB /* Hello.tokens in Resources */ = {isa = PBXBuildFile; fileRef = F984B3511CB4AD88004C31FB /* Hello.tokens */; };
+		F984B35C1CB4AD88004C31FB /* HelloBaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F984B3521CB4AD88004C31FB /* HelloBaseListener.swift */; };
+		F984B35D1CB4AD88004C31FB /* HelloBaseVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F984B3531CB4AD88004C31FB /* HelloBaseVisitor.swift */; };
+		F984B35E1CB4AD88004C31FB /* HelloLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F984B3541CB4AD88004C31FB /* HelloLexer.swift */; };
+		F984B35F1CB4AD88004C31FB /* HelloLexer.tokens in Resources */ = {isa = PBXBuildFile; fileRef = F984B3551CB4AD88004C31FB /* HelloLexer.tokens */; };
+		F984B3601CB4AD88004C31FB /* HelloListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F984B3561CB4AD88004C31FB /* HelloListener.swift */; };
+		F984B3611CB4AD88004C31FB /* HelloParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F984B3571CB4AD88004C31FB /* HelloParser.swift */; };
+		F984B3621CB4AD88004C31FB /* HelloVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F984B3581CB4AD88004C31FB /* HelloVisitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,16 +32,16 @@
 		F906900E1C318A5C00AC6125 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F906901F1C318A8600AC6125 /* HelloWalker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloWalker.swift; sourceTree = "<group>"; };
 		F906902B1C318B2000AC6125 /* TestHello.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestHello.txt; sourceTree = "<group>"; };
-		F9992E9B1C3C2059001E7C66 /* Hello.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Hello.tokens; sourceTree = "<group>"; };
-		F9992E9C1C3C2059001E7C66 /* HelloBaseListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloBaseListener.swift; sourceTree = "<group>"; };
-		F9992E9D1C3C2059001E7C66 /* HelloBaseVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloBaseVisitor.swift; sourceTree = "<group>"; };
-		F9992E9E1C3C2059001E7C66 /* HelloLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloLexer.swift; sourceTree = "<group>"; };
-		F9992E9F1C3C2059001E7C66 /* HelloLexer.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HelloLexer.tokens; sourceTree = "<group>"; };
-		F9992EA01C3C2059001E7C66 /* HelloLexerATN.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = HelloLexerATN.json; sourceTree = "<group>"; };
-		F9992EA11C3C2059001E7C66 /* HelloListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloListener.swift; sourceTree = "<group>"; };
-		F9992EA21C3C2059001E7C66 /* HelloParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloParser.swift; sourceTree = "<group>"; };
-		F9992EA31C3C2059001E7C66 /* HelloParserATN.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = HelloParserATN.json; sourceTree = "<group>"; };
-		F9992EA41C3C2059001E7C66 /* HelloVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloVisitor.swift; sourceTree = "<group>"; };
+		F984B34F1CB4AD88004C31FB /* HelloLexerATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloLexerATN.swift; sourceTree = "<group>"; };
+		F984B3501CB4AD88004C31FB /* HelloParserATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloParserATN.swift; sourceTree = "<group>"; };
+		F984B3511CB4AD88004C31FB /* Hello.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Hello.tokens; sourceTree = "<group>"; };
+		F984B3521CB4AD88004C31FB /* HelloBaseListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloBaseListener.swift; sourceTree = "<group>"; };
+		F984B3531CB4AD88004C31FB /* HelloBaseVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloBaseVisitor.swift; sourceTree = "<group>"; };
+		F984B3541CB4AD88004C31FB /* HelloLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloLexer.swift; sourceTree = "<group>"; };
+		F984B3551CB4AD88004C31FB /* HelloLexer.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HelloLexer.tokens; sourceTree = "<group>"; };
+		F984B3561CB4AD88004C31FB /* HelloListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloListener.swift; sourceTree = "<group>"; };
+		F984B3571CB4AD88004C31FB /* HelloParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloParser.swift; sourceTree = "<group>"; };
+		F984B3581CB4AD88004C31FB /* HelloVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloVisitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,16 +88,16 @@
 		F90690141C318A8600AC6125 /* Hello */ = {
 			isa = PBXGroup;
 			children = (
-				F9992E9B1C3C2059001E7C66 /* Hello.tokens */,
-				F9992E9C1C3C2059001E7C66 /* HelloBaseListener.swift */,
-				F9992E9D1C3C2059001E7C66 /* HelloBaseVisitor.swift */,
-				F9992E9E1C3C2059001E7C66 /* HelloLexer.swift */,
-				F9992E9F1C3C2059001E7C66 /* HelloLexer.tokens */,
-				F9992EA01C3C2059001E7C66 /* HelloLexerATN.json */,
-				F9992EA11C3C2059001E7C66 /* HelloListener.swift */,
-				F9992EA21C3C2059001E7C66 /* HelloParser.swift */,
-				F9992EA31C3C2059001E7C66 /* HelloParserATN.json */,
-				F9992EA41C3C2059001E7C66 /* HelloVisitor.swift */,
+				F984B34F1CB4AD88004C31FB /* HelloLexerATN.swift */,
+				F984B3501CB4AD88004C31FB /* HelloParserATN.swift */,
+				F984B3511CB4AD88004C31FB /* Hello.tokens */,
+				F984B3521CB4AD88004C31FB /* HelloBaseListener.swift */,
+				F984B3531CB4AD88004C31FB /* HelloBaseVisitor.swift */,
+				F984B3541CB4AD88004C31FB /* HelloLexer.swift */,
+				F984B3551CB4AD88004C31FB /* HelloLexer.tokens */,
+				F984B3561CB4AD88004C31FB /* HelloListener.swift */,
+				F984B3571CB4AD88004C31FB /* HelloParser.swift */,
+				F984B3581CB4AD88004C31FB /* HelloVisitor.swift */,
 			);
 			path = Hello;
 			sourceTree = "<group>";
@@ -162,11 +162,9 @@
 			files = (
 				F906902C1C318B2000AC6125 /* TestHello.txt in Resources */,
 				F906900A1C318A5C00AC6125 /* Assets.xcassets in Resources */,
-				F9992EA51C3C2059001E7C66 /* Hello.tokens in Resources */,
-				F9992EA91C3C2059001E7C66 /* HelloLexer.tokens in Resources */,
+				F984B35B1CB4AD88004C31FB /* Hello.tokens in Resources */,
+				F984B35F1CB4AD88004C31FB /* HelloLexer.tokens in Resources */,
 				F906900D1C318A5C00AC6125 /* MainMenu.xib in Resources */,
-				F9992EAD1C3C2059001E7C66 /* HelloParserATN.json in Resources */,
-				F9992EAA1C3C2059001E7C66 /* HelloLexerATN.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,14 +175,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9992EAB1C3C2059001E7C66 /* HelloListener.swift in Sources */,
-				F9992EAE1C3C2059001E7C66 /* HelloVisitor.swift in Sources */,
-				F9992EAC1C3C2059001E7C66 /* HelloParser.swift in Sources */,
-				F9992EA71C3C2059001E7C66 /* HelloBaseVisitor.swift in Sources */,
-				F9992EA61C3C2059001E7C66 /* HelloBaseListener.swift in Sources */,
-				F9992EA81C3C2059001E7C66 /* HelloLexer.swift in Sources */,
+				F984B3601CB4AD88004C31FB /* HelloListener.swift in Sources */,
+				F984B35E1CB4AD88004C31FB /* HelloLexer.swift in Sources */,
 				F90690081C318A5C00AC6125 /* AppDelegate.swift in Sources */,
+				F984B3611CB4AD88004C31FB /* HelloParser.swift in Sources */,
 				F906902A1C318A8600AC6125 /* HelloWalker.swift in Sources */,
+				F984B35D1CB4AD88004C31FB /* HelloBaseVisitor.swift in Sources */,
+				F984B35C1CB4AD88004C31FB /* HelloBaseListener.swift in Sources */,
+				F984B3591CB4AD88004C31FB /* HelloLexerATN.swift in Sources */,
+				F984B35A1CB4AD88004C31FB /* HelloParserATN.swift in Sources */,
+				F984B3621CB4AD88004C31FB /* HelloVisitor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
