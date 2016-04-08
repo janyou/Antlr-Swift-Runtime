@@ -204,7 +204,7 @@ public class ATNState: Hashable, CustomStringConvertible {
     }
     
     public func getStateType() -> Int {
-        RuntimeException(__FUNCTION__ + " must be overridden")
+        RuntimeException(#function + " must be overridden")
         return 0
     }
     

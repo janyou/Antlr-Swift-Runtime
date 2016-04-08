@@ -169,8 +169,8 @@ public class UnbufferedTokenStream<T>: TokenStream {
             lastTokenBufferStart = lastToken
         }
 
-        p++
-        currentTokenIndex++
+        p += 1
+        currentTokenIndex += 1
         try sync(1)
     }
 
@@ -213,7 +213,8 @@ public class UnbufferedTokenStream<T>: TokenStream {
             (t as! WritableToken).setTokenIndex(getBufferStartIndex() + n)
         }
 
-        tokens[n++] = t
+        tokens[n] = t
+        n += 1
     }
 
     /**
@@ -230,7 +231,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
         }
 
         let mark: Int = -numMarkers - 1
-        numMarkers++
+        numMarkers += 1
         return mark
     }
 
@@ -241,7 +242,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
             throw ANTLRError.IllegalState(msg: "release() called with an invalid marker.")
         }
 
-        numMarkers--
+        numMarkers -= 1
         if numMarkers == 0 {
             // can we release buffer?
             if p > 0 {
@@ -263,7 +264,8 @@ public class UnbufferedTokenStream<T>: TokenStream {
     }
 
 
-    public func seek(var index: Int) throws {
+    public func seek(index: Int) throws {
+        var index = index
         // seek to absolute index
         if index == currentTokenIndex {
             return

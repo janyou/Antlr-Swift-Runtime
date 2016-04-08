@@ -426,10 +426,12 @@ public class Parser: Recognizer<ParserATNSimulator> {
     public func triggerExitRuleEvent() throws {
         // reverse order walk of listeners
         if _parseListeners != nil && _ctx != nil {
-            for var i: Int = _parseListeners!.count - 1; i >= 0; i-- {
+            var i: Int = _parseListeners!.count - 1
+            while i >= 0 {
                 let listener: ParseTreeListener = _parseListeners![i]
                 _ctx!.exitRule(listener)
                 try  listener.exitEveryRule(_ctx!)
+                i -= 1
             }
         }
     }
@@ -561,7 +563,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
 
     public func notifyErrorListeners(offendingToken: Token, _ msg: String,
                                      _ e: AnyObject?) {
-        _syntaxErrors++
+        _syntaxErrors += 1
         var line: Int = -1
         var charPositionInLine: Int = -1
         line = offendingToken.getLine()
@@ -968,7 +970,8 @@ public class Parser: Recognizer<ParserATNSimulator> {
         return getRuleInvocationStack(_ctx)
     }
 
-    public func getRuleInvocationStack(var p: RuleContext?) -> Array<String> {
+    public func getRuleInvocationStack(p: RuleContext?) -> Array<String> {
+        var p = p
         var ruleNames: [String] = getRuleNames()
         var stack: Array<String> = Array<String>()
         while p != nil {
@@ -989,7 +992,8 @@ public class Parser: Recognizer<ParserATNSimulator> {
         var s: Array<String> = Array<String>()
         synced(_interp!.decisionToDFA) {
             [unowned self] in
-            for var d: Int = 0; d < self._interp!.decisionToDFA.count; d++ {
+ 
+            for d in 0..<self._interp!.decisionToDFA.count {
                 let dfa: DFA = self._interp!.decisionToDFA[d]
                 s.append(dfa.toString(self.getVocabulary()))
             }
@@ -1003,7 +1007,8 @@ public class Parser: Recognizer<ParserATNSimulator> {
         synced(_interp!.decisionToDFA) {
             [unowned self] in
             var seenOne: Bool = false
-            for var d: Int = 0; d < self._interp!.decisionToDFA.count; d++ {
+
+            for d in 0..<self._interp!.decisionToDFA.count {
                 let dfa: DFA = self._interp!.decisionToDFA[d]
                 if !dfa.states.isEmpty {
                     if seenOne {

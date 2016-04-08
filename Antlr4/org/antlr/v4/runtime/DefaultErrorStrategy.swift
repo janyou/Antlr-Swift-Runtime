@@ -595,11 +595,13 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
         if current.getType() == CommonToken.EOF && lookback != nil {
             current = lookback!
         }
-        return
-        recognizer.getTokenFactory().create((current.getTokenSource(), current.getTokenSource()!.getInputStream()), expectedTokenType, tokenText,
+        
+        let token = recognizer.getTokenFactory().create((current.getTokenSource(), current.getTokenSource()!.getInputStream()), expectedTokenType, tokenText,
                 CommonToken.DEFAULT_CHANNEL,
                 -1, -1,
                 current.getLine(), current.getCharPositionInLine())
+
+        return token
     }
 
 
@@ -639,8 +641,8 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
     }
 
 
-    internal func escapeWSAndQuote(var s: String) -> String {
-
+    internal func escapeWSAndQuote(s: String) -> String {
+        var s = s
         s = s.replaceAll("\n", replacement: "\\n")
         s = s.replaceAll("\r", replacement: "\\r")
         s = s.replaceAll("\t", replacement: "\\t")

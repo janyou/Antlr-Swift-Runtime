@@ -206,7 +206,8 @@ public class BufferedTokenStream: TokenStream {
     }
 
     /** Get all tokens from start..stop inclusively */
-    public func get(start: Int, var _ stop: Int) throws -> Array<Token>? {
+    public func get(start: Int,_ stop: Int) throws -> Array<Token>? {
+        var stop = stop
         if start < 0 || stop < 0 {
             return nil
         }
@@ -345,7 +346,8 @@ public class BufferedTokenStream: TokenStream {
      * the EOF token if there are no tokens on channel between {@code i} and
      * EOF.
      */
-    internal func nextTokenOnChannel(var i: Int, _ channel: Int) throws -> Int {
+    internal func nextTokenOnChannel(i: Int, _ channel: Int) throws -> Int {
+        var i = i
         try sync(i)
         if i >= size() {
             return size() - 1
@@ -357,7 +359,7 @@ public class BufferedTokenStream: TokenStream {
                 return i
             }
 
-            i++
+            i += 1
             try sync(i)
             token = tokens[i]
         }
@@ -375,7 +377,8 @@ public class BufferedTokenStream: TokenStream {
      * index is returned. This is due to the fact that the EOF token is treated
      * as though it were on every channel.</p>
      */
-    internal func previousTokenOnChannel(var i: Int, _ channel: Int) throws -> Int {
+    internal func previousTokenOnChannel(i: Int, _ channel: Int) throws -> Int {
+        var i = i
         try sync(i)
         if i >= size() {
             // the EOF token is on every channel
@@ -388,7 +391,7 @@ public class BufferedTokenStream: TokenStream {
                 return i
             }
 
-            i--
+            i -= 1
         }
 
         return i

@@ -631,7 +631,7 @@ public class TokenStreamRewriter {
                 if t.getType() != CommonToken.EOF {
                     buf.append(t.getText()!)
                 }
-                i++ // move to next token
+                i += 1 // move to next token
             } else {
                 i = try op!.execute(buf) // execute operation and skip
             }

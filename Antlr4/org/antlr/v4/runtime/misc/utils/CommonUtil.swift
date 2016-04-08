@@ -114,7 +114,7 @@ public func intChar2String(i: Int) -> String {
     return String(Character(integerLiteral: i))
 }
 
-public func log(message: String = "", file: String = __FILE__, function: String = __FUNCTION__, lineNum: Int = __LINE__) {
+public func log(message: String = "", file: String = #file, function: String = #function, lineNum: Int = #line) {
 
     // #if DEBUG
     print("FILE: \(NSURL(fileURLWithPath: file).pathComponents!.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)")
@@ -124,7 +124,7 @@ public func log(message: String = "", file: String = __FILE__, function: String 
 }
 
 
-public func RuntimeException(message: String = "", file: String = __FILE__, function: String = __FUNCTION__, lineNum: Int = __LINE__) {
+public func RuntimeException(message: String = "", file: String = #file, function: String = #function, lineNum: Int = #line) {
     // #if DEBUG
     let info = "FILE: \(NSURL(fileURLWithPath: file).pathComponents!.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)"
     //   #else

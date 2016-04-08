@@ -62,7 +62,7 @@ func == <K: Hashable, V: Equatable>(lhs: Entry<K,V?>, rhs: Entry<K,V?>) -> Bool 
 
 
 
-public final class HashMap<K: Hashable,V>
+public final class HashMap<K: Hashable,V>: SequenceType
 {
     
     /**
@@ -142,7 +142,8 @@ public final class HashMap<K: Hashable,V>
         table =  [Entry<K,V>!](count: DEFAULT_INITIAL_CAPACITY, repeatedValue: nil)
     }
     
-    static func hash(var h: Int) -> Int {
+    static func hash(h: Int) -> Int {
+        var h = h
         // This function ensures that hashCodes that differ only by
         // constant multiples at each bit position have a bounded
         // number of collisions (approximately 8 at default load factor).
@@ -170,7 +171,11 @@ public final class HashMap<K: Hashable,V>
             return get(key)
         }
         set {
-            put(key,newValue!)
+            if newValue == nil {
+                remove(key)
+            }else{
+                put(key,newValue!)
+            }
         }
     }
     
@@ -196,12 +201,15 @@ public final class HashMap<K: Hashable,V>
      */
     public final func get(key: K) -> V? {
         let hash: Int = HashMap.hash(key.hashValue)
-        for  var e = table[HashMap.indexFor(hash, table.count)]; e != nil; e = e!.next {
+        var e = table[HashMap.indexFor(hash, table.count)]
+        while e != nil {
             if  e.hash == hash &&  e.key == key
             {
                 return e.value
             }
+            e = e!.next
         }
+
         return nil
     }
     /**
@@ -223,15 +231,15 @@ public final class HashMap<K: Hashable,V>
      */
     final func getEntry(key: K) -> Entry<K,V>! {
         let hash: Int =  HashMap.hash(key.hashValue)
-        for  var e = table[HashMap.indexFor(hash, table.count)];
-            e != nil;
-            e = e!.next {
-                if  e.hash == hash &&  e.key == key
-                {
-                    return e
-                }
-                
+        var e = table[HashMap.indexFor(hash, table.count)]
+        while e != nil {
+            if  e.hash == hash &&  e.key == key
+            {
+                return e
+            }
+            e = e!.next
         }
+
         return nil
     }
     
@@ -252,15 +260,18 @@ public final class HashMap<K: Hashable,V>
         
         let hash: Int = HashMap.hash(key.hashValue)
         let i: Int = HashMap.indexFor(hash, table.count)
-        for  var e = table[i]; e != nil; e = e.next {
+        var e = table[i]
+        while e != nil {
             if  e.hash == hash &&  e.key == key {
                 let oldValue = e.value
                 e.value = value
                 return oldValue
             }
+            e = e.next
         }
         
-        modCount++
+        
+        modCount += 1
         addEntry(hash, key, value, i)
         return nil
     }
@@ -275,7 +286,9 @@ public final class HashMap<K: Hashable,V>
     final func addEntry(hash: Int, _ key: K, _ value: V, _ bucketIndex: Int) {
         let e = table[bucketIndex]
         table[bucketIndex] = Entry<K,V>(hash, key, value, e)
-        if size++ >= threshold {
+        let oldSize = size
+        size += 1
+        if oldSize >= threshold {
             resize(2 * table.count)
         }
     }
@@ -332,12 +345,43 @@ public final class HashMap<K: Hashable,V>
      * The map will be empty after this call returns.
      */
     public final func clear() {
-        modCount++
+        modCount += 1
         let length = table.count
         for  i in 0..<length {
             table[i] = nil
         }
         size = 0
+    }
+    
+    public func remove(key: K) -> V? {
+        let e  = removeEntryForKey(key)
+        return (e == nil ? nil : e!.value)
+    }
+    
+ 
+    final func removeEntryForKey(key: K) -> Entry<K,V>? {
+        let hash: Int = HashMap.hash(Int(key.hashValue))
+        let i = Int(HashMap.indexFor(hash, Int(table.count)))
+        var prev  = table[i]
+        var e  = prev
+        
+        while e != nil{
+            let next  = e.next
+            var _: AnyObject
+            if e.hash == hash &&  e.key == key{
+                modCount += 1
+                size -= 1
+                if prev === e
+                {table[i] = next}
+                else
+                {prev.next = next}
+                return e
+            }
+            prev = e
+            e = next
+        }
+        
+        return e
     }
     
     public final var values: [V]{
@@ -380,5 +424,43 @@ public final class HashMap<K: Hashable,V>
         return keyList
     }
     
+ 
+    public func generate() ->  AnyGenerator<(K,V)> {
+        var _next: Entry<K,V>? // next entry to return
+        let expectedModCount: Int = modCount // For fast-fail
+        var index: Int = 0 // current slot
+        //var current: HashMapEntry<K,V> // current entry
+        if size > 0{ // advance to first entry
+            
+            while index < table.count &&  _next == nil
+            {
+                _next = table[index]
+                index += 1
+            }
+        }
+        
+        return AnyGenerator {
+            if self.modCount != expectedModCount
+            {
+                fatalError("\(#function) ConcurrentModificationException")
+            }
+            let e  = _next
+            if e == nil
+            {
+                return nil
+            }
+            _next = e!.next
+            if _next == nil{
+                while index < self.table.count &&  _next == nil
+                {
+                    _next = self.table[index]
+                    index += 1
+                }
+            }
+            //current = e
+            return (e!.getKey(),e!.getValue())
+        }
+        
+    }
     
 }

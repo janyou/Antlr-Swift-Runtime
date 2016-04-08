@@ -442,7 +442,7 @@ public class ParseTreePatternMatcher {
                             stops.append(p)
                             p += stop.length
                         } else {
-                            p++
+                            p += 1
                         }
                     }
                 }

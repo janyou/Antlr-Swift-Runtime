@@ -187,7 +187,7 @@ public class ParserRuleContext: RuleContext {
         for o: ParseTree in children! {
             //if ( ctxType.isInstance(o) ) {
             if o is T {
-                j++
+                j += 1
                 if j == i {
                     return o as? T//ctxType.cast(o);
                 }
@@ -207,7 +207,7 @@ public class ParserRuleContext: RuleContext {
                 let tnode: TerminalNode = o as! TerminalNode
                 let symbol: Token = tnode.getSymbol()!
                 if symbol.getType() == ttype {
-                    j++
+                    j += 1
                     if j == i {
                         return tnode
                     }

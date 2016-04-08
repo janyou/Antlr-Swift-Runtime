@@ -191,7 +191,8 @@ public enum PredictionMode {
      * the configurations to strip out all of the predicates so that a standard
      * {@link org.antlr.v4.runtime.atn.ATNConfigSet} will merge everything ignoring predicates.</p>
      */
-    public static func hasSLLConflictTerminatingPrediction(mode: PredictionMode, var _ configs: ATNConfigSet) throws -> Bool {
+    public static func hasSLLConflictTerminatingPrediction(mode: PredictionMode,_ configs: ATNConfigSet) throws -> Bool {
+        var configs = configs
         /* Configs in rule stop states indicate reaching the end of the decision
         * rule (local context) or end of start rule (full context). If all
         * configs meet this condition, then none of the configurations is able

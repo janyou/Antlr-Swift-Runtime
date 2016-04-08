@@ -62,7 +62,7 @@ public class SemanticContext: Hashable, CustomStringConvertible {
     * dependent predicate evaluation.</p>
     */
     public func eval<T:ATNSimulator>(parser: Recognizer<T>, _ parserCallStack: RuleContext) throws -> Bool {
-        RuntimeException(__FUNCTION__ + " must be overridden")
+        RuntimeException(#function + " must be overridden")
         return false
     }
 
@@ -88,11 +88,11 @@ public class SemanticContext: Hashable, CustomStringConvertible {
         return self
     }
     public var hashValue: Int {
-        RuntimeException(__FUNCTION__ + " must be overridden")
+        RuntimeException(#function + " must be overridden")
         return 0
     }
     public var description: String {
-        RuntimeException(__FUNCTION__ + " must be overridden")
+        RuntimeException(#function + " must be overridden")
         return ""
     }
 

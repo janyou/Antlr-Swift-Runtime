@@ -520,7 +520,7 @@ public class ATNConfigSet: Hashable, CustomStringConvertible {
                     altToPred![i] = SemanticContext.NONE
                 } else {
                     if altToPred![i] != SemanticContext.NONE {
-                        nPredAlts++
+                        nPredAlts += 1
                     }
                 }
             }

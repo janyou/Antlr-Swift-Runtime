@@ -109,7 +109,7 @@ public class RuleContext: RuleNode {
         var p: RuleContext? = self
         while p != nil {
             p = p!.parent
-            n++
+            n += 1
         }
         return n
     }

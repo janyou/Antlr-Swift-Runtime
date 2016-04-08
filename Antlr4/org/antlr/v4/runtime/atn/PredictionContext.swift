@@ -50,7 +50,9 @@ public class PredictionContext: Hashable, CustomStringConvertible {
 
     public static var globalNodeCount: Int = 0
     public final let id: Int = {
-        return globalNodeCount++
+        let oldGlobalNodeCount = globalNodeCount
+        globalNodeCount += 1
+        return oldGlobalNodeCount
     }()
 
     /**
@@ -83,7 +85,8 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     /** Convert a {@link org.antlr.v4.runtime.RuleContext} tree to a {@link org.antlr.v4.runtime.atn.PredictionContext} graph.
      *  Return {@link #EMPTY} if {@code outerContext} is empty or null.
      */
-    public static func fromRuleContext(atn: ATN, var _ outerContext: RuleContext?) -> PredictionContext {
+    public static func fromRuleContext(atn: ATN, _ outerContext: RuleContext?) -> PredictionContext {
+        var outerContext = outerContext
         if (outerContext == nil) {
             outerContext = RuleContext.EMPTY
         }
@@ -104,19 +107,19 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     }
 
     public func size() -> Int {
-        RuntimeException(__FUNCTION__ + " must be overridden")
+        RuntimeException(#function + " must be overridden")
         return 0
     }
 
 
     public func getParent(index: Int) -> PredictionContext? {
-        RuntimeException(__FUNCTION__ + " must be overridden")
+        RuntimeException(#function + " must be overridden")
         return nil
     }
 
 
     public func getReturnState(index: Int) -> Int {
-        RuntimeException(__FUNCTION__ + " must be overridden")
+        RuntimeException(#function + " must be overridden")
         return 0
     }
 
@@ -165,10 +168,12 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     
     // dispatch
     public static func merge(
-        var a: PredictionContext,
-        var _ b: PredictionContext,
+        a: PredictionContext,
+        _ b: PredictionContext,
         _ rootIsWildcard: Bool,
         inout _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
+        var a = a
+        var b = b
             // assert ( a != nil && b != nil,"Expected: a!=null&&b!=null");
             //assert ( a!=nil && b!=nil,"Expected: a!=null&&b!=null"); // must be empty context, never null
             // share same graph if both same
@@ -469,34 +474,35 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                         mergedParents[k] = mergedParent
                         mergedReturnStates[k] = payload
                     }
-                    i++ // hop over left one as usual
-                    j++ // but also skip one in right side since we merge
+                    i += 1 // hop over left one as usual
+                    j += 1 // but also skip one in right side since we merge
                 } else if (aReturnStates[i] < bReturnStates[j]) {
                     // copy a[i] to M
                     mergedParents[k] = a_parent
                     mergedReturnStates[k] = aReturnStates[i]
-                    i++
+                    i += 1
                 } else {
                     // b > a, copy b[j] to M
                     mergedParents[k] = b_parent
                     mergedReturnStates[k] = bReturnStates[j]
-                    j++
+                    j += 1
                 }
-                k++
+                k += 1
             }
             
             // copy over any payloads remaining in either array
             if (i < aReturnStatesLength) {
-                for var p: Int = i; p < aReturnStatesLength; p++ {
+                
+                for p in i..<aReturnStatesLength {
                     mergedParents[k] = aParents[p]
                     mergedReturnStates[k] = aReturnStates[p]
-                    k++
+                    k += 1
                 }
             } else {
-                for var p: Int = j; p < bReturnStatesLength; p++ {
+                for p in j..<bReturnStatesLength {
                     mergedParents[k] = bParents[p]
                     mergedReturnStates[k] = bReturnStates[p]
-                    k++
+                    k += 1
                 }
             }
             
@@ -676,7 +682,8 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                 if (changed || parent !== context.getParent(i)) {
                     if (!changed) {
                         parents = [PredictionContext?](count: context.size(), repeatedValue: nil)
-                        for var j: Int = 0; j < context.size(); j++ {
+                        
+                        for j in 0..<context.size() {
                             parents[j] = context.getParent(j)
                         }
                         
@@ -750,9 +757,8 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     // FROM SAM
     public func toStrings<T:ATNSimulator>(recognizer: Recognizer<T>?, _ stop: PredictionContext, _ currentState: Int) -> [String] {
         var result: Array<String> = Array<String>()
-        
-        outer:
-            for var perm: Int = 0;; perm++ {
+        var perm: Int = 0
+        outer: while true {
                 var offset: Int = 0
                 var last: Bool = true
                 var p: PredictionContext = self
@@ -764,7 +770,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                     if (p.size() > 0) {
                         var bits: Int = 1
                         while (1 << bits) < p.size() {
-                            bits++
+                            bits += 1
                         }
                         
                         let mask: Int = (1 << bits) - 1
@@ -811,6 +817,8 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                 if (last) {
                     break
                 }
+                
+                perm += 1
         }
         
         return result

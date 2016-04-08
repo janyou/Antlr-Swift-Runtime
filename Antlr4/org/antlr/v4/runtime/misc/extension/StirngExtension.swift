@@ -52,7 +52,8 @@ public extension String {
     func indexOf(target: String, startIndex: Int) -> Int {
 
         let startRange = self.startIndex.advancedBy(startIndex)
-        let range = self.rangeOfString(target, options: NSStringCompareOptions.LiteralSearch, range: Range<String.Index>(start: startRange, end: self.endIndex))
+        let range = self.rangeOfString(target, options: NSStringCompareOptions.LiteralSearch, range: startRange..<self.endIndex)
+ 
         if let range = range {
 
             return self.startIndex.distanceTo(range.startIndex)
@@ -140,7 +141,7 @@ public extension String {
 
 
 
-        let range = Range(start: startIndex, end: endIndex)
+        let range = startIndex..<endIndex
 
         return substringWithRange(range)
     }

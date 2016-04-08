@@ -118,7 +118,7 @@ public class LexerATNSimulator: ATNSimulator {
     }
     
     public func match(input: CharStream, _ mode: Int) throws -> Int {
-        LexerATNSimulator.match_calls++
+        LexerATNSimulator.match_calls += 1
         self.mode = mode
         var mark: Int = input.mark()
         do {
@@ -150,7 +150,8 @@ public class LexerATNSimulator: ATNSimulator {
     
     override
     public func clearDFA() {
-        for var d: Int = 0; d < decisionToDFA.count; d++ {
+ 
+        for d in 0..<decisionToDFA.count {
             decisionToDFA[d] = DFA(atn.getDecisionState(d)!, d)
         }
     }
@@ -428,7 +429,8 @@ public class LexerATNSimulator: ATNSimulator {
      * @return {@code true} if an accept state is reached, otherwise
      * {@code false}.
      */
-    final func closure(input: CharStream, _ config: LexerATNConfig, _ configs: ATNConfigSet, var _ currentAltReachedAcceptState: Bool, _ speculative: Bool, _ treatEofAsEpsilon: Bool) throws -> Bool {
+    final func closure(input: CharStream, _ config: LexerATNConfig, _ configs: ATNConfigSet, _ currentAltReachedAcceptState: Bool, _ speculative: Bool, _ treatEofAsEpsilon: Bool) throws -> Bool {
+        var currentAltReachedAcceptState = currentAltReachedAcceptState
         if LexerATNSimulator.debug {
             print("closure(" + config.toString(recog, true) + ")")
         }
@@ -763,10 +765,10 @@ public class LexerATNSimulator: ATNSimulator {
     public func consume(input: CharStream) throws {
         let curChar: Int = try input.LA(1)
         if String(Character(integerLiteral: curChar)) == "\n" {
-            line++
+            line += 1
             charPositionInLine = 0
         } else {
-            charPositionInLine++
+            charPositionInLine += 1
         }
         try  input.consume()
     }

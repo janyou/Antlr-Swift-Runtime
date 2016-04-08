@@ -130,7 +130,7 @@ public class ListTokenSource: TokenSource {
             eofToken = t
         }
 
-        i++
+        i += 1
         return t
     }
 
@@ -156,7 +156,7 @@ public class ListTokenSource: TokenSource {
                         let length = tokenText!.length
                         for j in 0..<length {
                             if String(tokenText![j]) == "\n" {
-                                line++
+                                line += 1
                             }
                         }
                     }

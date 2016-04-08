@@ -314,13 +314,15 @@ public class ParserATNSimulator: ATNSimulator {
     
     override
     public func clearDFA() {
-        for var d: Int = 0; d < decisionToDFA.count; d++ {
+        //for var d: Int = 0; d < decisionToDFA.count; d++ {
+        for d in 0..<decisionToDFA.count {
             decisionToDFA[d] = DFA(atn.getDecisionState(d)!, d)
         }
     }
     
     public func adaptivePredict(input: TokenStream, _ decision: Int,
-        var _ outerContext: ParserRuleContext?) throws -> Int {
+        _ outerContext: ParserRuleContext?) throws -> Int {
+        var outerContext = outerContext
             if debug || debug_list_atn_decisions {
                 try  print("adaptivePredict decision \(decision) exec LA(1)==\(getLookaheadName(input)) line \(input.LT(1)!.getLine()):\(input.LT(1)!.getCharPositionInLine())")
             }
@@ -1490,11 +1492,11 @@ public class ParserATNSimulator: ATNSimulator {
                             }
                         }
                         
-                        c!.reachesIntoOuterContext++
+                        c!.reachesIntoOuterContext += 1
                         configs.dipsIntoOuterContext = true // TODO: can remove? only care when we add to set per middle of this method
                         //print("newDepth=>\(newDepth)")
                         assert(newDepth > Int.min, "Expected: newDepth>Integer.MIN_VALUE")
-                        newDepth--
+                        newDepth -= 1
                         
                         if debug {
                             print("dips into outer ctx: \(c!)")
@@ -1502,7 +1504,7 @@ public class ParserATNSimulator: ATNSimulator {
                     } else if t is RuleTransition {
                         // latch when newDepth goes negative - once we step out of the entry context we can't return
                         if newDepth >= 0 {
-                            newDepth++
+                            newDepth += 1
                         }
                         
                         
@@ -1831,7 +1833,8 @@ public class ParserATNSimulator: ATNSimulator {
     final func addDFAEdge(dfa: DFA,
         _ from: DFAState?,
         _ t: Int,
-        var _ to: DFAState?) throws -> DFAState? {
+        _ to: DFAState?) throws -> DFAState? {
+        var to = to
             if debug {
                 print("EDGE \(from) -> \(to) upon \(getTokenName(t))")
             }

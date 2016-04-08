@@ -76,8 +76,8 @@ public class ProfilingATNSimulator: ParserATNSimulator {
     }
 
     override
-    public func adaptivePredict(input: TokenStream, _ decision: Int, var _ outerContext: ParserRuleContext?) throws -> Int {
-
+    public func adaptivePredict(input: TokenStream, _ decision: Int,_ outerContext: ParserRuleContext?) throws -> Int {
+        var outerContext = outerContext
         self._sllStopIndex = -1
         self._llStopIndex = -1
         self.currentDecision = decision
@@ -85,7 +85,7 @@ public class ProfilingATNSimulator: ParserATNSimulator {
         var alt: Int = try  super.adaptivePredict(input, decision, outerContext)
         var stop: Int64 = Int64(NSDate().timeIntervalSince1970)  //System.nanoTime();
         decisions[decision].timeInPrediction += (stop - start)
-        decisions[decision].invocations++
+        decisions[decision].invocations += 1
 
         var SLL_k: Int64 = _sllStopIndex - _startIndex + 1
         decisions[decision].SLL_TotalLook += SLL_k
@@ -123,7 +123,7 @@ public class ProfilingATNSimulator: ParserATNSimulator {
 
         let existingTargetState: DFAState? = super.getExistingTargetState(previousD, t)
         if existingTargetState != nil {
-            decisions[currentDecision].SLL_DFATransitions++ // count only if we transition over a DFA state
+            decisions[currentDecision].SLL_DFATransitions += 1 // count only if we transition over a DFA state
             if existingTargetState == ATNSimulator.ERROR {
                 decisions[currentDecision].errors.append(
                 ErrorInfo(currentDecision, previousD.configs, _input, _startIndex, _sllStopIndex, false)
@@ -152,7 +152,7 @@ public class ProfilingATNSimulator: ParserATNSimulator {
 
         let reachConfigs: ATNConfigSet? = try super.computeReachSet(closure, t, fullCtx)
         if fullCtx {
-            decisions[currentDecision].LL_ATNTransitions++ // count computation even if error
+            decisions[currentDecision].LL_ATNTransitions += 1 // count computation even if error
             if reachConfigs != nil {
             } else {
                 // no reach on current lookahead symbol. ERROR.
@@ -162,7 +162,7 @@ public class ProfilingATNSimulator: ParserATNSimulator {
                 )
             }
         } else {
-            decisions[currentDecision].SLL_ATNTransitions++
+            decisions[currentDecision].SLL_ATNTransitions += 1
             if reachConfigs != nil {
             } else {
                 // no reach on current lookahead symbol. ERROR.
@@ -195,7 +195,7 @@ public class ProfilingATNSimulator: ParserATNSimulator {
         } else {
             conflictingAltResolvedBySLL = try configs.getAlts().nextSetBit(0)
         }
-        decisions[currentDecision].LL_Fallback++
+        decisions[currentDecision].LL_Fallback += 1
         try super.reportAttemptingFullContext(dfa, conflictingAlts!, configs, startIndex, stopIndex)
     }
 

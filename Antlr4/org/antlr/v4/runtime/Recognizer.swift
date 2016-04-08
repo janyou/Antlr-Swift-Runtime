@@ -54,12 +54,12 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
      */
     ////@Deprecated
     public func getTokenNames() -> [String?]? {
-        RuntimeException(__FUNCTION__ + " must be overridden")
+        RuntimeException(#function + " must be overridden")
         return []
     }
 
     public func getRuleNames() -> [String] {
-        RuntimeException(__FUNCTION__ + " must be overridden")
+        RuntimeException(#function + " must be overridden")
         return []
     }
 
@@ -159,7 +159,7 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
      *  Have ANTLR generate an implementation for this method.
      */
     public func getGrammarFileName() -> String {
-        RuntimeException(__FUNCTION__ + " must be overridden")
+        RuntimeException(#function + " must be overridden")
         return ""
     }
 
@@ -169,7 +169,7 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
      * @return The {@link org.antlr.v4.runtime.atn.ATN} used by the recognizer for prediction.
      */
     public func getATN() -> ATN {
-        RuntimeException(__FUNCTION__ + " must be overridden")
+        RuntimeException(#function + " must be overridden")
         fatalError()
     }
 
@@ -303,25 +303,25 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
     }
 
     public func getInputStream() -> IntStream? {
-        RuntimeException(__FUNCTION__ + "Must be overridden")
+        RuntimeException(#function + "Must be overridden")
         fatalError()
     }
 
 
     public func setInputStream(input: IntStream) throws {
-        RuntimeException(__FUNCTION__ + "Must be overridden")
+        RuntimeException(#function + "Must be overridden")
 
     }
 
 
     public func getTokenFactory() -> TokenFactory {
-        RuntimeException(__FUNCTION__ + "Must be overridden")
+        RuntimeException(#function + "Must be overridden")
         fatalError()
     }
 
 
     public func setTokenFactory(input: TokenFactory) {
-        RuntimeException(__FUNCTION__ + "Must be overridden")
+        RuntimeException(#function + "Must be overridden")
 
     }
 

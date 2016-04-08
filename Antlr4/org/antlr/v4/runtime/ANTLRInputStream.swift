@@ -151,18 +151,19 @@ public class ANTLRInputStream: CharStream {
 
         // print("prev p="+p+", c="+(char)data[p]);
         if p < n {
-            p++
+            p += 1
             //print("p moves to "+p+" (c='"+(char)data[p]+"')");
         }
     }
 
 
-    public func LA(var i: Int) -> Int {
+    public func LA(i: Int) -> Int {
+        var i = i
         if i == 0 {
             return 0 // undefined
         }
         if i < 0 {
-            i++ // e.g., translate LA(-1) to use offset i=0; then data[p+0-1]
+            i += 1 // e.g., translate LA(-1) to use offset i=0; then data[p+0-1]
             if (p + i - 1) < 0 {
                 return ANTLRInputStream.EOF// invalid; no char before first char
             }
@@ -206,7 +207,8 @@ public class ANTLRInputStream: CharStream {
      *  update line and charPositionInLine. If we seek backwards, just set p
      */
 
-    public func seek(var index: Int) throws {
+    public func seek(index: Int) throws {
+        var index = index
         if index <= p {
             p = index // just jump; don't update stream state (line, ...)
             return

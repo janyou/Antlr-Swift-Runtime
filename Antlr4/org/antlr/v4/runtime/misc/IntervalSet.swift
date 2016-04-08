@@ -139,8 +139,9 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
         }
         // find position in list
         // Use iterators as we modify list in place
-        
-        for var i = 0; i < intervals.count; i++ {
+        var i = 0
+
+        while i < intervals.count {
 
             let r: Interval = intervals[i]
             if addition == r {
@@ -155,7 +156,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
                 // should be merged with next interval in list
                 //while  iter.hasNext()  {
                 while i < intervals.count - 1 {
-                    i++
+                    i += 1
                     let next: Interval = intervals[i]  //iter.next();
                     if !bigger.adjacent(next) && bigger.disjoint(next) {
                         break
@@ -167,7 +168,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
                     iter.set(bigger.union(next)); // set to 3 merged ones
                     iter.next(); // first call to next after previous duplicates the result*/
                     intervals.removeAtIndex(i)
-                    i--
+                    i -= 1
                     intervals[i] = bigger.union(next)
 
                 }
@@ -181,6 +182,8 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
                 return
             }
             // if disjoint and after r, a future iteration will handle it
+            
+            i += 1
         }
         // ok, must be after last interval (and disjoint from last interval)
         // just add it
@@ -283,12 +286,12 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
             // operation: (resultInterval - rightInterval) and update indexes
 
             if rightInterval.b < resultInterval.a {
-                rightI++
+                rightI += 1
                 continue
             }
 
             if rightInterval.a > resultInterval.b {
-                resultI++
+                resultI += 1
                 continue
             }
 
@@ -309,20 +312,20 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
                     //result.intervals.set(beforeCurrent,resultI);
                     result.intervals.insert(afterCurrent!, atIndex: resultI + 1)
                     //result.intervals.add(, afterCurrent);
-                    resultI++
-                    rightI++
+                    resultI += 1
+                    rightI += 1
                     continue
                 } else {
                     // replace the current interval
                     result.intervals[resultI] = beforeCurrent!
-                    resultI++
+                    resultI += 1
                     continue
                 }
             } else {
                 if afterCurrent != nil {
                     // replace the current interval
                     result.intervals[resultI] = afterCurrent!
-                    rightI++
+                    rightI += 1
                     continue
                 } else {
                     // remove the current interval (thus no need to increment resultI)
@@ -369,11 +372,11 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
             //System.out.println("mine="+mine+" and theirs="+theirs);
             if mine.startsBeforeDisjoint(theirs) {
                 // move this iterator looking for interval that might overlap
-                i++
+                i += 1
             } else {
                 if theirs.startsBeforeDisjoint(mine) {
                     // move other iterator looking for interval that might overlap
-                    j++
+                    j += 1
                 } else {
                     if mine.properlyContains(theirs) {
                         // overlap, add intersection, get next theirs
@@ -381,7 +384,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
                             intersection = try IntervalSet()
                         }
                         try intersection!.add(mine.intersection(theirs))
-                        j++
+                        j += 1
                     } else {
                         if theirs.properlyContains(mine) {
                             // overlap, add intersection, get next mine
@@ -389,7 +392,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
                                 intersection = try IntervalSet()
                             }
                             try intersection!.add(mine.intersection(theirs))
-                            i++
+                            i += 1
                         } else {
                             if !mine.disjoint(theirs) {
                                 // overlap, add intersection
@@ -405,10 +408,10 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
                                 // in thisIter.
                                 // move both iterators to next ranges
                                 if mine.startsAfterNonDisjoint(theirs) {
-                                    j++
+                                    j += 1
                                 } else {
                                     if theirs.startsAfterNonDisjoint(mine) {
-                                        i++
+                                        i += 1
                                     }
                                 }
                             }
@@ -683,7 +686,8 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
             let I: Interval = intervals[i]
             let a: Int = I.a
             let b: Int = I.b
-            for var v: Int = a; v <= b; v++ {
+            
+            for v in a...b  {
                 values.append(v)
             }
         }
@@ -698,7 +702,8 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
             let I: Interval = intervals[i]
             let a: Int = I.a
             let b: Int = I.b
-            for var v: Int = a; v <= b; v++ {
+ 
+            for v in a...b  {
                 values.append(v)
             }
         }
@@ -710,7 +715,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
         for I: Interval in intervals {
             let a: Int = I.a
             let b: Int = I.b
-            for var v: Int = a; v <= b; v++ {
+            for v in a...b  {
                 s.insert(v)
                 //s.add(v);
             }
@@ -725,15 +730,15 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
     public func get(i: Int) -> Int {
         let n: Int = intervals.count
         var index: Int = 0
-        for var j: Int = 0; j < n; j++ {
+        for j in 0..<n {
             let I: Interval = intervals[j]
             let a: Int = I.a
             let b: Int = I.b
-            for var v: Int = a; v <= b; v++ {
+            for v in a...b  {
                 if index == i {
                     return v
                 }
-                index++
+                index += 1
             }
         }
         return -1
@@ -764,12 +769,12 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
             }
             // if on left edge x..b, adjust left
             if el == a {
-                I.a++
+                I.a += 1
                 break
             }
             // if on right edge a..x, adjust right
             if el == b {
-                I.b--
+                I.b -= 1
                 break
             }
             // if in middle a..x..b, split interval

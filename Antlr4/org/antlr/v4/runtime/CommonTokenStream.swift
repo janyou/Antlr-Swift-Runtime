@@ -108,7 +108,7 @@ public class CommonTokenStream: BufferedTokenStream {
         while n <= k {
             // skip off-channel tokens
             try i = previousTokenOnChannel(i - 1, channel)
-            n++
+            n += 1
         }
         if i < 0 {
             return nil
@@ -134,7 +134,7 @@ public class CommonTokenStream: BufferedTokenStream {
             if try sync(i + 1) {
                 i = try nextTokenOnChannel(i + 1, channel)
             }
-            n++
+            n += 1
         }
 //		if ( i>range ) range = i;
         return tokens[i]
@@ -148,7 +148,7 @@ public class CommonTokenStream: BufferedTokenStream {
         for i in 0..<length {
             let t: Token = tokens[i]
             if t.getChannel() == channel {
-                n++
+                n += 1
             }
             if t.getType() == CommonToken.EOF {
                 break

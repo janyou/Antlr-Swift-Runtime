@@ -16,7 +16,7 @@ public class HelloVisitor<T>: ParseTreeVisitor<T> {
 	- returns: the visitor result
 	 */
 	public func visitR(ctx: HelloParser.RContext) -> T{
-	 	fatalError(__FUNCTION__ + " must be overridden")
+	 	fatalError(#function + " must be overridden")
 	}
 
 }
