@@ -33,10 +33,7 @@ extension Character {
 
     //char ->  int
     var unicodeValue: Int {
-        for s in String(self).unicodeScalars {
-            return Int(s.value)
-        }
-        return 0
+        return Int(String(self).unicodeScalars.first?.value ?? 0)
     }
 
     public static var MAX_VALUE: Int {
