@@ -31,75 +31,26 @@ func +(lhs: Token, rhs: String) -> String {
 infix operator >>> { associativity right precedence 160 }
 
 func >>>(lhs: Int32, rhs: Int32) -> Int32 {
-    var left: UInt32, right: UInt32
-    if lhs < 0 {
-
-        left = UInt32(bitPattern: lhs)
-
-    } else {
-        left = UInt32(lhs)
-    }
-
-    let bit: Int32 = 32
-
-    if rhs > Int32(bit - 1) {
-        right = UInt32(rhs % bit)
-    } else if rhs < 0 {
-        right = UInt32(bit + (rhs % bit))
-
-    } else {
-        right = UInt32(rhs)
-    }
-
-    return Int32(left >> right)
+    let left = UInt32(bitPattern: lhs)
+    let right = UInt32(bitPattern: rhs) % 32
+    
+    return Int32(bitPattern: left >> right)
 }
 
 func >>>(lhs: Int64, rhs: Int64) -> Int64 {
-    var left: UInt64, right: UInt64
-    if lhs < 0 {
-
-        left = UInt64(bitPattern: lhs)
-
-    } else {
-        left = UInt64(lhs)
-    }
-
-    let bit: Int64 = 64
-
-    if rhs > Int64(bit - 1) {
-        right = UInt64(rhs % bit)
-    } else if rhs < 0 {
-        right = UInt64(bit + (rhs % bit))
-
-    } else {
-        right = UInt64(rhs)
-    }
-
-    return Int64(left >> right)
+    let left = UInt64(bitPattern: lhs)
+    let right = UInt64(bitPattern: rhs) % 64
+    
+    return Int64(bitPattern: left >> right)
 }
 
 func >>>(lhs: Int, rhs: Int) -> Int {
-    var left: UInt, right: UInt
-    if lhs < 0 {
-
-        left = UInt(bitPattern: lhs)
-
-    } else {
-        left = UInt(lhs)
-    }
-
-    let bit: Int = sizeof(Int) == sizeof(Int64) ? 64 : 32
-
-    if rhs > (bit - 1) {
-        right = UInt(rhs % bit)
-    } else if rhs < 0 {
-        right = UInt(bit + (rhs % bit))
-
-    } else {
-        right = UInt(rhs)
-    }
-
-    return Int(left >> right)
+    let numberOfBits: UInt = sizeof(UInt) == sizeof(UInt64) ? 64 : 32
+    
+    let left = UInt(bitPattern: lhs)
+    let right = UInt(bitPattern: rhs) % numberOfBits
+    
+    return Int(bitPattern: left >> right)
 }
 
 

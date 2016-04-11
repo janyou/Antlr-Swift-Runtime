@@ -14,7 +14,7 @@ extension IntStream {
     * The value returned by {@link #LA LA()} when the end of the stream is
     * reached.
     */
-    static var EOF: Int {
+    public static var EOF: Int {
         return -1
     }
 
@@ -22,7 +22,7 @@ extension IntStream {
     * The value returned by {@link #getSourceName} when the actual name of the
     * underlying source is not known.
     */
-    static var UNKNOWN_SOURCE_NAME: String {
+    public static var UNKNOWN_SOURCE_NAME: String {
         return "<unknown>"
     }
 
