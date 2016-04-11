@@ -9,6 +9,7 @@ import Antlr4
  * of the available methods.
  */
 public class HelloBaseListener: HelloListener {
+    public init() { }
 	/**
 	 * {@inheritDoc}
 	 *
