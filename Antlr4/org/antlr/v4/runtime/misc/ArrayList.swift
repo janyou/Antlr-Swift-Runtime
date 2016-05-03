@@ -3,7 +3,7 @@
 //  Antlr4
 //
 //  Created by janyou on 16/2/24.
-//  Copyright © 2016年 jlabs. All rights reserved.
+//  Copyright © 2016 jlabs. All rights reserved.
 //
 
 import Foundation

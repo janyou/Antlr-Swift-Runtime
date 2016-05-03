@@ -91,7 +91,9 @@ public class HelloParser: Parser {
 		public func accept<T>(visitor: ParseTreeVisitor<T>) -> T? {
 			if visitor is HelloVisitor {
 			     return (visitor as! HelloVisitor<T>).visitR(self)
-			}
+			}else if visitor is HelloBaseVisitor {
+		    	 return (visitor as! HelloBaseVisitor<T>).visitR(self)
+		    }
 			else {
 			     return visitor.visitChildren(self)
 			}
