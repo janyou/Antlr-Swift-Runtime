@@ -172,7 +172,7 @@ public extension String {
     }
 
     func charAt(index: Int) -> Character {
-        return [Character](characters)[index]
+       return self[self.startIndex.advancedBy(index)]
     }
 
 }
