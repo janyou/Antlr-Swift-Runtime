@@ -58,7 +58,7 @@ public final class LexerSkipAction: LexerAction, CustomStringConvertible {
      */
     override
     public func getActionType() -> LexerActionType {
-        return LexerActionType.SKIP
+        return LexerActionType.skip
     }
 
     /**
@@ -76,7 +76,7 @@ public final class LexerSkipAction: LexerAction, CustomStringConvertible {
      * <p>This action is implemented by calling {@link org.antlr.v4.runtime.Lexer#skip}.</p>
      */
     override
-    public func execute(lexer: Lexer) {
+    public func execute(_ lexer: Lexer) {
         lexer.skip()
     }
 

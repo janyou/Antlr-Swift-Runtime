@@ -32,7 +32,7 @@
 
 public class MultiMap<K:Hashable, V> {
     private var mapping = [K: Array < V>]()
-    public func map(key: K, _ value: V) {
+    public func map(_ key: K, _ value: V) {
         var elementsForKey: Array<V>? = mapping[key]
         if elementsForKey == nil {
             elementsForKey = Array<V>()
@@ -51,7 +51,7 @@ public class MultiMap<K:Hashable, V> {
         return pairs
     }
 
-    public func get(key: K) -> Array<(V)>? {
+    public func get(_ key: K) -> Array<(V)>? {
         return mapping[key]
     }
 

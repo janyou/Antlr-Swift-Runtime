@@ -65,7 +65,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * ensure that the handler is not in error recovery mode.</p>
      */
 
-    public func reset(recognizer: Parser) {
+    public func reset(_ recognizer: Parser) {
         endErrorCondition(recognizer)
     }
 
@@ -75,7 +75,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      *
      * @param recognizer the parser instance
      */
-    internal func beginErrorCondition(recognizer: Parser) {
+    internal func beginErrorCondition(_ recognizer: Parser) {
         errorRecoveryMode = true
     }
 
@@ -83,7 +83,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * {@inheritDoc}
      */
 
-    public func inErrorRecoveryMode(recognizer: Parser) -> Bool {
+    public func inErrorRecoveryMode(_ recognizer: Parser) -> Bool {
         return errorRecoveryMode
     }
 
@@ -93,7 +93,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      *
      * @param recognizer
      */
-    internal func endErrorCondition(recognizer: Parser) {
+    internal func endErrorCondition(_ recognizer: Parser) {
         errorRecoveryMode = false
         lastErrorStates = nil
         lastErrorIndex = -1
@@ -105,7 +105,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * <p>The default implementation simply calls {@link #endErrorCondition}.</p>
      */
 
-    public func reportMatch(recognizer: Parser) {
+    public func reportMatch(_ recognizer: Parser) {
         endErrorCondition(recognizer)
     }
 
@@ -129,7 +129,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * </ul>
      */
 
-    public func reportError(recognizer: Parser,
+    public func reportError(_ recognizer: Parser,
                             _ e: AnyObject) {
         // if we've already reported an error and have not matched a token
         // yet successfully, don't report any errors.
@@ -164,15 +164,15 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * that can follow the current rule.</p>
      */
 
-    public func recover(recognizer: Parser, _ e: AnyObject) throws {
+    public func recover(_ recognizer: Parser, _ e: AnyObject) throws {
 //		print("recover in "+recognizer.getRuleInvocationStack()+
 //						   " index="+getTokenStream(recognizer).index()+
 //						   ", lastErrorIndex="+
 //						   lastErrorIndex+
 //						   ", states="+lastErrorStates);
-        if lastErrorIndex == getTokenStream(recognizer).index() &&
-                lastErrorStates != nil &&
-                lastErrorStates!.contains(recognizer.getState()) {
+        if let lastErrorStates = lastErrorStates where
+          lastErrorIndex == getTokenStream(recognizer).index() &&
+          lastErrorStates.contains(recognizer.getState()) {
             // uh oh, another error at same token index and previously-visited
             // state in ATN; must be a case where LT(1) is in the recovery
             // token set so nothing got consumed. Consume a single token
@@ -238,7 +238,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * functionality by simply overriding this method as a blank { }.</p>
      */
 
-    public func sync(recognizer: Parser) throws {
+    public func sync(_ recognizer: Parser) throws {
         let s: ATNState = recognizer.getInterpreter().atn.states[recognizer.getState()]!
 //		errPrint("sync @ "+s.stateNumber+"="+s.getClass().getSimpleName());
         // If already recovering, don't try to sync
@@ -270,7 +270,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
             if try singleTokenDeletion(recognizer) != nil {
                 return
             }
-            throw try ANTLRException.Recognition(e: InputMismatchException(recognizer))
+            throw try ANTLRException.recognition(e: InputMismatchException(recognizer))
 
         case ATNState.PLUS_LOOP_BACK: fallthrough
         case ATNState.STAR_LOOP_BACK:
@@ -297,15 +297,15 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * @param recognizer the parser instance
      * @param e the recognition exception
      */
-    internal func reportNoViableAlternative(recognizer: Parser,
+    internal func reportNoViableAlternative(_ recognizer: Parser,
                                             _ e: NoViableAltException) throws {
         let tokens: TokenStream? = getTokenStream(recognizer)
         var input: String
-        if tokens != nil {
+        if let tokens = tokens {
             if e.getStartToken().getType() == CommonToken.EOF {
                 input = "<EOF>"
             } else {
-                input = try tokens!.getText(e.getStartToken(), e.getOffendingToken())
+                input = try tokens.getText(e.getStartToken(), e.getOffendingToken())
             }
         } else {
             input = "<unknown input>"
@@ -323,7 +323,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * @param recognizer the parser instance
      * @param e the recognition exception
      */
-    internal func reportInputMismatch(recognizer: Parser,
+    internal func reportInputMismatch(_ recognizer: Parser,
                                       _ e: InputMismatchException) {
         let msg: String = "mismatched input " + getTokenErrorDisplay(e.getOffendingToken()) +
                 " expecting " + e.getExpectedTokens()!.toString(recognizer.getVocabulary())
@@ -339,7 +339,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * @param recognizer the parser instance
      * @param e the recognition exception
      */
-    internal func reportFailedPredicate(recognizer: Parser,
+    internal func reportFailedPredicate(_ recognizer: Parser,
                                         _ e: FailedPredicateException) {
         let ruleName: String = recognizer.getRuleNames()[recognizer._ctx!.getRuleIndex()]
         let msg: String = "rule " + ruleName + " " + e.message! // e.getMessage()
@@ -364,7 +364,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      *
      * @param recognizer the parser instance
      */
-    internal func reportUnwantedToken(recognizer: Parser) throws {
+    internal func reportUnwantedToken(_ recognizer: Parser) throws {
         if inErrorRecoveryMode(recognizer) {
             return
         }
@@ -396,7 +396,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      *
      * @param recognizer the parser instance
      */
-    internal func reportMissingToken(recognizer: Parser) throws {
+    internal func reportMissingToken(_ recognizer: Parser) throws {
         if inErrorRecoveryMode(recognizer) {
             return
         }
@@ -462,7 +462,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * in rule {@code atom}. It can assume that you forgot the {@code ')'}.
      */
 
-    public func recoverInline(recognizer: Parser) throws -> Token {
+    public func recoverInline(_ recognizer: Parser) throws -> Token {
         // SINGLE TOKEN DELETION
         let matchedSymbol: Token? = try singleTokenDeletion(recognizer)
         if matchedSymbol != nil {
@@ -476,7 +476,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
         if try singleTokenInsertion(recognizer) {
             return try getMissingSymbol(recognizer)
         }
-        throw try ANTLRException.Recognition(e: InputMismatchException(recognizer))
+        throw try ANTLRException.recognition(e: InputMismatchException(recognizer))
         // throw try ANTLRException.InputMismatch(e: InputMismatchException(recognizer) )
         //RuntimeException("InputMismatchException")
         // even that didn't work; must throw the exception
@@ -500,7 +500,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * @return {@code true} if single-token insertion is a viable recovery
      * strategy for the current mismatched input, otherwise {@code false}
      */
-    internal func singleTokenInsertion(recognizer: Parser) throws -> Bool {
+    internal func singleTokenInsertion(_ recognizer: Parser) throws -> Bool {
         let currentSymbolType: Int = try getTokenStream(recognizer).LA(1)
         // if current token is consistent with what could come after current
         // ATN state, then we know we're missing a token; error recovery
@@ -536,7 +536,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      * deletion successfully recovers from the mismatched input, otherwise
      * {@code null}
      */
-    internal func singleTokenDeletion(recognizer: Parser) throws -> Token? {
+    internal func singleTokenDeletion(_ recognizer: Parser) throws -> Token? {
         let nextTokenType: Int = try getTokenStream(recognizer).LA(2)
         let expecting: IntervalSet = try getExpectedTokens(recognizer)
         if expecting.contains(nextTokenType) {
@@ -576,11 +576,11 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      *  override this method to create the appropriate tokens.
      */
 
-    internal func getTokenStream(recognizer: Parser) -> TokenStream {
+    internal func getTokenStream(_ recognizer: Parser) -> TokenStream {
         return recognizer.getInputStream() as! TokenStream
     }
 
-    internal func getMissingSymbol(recognizer: Parser) throws -> Token {
+    internal func getMissingSymbol(_ recognizer: Parser) throws -> Token {
         let currentSymbol: Token = try recognizer.getCurrentToken()
         let expecting: IntervalSet = try getExpectedTokens(recognizer)
         let expectedTokenType: Int = expecting.getMinElement() // get any element
@@ -605,7 +605,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
     }
 
 
-    internal func getExpectedTokens(recognizer: Parser) throws -> IntervalSet {
+    internal func getExpectedTokens(_ recognizer: Parser) throws -> IntervalSet {
         return try recognizer.getExpectedTokens()
     }
 
@@ -617,7 +617,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      *  your token objects because you don't have to go modify your lexer
      *  so that it creates a new Java type.
      */
-    internal func getTokenErrorDisplay(t: Token?) -> String {
+    internal func getTokenErrorDisplay(_ t: Token?) -> String {
         if t == nil {
             return "<no token>"
         }
@@ -632,16 +632,16 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
         return escapeWSAndQuote(s!)
     }
 
-    internal func getSymbolText(symbol: Token) -> String {
+    internal func getSymbolText(_ symbol: Token) -> String {
         return symbol.getText()!
     }
 
-    internal func getSymbolType(symbol: Token) -> Int {
+    internal func getSymbolType(_ symbol: Token) -> Int {
         return symbol.getType()
     }
 
 
-    internal func escapeWSAndQuote(s: String) -> String {
+    internal func escapeWSAndQuote(_ s: String) -> String {
         var s = s
         s = s.replaceAll("\n", replacement: "\\n")
         s = s.replaceAll("\r", replacement: "\\r")
@@ -741,17 +741,17 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
      *  Like Grosch I implement context-sensitive FOLLOW sets that are combined
      *  at run-time upon error to avoid overhead during parsing.
      */
-    internal func getErrorRecoverySet(recognizer: Parser) throws -> IntervalSet {
+    internal func getErrorRecoverySet(_ recognizer: Parser) throws -> IntervalSet {
         let atn: ATN = recognizer.getInterpreter().atn
         var ctx: RuleContext? = recognizer._ctx
         let recoverSet: IntervalSet = try IntervalSet()
-        while ctx != nil && ctx!.invokingState >= 0 {
+        while  let ctxWrap = ctx where ctxWrap.invokingState >= 0 {
             // compute what follows who invoked us
-            let invokingState: ATNState = atn.states[ctx!.invokingState]!
+            let invokingState: ATNState = atn.states[ctxWrap.invokingState]!
             let rt: RuleTransition = invokingState.transition(0) as! RuleTransition
             let follow: IntervalSet = try atn.nextTokens(rt.followState)
             try recoverSet.addAll(follow)
-            ctx = ctx!.parent
+            ctx = ctxWrap.parent
         }
         try recoverSet.remove(CommonToken.EPSILON)
 //		print("recover set "+recoverSet.toString(recognizer.getTokenNames()));
@@ -759,7 +759,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
     }
 
     /** Consume tokens until one matches the given token set. */
-    internal func consumeUntil(recognizer: Parser, _ set: IntervalSet) throws {
+    internal func consumeUntil(_ recognizer: Parser, _ set: IntervalSet) throws {
 //		errPrint("consumeUntil("+set.toString(recognizer.getTokenNames())+")");
         var ttype: Int = try getTokenStream(recognizer).LA(1)
         while ttype != CommonToken.EOF && !set.contains(ttype) {

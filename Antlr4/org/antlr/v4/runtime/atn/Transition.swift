@@ -126,7 +126,7 @@ public class Transition {
         return nil
     }
 
-    public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
+    public func matches(_ symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
         RuntimeException(#function + " must be overridden")
         fatalError()
     }

@@ -55,11 +55,11 @@ public final class LexerPopModeAction: LexerAction, CustomStringConvertible {
 
     /**
      * {@inheritDoc}
-     * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#POP_MODE}.
+     * @return This method returns {@link org.antlr.v4.runtime.atn.LexerActionType#popMode}.
      */
     override
     public func getActionType() -> LexerActionType {
-        return LexerActionType.POP_MODE
+        return LexerActionType.popMode
     }
 
     /**
@@ -77,7 +77,7 @@ public final class LexerPopModeAction: LexerAction, CustomStringConvertible {
      * <p>This action is implemented by calling {@link org.antlr.v4.runtime.Lexer#popMode}.</p>
      */
 
-    public override func execute(lexer: Lexer) throws {
+    public override func execute(_ lexer: Lexer) throws {
         try lexer.popMode()
     }
 

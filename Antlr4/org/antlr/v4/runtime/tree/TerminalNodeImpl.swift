@@ -39,7 +39,7 @@ public class TerminalNodeImpl: TerminalNode {
     }
 
 
-    public override func getChild(i: Int) -> Tree? {
+    public override func getChild(_ i: Int) -> Tree? {
         return nil
     }
 
@@ -73,7 +73,7 @@ public class TerminalNodeImpl: TerminalNode {
 
 
     override
-    public func accept<T>(visitor: ParseTreeVisitor<T>) -> T? {
+    public func accept<T>(_ visitor: ParseTreeVisitor<T>) -> T? {
         return visitor.visitTerminal(self)
     }
 
@@ -83,7 +83,7 @@ public class TerminalNodeImpl: TerminalNode {
     }
 
     override
-    public func toStringTree(parser: Parser) -> String {
+    public func toStringTree(_ parser: Parser) -> String {
         return description
     }
 

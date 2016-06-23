@@ -42,10 +42,10 @@ public protocol TokenFactory {
      *  error handling strategy. If text!=null, than the start and stop positions
      *  are wiped to -1 in the text override is set in the CommonToken.
      */
-    func create(source: (TokenSource?, CharStream?), _ type: Int, _ text: String?,
+    func create(_ source: (TokenSource?, CharStream?), _ type: Int, _ text: String?,
                 _ channel: Int, _ start: Int, _ stop: Int,
                 _ line: Int, _ charPositionInLine: Int) -> Token
     /** Generically useful */
-    func create(type: Int, _ text: String) -> Token
+    func create(_ type: Int, _ text: String) -> Token
 
 }

@@ -95,13 +95,13 @@ public class ParseTreeMatch: CustomStringConvertible {
      * label, or {@code null} if no parse tree matched a tag with the label.
      */
 
-    public func get(label: String) -> ParseTree? {
-        var parseTrees: Array<ParseTree>? = labels.get(label)
-        if parseTrees == nil || parseTrees?.count == 0 {
+    public func get(_ label: String) -> ParseTree? {
+        if let parseTrees = labels.get(label) where parseTrees.count > 0 {
+            return parseTrees[parseTrees.count - 1]   // return last if multiple
+        } else {
             return nil
         }
 
-        return parseTrees![parseTrees!.count - 1] // return last if multiple
     }
 
     /**
@@ -128,7 +128,7 @@ public class ParseTreeMatch: CustomStringConvertible {
      * is returned.
      */
 
-    public func getAll(label: String) -> Array<ParseTree> {
+    public func getAll(_ label: String) -> Array<ParseTree> {
         let nodes: Array<ParseTree>? = labels.get(label)
         if nodes == nil {
             return Array<ParseTree>()

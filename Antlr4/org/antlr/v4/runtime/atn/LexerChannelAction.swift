@@ -64,7 +64,7 @@ public final class LexerChannelAction: LexerAction, CustomStringConvertible {
      */
 
     public override func getActionType() -> LexerActionType {
-        return LexerActionType.CHANNEL
+        return LexerActionType.channel
     }
 
     /**
@@ -83,7 +83,7 @@ public final class LexerChannelAction: LexerAction, CustomStringConvertible {
      * value provided by {@link #getChannel}.</p>
      */
 
-    public override func execute(lexer: Lexer) {
+    public override func execute(_ lexer: Lexer) {
         lexer.setChannel(channel)
     }
 

@@ -87,7 +87,7 @@ public class TagChunk: Chunk, CustomStringConvertible {
         self.tag = tag
         super.init()
         if tag.isEmpty {
-            throw ANTLRError.IllegalArgument(msg: "tag cannot be null or empty")
+            throw ANTLRError.illegalArgument(msg: "tag cannot be null or empty")
         }
     }
 

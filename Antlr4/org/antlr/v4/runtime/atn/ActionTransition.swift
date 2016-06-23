@@ -60,12 +60,12 @@ public final class ActionTransition: Transition, CustomStringConvertible {
     }
 
     override
-    public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
+    public func matches(_ symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
         return false
     }
 
     public var description: String {
-        return "action_" + String(ruleIndex) + ":" + String(actionIndex)
+        return "action_\(ruleIndex):\(actionIndex)"
     }
 
 }

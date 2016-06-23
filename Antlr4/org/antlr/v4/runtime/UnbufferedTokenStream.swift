@@ -97,17 +97,17 @@ public class UnbufferedTokenStream<T>: TokenStream {
     }
 
 
-    public func get(i: Int) throws -> Token {
+    public func get(_ i: Int) throws -> Token {
         // get absolute index
         let bufferStartIndex: Int = getBufferStartIndex()
         if i < bufferStartIndex || i >= bufferStartIndex + n {
-            throw ANTLRError.IndexOutOfBounds(msg: "get(\(i)) outside buffer: \(bufferStartIndex)..\(bufferStartIndex + n)")
+            throw ANTLRError.indexOutOfBounds(msg: "get(\(i)) outside buffer: \(bufferStartIndex)..\(bufferStartIndex + n)")
         }
         return tokens[i - bufferStartIndex]
     }
 
 
-    public func LT(i: Int) throws -> Token? {
+    public func LT(_ i: Int) throws -> Token? {
         if i == -1 {
             return lastToken
         }
@@ -115,7 +115,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
         try sync(i)
         let index: Int = p + i - 1
         if index < 0 {
-            throw ANTLRError.IndexOutOfBounds(msg: "LT(\(i) gives negative index")
+            throw ANTLRError.indexOutOfBounds(msg: "LT(\(i) gives negative index")
         }
 
         if index >= n {
@@ -128,7 +128,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
     }
 
 
-    public func LA(i: Int) throws -> Int {
+    public func LA(_ i: Int) throws -> Int {
         return try  LT(i)!.getType()
     }
 
@@ -143,12 +143,12 @@ public class UnbufferedTokenStream<T>: TokenStream {
     }
 
 
-    public func getText(ctx: RuleContext) throws -> String {
+    public func getText(_ ctx: RuleContext) throws -> String {
         return try getText(ctx.getSourceInterval())
     }
 
 
-    public func getText(start: Token?, _ stop: Token?) throws -> String {
+    public func getText(_ start: Token?, _ stop: Token?) throws -> String {
         return try getText(Interval.of(start!.getTokenIndex(), stop!.getTokenIndex()))
     }
 
@@ -156,7 +156,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
     public func consume() throws {
         //Token.EOF
         if try  LA(1) == CommonToken.EOF {
-            throw ANTLRError.IllegalState(msg: "cannot consume EOF")
+            throw ANTLRError.illegalState(msg: "cannot consume EOF")
         }
 
         // buf always has at least tokens[p==0] in this method due to ctor
@@ -178,7 +178,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
      *  {@code p} index is {@code tokens.length-1}.  {@code p+need-1} is the tokens index 'need' elements
      *  ahead.  If we need 1 element, {@code (p+1-1)==p} must be less than {@code tokens.length}.
      */
-    internal func sync(want: Int) throws {
+    internal func sync(_ want: Int) throws {
         let need: Int = (p + want - 1) - n + 1 // how many more elements we need?
         if need > 0 {
             try fill(need)
@@ -190,7 +190,8 @@ public class UnbufferedTokenStream<T>: TokenStream {
      * actually added to the buffer. If the return value is less than {@code n},
      * then EOF was reached before {@code n} tokens could be added.
      */
-    internal func fill(n: Int) throws -> Int {
+    @discardableResult
+    internal func fill(_ n: Int) throws -> Int {
         for i in 0..<n {
             if self.n > 0 && tokens[self.n - 1].getType() == CommonToken.EOF {
                 return i
@@ -203,7 +204,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
         return n
     }
 
-    internal func add(t: Token) {
+    internal func add(_ t: Token) {
         if n >= tokens.count {
             //TODO: array count buffer size
             //tokens = Arrays.copyOf(tokens, tokens.length * 2);
@@ -236,10 +237,10 @@ public class UnbufferedTokenStream<T>: TokenStream {
     }
 
 
-    public func release(marker: Int) throws {
+    public func release(_ marker: Int) throws {
         let expectedMark: Int = -numMarkers
         if marker != expectedMark {
-            throw ANTLRError.IllegalState(msg: "release() called with an invalid marker.")
+            throw ANTLRError.illegalState(msg: "release() called with an invalid marker.")
         }
 
         numMarkers -= 1
@@ -264,7 +265,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
     }
 
 
-    public func seek(index: Int) throws {
+    public func seek(_ index: Int) throws {
         var index = index
         // seek to absolute index
         if index == currentTokenIndex {
@@ -279,11 +280,11 @@ public class UnbufferedTokenStream<T>: TokenStream {
         let bufferStartIndex: Int = getBufferStartIndex()
         let i: Int = index - bufferStartIndex
         if i < 0 {
-            throw ANTLRError.IllegalState(msg: "cannot seek to negative index \(index)")
+            throw ANTLRError.illegalState(msg: "cannot seek to negative index \(index)")
 
         } else {
             if i >= n {
-                throw ANTLRError.UnsupportedOperation(msg: "seek to index outside buffer: \(index) not in \(bufferStartIndex)..\(bufferStartIndex + n)")
+                throw ANTLRError.unsupportedOperation(msg: "seek to index outside buffer: \(index) not in \(bufferStartIndex)..\(bufferStartIndex + n)")
 
             }
         }
@@ -311,7 +312,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
     }
 
 
-    public func getText(interval: Interval) throws -> String {
+    public func getText(_ interval: Interval) throws -> String {
         let bufferStartIndex: Int = getBufferStartIndex()
         let bufferStopIndex: Int = bufferStartIndex + tokens.count - 1
 
@@ -319,7 +320,7 @@ public class UnbufferedTokenStream<T>: TokenStream {
         let stop: Int = interval.b
         if start < bufferStartIndex || stop > bufferStopIndex {
 
-            throw ANTLRError.UnsupportedOperation(msg: "interval \(interval) not in token buffer window: \(bufferStartIndex)..bufferStopIndex)")
+            throw ANTLRError.unsupportedOperation(msg: "interval \(interval) not in token buffer window: \(bufferStartIndex)..bufferStopIndex)")
 
         }
 

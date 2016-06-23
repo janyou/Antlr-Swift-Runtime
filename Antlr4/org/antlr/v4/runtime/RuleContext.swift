@@ -107,8 +107,8 @@ public class RuleContext: RuleNode {
     public func depth() -> Int {
         var n: Int = 0
         var p: RuleContext? = self
-        while p != nil {
-            p = p!.parent
+        while let pWrap = p {
+            p = pWrap.parent
             n += 1
         }
         return n
@@ -170,7 +170,7 @@ public class RuleContext: RuleNode {
     }
 
 
-    public override func getChild(i: Int) -> Tree? {
+    public override func getChild(_ i: Int) -> Tree? {
         return nil
     }
 
@@ -179,7 +179,7 @@ public class RuleContext: RuleNode {
         return 0
     }
 
-    public override func accept<T>(visitor: ParseTreeVisitor<T>) -> T? {
+    public override func accept<T>(_ visitor: ParseTreeVisitor<T>) -> T? {
         return visitor.visitChildren(self)
     }
 
@@ -232,14 +232,14 @@ public class RuleContext: RuleNode {
      *  We have to know the recognizer so we can get rule names.
      */
 
-    public override func toStringTree(recog: Parser) -> String {
+    public override func toStringTree(_ recog: Parser) -> String {
         return Trees.toStringTree(self, recog)
     }
 
     /** Print out a whole tree, not just a node, in LISP format
      *  (root child1 .. childN). Print just a node if this is a leaf.
      */
-    public func toStringTree(ruleNames: Array<String>?) -> String {
+    public func toStringTree(_ ruleNames: Array<String>?) -> String {
         return Trees.toStringTree(self, ruleNames)
     }
 
@@ -258,48 +258,49 @@ public class RuleContext: RuleNode {
          return description
     }
 
-    public final func toString<T:ATNSimulator>(recog: Recognizer<T>) -> String {
+    public final func toString<T:ATNSimulator>(_ recog: Recognizer<T>) -> String {
         return toString(recog, ParserRuleContext.EMPTY)
     }
 
-    public final func toString(ruleNames: Array<String>) -> String {
+    public final func toString(_ ruleNames: Array<String>) -> String {
         return toString(ruleNames, nil)
     }
 
     // recog null unless ParserRuleContext, in which case we use subclass toString(...)
-    public func toString<T:ATNSimulator>(recog: Recognizer<T>?, _ stop: RuleContext) -> String {
+    public func toString<T:ATNSimulator>(_ recog: Recognizer<T>?, _ stop: RuleContext) -> String {
         let ruleNames: [String]? = recog != nil ? recog!.getRuleNames() : nil
-        let ruleNamesList: Array<String>? = ruleNames != nil ? ruleNames : nil
+        let ruleNamesList: Array<String>? = ruleNames ?? nil
         return toString(ruleNamesList, stop)
     }
 
-    public func toString(ruleNames: Array<String>?, _ stop: RuleContext?) -> String {
+    public func toString(_ ruleNames: Array<String>?, _ stop: RuleContext?) -> String {
         let buf: StringBuilder = StringBuilder()
         var p: RuleContext? = self
         buf.append("[")
-        while p != nil && p! !== stop {
+        while let pWrap = p where pWrap !== stop {
             if ruleNames == nil {
-                if !p!.isEmpty() {
-                    buf.append(p!.invokingState)
+                if !pWrap.isEmpty() {
+                    buf.append(pWrap.invokingState)
                 }
             } else {
-                let ruleIndex: Int = p!.getRuleIndex()
-                let ruleName: String = ruleIndex >= 0 && ruleIndex < ruleNames!.count ? ruleNames![ruleIndex] : String(ruleIndex)
+                let ruleIndex: Int = pWrap.getRuleIndex()
+                let ruleIndexInRange: Bool =  ruleIndex >= 0 && ruleIndex < ruleNames!.count
+                let ruleName: String = ruleIndexInRange ? ruleNames![ruleIndex] : String(ruleIndex)
                 buf.append(ruleName)
             }
 
-            if p!.parent != nil && (ruleNames != nil || !p!.parent!.isEmpty()) {
+            if pWrap.parent != nil && (ruleNames != nil || !pWrap.parent!.isEmpty()) {
                 buf.append(" ")
             }
 
-            p = p!.parent
+            p = pWrap.parent
         }
 
         buf.append("]")
         return buf.toString()
     }
 
-    public func castdown<T>(subType: T.Type) -> T {
+    public func castdown<T>(_ subType: T.Type) -> T {
         return self as! T
     }
 

@@ -42,33 +42,33 @@ public enum LexerActionType: Int {
     /**
      * The type of a {@link org.antlr.v4.runtime.atn.LexerChannelAction} action.
      */
-    case CHANNEL = 0
+    case channel = 0
     /**
      * The type of a {@link org.antlr.v4.runtime.atn.LexerCustomAction} action.
      */
-    case CUSTOM
+    case custom
     /**
      * The type of a {@link org.antlr.v4.runtime.atn.LexerModeAction} action.
      */
-    case MODE
+    case mode
     /**
      * The type of a {@link org.antlr.v4.runtime.atn.LexerMoreAction} action.
      */
-    case MORE
+    case more
     /**
      * The type of a {@link org.antlr.v4.runtime.atn.LexerPopModeAction} action.
      */
-    case POP_MODE
+    case popMode
     /**
      * The type of a {@link org.antlr.v4.runtime.atn.LexerPushModeAction} action.
      */
-    case PUSH_MODE
+    case pushMode
     /**
      * The type of a {@link org.antlr.v4.runtime.atn.LexerSkipAction} action.
      */
-    case SKIP
+    case skip
     /**
      * The type of a {@link org.antlr.v4.runtime.atn.LexerTypeAction} action.
      */
-    case TYPE
+    case type
 }

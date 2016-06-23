@@ -44,11 +44,11 @@
  */
 
 public protocol ParseTreeListener: class {
-    func visitTerminal(node: TerminalNode)
+    func visitTerminal(_ node: TerminalNode)
 
-    func visitErrorNode(node: ErrorNode)
+    func visitErrorNode(_ node: ErrorNode)
 
-    func enterEveryRule(ctx: ParserRuleContext) throws
+    func enterEveryRule(_ ctx: ParserRuleContext) throws
 
-    func exitEveryRule(ctx: ParserRuleContext) throws
+    func exitEveryRule(_ ctx: ParserRuleContext) throws
 }

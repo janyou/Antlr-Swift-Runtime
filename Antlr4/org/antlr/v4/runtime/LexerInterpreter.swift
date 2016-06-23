@@ -83,8 +83,8 @@ public class LexerInterpreter: Lexer {
         self._tokenFactorySourcePair = (self, input)
         self._interp = LexerATNSimulator(self, atn, _decisionToDFA, _sharedContextCache)
 
-        if atn.grammarType != ATNType.LEXER {
-            throw ANTLRError.IllegalArgument(msg: "The ATN must be a lexer ATN.")
+        if atn.grammarType != ATNType.lexer {
+            throw ANTLRError.illegalArgument(msg: "The ATN must be a lexer ATN.")
 
         }
     }

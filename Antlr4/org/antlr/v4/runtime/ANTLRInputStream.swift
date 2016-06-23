@@ -145,7 +145,7 @@ public class ANTLRInputStream: CharStream {
         if p >= n {
             assert(LA(1) == ANTLRInputStream.EOF, "Expected: LA(1)==IntStream.EOF")
 
-            throw ANTLRError.IllegalState(msg: "annot consume EOF")
+            throw ANTLRError.illegalState(msg: "annot consume EOF")
              
         }
 
@@ -157,7 +157,7 @@ public class ANTLRInputStream: CharStream {
     }
 
 
-    public func LA(i: Int) -> Int {
+    public func LA(_ i: Int) -> Int {
         var i = i
         if i == 0 {
             return 0 // undefined
@@ -178,7 +178,7 @@ public class ANTLRInputStream: CharStream {
         return data[p + i - 1].unicodeValue
     }
 
-    public func LT(i: Int) -> Int {
+    public func LT(_ i: Int) -> Int {
         return LA(i)
     }
 
@@ -200,14 +200,14 @@ public class ANTLRInputStream: CharStream {
         return -1
     }
 
-    public func release(marker: Int) {
+    public func release(_ marker: Int) {
     }
 
     /** consume() ahead until p==index; can't just set p=index as we must
      *  update line and charPositionInLine. If we seek backwards, just set p
      */
 
-    public func seek(index: Int) throws {
+    public func seek(_ index: Int) throws {
         var index = index
         if index <= p {
             p = index // just jump; don't update stream state (line, ...)
@@ -221,7 +221,7 @@ public class ANTLRInputStream: CharStream {
     }
 
 
-    public func getText(interval: Interval) -> String {
+    public func getText(_ interval: Interval) -> String {
         let start: Int = interval.a
         var stop: Int = interval.b
         if stop >= n {
@@ -237,11 +237,10 @@ public class ANTLRInputStream: CharStream {
 
 
     public func getSourceName() -> String {
-        if name == nil || name!.isEmpty {
-            return ANTLRInputStream.UNKNOWN_SOURCE_NAME
+        guard let name = name where !name.isEmpty else {
+             return ANTLRInputStream.UNKNOWN_SOURCE_NAME
         }
-
-        return name!
+        return name
     }
 
 

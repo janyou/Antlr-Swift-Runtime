@@ -63,7 +63,7 @@ public class LexerTypeAction: LexerAction, CustomStringConvertible {
      */
 
     public override func getActionType() -> LexerActionType {
-        return LexerActionType.TYPE
+        return LexerActionType.type
     }
 
     /**
@@ -82,7 +82,7 @@ public class LexerTypeAction: LexerAction, CustomStringConvertible {
      * value provided by {@link #getType}.</p>
      */
 
-    public override func execute(lexer: Lexer) {
+    public override func execute(_ lexer: Lexer) {
         lexer.setType(type)
     }
 

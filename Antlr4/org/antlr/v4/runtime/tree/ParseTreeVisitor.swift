@@ -52,7 +52,7 @@ public class ParseTreeVisitor<T> {
      * @param tree The {@link org.antlr.v4.runtime.tree.ParseTree} to visit.
      * @return The result of visiting the parse tree.
      */
-    public func visit(tree: ParseTree) -> T? {
+    public func visit(_ tree: ParseTree) -> T? {
         RuntimeException(" must overriden !")
         return nil
 
@@ -65,7 +65,7 @@ public class ParseTreeVisitor<T> {
      * @param node The {@link org.antlr.v4.runtime.tree.RuleNode} whose children should be visited.
      * @return The result of visiting the children of the node.
      */
-    public func visitChildren(node: RuleNode) -> T? {
+    public func visitChildren(_ node: RuleNode) -> T? {
         RuntimeException(" must overriden !")
         return nil
 
@@ -77,7 +77,7 @@ public class ParseTreeVisitor<T> {
      * @param node The {@link org.antlr.v4.runtime.tree.TerminalNode} to visit.
      * @return The result of visiting the node.
      */
-    public func visitTerminal(node: TerminalNode) -> T? {
+    public func visitTerminal(_ node: TerminalNode) -> T? {
         RuntimeException(" must overriden !")
         return nil
 
@@ -89,7 +89,7 @@ public class ParseTreeVisitor<T> {
      * @param node The {@link org.antlr.v4.runtime.tree.ErrorNode} to visit.
      * @return The result of visiting the node.
      */
-    public func visitErrorNode(node: ErrorNode) -> T? {
+    public func visitErrorNode(_ node: ErrorNode) -> T? {
         RuntimeException(" must overriden !")
         return nil
     }

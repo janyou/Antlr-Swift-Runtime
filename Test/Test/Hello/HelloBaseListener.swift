@@ -15,36 +15,36 @@ public class HelloBaseListener: HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	public func enterR(ctx: HelloParser.RContext) { }
+	public func enterR(_ ctx: HelloParser.RContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	public func exitR(ctx: HelloParser.RContext) { }
+	public func exitR(_ ctx: HelloParser.RContext) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	 public func enterEveryRule(ctx: ParserRuleContext) { }
+	 public func enterEveryRule(_ ctx: ParserRuleContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	 public func exitEveryRule(ctx: ParserRuleContext) { }
+	 public func exitEveryRule(_ ctx: ParserRuleContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	public func visitTerminal(node: TerminalNode) { }
+	public func visitTerminal(_ node: TerminalNode) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	public func visitErrorNode(node: ErrorNode) { }
+	public func visitErrorNode(_ node: ErrorNode) { }
 }

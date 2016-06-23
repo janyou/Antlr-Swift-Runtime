@@ -85,23 +85,25 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     /** Convert a {@link org.antlr.v4.runtime.RuleContext} tree to a {@link org.antlr.v4.runtime.atn.PredictionContext} graph.
      *  Return {@link #EMPTY} if {@code outerContext} is empty or null.
      */
-    public static func fromRuleContext(atn: ATN, _ outerContext: RuleContext?) -> PredictionContext {
-        var outerContext = outerContext
-        if (outerContext == nil) {
-            outerContext = RuleContext.EMPTY
+    public static func fromRuleContext(_ atn: ATN, _ outerContext: RuleContext?) -> PredictionContext {
+        var _outerContext: RuleContext
+        if let outerContext = outerContext {
+            _outerContext = outerContext
+        }else {
+            _outerContext = RuleContext.EMPTY
         }
 
         // if we are in RuleContext of start rule, s, then PredictionContext
         // is EMPTY. Nobody called us. (if we are empty, return empty)
-        if (outerContext!.parent == nil || outerContext! === RuleContext.EMPTY) {
+        if (_outerContext.parent == nil || _outerContext === RuleContext.EMPTY) {
             return PredictionContext.EMPTY
         }
 
         // If we have a parent, convert it to a PredictionContext graph
         var parent: PredictionContext = EMPTY
-        parent = PredictionContext.fromRuleContext(atn, outerContext!.parent)
+        parent = PredictionContext.fromRuleContext(atn, _outerContext.parent)
 
-        let state: ATNState = atn.states[outerContext!.invokingState]!
+        let state: ATNState = atn.states[_outerContext.invokingState]!
         let transition: RuleTransition = state.transition(0) as! RuleTransition
         return SingletonPredictionContext.create(parent, transition.followState.stateNumber)
     }
@@ -112,13 +114,13 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     }
 
 
-    public func getParent(index: Int) -> PredictionContext? {
+    public func getParent(_ index: Int) -> PredictionContext? {
         RuntimeException(#function + " must be overridden")
         return nil
     }
 
 
-    public func getReturnState(index: Int) -> Int {
+    public func getReturnState(_ index: Int) -> Int {
         RuntimeException(#function + " must be overridden")
         return 0
     }
@@ -143,7 +145,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
         return hash
     }
 
-    static func calculateHashCode(parent: PredictionContext?, _ returnState: Int) -> Int {
+    static func calculateHashCode(_ parent: PredictionContext?, _ returnState: Int) -> Int {
         var hash: Int = MurmurHash.initialize(INITIAL_HASH)
         hash = MurmurHash.update(hash, parent)
         hash = MurmurHash.update(hash, returnState)
@@ -151,7 +153,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
         return hash
     }
 
-    static func calculateHashCode(parents: [PredictionContext?], _ returnStates: [Int]) -> Int {
+    static func calculateHashCode(_ parents: [PredictionContext?], _ returnStates: [Int]) -> Int {
         var hash: Int = MurmurHash.initialize(INITIAL_HASH)
         var length = parents.count
         for i in 0..<length {
@@ -168,10 +170,10 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     
     // dispatch
     public static func merge(
-        a: PredictionContext,
+        _ a: PredictionContext,
         _ b: PredictionContext,
         _ rootIsWildcard: Bool,
-        inout _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
+        _ mergeCache: inout DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
         var a = a
         var b = b
             // assert ( a != nil && b != nil,"Expected: a!=null&&b!=null");
@@ -239,28 +241,28 @@ public class PredictionContext: Hashable, CustomStringConvertible {
      * @param mergeCache
      */
     public static func mergeSingletons(
-        a: SingletonPredictionContext,
+        _ a: SingletonPredictionContext,
         _ b: SingletonPredictionContext,
         _ rootIsWildcard: Bool,
-        inout _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
+        _ mergeCache: inout DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
  
-            if (mergeCache != nil) {
-                var previous: PredictionContext? = mergeCache!.get(a, b)
+            if let mergeCache = mergeCache {
+                var previous: PredictionContext? = mergeCache.get(a, b)
                 if previous != nil {
                     return previous!
                 }
-                previous = mergeCache!.get(b, a)
+                previous = mergeCache.get(b, a)
                 if previous != nil {
                     return previous!
                 }
             }
             
-            let rootMerge: PredictionContext? = mergeRoot(a, b, rootIsWildcard)
-            if rootMerge != nil {
+        
+            if let rootMerge = mergeRoot(a, b, rootIsWildcard) {
                 if mergeCache != nil {
-                    mergeCache!.put(a, b, rootMerge!)
+                    mergeCache!.put(a, b, rootMerge)
                 }
-                return rootMerge!
+                return rootMerge
             }
             
             if (a.returnState == b.returnState) {
@@ -366,7 +368,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
      * @param rootIsWildcard {@code true} if this is a local-context merge,
      * otherwise false to indicate a full-context merge
      */
-    public static func mergeRoot(a: SingletonPredictionContext,
+    public static func mergeRoot(_ a: SingletonPredictionContext,
         _ b: SingletonPredictionContext,
         _ rootIsWildcard: Bool) -> PredictionContext? {
             if (rootIsWildcard) {
@@ -420,10 +422,10 @@ public class PredictionContext: Hashable, CustomStringConvertible {
      * <embed src="images/ArrayMerge_EqualTop.svg" type="image/svg+xml"/></p>
      */
     public static func mergeArrays(
-        a: ArrayPredictionContext,
+        _ a: ArrayPredictionContext,
         _ b: ArrayPredictionContext,
         _ rootIsWildcard: Bool,
-        inout _ mergeCache: DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
+        _ mergeCache: inout DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext>?) -> PredictionContext {
             
             if (mergeCache != nil) {
                 var previous: PredictionContext? = mergeCache!.get(a, b)
@@ -443,10 +445,11 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             
             let aReturnStatesLength = a.returnStates.count
             let bReturnStatesLength = b.returnStates.count
+        
+            let mergedReturnStatesLength = aReturnStatesLength + bReturnStatesLength
+            var mergedReturnStates: [Int] = [Int](repeating: 0, count: mergedReturnStatesLength)
             
-            var mergedReturnStates: [Int] = [Int](count: aReturnStatesLength + bReturnStatesLength, repeatedValue: 0)
-            
-            var mergedParents: [PredictionContext?] = [PredictionContext?](count: aReturnStatesLength + bReturnStatesLength, repeatedValue: nil)
+            var mergedParents: [PredictionContext?] = [PredictionContext?](repeating: nil, count: mergedReturnStatesLength)
             //new PredictionContext[a.returnStates.length + b.returnStates.length];
             // walk and merge to yield mergedParents, mergedReturnStates
             let aReturnStates = a.returnStates
@@ -461,9 +464,16 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                     // same payload (stack tops are equal), must yield merged singleton
                     let payload: Int = aReturnStates[i]
                     // $+$ = $
-                    let both$: Bool = ((payload == EMPTY_RETURN_STATE) &&
-                        a_parent == nil && b_parent == nil)
-                    let ax_ax: Bool = (a_parent != nil && b_parent != nil) && a_parent! == b_parent!  // ax+ax -> ax
+                    var both$: Bool = (payload == EMPTY_RETURN_STATE)
+                    both$ =  both$ && a_parent == nil
+                    both$ =  both$ && b_parent == nil
+//                    let both$: Bool = ((payload == EMPTY_RETURN_STATE) &&
+//                        a_parent == nil && b_parent == nil)
+                    var ax_ax: Bool = (a_parent != nil && b_parent != nil)
+                    ax_ax = ax_ax  && a_parent! == b_parent!
+//                    let ax_ax: Bool = (a_parent != nil && b_parent != nil) && a_parent! == b_parent!  // ax+ax -> ax
+                    
+                    
                     if (both$ || ax_ax) {
                         mergedParents[k] = a_parent // choose left
                         mergedReturnStates[k] = payload
@@ -578,7 +588,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
 //        
 //    }
     
-    public static func toDOTString(context: PredictionContext?) -> String {
+    public static func toDOTString(_ context: PredictionContext?) -> String {
         if (context == nil) {
             return ""
         }
@@ -588,7 +598,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
         
         var nodes: Array<PredictionContext> = getAllContextNodes(context!)
         
-        nodes.sortInPlace({ $0.id > $1.id })
+        nodes.sort(isOrderedBefore: { $0.id > $1.id })
         
         
         for current: PredictionContext in nodes {
@@ -599,7 +609,9 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                 if (current is EmptyPredictionContext) {
                     returnState = "$"
                 }
-                buf.append(" [label=\"").append(returnState).append("\"];\n")
+                buf.append(" [label=\"")
+                buf.append(returnState)
+                buf.append("\"];\n")
                 continue
             }
             let arr: ArrayPredictionContext = current as! ArrayPredictionContext
@@ -629,16 +641,17 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             }
             let length = current.size()
             for i in 0..<length {
-                if (current.getParent(i) == nil) {
+                guard let currentParent = current.getParent(i) else {
                     continue
                 }
                 let s: String = String(current.id)
                 buf.append("  s").append(s)
                 buf.append("->")
                 buf.append("s")
-                buf.append(current.getParent(i)!.id)
+                buf.append(currentParent.id)
                 if (current.size() > 1) {
-                    buf.append(" [label=\"parent[" + String(i) + "]\"];\n"); } else {
+                    buf.append(" [label=\"parent[\(i)]\"];\n");
+                } else {
                     buf.append(";\n")
                 }
             }
@@ -650,7 +663,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     
     // From Sam
     public static func getCachedContext(
-        context: PredictionContext,
+        _ context: PredictionContext,
         _ contextCache: PredictionContextCache,
         _ visited: HashMap<PredictionContext, PredictionContext>) -> PredictionContext {
             if (context.isEmpty()) {
@@ -669,7 +682,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
             }
             
             var changed: Bool = false
-            var parents: [PredictionContext?] = [PredictionContext?](count: context.size(), repeatedValue: nil)
+            var parents: [PredictionContext?] = [PredictionContext?](repeating: nil, count: context.size())
             let length = parents.count
             for i in 0..<length {
                 //added by janyou
@@ -681,7 +694,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                 //modified by janyou != !==
                 if (changed || parent !== context.getParent(i)) {
                     if (!changed) {
-                        parents = [PredictionContext?](count: context.size(), repeatedValue: nil)
+                        parents = [PredictionContext?](repeating: nil, count: context.size())
                         
                         for j in 0..<context.size() {
                             parents[j] = context.getParent(j)
@@ -722,7 +735,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     
     
     // ter's recursive version of Sam's getAllNodes()
-    public static func getAllContextNodes(context: PredictionContext) -> Array<PredictionContext> {
+    public static func getAllContextNodes(_ context: PredictionContext) -> Array<PredictionContext> {
         var nodes: Array<PredictionContext> = Array<PredictionContext>()
         let visited: HashMap<PredictionContext, PredictionContext> =
         HashMap<PredictionContext, PredictionContext>()
@@ -730,32 +743,33 @@ public class PredictionContext: Hashable, CustomStringConvertible {
         return nodes
     }
     
-    public static func getAllContextNodes_(context: PredictionContext?,
-        inout _ nodes: Array<PredictionContext>,
-        _ visited: HashMap<PredictionContext, PredictionContext>) {
-            //if (context == nil || visited.keys.contains(context!)) {
-            if  context == nil || visited[context!] != nil   {
-                return
-            }
-            visited[context!] = context!
-            nodes.append(context!)
-            let length = context!.size()
-            for i in 0..<length {
-                getAllContextNodes_(context!.getParent(i), &nodes, visited)
-            }
+    public static func getAllContextNodes_(_ context: PredictionContext?,
+                                           _ nodes: inout Array<PredictionContext>,
+                                           _ visited: HashMap<PredictionContext, PredictionContext>) {
+        //if (context == nil || visited.keys.contains(context!)) {
+        
+        guard let context = context where visited[context] == nil else {
+            return
+        }
+        visited[context] = context
+        nodes.append(context)
+        let length = context.size()
+        for i in 0..<length {
+            getAllContextNodes_(context.getParent(i), &nodes, visited)
+        }
     }
     
-    public func toString<T:ATNSimulator>(recog: Recognizer<T>) -> String {
+    public func toString<T:ATNSimulator>(_ recog: Recognizer<T>) -> String {
         return NSStringFromClass(PredictionContext.self)
         //		return toString(recog, ParserRuleContext.EMPTY);
     }
     
-    public func toStrings<T:ATNSimulator>(recognizer: Recognizer<T>, _ currentState: Int) -> [String] {
+    public func toStrings<T:ATNSimulator>(_ recognizer: Recognizer<T>, _ currentState: Int) -> [String] {
         return toStrings(recognizer, PredictionContext.EMPTY, currentState)
     }
     
     // FROM SAM
-    public func toStrings<T:ATNSimulator>(recognizer: Recognizer<T>?, _ stop: PredictionContext, _ currentState: Int) -> [String] {
+    public func toStrings<T:ATNSimulator>(_ recognizer: Recognizer<T>?, _ stop: PredictionContext, _ currentState: Int) -> [String] {
         var result: Array<String> = Array<String>()
         var perm: Int = 0
         outer: while true {
@@ -786,15 +800,15 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                         offset += bits
                     }
                     
-                    if (recognizer != nil) {
+                    if let recognizer = recognizer {
                         if (localBuffer.length > 1) {
                             // first char is '[', if more than that this isn't the first rule
                             localBuffer.append(" ")
                         }
                         
-                        let atn: ATN = recognizer!.getATN()
+                        let atn: ATN = recognizer.getATN()
                         let s: ATNState = atn.states[stateNumber]!
-                        let ruleName: String = recognizer!.getRuleNames()[s.ruleIndex!]
+                        let ruleName: String = recognizer.getRuleNames()[s.ruleIndex!]
                         localBuffer.append(ruleName)
                     } else {
                         if (p.getReturnState(index) != PredictionContext.EMPTY_RETURN_STATE) {
@@ -825,7 +839,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     }
     
     public var description: String {
-        return String(PredictionContext.self) + "@" + String(unsafeAddressOf(self).hashValue)
+        return String(PredictionContext.self) + "@" + String(unsafeAddress(of: self).hashValue)
     }
 }
 

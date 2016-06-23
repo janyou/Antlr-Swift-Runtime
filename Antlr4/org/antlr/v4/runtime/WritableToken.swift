@@ -31,15 +31,15 @@
 
 
 public protocol WritableToken: Token {
-    func setText(text: String)
+    func setText(_ text: String)
 
-    func setType(ttype: Int)
+    func setType(_ ttype: Int)
 
-    func setLine(line: Int)
+    func setLine(_ line: Int)
 
-    func setCharPositionInLine(pos: Int)
+    func setCharPositionInLine(_ pos: Int)
 
-    func setChannel(channel: Int)
+    func setChannel(_ channel: Int)
 
-    func setTokenIndex(index: Int)
+    func setTokenIndex(_ index: Int)
 }

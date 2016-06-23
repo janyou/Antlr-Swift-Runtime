@@ -45,19 +45,19 @@ extension Character {
         return c.unicodeValue
     }
 
-    public static func isJavaIdentifierStart(char: Int) -> Bool {
+    public static func isJavaIdentifierStart(_ char: Int) -> Bool {
         let ch = Character(integerLiteral: char)
         return ch == "_" || ch == "$" || ("a" <= ch && ch <= "z")
                 || ("A" <= ch && ch <= "Z")
 
     }
 
-    public static func isJavaIdentifierPart(char: Int) -> Bool {
+    public static func isJavaIdentifierPart(_ char: Int) -> Bool {
         let ch = Character(integerLiteral: char)
         return isJavaIdentifierStart(char) || ("0" <= ch && ch <= "9")
     }
 
-    public static func toCodePoint(high: Int, _ low: Int) -> Int {
+    public static func toCodePoint(_ high: Int, _ low: Int) -> Int {
         let MIN_SUPPLEMENTARY_CODE_POINT = 65536 // 0x010000
         let MIN_HIGH_SURROGATE = 0xd800 //"\u{dbff}"  //"\u{DBFF}"  //"\u{DBFF}"
         let MIN_LOW_SURROGATE = 0xdc00 //"\u{dc00}" //"\u{DC00}"

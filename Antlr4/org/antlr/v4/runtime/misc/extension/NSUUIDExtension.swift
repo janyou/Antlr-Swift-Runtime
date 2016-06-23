@@ -9,14 +9,14 @@
 import Foundation
 
 
-extension NSUUID {
+extension UUID {
 
-    public convenience init(mostSigBits: Int64, leastSigBits: Int64) {
+    public init(mostSigBits: Int64, leastSigBits: Int64) {
         let uuid: String = ""
-        self.init(UUIDString: uuid)!
+        self.init(uuidString: uuid)!
     }
 
-    private func toUUID(mostSigBits: Int64, _ leastSigBits: Int64) -> String {
+    private func toUUID(_ mostSigBits: Int64, _ leastSigBits: Int64) -> String {
 
         return (digits(mostSigBits >> 32, 8) + "-" +
                 digits(mostSigBits >> 16, 4) + "-" +
@@ -25,7 +25,7 @@ extension NSUUID {
                 digits(leastSigBits, 12))
     }
 
-    private func digits(val: Int64, _ digits: Int) -> String {
+    private func digits(_ val: Int64, _ digits: Int) -> String {
         let hi = Int64(1) << Int64(digits * 4)
         let intLiteral = hi | (val & (hi - 1))
         let s: String = String(Character(UnicodeScalar(UInt32(intLiteral))))

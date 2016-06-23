@@ -115,7 +115,7 @@ public final class LexerIndexedCustomAction: LexerAction {
      * using the provided {@code lexer}.</p>
      */
 
-    public override func execute(lexer: Lexer) throws {
+    public override func execute(_ lexer: Lexer) throws {
         // assume the input stream position was properly set by the calling code
         try action.execute(lexer)
     }

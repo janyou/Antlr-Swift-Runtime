@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum ANTLRError: ErrorType {
-    case NullPointer(msg:String)
-    case UnsupportedOperation(msg:String)
-    case IndexOutOfBounds(msg:String)
-    case IllegalState(msg:String)
-    case IllegalArgument(msg:String)
-    case NegativeArraySize(msg:String)
-    case ParseCancellation
+enum ANTLRError: ErrorProtocol {
+    case nullPointer(msg:String)
+    case unsupportedOperation(msg:String)
+    case indexOutOfBounds(msg:String)
+    case illegalState(msg:String)
+    case illegalArgument(msg:String)
+    case negativeArraySize(msg:String)
+    case parseCancellation
 }

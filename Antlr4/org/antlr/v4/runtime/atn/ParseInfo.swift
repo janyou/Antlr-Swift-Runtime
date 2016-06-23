@@ -188,7 +188,7 @@ public class ParseInfo {
      * Gets the total number of DFA states stored in the DFA cache for a
      * particular decision.
      */
-    public func getDFASize(decision: Int) -> Int {
+    public func getDFASize(_ decision: Int) -> Int {
         let decisionToDFA: DFA = atnSimulator.decisionToDFA[decision]
         return decisionToDFA.states.count
     }

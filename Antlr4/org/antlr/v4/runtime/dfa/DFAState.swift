@@ -168,8 +168,8 @@ public class DFAState: Hashable, CustomStringConvertible {
         buf.append(stateNumber).append(":").append(configs)
         if isAcceptState {
             buf.append("=>")
-            if predicates != nil {
-                buf.append(predicates!.map({ $0.description }))
+            if let predicates = predicates {
+                buf.append(predicates.map({ $0.description }))
             } else {
                 buf.append(prediction)
             }

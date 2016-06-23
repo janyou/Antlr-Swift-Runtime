@@ -22,27 +22,27 @@ public class StringBuilder {
     public var length: Int {
         return stringValue.length
     }
-
-    public func append(string: String) -> StringBuilder {
+    @discardableResult
+    public func append(_ string: String) -> StringBuilder {
         stringValue += string
         return self
     }
-
-    public func append<T:CustomStringConvertible>(value: T) -> StringBuilder {
+    @discardableResult
+    public func append<T:CustomStringConvertible>(_ value: T) -> StringBuilder {
         stringValue += value.description
         return self
     }
-
-    public func appendLine(string: String) -> StringBuilder {
+    @discardableResult
+    public func appendLine(_ string: String) -> StringBuilder {
         stringValue += string + "\n"
         return self
     }
-
-    public func appendLine<T:CustomStringConvertible>(value: T) -> StringBuilder {
+    @discardableResult
+    public func appendLine<T:CustomStringConvertible>(_ value: T) -> StringBuilder {
         stringValue += value.description + "\n"
         return self
     }
-
+    @discardableResult
     public func clear() -> StringBuilder {
         stringValue = ""
         return self

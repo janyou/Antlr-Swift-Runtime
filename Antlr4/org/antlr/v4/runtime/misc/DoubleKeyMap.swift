@@ -38,8 +38,8 @@
 
 public struct DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
     private var data: HashMap<Key1, HashMap<Key2, Value>> = HashMap<Key1, HashMap<Key2, Value>>()
- 
-    public mutating func put(k1: Key1, _ k2: Key2, _ v: Value) -> Value? {
+    @discardableResult 
+    public mutating func put(_ k1: Key1, _ k2: Key2, _ v: Value) -> Value? {
  
         var data2 = data[k1]
         var prev: Value? = nil
@@ -54,7 +54,7 @@ public struct DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
         return prev
     }
 
-    public  func get(k1: Key1, _ k2: Key2) -> Value? {
+    public  func get(_ k1: Key1, _ k2: Key2) -> Value? {
  
         if let data2 = data[k1] {
             return data2[k2]
@@ -63,7 +63,7 @@ public struct DoubleKeyMap<Key1:Hashable, Key2:Hashable, Value> {
  
     }
 
-    public func get(k1: Key1) -> HashMap<Key2, Value>? {
+    public func get(_ k1: Key1) -> HashMap<Key2, Value>? {
         return data[k1]
     }
 

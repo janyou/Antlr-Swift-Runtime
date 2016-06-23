@@ -40,7 +40,7 @@
 
 public class BaseErrorListener: ANTLRErrorListener {
 
-    public func syntaxError<T:ATNSimulator>(recognizer: Recognizer<T>,
+    public func syntaxError<T:ATNSimulator>(_ recognizer: Recognizer<T>,
                                             _ offendingSymbol: AnyObject?,
                                             _ line: Int,
                                             _ charPositionInLine: Int,
@@ -50,7 +50,7 @@ public class BaseErrorListener: ANTLRErrorListener {
     }
 
 
-    public func reportAmbiguity(recognizer: Parser,
+    public func reportAmbiguity(_ recognizer: Parser,
                                 _ dfa: DFA,
                                 _ startIndex: Int,
                                 _ stopIndex: Int,
@@ -60,16 +60,16 @@ public class BaseErrorListener: ANTLRErrorListener {
     }
 
 
-    public func reportAttemptingFullContext(recognizer: Parser,
+    public func reportAttemptingFullContext(_ recognizer: Parser,
                                             _ dfa: DFA,
                                             _ startIndex: Int,
                                             _ stopIndex: Int,
-                                            _ conflictingAlts: BitSet,
+                                            _ conflictingAlts: BitSet?,
                                             _ configs: ATNConfigSet) throws {
     }
 
 
-    public func reportContextSensitivity(recognizer: Parser,
+    public func reportContextSensitivity(_ recognizer: Parser,
                                          _ dfa: DFA,
                                          _ startIndex: Int,
                                          _ stopIndex: Int,

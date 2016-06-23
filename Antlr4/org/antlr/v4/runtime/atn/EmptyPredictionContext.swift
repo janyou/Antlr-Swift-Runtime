@@ -46,12 +46,12 @@ public class EmptyPredictionContext: SingletonPredictionContext {
     }
 
     override
-    public func getParent(index: Int) -> PredictionContext? {
+    public func getParent(_ index: Int) -> PredictionContext? {
         return nil
     }
 
     override
-    public func getReturnState(index: Int) -> Int {
+    public func getReturnState(_ index: Int) -> Int {
         return returnState
     }
 

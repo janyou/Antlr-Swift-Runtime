@@ -16,5 +16,5 @@ public class HelloBaseVisitor<T>: AbstractParseTreeVisitor<T> {
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	public func visitR(ctx: HelloParser.RContext) -> T? { return visitChildren(ctx) }
+	public func visitR(_ ctx: HelloParser.RContext) -> T? { return visitChildren(ctx) }
 }

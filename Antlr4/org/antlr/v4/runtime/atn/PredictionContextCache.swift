@@ -45,7 +45,8 @@ public final class PredictionContextCache {
      *  return that one instead and do not add a new context to the cache.
      *  Protect shared cache from unsafe thread access.
      */
-    public func add(ctx: PredictionContext) -> PredictionContext {
+    @discardableResult
+    public func add(_ ctx: PredictionContext) -> PredictionContext {
         if ctx === PredictionContext.EMPTY {
             return PredictionContext.EMPTY
         }
@@ -58,7 +59,7 @@ public final class PredictionContextCache {
         return ctx
     }
 
-    public func get(ctx: PredictionContext) -> PredictionContext? {
+    public func get(_ ctx: PredictionContext) -> PredictionContext? {
         return cache[ctx]
     }
 

@@ -55,7 +55,7 @@ public final class MurmurHash {
      * @param seed the seed
      * @return the intermediate hash value
      */
-    public static func initialize(seed: Int) -> Int {
+    public static func initialize(_ seed: Int) -> Int {
         return seed
     }
 
@@ -66,7 +66,7 @@ public final class MurmurHash {
      * @param value the value to add to the current hash
      * @return the updated intermediate hash value
      */
-    public static func update2(hashIn: Int, _ value: Int) -> Int {
+    public static func update2(_ hashIn: Int, _ value: Int) -> Int {
 
         let c1: Int32 = -862048943//0xCC9E2D51;
         let c2: Int32 = 0x1B873593
@@ -100,7 +100,7 @@ public final class MurmurHash {
      * @param value the value to add to the current hash
      * @return the updated intermediate hash value
      */
-    public static func update<T:Hashable>(hash: Int, _ value: T?) -> Int {
+    public static func update<T:Hashable>(_ hash: Int, _ value: T?) -> Int {
         return update2(hash, value != nil ? value!.hashValue : 0)
         // return update2(hash, value);
     }
@@ -113,7 +113,7 @@ public final class MurmurHash {
      * @param numberOfWords the number of integer values added to the hash
      * @return the final hash result
      */
-    public static func finish(hashin: Int, _ numberOfWordsIn: Int) -> Int {
+    public static func finish(_ hashin: Int, _ numberOfWordsIn: Int) -> Int {
         var hash = Int32(hashin)
         let numberOfWords = Int32(numberOfWordsIn)
         hash = hash ^ Int32.multiplyWithOverflow(numberOfWords, Int32(4)).0  //(numberOfWords * UInt32(4));
@@ -136,7 +136,7 @@ public final class MurmurHash {
      * @param seed the seed for the MurmurHash algorithm
      * @return the hash code of the data
      */
-    public static func hashCode<T:Hashable>(data: [T], _ seed: Int) -> Int {
+    public static func hashCode<T:Hashable>(_ data: [T], _ seed: Int) -> Int {
         var hash: Int = initialize(seed)
         for value: T in data {
             //var hashValue = value != nil ?  value.hashValue : 0

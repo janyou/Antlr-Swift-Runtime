@@ -159,15 +159,12 @@
 		F9A422C31BCCC7E400A9CD35 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B31BCCC7E400A9CD35 /* ArrayExtension.swift */; };
 		F9A422C41BCCC7E400A9CD35 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B41BCCC7E400A9CD35 /* CharacterExtension.swift */; };
 		F9A422C51BCCC7E400A9CD35 /* IntStreamExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B51BCCC7E400A9CD35 /* IntStreamExtension.swift */; };
-		F9A422C61BCCC7E400A9CD35 /* NSMapTableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B61BCCC7E400A9CD35 /* NSMapTableExtension.swift */; };
 		F9A422C71BCCC7E400A9CD35 /* NSUUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B71BCCC7E400A9CD35 /* NSUUIDExtension.swift */; };
 		F9A422C81BCCC7E400A9CD35 /* StirngExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B81BCCC7E400A9CD35 /* StirngExtension.swift */; };
 		F9A422C91BCCC7E400A9CD35 /* TokenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B91BCCC7E400A9CD35 /* TokenExtension.swift */; };
 		F9A422CA1BCCC7E400A9CD35 /* CommonUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422BB1BCCC7E400A9CD35 /* CommonUtil.swift */; };
 		F9A422CB1BCCC7E400A9CD35 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422BC1BCCC7E400A9CD35 /* Stack.swift */; };
 		F9A422CC1BCCC7E400A9CD35 /* StringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422BD1BCCC7E400A9CD35 /* StringBuilder.swift */; };
-		F9A422CD1BCCC7E400A9CD35 /* WeakHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422BE1BCCC7E400A9CD35 /* WeakHashMap.swift */; };
-		F9A422CE1BCCC7E400A9CD35 /* WeakKeyDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422BF1BCCC7E400A9CD35 /* WeakKeyDictionary.swift */; };
 		F9A423011BCCD5E600A9CD35 /* Info-IOS.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9A423001BCCD5E600A9CD35 /* Info-IOS.plist */; };
 		F9A424041BCCD8D300A9CD35 /* AbstractPredicateTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421401BCCC48100A9CD35 /* AbstractPredicateTransition.swift */; };
 		F9A424051BCCD8D300A9CD35 /* ActionTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421411BCCC48100A9CD35 /* ActionTransition.swift */; };
@@ -249,15 +246,12 @@
 		F9A424521BCCD8D400A9CD35 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B31BCCC7E400A9CD35 /* ArrayExtension.swift */; };
 		F9A424531BCCD8D500A9CD35 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B41BCCC7E400A9CD35 /* CharacterExtension.swift */; };
 		F9A424541BCCD8D500A9CD35 /* IntStreamExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B51BCCC7E400A9CD35 /* IntStreamExtension.swift */; };
-		F9A424551BCCD8D500A9CD35 /* NSMapTableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B61BCCC7E400A9CD35 /* NSMapTableExtension.swift */; };
 		F9A424561BCCD8D500A9CD35 /* NSUUIDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B71BCCC7E400A9CD35 /* NSUUIDExtension.swift */; };
 		F9A424571BCCD8D500A9CD35 /* StirngExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B81BCCC7E400A9CD35 /* StirngExtension.swift */; };
 		F9A424581BCCD8D500A9CD35 /* TokenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422B91BCCC7E400A9CD35 /* TokenExtension.swift */; };
 		F9A424591BCCD8D500A9CD35 /* CommonUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422BB1BCCC7E400A9CD35 /* CommonUtil.swift */; };
 		F9A4245A1BCCD8D500A9CD35 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422BC1BCCC7E400A9CD35 /* Stack.swift */; };
 		F9A4245B1BCCD8D500A9CD35 /* StringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422BD1BCCC7E400A9CD35 /* StringBuilder.swift */; };
-		F9A4245C1BCCD8D500A9CD35 /* WeakHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422BE1BCCC7E400A9CD35 /* WeakHashMap.swift */; };
-		F9A4245D1BCCD8D500A9CD35 /* WeakKeyDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422BF1BCCC7E400A9CD35 /* WeakKeyDictionary.swift */; };
 		F9A4245E1BCCD8D500A9CD35 /* BitSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A422AE1BCCC7E400A9CD35 /* BitSet.swift */; };
 		F9A4245F1BCCD8D500A9CD35 /* DoubleKeyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421A31BCCC48100A9CD35 /* DoubleKeyMap.swift */; };
 		F9A424601BCCD8D500A9CD35 /* Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A421A91BCCC48100A9CD35 /* Interval.swift */; };
@@ -329,6 +323,8 @@
 		F9A424AB1BCD348C00A9CD35 /* Antlr4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A424AA1BCD348C00A9CD35 /* Antlr4Tests.swift */; };
 		F9A424AD1BCD348C00A9CD35 /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A4211C1BCCC35000A9CD35 /* Antlr4.framework */; };
 		F9A424B41BCD357800A9CD35 /* BaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A424B31BCD357800A9CD35 /* BaseTest.swift */; };
+		F9AD9C621D19876500B6CB7A /* ArrayWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AD9C611D19876500B6CB7A /* ArrayWrapper.swift */; };
+		F9AD9C661D19A20D00B6CB7A /* ArrayWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AD9C611D19876500B6CB7A /* ArrayWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -495,21 +491,19 @@
 		F9A422B31BCCC7E400A9CD35 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		F9A422B41BCCC7E400A9CD35 /* CharacterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CharacterExtension.swift; sourceTree = "<group>"; };
 		F9A422B51BCCC7E400A9CD35 /* IntStreamExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = IntStreamExtension.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		F9A422B61BCCC7E400A9CD35 /* NSMapTableExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NSMapTableExtension.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9A422B71BCCC7E400A9CD35 /* NSUUIDExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NSUUIDExtension.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9A422B81BCCC7E400A9CD35 /* StirngExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StirngExtension.swift; sourceTree = "<group>"; };
 		F9A422B91BCCC7E400A9CD35 /* TokenExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TokenExtension.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9A422BB1BCCC7E400A9CD35 /* CommonUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CommonUtil.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9A422BC1BCCC7E400A9CD35 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Stack.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9A422BD1BCCC7E400A9CD35 /* StringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = StringBuilder.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		F9A422BE1BCCC7E400A9CD35 /* WeakHashMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakHashMap.swift; sourceTree = "<group>"; };
-		F9A422BF1BCCC7E400A9CD35 /* WeakKeyDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakKeyDictionary.swift; sourceTree = "<group>"; };
 		F9A422F81BCCD47300A9CD35 /* Antlr4.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Antlr4.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9A423001BCCD5E600A9CD35 /* Info-IOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Info-IOS.plist"; sourceTree = "<group>"; };
 		F9A424A81BCD348C00A9CD35 /* Antlr4Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Antlr4Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9A424AA1BCD348C00A9CD35 /* Antlr4Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Antlr4Tests.swift; sourceTree = "<group>"; };
 		F9A424AC1BCD348C00A9CD35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9A424B31BCD357800A9CD35 /* BaseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTest.swift; sourceTree = "<group>"; };
+		F9AD9C611D19876500B6CB7A /* ArrayWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -747,6 +741,7 @@
 				F9A421B61BCCC48100A9CD35 /* Utils.swift */,
 				F95A4E2C1C7DF6FE002CF368 /* ArrayList.swift */,
 				F96B648D1C807BA600D92EFB /* HashMap.swift */,
+				F9AD9C611D19876500B6CB7A /* ArrayWrapper.swift */,
 			);
 			path = misc;
 			sourceTree = "<group>";
@@ -801,7 +796,6 @@
 				F9A422B31BCCC7E400A9CD35 /* ArrayExtension.swift */,
 				F9A422B41BCCC7E400A9CD35 /* CharacterExtension.swift */,
 				F9A422B51BCCC7E400A9CD35 /* IntStreamExtension.swift */,
-				F9A422B61BCCC7E400A9CD35 /* NSMapTableExtension.swift */,
 				F9A422B71BCCC7E400A9CD35 /* NSUUIDExtension.swift */,
 				F9A422B81BCCC7E400A9CD35 /* StirngExtension.swift */,
 				F9A422B91BCCC7E400A9CD35 /* TokenExtension.swift */,
@@ -815,8 +809,6 @@
 				F9A422BB1BCCC7E400A9CD35 /* CommonUtil.swift */,
 				F9A422BC1BCCC7E400A9CD35 /* Stack.swift */,
 				F9A422BD1BCCC7E400A9CD35 /* StringBuilder.swift */,
-				F9A422BE1BCCC7E400A9CD35 /* WeakHashMap.swift */,
-				F9A422BF1BCCC7E400A9CD35 /* WeakKeyDictionary.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -912,15 +904,18 @@
 		F9A421131BCCC35000A9CD35 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = jlabs;
 				TargetAttributes = {
 					F9A4211B1BCCC35000A9CD35 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 					};
 					F9A422F71BCCD47300A9CD35 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = U22U9NF353;
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Manual;
 					};
 					F9A424A71BCD348C00A9CD35 = {
 						CreatedOnToolsVersion = 7.0;
@@ -1022,7 +1017,6 @@
 				F9A4228F1BCCC48100A9CD35 /* ParseTreeMatch.swift in Sources */,
 				F9A422C51BCCC7E400A9CD35 /* IntStreamExtension.swift in Sources */,
 				F9A422211BCCC48100A9CD35 /* LexerPopModeAction.swift in Sources */,
-				F9A422CD1BCCC7E400A9CD35 /* WeakHashMap.swift in Sources */,
 				F9A422CC1BCCC7E400A9CD35 /* StringBuilder.swift in Sources */,
 				F9A4222B1BCCC48100A9CD35 /* OrderedATNConfig.swift in Sources */,
 				F9A422251BCCC48100A9CD35 /* LL1Analyzer.swift in Sources */,
@@ -1080,15 +1074,14 @@
 				F9A422311BCCC48100A9CD35 /* PrecedencePredicateTransition.swift in Sources */,
 				F9A422341BCCC48100A9CD35 /* PredictionContext.swift in Sources */,
 				F9A421FE1BCCC48100A9CD35 /* AmbiguityInfo.swift in Sources */,
-				F9A422CE1BCCC7E400A9CD35 /* WeakKeyDictionary.swift in Sources */,
 				F9A422421BCCC48100A9CD35 /* TokensStartState.swift in Sources */,
 				F9A4225D1BCCC48100A9CD35 /* DoubleKeyMap.swift in Sources */,
 				F9A4220C1BCCC48100A9CD35 /* BasicState.swift in Sources */,
 				F9A4220B1BCCC48100A9CD35 /* BasicBlockStartState.swift in Sources */,
+				F9AD9C621D19876500B6CB7A /* ArrayWrapper.swift in Sources */,
 				F9A4225A1BCCC48100A9CD35 /* ListTokenSource.swift in Sources */,
 				F9A422C41BCCC7E400A9CD35 /* CharacterExtension.swift in Sources */,
 				F9A4221C1BCCC48100A9CD35 /* LexerChannelAction.swift in Sources */,
-				F9A422C61BCCC7E400A9CD35 /* NSMapTableExtension.swift in Sources */,
 				F9A4227B1BCCC48100A9CD35 /* TokenFactory.swift in Sources */,
 				F9A4222D1BCCC48100A9CD35 /* ParseInfo.swift in Sources */,
 				F9A422531BCCC48100A9CD35 /* FailedPredicateException.swift in Sources */,
@@ -1147,6 +1140,7 @@
 				F9A424051BCCD8D300A9CD35 /* ActionTransition.swift in Sources */,
 				F9A424061BCCD8D300A9CD35 /* AmbiguityInfo.swift in Sources */,
 				F9A424071BCCD8D300A9CD35 /* ArrayPredictionContext.swift in Sources */,
+				F9AD9C661D19A20D00B6CB7A /* ArrayWrapper.swift in Sources */,
 				F9A424081BCCD8D300A9CD35 /* ATN.swift in Sources */,
 				F9A424091BCCD8D300A9CD35 /* ATNConfig.swift in Sources */,
 				F9A4240A1BCCD8D300A9CD35 /* ATNConfigSet.swift in Sources */,
@@ -1223,15 +1217,12 @@
 				F9A424521BCCD8D400A9CD35 /* ArrayExtension.swift in Sources */,
 				F9A424531BCCD8D500A9CD35 /* CharacterExtension.swift in Sources */,
 				F9A424541BCCD8D500A9CD35 /* IntStreamExtension.swift in Sources */,
-				F9A424551BCCD8D500A9CD35 /* NSMapTableExtension.swift in Sources */,
 				F9A424561BCCD8D500A9CD35 /* NSUUIDExtension.swift in Sources */,
 				F9A424571BCCD8D500A9CD35 /* StirngExtension.swift in Sources */,
 				F9A424581BCCD8D500A9CD35 /* TokenExtension.swift in Sources */,
 				F9A424591BCCD8D500A9CD35 /* CommonUtil.swift in Sources */,
 				F9A4245A1BCCD8D500A9CD35 /* Stack.swift in Sources */,
 				F9A4245B1BCCD8D500A9CD35 /* StringBuilder.swift in Sources */,
-				F9A4245C1BCCD8D500A9CD35 /* WeakHashMap.swift in Sources */,
-				F9A4245D1BCCD8D500A9CD35 /* WeakKeyDictionary.swift in Sources */,
 				F9A4245E1BCCD8D500A9CD35 /* BitSet.swift in Sources */,
 				F9A4245F1BCCD8D500A9CD35 /* DoubleKeyMap.swift in Sources */,
 				F9A424601BCCD8D500A9CD35 /* Interval.swift in Sources */,
@@ -1359,10 +1350,12 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1399,9 +1392,11 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1417,16 +1412,20 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Antlr4/Info-OSX.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = jlabs.Antlr4;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_DISABLE_SAFETY_CHECKS = NO;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1440,15 +1439,19 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Antlr4/Info-OSX.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = jlabs.Antlr4;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_DISABLE_SAFETY_CHECKS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1460,14 +1463,20 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Antlr4/Info-IOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = jlabs.Antlr4;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1480,14 +1489,20 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Antlr4/Info-IOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = jlabs.Antlr4;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1497,6 +1512,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Antlr4Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jlabs.Antlr4Tests;
@@ -1508,10 +1525,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = Antlr4Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jlabs.Antlr4Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};

@@ -24,7 +24,7 @@ public final class ArrayList<T>: ArrayLiteralConvertible  {
     
     }
     public init(count: Int, repeatedValue: T) {
-        array =  Array<T>(count: count, repeatedValue: repeatedValue)
+        array =  Array<T>( repeating: repeatedValue, count: count)
     }
     
     public init(arrayLiteral elements: T...) {

@@ -10,10 +10,10 @@ import Foundation
 
 public struct Stack<T> {
     var items = [T]()
-    public mutating func push(item: T) {
+    public mutating func push(_ item: T) {
         items.append(item)
     }
-
+    @discardableResult
     public mutating func pop() -> T {
         return items.removeLast()
     }

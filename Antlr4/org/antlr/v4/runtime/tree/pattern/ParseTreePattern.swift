@@ -86,7 +86,7 @@ public class ParseTreePattern {
      * used to determine whether or not the match was successful.
      */
 
-    public func match(tree: ParseTree) throws -> ParseTreeMatch {
+    public func match(_ tree: ParseTree) throws -> ParseTreeMatch {
         return try matcher.match(tree, self)
     }
 
@@ -97,7 +97,7 @@ public class ParseTreePattern {
      * @return {@code true} if {@code tree} is a match for the current tree
      * pattern; otherwise, {@code false}.
      */
-    public func matches(tree: ParseTree) throws -> Bool {
+    public func matches(_ tree: ParseTree) throws -> Bool {
         return try matcher.match(tree, self).succeeded()
     }
 

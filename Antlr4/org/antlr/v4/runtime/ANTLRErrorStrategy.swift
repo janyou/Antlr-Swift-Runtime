@@ -51,7 +51,7 @@ public protocol ANTLRErrorStrategy {
      * Reset the error handler state for the specified {@code recognizer}.
      * @param recognizer the parser instance
      */
-    func reset(recognizer: Parser)
+    func reset(_ recognizer: Parser)
 
     /**
      * This method is called when an unexpected symbol is encountered during an
@@ -71,7 +71,8 @@ public protocol ANTLRErrorStrategy {
      * @throws org.antlr.v4.runtime.RecognitionException if the error strategy was not able to
      * recover from the unexpected input symbol
      */
-    func recoverInline(recognizer: Parser) throws -> Token // RecognitionException;
+    @discardableResult
+    func recoverInline(_ recognizer: Parser) throws -> Token // RecognitionException;
 
     /**
      * This method is called to recover from exception {@code e}. This method is
@@ -85,7 +86,7 @@ public protocol ANTLRErrorStrategy {
      * @throws org.antlr.v4.runtime.RecognitionException if the error strategy could not recover from
      * the recognition exception
      */
-    func recover(recognizer: Parser, _ e: AnyObject) throws // RecognitionException;
+    func recover(_ recognizer: Parser, _ e: AnyObject) throws // RecognitionException;
 
     /**
      * This method provides the error handler with an opportunity to handle
@@ -106,7 +107,7 @@ public protocol ANTLRErrorStrategy {
      * strategy but cannot be automatically recovered at the current state in
      * the parsing process
      */
-    func sync(recognizer: Parser) throws // RecognitionException;
+    func sync(_ recognizer: Parser) throws // RecognitionException;
 
     /**
      * Tests whether or not {@code recognizer} is in the process of recovering
@@ -119,7 +120,7 @@ public protocol ANTLRErrorStrategy {
      * @return {@code true} if the parser is currently recovering from a parse
      * error, otherwise {@code false}
      */
-    func inErrorRecoveryMode(recognizer: Parser) -> Bool
+    func inErrorRecoveryMode(_ recognizer: Parser) -> Bool
 
     /**
      * This method is called by when the parser successfully matches an input
@@ -127,7 +128,7 @@ public protocol ANTLRErrorStrategy {
      *
      * @param recognizer the parser instance
      */
-    func reportMatch(recognizer: Parser)
+    func reportMatch(_ recognizer: Parser)
 
     /**
      * Report any kind of {@link org.antlr.v4.runtime.RecognitionException}. This method is called by
@@ -136,5 +137,5 @@ public protocol ANTLRErrorStrategy {
      * @param recognizer the parser instance
      * @param e the recognition exception to report
      */
-    func reportError(recognizer: Parser, _ e: AnyObject)
+    func reportError(_ recognizer: Parser, _ e: AnyObject)
 }

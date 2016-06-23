@@ -32,7 +32,7 @@ public class HelloParser: Parser {
 	//@Deprecated
 	public let tokenNames: [String?]? = {
 	    let length = _SYMBOLIC_NAMES.count
-	    var tokenNames = [String?](count: length, repeatedValue: nil)
+	    var tokenNames = [String?](repeating: nil, count: length)
 		for i in 0..<length {
 			var name = VOCABULARY.getLiteralName(i)
 			if name == nil {
@@ -76,19 +76,19 @@ public class HelloParser: Parser {
 		public func ID() -> TerminalNode? { return getToken(HelloParser.ID, 0) }
 		public override func getRuleIndex() -> Int { return HelloParser.RULE_r }
 		override
-		public func enterRule(listener: ParseTreeListener) {
+		public func enterRule(_ listener: ParseTreeListener) {
 			if listener is HelloListener {
 			 	(listener as! HelloListener).enterR(self)
 			}
 		}
 		override
-		public func exitRule(listener: ParseTreeListener) {
+		public func exitRule(_ listener: ParseTreeListener) {
 			if listener is HelloListener {
 			 	(listener as! HelloListener).exitR(self)
 			}
 		}
 		override
-		public func accept<T>(visitor: ParseTreeVisitor<T>) -> T? {
+		public func accept<T>(_ visitor: ParseTreeVisitor<T>) -> T? {
 			if visitor is HelloVisitor {
 			     return (visitor as! HelloVisitor<T>).visitR(self)
 			}else if visitor is HelloBaseVisitor {
@@ -99,6 +99,7 @@ public class HelloParser: Parser {
 			}
 		}
 	}
+	@discardableResult
 	public func r() throws -> RContext {
 		var _localctx: RContext = RContext(_ctx, getState())
 		try enterRule(_localctx, 0, HelloParser.RULE_r)
@@ -110,7 +111,7 @@ public class HelloParser: Parser {
 		 	try match(HelloParser.ID)
 
 		}
-		catch ANTLRException.Recognition(let re) {
+		catch ANTLRException.recognition(let re) {
 			_localctx.exception = re
 			_errHandler.reportError(self, re)
 			try _errHandler.recover(self, re)

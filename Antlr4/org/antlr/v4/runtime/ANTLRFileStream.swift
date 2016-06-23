@@ -43,13 +43,13 @@ public class ANTLRFileStream: ANTLRInputStream {
         self.init(fileName, nil)
     }
 
-    public init(_ fileName: String, _ encoding: NSStringEncoding?) {
+    public init(_ fileName: String, _ encoding: String.Encoding?) {
         self.fileName = fileName
         super.init()
         load(fileName, encoding)
     }
 
-    public func load(fileName: String, _ encoding: NSStringEncoding?) {
+    public func load(_ fileName: String, _ encoding: String.Encoding?) {
         if encoding != nil {
             data = Utils.readFile(fileName, encoding!)
         } else {

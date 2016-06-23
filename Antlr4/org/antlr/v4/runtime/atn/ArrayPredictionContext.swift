@@ -71,12 +71,12 @@ public class ArrayPredictionContext: PredictionContext {
     }
     
     override
-    final public func getParent(index: Int) -> PredictionContext? {
+    final public func getParent(_ index: Int) -> PredictionContext? {
         return parents[index]
     }
     
     override
-    final public func getReturnState(index: Int) -> Int {
+    final public func getReturnState(_ index: Int) -> Int {
         return returnStates[index]
     }
     

@@ -62,8 +62,8 @@ public class RecognitionException<T:ATNSimulator>  {
         self.recognizer = recognizer
         self.input = input
         self.ctx = ctx
-        if recognizer != nil {
-            self.offendingState = recognizer!.getState()
+        if let recognizer = recognizer {
+            self.offendingState = recognizer.getState()
         }
     }
 
@@ -75,8 +75,8 @@ public class RecognitionException<T:ATNSimulator>  {
         self.recognizer = recognizer
         self.input = input
         self.ctx = ctx
-        if recognizer != nil {
-            self.offendingState = recognizer!.getState()
+        if let recognizer = recognizer {
+            self.offendingState = recognizer.getState()
         }
     }
 
@@ -93,7 +93,7 @@ public class RecognitionException<T:ATNSimulator>  {
         return offendingState
     }
 
-    internal final func setOffendingState(offendingState: Int) {
+    internal final func setOffendingState(_ offendingState: Int) {
         self.offendingState = offendingState
     }
 
@@ -108,8 +108,8 @@ public class RecognitionException<T:ATNSimulator>  {
      * state in the ATN, or {@code null} if the information is not available.
      */
     public func getExpectedTokens() -> IntervalSet? {
-        if recognizer != nil {
-            return try? recognizer!.getATN().getExpectedTokens(offendingState, ctx!)
+        if let recognizer = recognizer {
+            return try? recognizer.getATN().getExpectedTokens(offendingState, ctx!)
         }
 
         return nil
@@ -146,7 +146,7 @@ public class RecognitionException<T:ATNSimulator>  {
         return offendingToken
     }
 
-    internal final func setOffendingToken(offendingToken: Token) {
+    internal final func setOffendingToken(_ offendingToken: Token) {
         self.offendingToken = offendingToken
     }
 

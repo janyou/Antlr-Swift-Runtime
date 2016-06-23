@@ -78,7 +78,7 @@ public class ATNDeserializationOptions {
         return verifyATN
     }
 
-    public final func setVerifyATN(verifyATN: Bool) throws {
+    public final func setVerifyATN(_ verifyATN: Bool) throws {
         try throwIfReadOnly()
         self.verifyATN = verifyATN
     }
@@ -87,14 +87,14 @@ public class ATNDeserializationOptions {
         return generateRuleBypassTransitions
     }
 
-    public final func setGenerateRuleBypassTransitions(generateRuleBypassTransitions: Bool) throws {
+    public final func setGenerateRuleBypassTransitions(_ generateRuleBypassTransitions: Bool) throws {
         try throwIfReadOnly()
         self.generateRuleBypassTransitions = generateRuleBypassTransitions
     }
 
     internal func throwIfReadOnly() throws {
         if isReadOnly() {
-            throw ANTLRError.IllegalState(msg: "This object is readonly")
+            throw ANTLRError.illegalState(msg: "This object is readonly")
 
         }
     }

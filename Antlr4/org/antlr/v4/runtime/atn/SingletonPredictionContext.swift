@@ -46,7 +46,7 @@ public class SingletonPredictionContext: PredictionContext {
         super.init(parent != nil ? PredictionContext.calculateHashCode(parent!, returnState) : PredictionContext.calculateEmptyHashCode())
     }
 
-    public static func create(parent: PredictionContext?, _ returnState: Int) -> SingletonPredictionContext {
+    public static func create(_ parent: PredictionContext?, _ returnState: Int) -> SingletonPredictionContext {
         if returnState == PredictionContext.EMPTY_RETURN_STATE && parent == nil {
             // someone can pass in the bits of an array ctx that mean $
             return PredictionContext.EMPTY
@@ -60,13 +60,13 @@ public class SingletonPredictionContext: PredictionContext {
     }
 
     override
-    public func getParent(index: Int) -> PredictionContext? {
+    public func getParent(_ index: Int) -> PredictionContext? {
         assert(index == 0, "Expected: index==0")
         return parent
     }
 
     override
-    public func getReturnState(index: Int) -> Int {
+    public func getReturnState(_ index: Int) -> Int {
         assert(index == 0, "Expected: index==0")
         return returnState
     }

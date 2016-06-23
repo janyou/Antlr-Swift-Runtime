@@ -94,7 +94,7 @@ public class ATN {
      *  the rule surrounding {@code s}. In other words, the set will be
      *  restricted to tokens reachable staying within {@code s}'s rule.
      */
-    public func nextTokens(s: ATNState, _ ctx: RuleContext?)throws -> IntervalSet {
+    public func nextTokens(_ s: ATNState, _ ctx: RuleContext?)throws -> IntervalSet {
         let anal: LL1Analyzer = LL1Analyzer(self)
         let next: IntervalSet = try anal.LOOK(s, ctx)
         return next
@@ -105,37 +105,38 @@ public class ATN {
      * staying in same rule. {@link org.antlr.v4.runtime.Token#EPSILON} is in set if we reach end of
      * rule.
      */
-    public func nextTokens(s: ATNState) throws -> IntervalSet {
-        if  s.nextTokenWithinRule != nil
+    public func nextTokens(_ s: ATNState) throws -> IntervalSet {
+        if let nextTokenWithinRule = s.nextTokenWithinRule
         {
-            return s.nextTokenWithinRule!
+            return nextTokenWithinRule
         }
-        s.nextTokenWithinRule = try nextTokens(s, nil)
-        try s.nextTokenWithinRule!.setReadonly(true)
-        return s.nextTokenWithinRule!
+        let intervalSet = try nextTokens(s, nil)
+        s.nextTokenWithinRule = intervalSet
+        try intervalSet.setReadonly(true)
+        return intervalSet
     }
     
-    public func addState(state: ATNState?) {
-        if state != nil {
-            state!.atn = self
-            state!.stateNumber = states.count
+    public func addState(_ state: ATNState?) {
+        if let state = state {
+            state.atn = self
+            state.stateNumber = states.count
         }
         
         states.append(state)
     }
     
-    public func removeState(state: ATNState) {
+    public func removeState(_ state: ATNState) {
         states[state.stateNumber] = nil
         //states.set(state.stateNumber, nil); // just free mem, don't shift states in list
     }
-    
-    public func defineDecisionState(s: DecisionState) -> Int {
+    @discardableResult
+    public func defineDecisionState(_ s: DecisionState) -> Int {
         decisionToState.append(s)
         s.decision = decisionToState.count-1
         return s.decision
     }
     
-    public func getDecisionState(decision: Int) -> DecisionState? {
+    public func getDecisionState(_ decision: Int) -> DecisionState? {
         if  !decisionToState.isEmpty  {
             return decisionToState[decision]
         }
@@ -165,9 +166,9 @@ public class ATN {
      * @throws IllegalArgumentException if the ATN does not contain a state with
      * number {@code stateNumber}
      */
-    public func getExpectedTokens(stateNumber: Int, _ context: RuleContext) throws -> IntervalSet {
+    public func getExpectedTokens(_ stateNumber: Int, _ context: RuleContext) throws -> IntervalSet {
         if stateNumber < 0 || stateNumber >= states.count {
-            throw ANTLRError.IllegalArgument(msg: "Invalid state number.")
+            throw ANTLRError.illegalArgument(msg: "Invalid state number.")
             /* throw IllegalArgumentException("Invalid state number."); */
         }
         
@@ -182,13 +183,14 @@ public class ATN {
         let expected: IntervalSet = try IntervalSet()
         try expected.addAll(following)
         try expected.remove(CommonToken.EPSILON)
-        while ctx != nil && ctx!.invokingState >= 0 && following.contains(CommonToken.EPSILON) {
-            let invokingState: ATNState = states[ctx!.invokingState]!
+        
+        while let ctxWrap = ctx where ctxWrap.invokingState >= 0 && following.contains(CommonToken.EPSILON) {
+            let invokingState: ATNState = states[ctxWrap.invokingState]!
             let rt: RuleTransition = invokingState.transition(0) as! RuleTransition
             following = try nextTokens(rt.followState)
             try expected.addAll(following)
             try expected.remove(CommonToken.EPSILON)
-            ctx = ctx!.parent
+            ctx = ctxWrap.parent
         }
         
         if following.contains(CommonToken.EPSILON) {
@@ -198,10 +200,10 @@ public class ATN {
         return expected
     }
     
-    public final func appendDecisionToState(state: DecisionState) {
+    public final func appendDecisionToState(_ state: DecisionState) {
         decisionToState.append(state)
     }
-    public final func appendModeToStartState(state: TokensStartState) {
+    public final func appendModeToStartState(_ state: TokensStartState) {
         modeToStartState.append(state)
     }
     

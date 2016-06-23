@@ -67,35 +67,35 @@ public class BailErrorStrategy: DefaultErrorStrategy {
 	 *  original {@link org.antlr.v4.runtime.RecognitionException}.
      */
     override
-    public func recover(recognizer: Parser, _ e: AnyObject) throws {
+    public func recover(_ recognizer: Parser, _ e: AnyObject) throws {
         var context: ParserRuleContext? = recognizer.getContext()
-        while context != nil {
-            context!.exception = e
-            context = (context!.getParent() as? ParserRuleContext)
+        while let contextWrap = context{
+            contextWrap.exception = e
+            context = (contextWrap.getParent() as? ParserRuleContext)
         }
 
-        throw  ANTLRException.Recognition(e: e)
+        throw  ANTLRException.recognition(e: e)
     }
 
     /** Make sure we don't attempt to recover inline; if the parser
      *  successfully recovers, it won't throw an exception.
      */
     override
-    public func recoverInline(recognizer: Parser) throws -> Token {
+    public func recoverInline(_ recognizer: Parser) throws -> Token {
         let e: InputMismatchException = try InputMismatchException(recognizer)
         var context: ParserRuleContext? = recognizer.getContext()
-        while context != nil {
-            context!.exception = e
-             context = (context!.getParent() as? ParserRuleContext)
+        while let contextWrap = context {
+             contextWrap.exception = e
+             context = (contextWrap.getParent() as? ParserRuleContext)
         }
  
-        throw  ANTLRException.Recognition(e: e)
+        throw  ANTLRException.recognition(e: e)
 
     }
 
     /** Make sure we don't attempt to recover from problems in subrules. */
     override
-    public func sync(recognizer: Parser) {
+    public func sync(_ recognizer: Parser) {
     }
 
 }

@@ -2,14 +2,14 @@ import Foundation
 
 //https://github.com/pNre/ExSwift/blob/master/ExSwift/Array.swift
 extension Array {
-
-    mutating func concat(addArray: [Element]) -> [Element] {
+   @discardableResult
+    mutating func concat(_ addArray: [Element]) -> [Element] {
         return self + addArray
     }
 
-    mutating func removeObject<T:Equatable>(object: T) {
+    mutating func removeObject<T:Equatable>(_ object: T) {
         var index: Int?
-        for (idx, objectToCompare) in self.enumerate() {
+        for (idx, objectToCompare) in self.enumerated() {
 
             if let to = objectToCompare as? T {
                 if object == to {
@@ -20,7 +20,7 @@ extension Array {
 
         if index != nil {
 
-            self.removeAtIndex(index!)
+            self.remove(at: index!)
         }
 
     }
@@ -38,11 +38,11 @@ extension Array {
     
     :param: newElement Element to append
     */
-    mutating func push(newElement: Element) {
+    mutating func push(_ newElement: Element) {
         return append(newElement)
     }
 
-    func all(test: (Element) -> Bool) -> Bool {
+    func all(_ test: (Element) -> Bool) -> Bool {
         for item in self {
             if !test(item) {
                 return false
@@ -59,7 +59,7 @@ extension Array {
     :param: test Function to call for each element
     :returns: True if test returns true for all the elements in self
     */
-    func every(test: (Element) -> Bool) -> Bool {
+    func every(_ test: (Element) -> Bool) -> Bool {
         for item in self {
             if !test(item) {
                 return false
@@ -75,7 +75,7 @@ extension Array {
     :param: test Function to call for each element
     :returns: true if test returns true for any element of self
     */
-    func any(test: (Element) -> Bool) -> Bool {
+    func any(_ test: (Element) -> Bool) -> Bool {
         for item in self {
             if test(item) {
                 return true
@@ -94,14 +94,14 @@ extension Array {
     :param: second Second array
     */
     //func slice(startIndex startIndex:Int, endIndex:Int) -> Slice<Element> {
-    func slice(startIndex startIndex: Int, endIndex: Int) -> ArraySlice<Element> {
+    func slice(startIndex: Int, endIndex: Int) -> ArraySlice<Element> {
 
 
         return self[startIndex ... endIndex]
 
     }
     // func slice(index:Int,isClose:Bool = false) ->(first:Slice<Element> ,second:Slice<Element>){
-    func slice(index: Int, isClose: Bool = false) -> (first:ArraySlice<Element>, second:ArraySlice<Element>) {
+    func slice(_ index: Int, isClose: Bool = false) -> (first:ArraySlice<Element>, second:ArraySlice<Element>) {
         var first = self[0 ... index]
         var second = self[index ..< count]
 

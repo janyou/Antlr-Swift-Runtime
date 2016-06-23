@@ -43,7 +43,7 @@ public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
      * specified tree.</p>
      */
 
-    public override func visit(tree: ParseTree) -> T? {
+    public override func visit(_ tree: ParseTree) -> T? {
         return tree.accept(self)
     }
 
@@ -63,7 +63,7 @@ public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
      * method to behave properly in respect to the specific algorithm in use.</p>
      */
 
-    public override func visitChildren(node: RuleNode) -> T? {
+    public override func visitChildren(_ node: RuleNode) -> T? {
         var result: T? = defaultResult()
         let n: Int = node.getChildCount()
 
@@ -87,7 +87,7 @@ public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
      * {@link #defaultResult defaultResult}.</p>
      */
 
-    public override func visitTerminal(node: TerminalNode) -> T? {
+    public override func visitTerminal(_ node: TerminalNode) -> T? {
         return defaultResult()
     }
 
@@ -98,7 +98,7 @@ public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
      * {@link #defaultResult defaultResult}.</p>
      */
     override
-    public func visitErrorNode(node: ErrorNode) -> T? {
+    public func visitErrorNode(_ node: ErrorNode) -> T? {
         return defaultResult()
     }
 
@@ -136,7 +136,7 @@ public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
      *
      * @return The updated aggregate result.
      */
-    internal func aggregateResult(aggregate: T?, _ nextResult: T?) -> T? {
+    internal func aggregateResult(_ aggregate: T?, _ nextResult: T?) -> T? {
         return nextResult
     }
 
@@ -164,7 +164,7 @@ public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
      * {@code false} to stop visiting children and immediately return the
      * current aggregate result from {@link #visitChildren}.
      */
-    internal func shouldVisitNextChild(node: RuleNode, _ currentResult: T?) -> Bool {
+    internal func shouldVisitNextChild(_ node: RuleNode, _ currentResult: T?) -> Bool {
         return true
     }
 

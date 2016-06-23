@@ -55,7 +55,7 @@ public class SetTransition: Transition, CustomStringConvertible {
     }
 
     override
-    public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
+    public func matches(_ symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
         return set.contains(symbol)
     }
 

@@ -100,9 +100,9 @@ public class DFA: CustomStringConvertible {
      * @see #isPrecedenceDfa()
      */
     ////@SuppressWarnings("null")
-    public final func getPrecedenceStartState(precedence: Int) throws -> DFAState? {
+    public final func getPrecedenceStartState(_ precedence: Int) throws -> DFAState? {
         if !isPrecedenceDfa() {
-            throw ANTLRError.IllegalState(msg: "Only precedence DFAs may contain a precedence start state.")
+            throw ANTLRError.illegalState(msg: "Only precedence DFAs may contain a precedence start state.")
 
         }
 
@@ -127,31 +127,27 @@ public class DFA: CustomStringConvertible {
      * @see #isPrecedenceDfa()
      */
     ////@SuppressWarnings({"SynchronizeOnNonFinalField", "null"})
-    public final func setPrecedenceStartState(precedence: Int, _ startState: DFAState) throws {
+    public final func setPrecedenceStartState(_ precedence: Int, _ startState: DFAState) throws {
         if !isPrecedenceDfa() {
-            throw ANTLRError.IllegalState(msg: "Only precedence DFAs may contain a precedence start state.")
+            throw ANTLRError.illegalState(msg: "Only precedence DFAs may contain a precedence start state.")
 
         }
 
-        if precedence < 0 ||
-                s0 == nil ||
-                s0!.edges == nil {
+        guard let s0 = s0,edges = s0.edges where precedence >= 0 else {
             return
         }
-
         // synchronization on s0 here is ok. when the DFA is turned into a
         // precedence DFA, s0 will be initialized once and not updated again
-        synced(s0!) {
-            [unowned self] in
+        synced(s0) {
             // s0.edges is never null for a precedence DFA
-            if precedence >= self.s0!.edges!.count {
-                let increase = [DFAState?](count: (precedence + 1 - self.s0!.edges!.count), repeatedValue: nil)
-                self.s0!.edges = self.s0!.edges + increase
+            if precedence >= edges.count {
+                let increase = [DFAState?](repeating: nil, count: (precedence + 1 - edges.count))
+                s0.edges = edges + increase
                 //Array( self.s0!.edges![0..<precedence + 1])
                 //s0.edges = Arrays.copyOf(s0.edges, precedence + 1);
             }
 
-            self.s0!.edges![precedence] = startState
+            s0.edges[precedence] = startState
         }
     }
 
@@ -167,9 +163,9 @@ public class DFA: CustomStringConvertible {
      * @deprecated This method no longer performs any action.
      */
     ////@Deprecated
-    public final func setPrecedenceDfa(precedenceDfa: Bool) throws {
+    public final func setPrecedenceDfa(_ precedenceDfa: Bool) throws {
         if precedenceDfa != isPrecedenceDfa() {
-            throw ANTLRError.UnsupportedOperation(msg: "The precedenceDfa field cannot change after a DFA is constructed.")
+            throw ANTLRError.unsupportedOperation(msg: "The precedenceDfa field cannot change after a DFA is constructed.")
 
         }
     }
@@ -181,7 +177,7 @@ public class DFA: CustomStringConvertible {
     public func getStates() -> Array<DFAState> {
         var result: Array<DFAState> = Array<DFAState>(states.keys)
 
-        result = result.sort {
+        result = result.sorted {
             $0.stateNumber < $1.stateNumber
         }
 
@@ -201,7 +197,7 @@ public class DFA: CustomStringConvertible {
      * @deprecated Use {@link #toString(org.antlr.v4.runtime.Vocabulary)} instead.
      */
     ////@Deprecated
-    public func toString(tokenNames: [String?]?) -> String {
+    public func toString(_ tokenNames: [String?]?) -> String {
         if s0 == nil {
             return ""
         }
@@ -209,7 +205,7 @@ public class DFA: CustomStringConvertible {
         return serializer.toString()
     }
 
-    public func toString(vocabulary: Vocabulary) -> String {
+    public func toString(_ vocabulary: Vocabulary) -> String {
         if s0 == nil {
             return ""
         }

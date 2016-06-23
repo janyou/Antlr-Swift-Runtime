@@ -12,8 +12,9 @@ import Antlr4
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBOutlet weak var window: NSWindow!
+ 
     
-    @IBAction func runHelloWalker(sender: AnyObject) {
+    @IBAction func runHelloWalker(_ sender: AnyObject) {
         do {
             //            let text = Utils.readFile2String("TestHello.txt")
             //            let chars :CharStream  =   ANTLRInputStream(text)
@@ -21,7 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             let textFileName = "TestHello.txt"
             
-            if let textFilePath = NSBundle.mainBundle().pathForResource(textFileName, ofType: nil) {
+            if let textFilePath = Bundle.main().pathForResource(textFileName, ofType: nil) {
                 let lexer =  HelloLexer(ANTLRFileStream(textFilePath))
                 let tokens =  CommonTokenStream(lexer)
                 let parser = try HelloParser(tokens)
@@ -33,9 +34,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 print("error occur: can not open \(textFileName)")
             }
             
-        }catch ANTLRException.CannotInvokeStartRule {
+        }catch ANTLRException.cannotInvokeStartRule {
             print("error occur: CannotInvokeStartRule")
-        }catch ANTLRException.Recognition(let e )   {
+        }catch ANTLRException.recognition(let e )   {
             print("error occur\(e)")
         }catch {
             print("error occur")
@@ -43,12 +44,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     
-    func applicationDidFinishLaunching(aNotification: NSNotification){
+    func applicationDidFinishLaunching(_ aNotification: Notification){
         // Insert code here to initialize your application
         
     }
     
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
     

@@ -45,8 +45,8 @@ public class ATNSimulator {
      * This is the current serialized UUID.
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#checkCondition(boolean)} instead.
      */
-    public static let SERIALIZED_UUID: NSUUID = {
-        return ATNDeserializer.SERIALIZED_UUID
+    public static let SERIALIZED_UUID: UUID = {
+        return (ATNDeserializer.SERIALIZED_UUID as UUID)
     }()
 
 
@@ -110,14 +110,14 @@ public class ATNSimulator {
      * @since 4.3
      */
     public func clearDFA() throws {
-        throw ANTLRError.UnsupportedOperation(msg: "This ATN simulator does not support clearing the DFA. ")
+        throw ANTLRError.unsupportedOperation(msg: "This ATN simulator does not support clearing the DFA. ")
     }
 
     public func getSharedContextCache() -> PredictionContextCache? {
         return sharedContextCache
     }
 
-    public func getCachedContext(context: PredictionContext) -> PredictionContext {
+    public func getCachedContext(_ context: PredictionContext) -> PredictionContext {
         if sharedContextCache == nil {
             return context
         }
@@ -137,7 +137,7 @@ public class ATNSimulator {
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#deserialize} instead.
      */
     ////@Deprecated
-    public static func deserialize(data: [Character]) throws -> ATN {
+    public static func deserialize(_ data: [Character]) throws -> ATN {
         return try ATNDeserializer().deserialize(data)
     }
 
@@ -145,7 +145,7 @@ public class ATNSimulator {
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#checkCondition(boolean)} instead.
      */
     ////@Deprecated
-    public static func checkCondition(condition: Bool) throws {
+    public static func checkCondition(_ condition: Bool) throws {
         try ATNDeserializer().checkCondition(condition)
     }
 
@@ -153,7 +153,7 @@ public class ATNSimulator {
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#checkCondition(boolean, String)} instead.
      */
     ////@Deprecated
-    public static func checkCondition(condition: Bool, _ message: String) throws {
+    public static func checkCondition(_ condition: Bool, _ message: String) throws {
         try ATNDeserializer().checkCondition(condition, message)
     }
 
@@ -161,7 +161,7 @@ public class ATNSimulator {
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#toInt} instead.
      */
     ////@Deprecated
-    public func toInt(c: Character) -> Int {
+    public func toInt(_ c: Character) -> Int {
         return toInt(c)
     }
 
@@ -169,7 +169,7 @@ public class ATNSimulator {
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#toInt32} instead.
      */
     ////@Deprecated
-    public func toInt32(data: [Character], _ offset: Int) -> Int {
+    public func toInt32(_ data: [Character], _ offset: Int) -> Int {
         return toInt32(data, offset)
     }
 
@@ -177,7 +177,7 @@ public class ATNSimulator {
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#toLong} instead.
      */
     ////@Deprecated
-    public func toLong(data: [Character], _ offset: Int) -> Int64 {
+    public func toLong(_ data: [Character], _ offset: Int) -> Int64 {
         return toLong(data, offset)
     }
 
@@ -194,7 +194,7 @@ public class ATNSimulator {
      */
     ////@Deprecated
 
-    public static func edgeFactory(atn: ATN,
+    public static func edgeFactory(_ atn: ATN,
                                   _ type: Int, _ src: Int, _ trg: Int,
                                   _ arg1: Int, _ arg2: Int, _ arg3: Int,
                                   _ sets: Array<IntervalSet>) throws -> Transition {
@@ -205,7 +205,7 @@ public class ATNSimulator {
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#stateFactory} instead.
      */
     ////@Deprecated
-    public static func stateFactory(type: Int, _ ruleIndex: Int) throws -> ATNState {
+    public static func stateFactory(_ type: Int, _ ruleIndex: Int) throws -> ATNState {
         return try ATNDeserializer().stateFactory(type, ruleIndex)!
     }
 

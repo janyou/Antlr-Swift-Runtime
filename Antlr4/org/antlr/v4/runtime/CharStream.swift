@@ -49,5 +49,5 @@ public protocol CharStream: IntStream {
      * @throws UnsupportedOperationException if the stream does not support
      * getting the text of the specified interval
      */
-    func getText(interval: Interval) -> String
+    func getText(_ interval: Interval) -> String
 }

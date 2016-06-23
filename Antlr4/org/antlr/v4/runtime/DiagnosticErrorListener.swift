@@ -80,7 +80,7 @@ public class DiagnosticErrorListener: BaseErrorListener {
     }
     
     override
-    public func reportAmbiguity(recognizer: Parser,
+    public func reportAmbiguity(_ recognizer: Parser,
         _ dfa: DFA,
         _ startIndex: Int,
         _ stopIndex: Int,
@@ -101,11 +101,11 @@ public class DiagnosticErrorListener: BaseErrorListener {
     }
     
     override
-    public func reportAttemptingFullContext(recognizer: Parser,
+    public func reportAttemptingFullContext(_ recognizer: Parser,
         _ dfa: DFA,
         _ startIndex: Int,
         _ stopIndex: Int,
-        _ conflictingAlts: BitSet,
+        _ conflictingAlts: BitSet?,
         _ configs: ATNConfigSet) throws {
             let format: String = "reportAttemptingFullContext d=%@, input='%@'"
             let decision: String = getDecisionDescription(recognizer, dfa)
@@ -115,7 +115,7 @@ public class DiagnosticErrorListener: BaseErrorListener {
     }
     
     override
-    public func reportContextSensitivity(recognizer: Parser,
+    public func reportContextSensitivity(_ recognizer: Parser,
         _ dfa: DFA,
         _ startIndex: Int,
         _ stopIndex: Int,
@@ -128,7 +128,7 @@ public class DiagnosticErrorListener: BaseErrorListener {
             try recognizer.notifyErrorListeners(message)
     }
     
-    internal func getDecisionDescription(recognizer: Parser, _ dfa: DFA) -> String {
+    internal func getDecisionDescription(_ recognizer: Parser, _ dfa: DFA) -> String {
         let decision: Int = dfa.decision
         let ruleIndex: Int = dfa.atnStartState.ruleIndex!
         
@@ -157,7 +157,7 @@ public class DiagnosticErrorListener: BaseErrorListener {
      * @return Returns {@code reportedAlts} if it is not {@code null}, otherwise
      * returns the set of alternatives represented in {@code configs}.
      */
-    internal func getConflictingAlts(reportedAlts: BitSet?, _ configs: ATNConfigSet) throws -> BitSet {
+    internal func getConflictingAlts(_ reportedAlts: BitSet?, _ configs: ATNConfigSet) throws -> BitSet {
         if reportedAlts != nil {
             return reportedAlts!
         }

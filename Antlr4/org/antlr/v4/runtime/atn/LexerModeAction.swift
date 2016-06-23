@@ -65,7 +65,7 @@ public final class LexerModeAction: LexerAction, CustomStringConvertible {
      */
 
     public override func getActionType() -> LexerActionType {
-        return LexerActionType.MODE
+        return LexerActionType.mode
     }
 
     /**
@@ -84,7 +84,7 @@ public final class LexerModeAction: LexerAction, CustomStringConvertible {
      * value provided by {@link #getMode}.</p>
      */
     override
-    public func execute(lexer: Lexer) {
+    public func execute(_ lexer: Lexer) {
         lexer.mode(mode)
     }
     override

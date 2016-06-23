@@ -50,7 +50,7 @@ public protocol Tree: class {
     func getPayload() -> AnyObject
 
     /** If there are children, get the {@code i}th value indexed from 0. */
-    func getChild(i: Int) -> Tree?
+    func getChild(_ i: Int) -> Tree?
 
     /** How many children are there? If there is none, then this
      *  node represents a leaf node.

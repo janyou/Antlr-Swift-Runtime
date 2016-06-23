@@ -45,7 +45,7 @@ public protocol TokenStream: IntStream {
      *
      * @see org.antlr.v4.runtime.IntStream#LA
      */
-    func LT(k: Int) throws -> Token?
+    func LT(_ k: Int) throws -> Token?
 
     /**
      * Gets the {@link org.antlr.v4.runtime.Token} at the specified {@code index} in the stream. When
@@ -65,7 +65,7 @@ public protocol TokenStream: IntStream {
      * @throws UnsupportedOperationException if the stream does not support
      * retrieving the token at the specified index
      */
-    func get(index: Int) throws -> Token
+    func get(_ index: Int) throws -> Token
 
     /**
      * Gets the underlying {@link org.antlr.v4.runtime.TokenSource} which provides tokens for this
@@ -94,7 +94,7 @@ public protocol TokenStream: IntStream {
      *
      * @throws NullPointerException if {@code interval} is {@code null}
      */
-    func getText(interval: Interval) throws -> String
+    func getText(_ interval: Interval) throws -> String
 
     /**
      * Return the text of all tokens in the stream. This method behaves like the
@@ -129,7 +129,7 @@ public protocol TokenStream: IntStream {
      * text for.
      * @return The text of all tokens within the source interval of {@code ctx}.
      */
-    func getText(ctx: RuleContext) throws -> String
+    func getText(_ ctx: RuleContext) throws -> String
 
     /**
      * Return the text of all tokens in this stream between {@code start} and
@@ -160,5 +160,5 @@ public protocol TokenStream: IntStream {
      * @throws UnsupportedOperationException if this stream does not support
      * this method for the specified tokens
      */
-    func getText(start: Token?, _ stop: Token?) throws -> String
+    func getText(_ start: Token?, _ stop: Token?) throws -> String
 }

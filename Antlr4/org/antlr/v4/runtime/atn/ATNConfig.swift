@@ -154,7 +154,7 @@ public class ATNConfig: Hashable, CustomStringConvertible {
         return (reachesIntoOuterContext & SUPPRESS_PRECEDENCE_FILTER) != 0
     }
 
-    public final func setPrecedenceFilterSuppressed(value: Bool) {
+    public final func setPrecedenceFilterSuppressed(_ value: Bool) {
         if value {
             self.reachesIntoOuterContext |= 0x40000000
         } else {
@@ -185,7 +185,7 @@ public class ATNConfig: Hashable, CustomStringConvertible {
         //return "MyClass \(string)"
         return toString(nil, true)
     }
-    public func toString<T:ATNSimulator>(recog: Recognizer<T>?, _ showAlt: Bool) -> String {
+    public func toString<T:ATNSimulator>(_ recog: Recognizer<T>?, _ showAlt: Bool) -> String {
         let buf: StringBuilder = StringBuilder()
 //		if ( state.ruleIndex>=0 ) {
 //			if ( recog!=null ) buf.append(recog.getRuleNames()[state.ruleIndex]+":");

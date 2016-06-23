@@ -119,7 +119,7 @@ public protocol IntStream: class {
      * @throws UnsupportedOperationException if the stream does not support
      * retrieving the value of the specified symbol
      */
-    func LA(i: Int) throws -> Int
+    func LA(_ i: Int) throws -> Int
 
     /**
      * A mark provides a guarantee that {@link #seek seek()} operations will be
@@ -181,7 +181,7 @@ public protocol IntStream: class {
      * @param marker A marker returned by a call to {@code mark()}.
      * @see #mark
      */
-    func release(marker: Int) throws
+    func release(_ marker: Int) throws
 
     /**
      * Return the index into the stream of the input symbol referred to by
@@ -221,7 +221,7 @@ public protocol IntStream: class {
      * @throws UnsupportedOperationException if the stream does not support
      * seeking to the specified index
      */
-    func seek(index: Int) throws
+    func seek(_ index: Int) throws
 
     /**
      * Returns the total number of symbols in the stream, including a single EOF

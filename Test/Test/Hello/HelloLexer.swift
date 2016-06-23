@@ -35,7 +35,7 @@ public class HelloLexer: Lexer {
 	//@Deprecated
 	public let tokenNames: [String?]? = {
 	    let length = _SYMBOLIC_NAMES.count
-	    var tokenNames = [String?](count: length, repeatedValue: nil)
+	    var tokenNames = [String?](repeating: nil, count: length)
 		for i in 0..<length {
 			var name = VOCABULARY.getLiteralName(i)
 			if name == nil {

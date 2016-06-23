@@ -78,22 +78,25 @@ public class ListTokenSource: TokenSource {
         if i < tokens.count {
             return tokens[i].getCharPositionInLine()
         } else {
-            if eofToken != nil {
-                return eofToken!.getCharPositionInLine()
+            if let eofToken = eofToken {
+              return eofToken.getCharPositionInLine()
             } else {
                 if tokens.count > 0 {
                     // have to calculate the result from the line/column of the previous
                     // token, along with the text of the token.
                     let lastToken: Token = tokens[tokens.count - 1]
-                    let tokenText: String? = lastToken.getText()
-                    if tokenText != nil {
-                        let lastNewLine: Int = tokenText!.lastIndexOf("\n")
+                    
+                    if let tokenText = lastToken.getText() {
+                        let lastNewLine: Int = tokenText.lastIndexOf("\n")
                         if lastNewLine >= 0 {
-                            return tokenText!.length - lastNewLine - 1
+                            return tokenText.length - lastNewLine - 1
                         }
                     }
-
-                    return lastToken.getCharPositionInLine() + lastToken.getStopIndex() - lastToken.getStartIndex() + 1
+                    var position = lastToken.getCharPositionInLine()
+                    position += lastToken.getStopIndex()
+                    position -= lastToken.getStartIndex()
+                    position += 1
+                    return position
                 }
             }
         }
@@ -142,8 +145,8 @@ public class ListTokenSource: TokenSource {
         if i < tokens.count {
             return tokens[i].getLine()
         } else {
-            if eofToken != nil {
-                return eofToken!.getLine()
+            if let eofToken = eofToken {
+                return eofToken.getLine()
             } else {
                 if tokens.count > 0 {
                     // have to calculate the result from the line/column of the previous
@@ -151,11 +154,10 @@ public class ListTokenSource: TokenSource {
                     let lastToken: Token = tokens[tokens.count - 1]
                     var line: Int = lastToken.getLine()
 
-                    let tokenText: String? = lastToken.getText()
-                    if tokenText != nil {
-                        let length = tokenText!.length
+                    if let tokenText = lastToken.getText() {
+                        let length = tokenText.length
                         for j in 0..<length {
-                            if String(tokenText![j]) == "\n" {
+                            if String(tokenText[j]) == "\n" {
                                 line += 1
                             }
                         }
@@ -180,8 +182,8 @@ public class ListTokenSource: TokenSource {
         if i < tokens.count {
             return tokens[i].getInputStream()
         } else {
-            if eofToken != nil {
-                return eofToken!.getInputStream()
+            if let eofToken = eofToken{
+                return eofToken.getInputStream()
             } else {
                 if tokens.count > 0 {
                     return tokens[tokens.count - 1].getInputStream()
@@ -201,10 +203,9 @@ public class ListTokenSource: TokenSource {
         if sourceName != nil {
             return sourceName!
         }
-
-        let inputStream: CharStream? = getInputStream()
-        if inputStream != nil {
-            return inputStream!.getSourceName()
+ 
+        if let inputStream = getInputStream() {
+            return inputStream.getSourceName()
         }
 
         return "List"
@@ -214,7 +215,7 @@ public class ListTokenSource: TokenSource {
      * {@inheritDoc}
      */
 
-    public func setTokenFactory(factory: TokenFactory) {
+    public func setTokenFactory(_ factory: TokenFactory) {
         self._factory = factory
     }
 

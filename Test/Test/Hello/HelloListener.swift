@@ -11,11 +11,11 @@ public protocol HelloListener: ParseTreeListener {
 	 - Parameters:
 	   - ctx: the parse tree
 	 */
-	func enterR(ctx: HelloParser.RContext)
+	func enterR(_ ctx: HelloParser.RContext)
 	/**
 	 * Exit a parse tree produced by {@link HelloParser#r}.
 	 - Parameters:
 	   - ctx: the parse tree
 	 */
-	func exitR(ctx: HelloParser.RContext)
+	func exitR(_ ctx: HelloParser.RContext)
 }

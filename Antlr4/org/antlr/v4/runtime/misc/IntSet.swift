@@ -44,7 +44,7 @@ public protocol IntSet {
      *
      * @exception IllegalStateException if the current set is read-only
      */
-    func add(el: Int) throws
+    func add(_ el: Int) throws
 
     /**
      * Modify the current {@link org.antlr.v4.runtime.misc.IntSet} object to contain all elements that are
@@ -57,7 +57,7 @@ public protocol IntSet {
      * @exception IllegalStateException if the current set is read-only
      */
 
-    func addAll(set: IntSet?) throws -> IntSet
+    func addAll(_ set: IntSet?) throws -> IntSet
 
     /**
      * Return a new {@link org.antlr.v4.runtime.misc.IntSet} object containing all elements that are
@@ -70,7 +70,7 @@ public protocol IntSet {
      * place of an empty result set.
      */
 
-    func and(a: IntSet?) throws -> IntSet?
+    func and(_ a: IntSet?) throws -> IntSet?
 
     /**
      * Return a new {@link org.antlr.v4.runtime.misc.IntSet} object containing all elements that are
@@ -90,7 +90,7 @@ public protocol IntSet {
      * {@code null} may be returned in place of an empty result set.
      */
 
-    func complement(elements: IntSet?) throws -> IntSet?
+    func complement(_ elements: IntSet?) throws -> IntSet?
 
     /**
      * Return a new {@link org.antlr.v4.runtime.misc.IntSet} object containing all elements that are
@@ -107,7 +107,7 @@ public protocol IntSet {
      * empty result set.
      */
 
-    func or(a: IntSet) throws -> IntSet
+    func or(_ a: IntSet) throws -> IntSet
 
     /**
      * Return a new {@link org.antlr.v4.runtime.misc.IntSet} object containing all elements that are
@@ -127,7 +127,7 @@ public protocol IntSet {
      * {@code null} may be returned in place of an empty result set.
      */
 
-    func subtract(a: IntSet?) throws -> IntSet
+    func subtract(_ a: IntSet?) throws -> IntSet
 
     /**
      * Return the total number of elements represented by the current set.
@@ -166,7 +166,7 @@ public protocol IntSet {
      * @param el The element to check for.
      * @return {@code true} if the set contains {@code el}; otherwise {@code false}.
      */
-    func contains(el: Int) -> Bool
+    func contains(_ el: Int) -> Bool
 
     /**
      * Removes the specified value from the current set. If the current set does
@@ -176,7 +176,7 @@ public protocol IntSet {
      *
      * @exception IllegalStateException if the current set is read-only
      */
-    func remove(el: Int) throws
+    func remove(_ el: Int) throws
 
     /**
      * Return a list containing the elements represented by the current set. The

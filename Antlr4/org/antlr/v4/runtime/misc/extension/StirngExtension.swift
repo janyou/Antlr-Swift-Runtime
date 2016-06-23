@@ -16,53 +16,53 @@ import UIKit
 public extension String {
 
     func trim() -> String {
-        return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        return self.trimmingCharacters(in: CharacterSet.whitespaces)
     }
 
-    func split(separator: String) -> [String] {
-        return self.componentsSeparatedByString(separator)
+    func split(_ separator: String) -> [String] {
+        return self.components(separatedBy: separator)
+    }
+ 
+    func replaceAll(_ from: String, replacement: String) -> String {
+        return self.replacingOccurrences(of: from, with: replacement, options: NSString.CompareOptions.literalSearch, range: nil)
     }
 
-    func replaceAll(from: String, replacement: String) -> String {
-        return self.stringByReplacingOccurrencesOfString(from, withString: replacement, options: NSStringCompareOptions.LiteralSearch, range: nil)
+    func contains(_ find: String) -> Bool {
+        return self.range(of: find) != nil
     }
 
-    func contains(find: String) -> Bool {
-        return self.rangeOfString(find) != nil
-    }
-
-    func containsIgnoreCase(find: String) -> Bool {
-        return self.lowercaseString.rangeOfString(find.lowercaseString) != nil
+    func containsIgnoreCase(_ find: String) -> Bool {
+        return self.lowercased().range(of: find.lowercased()) != nil
     }
 
     var length: Int {
         return self.characters.count
     }
 
-    func indexOf(target: String) -> Int {
-        let range = self.rangeOfString(target)
+    func indexOf(_ target: String) -> Int {
+        let range = self.range(of: target)
         if let range = range {
-            return self.startIndex.distanceTo(range.startIndex)
+            return self.characters.distance(from: self.startIndex, to: range.lowerBound)
 
         } else {
             return -1
         }
     }
 
-    func indexOf(target: String, startIndex: Int) -> Int {
+    func indexOf(_ target: String, startIndex: Int) -> Int {
 
-        let startRange = self.startIndex.advancedBy(startIndex)
-        let range = self.rangeOfString(target, options: NSStringCompareOptions.LiteralSearch, range: startRange..<self.endIndex)
+        let startRange = self.characters.index(self.startIndex, offsetBy: startIndex)
+        let range = self.range(of: target, options: NSString.CompareOptions.literalSearch, range: startRange..<self.endIndex)
  
         if let range = range {
 
-            return self.startIndex.distanceTo(range.startIndex)
+            return self.characters.distance(from: self.startIndex, to: range.lowerBound)
         } else {
             return -1
         }
     }
 
-    func lastIndexOf(target: String) -> Int {
+    func lastIndexOf(_ target: String) -> Int {
         var index = -1
         var stepIndex = self.indexOf(target)
         while stepIndex > -1 {
@@ -76,11 +76,10 @@ public extension String {
         return index
     }
 
-    func substringAfter(string: String) -> String {
-        let range = self.rangeOfString(string)
-        if range != nil {
-            let intIndex: Int = self.startIndex.distanceTo(range!.endIndex)
-            return self.substringFromIndex(self.startIndex.advancedBy(intIndex))
+    func substringAfter(_ string: String) -> String {
+        if let range = self.range(of: string) {
+            let intIndex: Int = self.characters.distance(from: self.startIndex, to: range.upperBound)
+            return self.substring(from: self.characters.index(self.startIndex, offsetBy: intIndex))
         }
         return self
 
@@ -90,89 +89,33 @@ public extension String {
         var result = self
         if self.length > 0 {
             let startIndex = self.startIndex
-            result.replaceRange(startIndex ... startIndex, with: String(self[startIndex]).lowercaseString)
+            result.replaceSubrange(startIndex ... startIndex, with: String(self[startIndex]).lowercased())
         }
         return result
     }
-    func substringWithRange(range: Range<Int>) -> String {
+    func substringWithRange(_ range: Range<Int>) -> String {
 
 
-        let start = self.startIndex.advancedBy(range.startIndex)
+        let start = self.characters.index(self.startIndex, offsetBy: range.lowerBound)
 
-        let end = self.startIndex.advancedBy(range.endIndex)
-        return self.substringWithRange(start ..< end)
+        let end = self.characters.index(self.startIndex, offsetBy: range.upperBound)
+        return self.substring(with: start ..< end)
     }
-
-    func substringBetween(start  start: String, end: String) -> String {
-
-        let scanner = NSScanner(string: self)
-        var scanned: NSString?
-
-        //http://blog.csdn.net/binzi98/article/details/8588604
-        scanner.scanUpToString(start, intoString: nil)
-        if !scanner.scanString(start, intoString: nil) {
-            return ""
-        }
-        scanner.scanUpToString(end, intoString: &scanned)
-
-        if !scanner.scanString(end, intoString: nil) {
-            return ""
-        }
-
-        if let result: String = scanned as? String {
-            return result
-        }
-        return ""
-    }
-
-    func substringBetween1(start  start: String, end: String) -> String {
-        var startIndex = indexOf(start)
-        if startIndex == -1 {
-            return ""
-        }
-
-        startIndex = startIndex + start.length
-
-        let endIndex = indexOf(end, startIndex: startIndex)
-
-        if endIndex == -1 || startIndex > endIndex {
-            return ""
-        }
-
-
-
-        let range = startIndex..<endIndex
-
-        return substringWithRange(range)
-    }
-
-    var html2String: String {
-        let encodeData = self.dataUsingEncoding(NSUTF8StringEncoding)
-        if encodeData == nil {
-            return ""
-        }
-        let aString = try? NSAttributedString(data: self.dataUsingEncoding(NSUTF8StringEncoding)!,
-                options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding], documentAttributes: nil)
-
-        return (aString != nil) ? aString!.string : ""
-    }
-
+    
     subscript(integerIndex: Int) -> Character {
-
-        let index = startIndex.advancedBy(integerIndex)
+        let index = characters.index(startIndex, offsetBy: integerIndex)
         return self[index]
     }
 
     subscript(integerRange: Range<Int>) -> String {
-
-        let start = startIndex.advancedBy(integerRange.startIndex)
-        let end = startIndex.advancedBy(integerRange.endIndex)
+        let start = characters.index(startIndex, offsetBy: integerRange.lowerBound)
+        let end = characters.index(startIndex, offsetBy: integerRange.upperBound)
         let range = start ..< end
         return self[range]
     }
 
-    func charAt(index: Int) -> Character {
-       return self[self.startIndex.advancedBy(index)]
+    func charAt(_ index: Int) -> Character {
+       return self[self.characters.index(self.startIndex, offsetBy: index)]
     }
 
 }
@@ -205,7 +148,7 @@ extension String {
         // Unicode character, e.g.
         //    decodeNumeric("64", 10)   --> "@"
         //    decodeNumeric("20ac", 16) --> "€"
-        func decodeNumeric(string: String, base: Int32) -> Character? {
+        func decodeNumeric(_ string: String, base: Int32) -> Character? {
             let code = UInt32(strtoul(string, nil, base))
             return Character(UnicodeScalar(code))
         }
@@ -216,12 +159,12 @@ extension String {
         //     decode("&#x20ac;") --> "€"
         //     decode("&lt;")     --> "<"
         //     decode("&foo;")    --> nil
-        func decode(entity: String) -> Character? {
+        func decode(_ entity: String) -> Character? {
 
             if entity.hasPrefix("&#x") || entity.hasPrefix("&#X") {
-                return decodeNumeric(entity.substringFromIndex(entity.startIndex.advancedBy(3)), base: 16)
+                return decodeNumeric(entity.substring(from: entity.characters.index(entity.startIndex, offsetBy: 3)), base: 16)
             } else if entity.hasPrefix("&#") {
-                return decodeNumeric(entity.substringFromIndex(entity.startIndex.advancedBy(2)), base: 10)
+                return decodeNumeric(entity.substring(from: entity.characters.index(entity.startIndex, offsetBy: 2)), base: 10)
             } else {
                 return characterEntities[entity]
             }
@@ -232,21 +175,21 @@ extension String {
         var position = startIndex
 
         // Find the next '&' and copy the characters preceding it to `result`:
-        while let ampRange = self.rangeOfString("&", range: position ..< endIndex) {
-            result.appendContentsOf(self[position ..< ampRange.startIndex])
-            position = ampRange.startIndex
+        while let ampRange = self.range(of: "&", range: position ..< endIndex) {
+            result.append(self[position ..< ampRange.lowerBound])
+            position = ampRange.lowerBound
 
             // Find the next ';' and copy everything from '&' to ';' into `entity`
-            if let semiRange = self.rangeOfString(";", range: position ..< endIndex) {
-                let entity = self[position ..< semiRange.endIndex]
-                position = semiRange.endIndex
+            if let semiRange = self.range(of: ";", range: position ..< endIndex) {
+                let entity = self[position ..< semiRange.upperBound]
+                position = semiRange.upperBound
 
                 if let decoded = decode(entity) {
                     // Replace by decoded character:
                     result.append(decoded)
                 } else {
                     // Invalid entity, copy verbatim:
-                    result.appendContentsOf(entity)
+                    result.append(entity)
                 }
             } else {
                 // No matching ';'.
@@ -254,7 +197,7 @@ extension String {
             }
         }
         // Copy remaining characters to `result`:
-        result.appendContentsOf(self[position ..< endIndex])
+        result.append(self[position ..< endIndex])
         return result
     }
 }

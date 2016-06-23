@@ -36,7 +36,7 @@ public class ParseTreeWalker {
 
     }
 
-    public func walk(listener: ParseTreeListener, _ t: ParseTree) throws {
+    public func walk(_ listener: ParseTreeListener, _ t: ParseTree) throws {
         if t is ErrorNode {
             listener.visitErrorNode(t as! ErrorNode)
             return
@@ -61,13 +61,13 @@ public class ParseTreeWalker {
      * {@link org.antlr.v4.runtime.RuleContext}-specific event. First we trigger the generic and then
      * the rule specific. We to them in reverse order upon finishing the node.
      */
-    internal func enterRule(listener: ParseTreeListener, _ r: RuleNode) throws {
+    internal func enterRule(_ listener: ParseTreeListener, _ r: RuleNode) throws {
         let ctx: ParserRuleContext = r.getRuleContext() as! ParserRuleContext
         try listener.enterEveryRule(ctx)
         ctx.enterRule(listener)
     }
 
-    internal func exitRule(listener: ParseTreeListener, _ r: RuleNode) throws {
+    internal func exitRule(_ listener: ParseTreeListener, _ r: RuleNode) throws {
         let ctx: ParserRuleContext = r.getRuleContext() as! ParserRuleContext
         ctx.exitRule(listener)
         try listener.exitEveryRule(ctx)

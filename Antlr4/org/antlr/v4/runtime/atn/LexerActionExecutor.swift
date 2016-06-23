@@ -84,7 +84,7 @@ public class LexerActionExecutor: Hashable {
      * @return A {@link org.antlr.v4.runtime.atn.LexerActionExecutor} for executing the combine actions
      * of {@code lexerActionExecutor} and {@code lexerAction}.
      */
-    public static func append(lexerActionExecutor: LexerActionExecutor?, _ lexerAction: LexerAction) -> LexerActionExecutor {
+    public static func append(_ lexerActionExecutor: LexerActionExecutor?, _ lexerAction: LexerAction) -> LexerActionExecutor {
         if lexerActionExecutor == nil {
             return LexerActionExecutor([lexerAction])
         }
@@ -125,7 +125,7 @@ public class LexerActionExecutor: Hashable {
      * @return A {@link org.antlr.v4.runtime.atn.LexerActionExecutor} which stores input stream offsets
      * for all position-dependent lexer actions.
      */
-    public func fixOffsetBeforeMatch(offset: Int) -> LexerActionExecutor {
+    public func fixOffsetBeforeMatch(_ offset: Int) -> LexerActionExecutor {
         var updatedLexerActions: [LexerAction]? = nil
         let length = lexerActions.count
         for i in 0..<length {
@@ -172,7 +172,7 @@ public class LexerActionExecutor: Hashable {
      * {@link org.antlr.v4.runtime.IntStream#seek} to set the {@code input} position to the beginning
      * of the token.
      */
-    public func execute(lexer: Lexer, _ input: CharStream, _ startIndex: Int) throws {
+    public func execute(_ lexer: Lexer, _ input: CharStream, _ startIndex: Int) throws {
         var requiresSeek: Bool = false
         var stopIndex: Int = input.index()
         //try {

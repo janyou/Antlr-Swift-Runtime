@@ -42,11 +42,11 @@ public enum ATNType: Int {
     /**
      * A lexer grammar.
      */
-    case LEXER = 0
+    case lexer = 0
 
     /**
      * A parser grammar.
      */
-    case PARSER
+    case parser
 
 }

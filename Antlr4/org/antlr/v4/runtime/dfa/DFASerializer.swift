@@ -59,15 +59,19 @@ public class DFASerializer: CustomStringConvertible {
         let states: Array<DFAState> = dfa.getStates()
         for s: DFAState in states {
             var n: Int = 0
-            if s.edges != nil {
-                n = s.edges!.count
+            if let sEdges = s.edges {
+                n = sEdges.count
             }
             for i in 0..<n {
                 let t: DFAState? = s.edges![i]
-                if t != nil && t!.stateNumber != Int.max {
+                if let t = t where t.stateNumber != Int.max {
                     buf.append(getStateString(s))
                     let label: String = getEdgeLabel(i)
-                    buf.append("-").append(label).append("->").append(getStateString(t!)).append("\n")
+                    buf.append("-")
+                    buf.append(label)
+                    buf.append("->")
+                    buf.append(getStateString(t))
+                    buf.append("\n")
                 }
             }
         }
@@ -85,22 +89,22 @@ public class DFASerializer: CustomStringConvertible {
         return description
     }
 
-    internal func getEdgeLabel(i: Int) -> String {
+    internal func getEdgeLabel(_ i: Int) -> String {
         return vocabulary.getDisplayName(i - 1)
     }
 
 
-    internal func getStateString(s: DFAState) -> String {
+    internal func getStateString(_ s: DFAState) -> String {
         let n: Int = s.stateNumber
 
         let s1 = s.isAcceptState ? ":" : ""
         let s2 = s.requiresFullContext ? "^" : ""
         let baseStateStr: String = s1 + "s" + String(n) + s2
         if s.isAcceptState {
-            if s.predicates != nil {
-                return baseStateStr + "=>\(s.predicates)"
+            if let predicates = s.predicates {
+                return baseStateStr + "=>\(predicates)"
             } else {
-                return baseStateStr + "=>\(s.prediction)"
+                return baseStateStr + "=>\(s.prediction!)"
             }
         } else {
             return baseStateStr

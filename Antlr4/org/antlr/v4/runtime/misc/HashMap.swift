@@ -22,7 +22,7 @@ final class Entry<K: Hashable,V>: CustomStringConvertible {
         return value
     }
     
-    final func setValue(newValue: V) -> V {
+    final func setValue(_ newValue: V) -> V {
         let oldValue: V = value
         value = newValue
         return oldValue
@@ -62,7 +62,7 @@ func == <K: Hashable, V: Equatable>(lhs: Entry<K,V?>, rhs: Entry<K,V?>) -> Bool 
 
 
 
-public final class HashMap<K: Hashable,V>: SequenceType
+public final class HashMap<K: Hashable,V>: Sequence
 {
     
     /**
@@ -85,7 +85,7 @@ public final class HashMap<K: Hashable,V>: SequenceType
     /**
      * The table, resized as necessary. Length MUST Always be a power of two.
      */
-     var table: [Entry<K,V>!]
+     var table: [Entry<K,V>?]
     
     /**
      * The number of key-value mappings contained in this map.
@@ -134,15 +134,15 @@ public final class HashMap<K: Hashable,V>: SequenceType
         
         self.loadFactor = DEFAULT_LOAD_FACTOR
         threshold = Int(Float(initialCapacity) * loadFactor)
-        table =  [Entry<K,V>!](count: initialCapacity, repeatedValue: nil)
+        table =  [Entry<K,V>?](repeating: nil, count: initialCapacity)
     }
     public init() {
         self.loadFactor = DEFAULT_LOAD_FACTOR
         threshold = Int(Float(DEFAULT_INITIAL_CAPACITY) * DEFAULT_LOAD_FACTOR)
-        table =  [Entry<K,V>!](count: DEFAULT_INITIAL_CAPACITY, repeatedValue: nil)
+        table =  [Entry<K,V>?](repeating: nil, count: DEFAULT_INITIAL_CAPACITY)
     }
     
-    static func hash(h: Int) -> Int {
+    static func hash(_ h: Int) -> Int {
         var h = h
         // This function ensures that hashCodes that differ only by
         // constant multiples at each bit position have a bounded
@@ -154,7 +154,7 @@ public final class HashMap<K: Hashable,V>: SequenceType
     /**
      * Returns index for hash code h.
      */
-    static func indexFor(h: Int, _ length: Int) -> Int {
+    static func indexFor(_ h: Int, _ length: Int) -> Int {
         return h & (length-1)
     }
     
@@ -199,15 +199,15 @@ public final class HashMap<K: Hashable,V>: SequenceType
      *
      * @see #put(Object, Object)
      */
-    public final func get(key: K) -> V? {
+    public final func get(_ key: K) -> V? {
         let hash: Int = HashMap.hash(key.hashValue)
         var e = table[HashMap.indexFor(hash, table.count)]
-        while e != nil {
-            if  e.hash == hash &&  e.key == key
+        while let eWrap = e {
+            if  eWrap.hash == hash &&  eWrap.key == key
             {
-                return e.value
+                return eWrap.value
             }
-            e = e!.next
+            e = eWrap.next
         }
 
         return nil
@@ -220,7 +220,7 @@ public final class HashMap<K: Hashable,V>: SequenceType
      * @return <tt>true</tt> if this map contains a mapping for the specified
      * key.
      */
-    public final func containsKey(key: K) -> Bool {
+    public final func containsKey(_ key: K) -> Bool {
         return getEntry(key) != nil
     }
     
@@ -229,15 +229,15 @@ public final class HashMap<K: Hashable,V>: SequenceType
      * HashMap.  Returns null if the HashMap contains no mapping
      * for the key.
      */
-    final func getEntry(key: K) -> Entry<K,V>! {
+    final func getEntry(_ key: K) -> Entry<K,V>! {
         let hash: Int =  HashMap.hash(key.hashValue)
         var e = table[HashMap.indexFor(hash, table.count)]
-        while e != nil {
-            if  e.hash == hash &&  e.key == key
+        while let eWrap = e {
+            if eWrap.hash == hash && eWrap.key == key
             {
-                return e
+                return eWrap
             }
-            e = e!.next
+            e = eWrap.next
         }
 
         return nil
@@ -256,18 +256,19 @@ public final class HashMap<K: Hashable,V>: SequenceType
      *         (A <tt>null</tt> return can also indicate that the map
      *         previously associated <tt>null</tt> with <tt>key</tt>.)
      */
-    public final func put(key: K, _ value: V) -> V? {
+    @discardableResult
+    public final func put(_ key: K, _ value: V) -> V? {
         
         let hash: Int = HashMap.hash(key.hashValue)
         let i: Int = HashMap.indexFor(hash, table.count)
         var e = table[i]
-        while e != nil {
-            if  e.hash == hash &&  e.key == key {
-                let oldValue = e.value
-                e.value = value
+        while let eWrap = e {
+            if  eWrap.hash == hash &&  eWrap.key == key {
+                let oldValue = eWrap.value
+                eWrap.value = value
                 return oldValue
             }
-            e = e.next
+            e = eWrap.next
         }
         
         
@@ -283,7 +284,7 @@ public final class HashMap<K: Hashable,V>: SequenceType
      *
      * Subclass overrides this to alter the behavior of put method.
      */
-    final func addEntry(hash: Int, _ key: K, _ value: V, _ bucketIndex: Int) {
+    final func addEntry(_ hash: Int, _ key: K, _ value: V, _ bucketIndex: Int) {
         let e = table[bucketIndex]
         table[bucketIndex] = Entry<K,V>(hash, key, value, e)
         let oldSize = size
@@ -306,14 +307,14 @@ public final class HashMap<K: Hashable,V>: SequenceType
      *        capacity is MAXIMUM_CAPACITY (in which case value
      *        is irrelevant).
      */
-    final func resize(newCapacity: Int) {
+    final func resize(_ newCapacity: Int) {
         let oldCapacity: Int = table.count
         if oldCapacity == MAXIMUM_CAPACITY {
             threshold = Int.max
             return
         }
         
-        var newTable  = [Entry<K,V>!](count: newCapacity, repeatedValue: nil)
+        var newTable  = [Entry<K,V>?](repeating: nil, count: newCapacity)
         transfer(&newTable)
         table = newTable
         threshold = Int(Float(newCapacity) * loadFactor)
@@ -322,21 +323,21 @@ public final class HashMap<K: Hashable,V>: SequenceType
     /**
      * Transfers all entries from current table to newTable.
      */
-    final func transfer(inout newTable: [Entry<K,V>!]) {
+    final func transfer(_ newTable: inout [Entry<K,V>?]) {
         
         let newCapacity: Int = newTable.count
         let length = table.count
         for  j in 0..<length {
-            var e = table[j]
-            if e != nil {
+            if let e = table[j] {
                 table[j] = nil
-                repeat {
+                var eOption: Entry<K,V>? = e
+                while let e = eOption {
                     let next = e.next
                     let i: Int = HashMap.indexFor(e.hash, newCapacity)
                     e.next = newTable[i]
                     newTable[i] = e
-                    e = next
-                } while e != nil
+                    eOption = next
+                }
             }
         }
     }
@@ -352,32 +353,34 @@ public final class HashMap<K: Hashable,V>: SequenceType
         }
         size = 0
     }
-    
-    public func remove(key: K) -> V? {
-        let e  = removeEntryForKey(key)
-        return (e == nil ? nil : e!.value)
+    @discardableResult
+    public func remove(_ key: K) -> V? {
+        if let e  = removeEntryForKey(key) {
+            return e.value
+        }
+        return nil
     }
     
  
-    final func removeEntryForKey(key: K) -> Entry<K,V>? {
+    final func removeEntryForKey(_ key: K) -> Entry<K,V>? {
         let hash: Int = HashMap.hash(Int(key.hashValue))
         let i = Int(HashMap.indexFor(hash, Int(table.count)))
         var prev  = table[i]
         var e  = prev
         
-        while e != nil{
-            let next  = e.next
+        while let eWrap = e {
+            let next  = eWrap.next
             var _: AnyObject
-            if e.hash == hash &&  e.key == key{
+            if eWrap.hash == hash &&  eWrap.key == key{
                 modCount += 1
                 size -= 1
-                if prev === e
+                if prev === eWrap
                 {table[i] = next}
                 else
-                {prev.next = next}
-                return e
+                {prev?.next = next}
+                return eWrap
             }
-            prev = e
+            prev = eWrap
             e = next
         }
         
@@ -388,17 +391,17 @@ public final class HashMap<K: Hashable,V>: SequenceType
         var valueList: [V] = [V]()
         let length = table.count
         for  j in 0..<length {
-            var e = table[j]
-            if e != nil {
+            if let e = table[j] {
                 valueList.append(e.value)
-                repeat {
+                var eOption: Entry<K,V>? = e
+                while let e = eOption {
                     let next = e.next
-                    e = next
-                    if e != nil {
-                        valueList.append(e.value)
+                    eOption = next
+                    if let eOption = eOption  {
+                        valueList.append(eOption.value)
                     }
                     
-                } while e != nil
+                }
             }
         }
         return valueList
@@ -408,24 +411,24 @@ public final class HashMap<K: Hashable,V>: SequenceType
         var keyList: [K] = [K]()
         let length = table.count
         for  j in 0..<length {
-            var e = table[j]
-            if e != nil {
+            if let e = table[j] {
                 keyList.append(e.key)
-                repeat {
+                var eOption: Entry<K,V>? = e
+                while let e = eOption {
                     let next = e.next
-                    e = next
-                    if e != nil {
-                        keyList.append(e.key)
+                    eOption = next
+                    if let eOption = eOption  {
+                        keyList.append(eOption.key )
                     }
                     
-                } while e != nil
+                }
             }
         }
         return keyList
     }
     
  
-    public func generate() ->  AnyGenerator<(K,V)> {
+    public func makeIterator() ->  AnyIterator<(K,V)> {
         var _next: Entry<K,V>? // next entry to return
         let expectedModCount: Int = modCount // For fast-fail
         var index: Int = 0 // current slot
@@ -439,26 +442,26 @@ public final class HashMap<K: Hashable,V>: SequenceType
             }
         }
         
-        return AnyGenerator {
+        return AnyIterator {
             if self.modCount != expectedModCount
             {
                 fatalError("\(#function) ConcurrentModificationException")
             }
-            let e  = _next
-            if e == nil
-            {
+            if let e  = _next {
+                _next = e.next
+                if _next == nil{
+                    while index < self.table.count &&  _next == nil
+                    {
+                        _next = self.table[index]
+                        index += 1
+                    }
+                }
+                //current = e
+                return (e.getKey(),e.getValue())
+            } else {
                 return nil
             }
-            _next = e!.next
-            if _next == nil{
-                while index < self.table.count &&  _next == nil
-                {
-                    _next = self.table[index]
-                    index += 1
-                }
-            }
-            //current = e
-            return (e!.getKey(),e!.getValue())
+            
         }
         
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-func errPrint(msg: String) {
+func errPrint(_ msg: String) {
     fputs(msg + "\n", __stderrp)
 }
 
@@ -54,30 +54,30 @@ func >>>(lhs: Int, rhs: Int) -> Int {
 }
 
 
-public func synced(lock: AnyObject, closure: () -> ()) {
+public func synced(_ lock: AnyObject, closure: () -> ()) {
     objc_sync_enter(lock)
     closure()
     objc_sync_exit(lock)
 }
 
 
-public func intChar2String(i: Int) -> String {
+public func intChar2String(_ i: Int) -> String {
     return String(Character(integerLiteral: i))
 }
 
-public func log(message: String = "", file: String = #file, function: String = #function, lineNum: Int = #line) {
+public func log(_ message: String = "", file: String = #file, function: String = #function, lineNum: Int = #line) {
 
     // #if DEBUG
-    print("FILE: \(NSURL(fileURLWithPath: file).pathComponents!.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)")
+    print("FILE: \(URL(fileURLWithPath: file).pathComponents!.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)")
     //   #else
     // do nothing
     //   #endif
 }
 
 
-public func RuntimeException(message: String = "", file: String = #file, function: String = #function, lineNum: Int = #line) {
+public func RuntimeException(_ message: String = "", file: String = #file, function: String = #function, lineNum: Int = #line) {
     // #if DEBUG
-    let info = "FILE: \(NSURL(fileURLWithPath: file).pathComponents!.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)"
+    let info = "FILE: \(URL(fileURLWithPath: file).pathComponents!.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)"
     //   #else
     // let info = "FILE: \(NSURL(fileURLWithPath: file).pathComponents!.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)"
     //   #endif
@@ -87,25 +87,25 @@ public func RuntimeException(message: String = "", file: String = #file, functio
 }
 
 
-public func toInt(c: Character) -> Int {
+public func toInt(_ c: Character) -> Int {
     return c.unicodeValue
 }
  
-public func toInt32(data: [Character], _ offset: Int) -> Int {
+public func toInt32(_ data: [Character], _ offset: Int) -> Int {
     return data[offset].unicodeValue | (data[offset + 1].unicodeValue << 16)
 }
 
-public func toLong(data: [Character], _ offset: Int) -> Int64 {
+public func toLong(_ data: [Character], _ offset: Int) -> Int64 {
     let mask: Int64 = 0x00000000FFFFFFFF
     let lowOrder: Int64 = Int64(toInt32(data, offset)) & mask
     return lowOrder | Int64(toInt32(data, offset + 2) << 32)
 }
 
-public func toUUID(data: [Character], _ offset: Int) -> NSUUID {
+public func toUUID(_ data: [Character], _ offset: Int) -> UUID {
     let leastSigBits: Int64 = toLong(data, offset)
     let mostSigBits: Int64 = toLong(data, offset + 4)
     //TODO:NSUUID(mostSigBits, leastSigBits);
-    return NSUUID(mostSigBits: mostSigBits, leastSigBits: leastSigBits)
+    return UUID(mostSigBits: mostSigBits, leastSigBits: leastSigBits)
 }
 public func == <Element : Equatable>(
     lhs: Array<Element?>, rhs: Array<Element?>
@@ -120,8 +120,8 @@ public func == <Element : Equatable>(
             return true
         }
         
-        var streamLHS = lhs.generate()
-        var streamRHS = rhs.generate()
+        var streamLHS = lhs.makeIterator()
+        var streamRHS = rhs.makeIterator()
         
         var nextLHS = streamLHS.next()
         while nextLHS != nil {
@@ -141,7 +141,7 @@ public func == <Element : Equatable>(
         return true
         
 }
-public func ArrayEquals<T:Equatable>(a: [T], _ a2: [T]) -> Bool {
+public func ArrayEquals<T:Equatable>(_ a: [T], _ a2: [T]) -> Bool {
     
     if a2.count != a.count {
         return false
@@ -159,7 +159,7 @@ public func ArrayEquals<T:Equatable>(a: [T], _ a2: [T]) -> Bool {
     return true
 }
 
-public func ArrayEquals<T:Equatable>(a: [T?], _ a2: [T?]) -> Bool {
+public func ArrayEquals<T:Equatable>(_ a: [T?], _ a2: [T?]) -> Bool {
 
     if a2.count != a.count {
         return false

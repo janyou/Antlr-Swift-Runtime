@@ -39,7 +39,7 @@ public class OrderedATNConfigSet: ATNConfigSet {
 
     public init() {
         super.init(true)
-        self.configLookup = LookupDictionary(type: LookupDictionaryType.Ordered)
+        self.configLookup = LookupDictionary(type: LookupDictionaryType.ordered)
 
     }
 

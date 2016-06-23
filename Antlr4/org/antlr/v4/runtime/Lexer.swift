@@ -111,8 +111,8 @@ public class Lexer: Recognizer<LexerATNSimulator>
 
     public func reset() throws {
         // wack Lexer state variables
-        if _input != nil {
-            try  _input!.seek(0) // rewind the input
+        if let _input = _input {
+            try  _input.seek(0) // rewind the input
         }
         _token = nil
         _type = CommonToken.INVALID_TYPE
@@ -134,14 +134,18 @@ public class Lexer: Recognizer<LexerATNSimulator>
      */
 
     public func nextToken() throws -> Token {
-        if _input == nil {
-            throw ANTLRError.IllegalState(msg: "nextToken requires a non-null input stream.")
+        guard let _input = _input else {
+            throw ANTLRError.illegalState(msg: "nextToken requires a non-null input stream.")
         }
 
         // Mark start location in char stream so unbuffered streams are
         // guaranteed at least have text of current token
-        var tokenStartMarker: Int = _input!.mark()
-
+        var tokenStartMarker: Int = _input.mark()
+        defer {
+            // make sure we release marker after match or
+            // unbuffered char stream will keep buffering
+            try! _input.release(tokenStartMarker)
+        }
         do {
             outer:
             while true {
@@ -152,7 +156,7 @@ public class Lexer: Recognizer<LexerATNSimulator>
 
                 _token = nil
                 _channel = CommonToken.DEFAULT_CHANNEL
-                _tokenStartCharIndex = _input!.index()
+                _tokenStartCharIndex = _input.index()
                 _tokenStartCharPositionInLine = getInterpreter().getCharPositionInLine()
                 _tokenStartLine = getInterpreter().getLine()
                 _text = nil
@@ -163,14 +167,14 @@ public class Lexer: Recognizer<LexerATNSimulator>
                     //   " at index \(_input!.index())" );
                     var ttype: Int
                     do {
-                        ttype = try getInterpreter().match(_input!, _mode)
+                        ttype = try getInterpreter().match(_input, _mode)
                     }
-                    catch  ANTLRException.Recognition(let e) {
+                    catch  ANTLRException.recognition(let e) {
                         notifyListeners(e as! LexerNoViableAltException, recognizer: self)
                         try recover(e as! LexerNoViableAltException)
                         ttype = Lexer.SKIP
                     }
-                    if try _input!.LA(1) == BufferedTokenStream.EOF {
+                    if try _input.LA(1) == BufferedTokenStream.EOF {
                         _hitEOF = true
                     }
                     if _type == CommonToken.INVALID_TYPE {
@@ -187,11 +191,7 @@ public class Lexer: Recognizer<LexerATNSimulator>
                 return _token!
             }
         }
-        defer {
-            // make sure we release marker after match or
-            // unbuffered char stream will keep buffering
-            try! _input!.release(tokenStartMarker)
-        }
+
     }
 
     /** Instruct the lexer to skip creating a token for current lexer rule
@@ -208,21 +208,21 @@ public class Lexer: Recognizer<LexerATNSimulator>
         _type = Lexer.MORE
     }
 
-    public func mode(m: Int) {
+    public func mode(_ m: Int) {
         _mode = m
     }
 
-    public func pushMode(m: Int) {
+    public func pushMode(_ m: Int) {
         if LexerATNSimulator.debug {
             print("pushMode \(m)")
         }
         _modeStack.push(_mode)
         mode(m)
     }
-
+    @discardableResult
     public func popMode() throws -> Int {
         if _modeStack.isEmpty {
-            throw ANTLRError.UnsupportedOperation(msg: " EmptyStackException")
+            throw ANTLRError.unsupportedOperation(msg: " EmptyStackException")
             //RuntimeException(" EmptyStackException")
             //throwException() /* throw EmptyStackException(); } */
         }
@@ -235,7 +235,7 @@ public class Lexer: Recognizer<LexerATNSimulator>
     }
 
 
-    public override func setTokenFactory(factory: TokenFactory) {
+    public override func setTokenFactory(_ factory: TokenFactory) {
         self._factory = factory
     }
 
@@ -246,7 +246,7 @@ public class Lexer: Recognizer<LexerATNSimulator>
 
     /** Set the char stream and reset the lexer */
 
-    public override func setInputStream(input: IntStream) throws {
+    public override func setInputStream(_ input: IntStream) throws {
         self._input = nil
         self._tokenFactorySourcePair = (self, _input!)
         try reset()
@@ -269,7 +269,7 @@ public class Lexer: Recognizer<LexerATNSimulator>
      *  and getToken (to push tokens into a list and pull from that list
      *  rather than a single variable as this implementation does).
      */
-    public func emit(token: Token) {
+    public func emit(_ token: Token) {
         //System.err.println("emit "+token);
         self._token = token
     }
@@ -280,13 +280,14 @@ public class Lexer: Recognizer<LexerATNSimulator>
      *  use that to set the token's text.  Override this method to emit
      *  custom Token objects or provide a new factory.
      */
+    @discardableResult
     public func emit() -> Token {
         let t: Token = _factory.create(_tokenFactorySourcePair, _type, _text, _channel, _tokenStartCharIndex, getCharIndex() - 1,
                 _tokenStartLine, _tokenStartCharPositionInLine)
         emit(t)
         return t
     }
-
+    @discardableResult
     public func emitEOF() -> Token {
         let cpos: Int = getCharPositionInLine()
         let line: Int = getLine()
@@ -313,11 +314,11 @@ public class Lexer: Recognizer<LexerATNSimulator>
         return getInterpreter().getCharPositionInLine()
     }
 
-    public func setLine(line: Int) {
+    public func setLine(_ line: Int) {
         getInterpreter().setLine(line)
     }
 
-    public func setCharPositionInLine(charPositionInLine: Int) {
+    public func setCharPositionInLine(_ charPositionInLine: Int) {
         getInterpreter().setCharPositionInLine(charPositionInLine)
     }
 
@@ -339,7 +340,7 @@ public class Lexer: Recognizer<LexerATNSimulator>
     /** Set the complete text of this token; it wipes any previous
      *  changes to the text.
      */
-    public func setText(text: String) {
+    public func setText(_ text: String) {
         self._text = text
     }
 
@@ -348,11 +349,11 @@ public class Lexer: Recognizer<LexerATNSimulator>
         return _token!
     }
 
-    public func setToken(_token: Token) {
+    public func setToken(_ _token: Token) {
         self._token = _token
     }
 
-    public func setType(ttype: Int) {
+    public func setType(_ ttype: Int) {
         _type = ttype
     }
 
@@ -360,7 +361,7 @@ public class Lexer: Recognizer<LexerATNSimulator>
         return _type
     }
 
-    public func setChannel(channel: Int) {
+    public func setChannel(_ channel: Int) {
         _channel = channel
     }
 
@@ -394,14 +395,14 @@ public class Lexer: Recognizer<LexerATNSimulator>
         return tokens
     }
 
-    public func recover(e: LexerNoViableAltException) throws {
+    public func recover(_ e: LexerNoViableAltException) throws {
         if try _input!.LA(1) != BufferedTokenStream.EOF {
             // skip a char and try again
             try getInterpreter().consume(_input!)
         }
     }
 
-    public func notifyListeners<T:ATNSimulator>(e: LexerNoViableAltException, recognizer: Recognizer<T>) {
+    public func notifyListeners<T:ATNSimulator>(_ e: LexerNoViableAltException, recognizer: Recognizer<T>) {
 
         let text: String = _input!.getText(Interval.of(_tokenStartCharIndex, _input!.index()))
         let msg: String = "token recognition error at: '\(getErrorDisplay(text))'"
@@ -410,7 +411,7 @@ public class Lexer: Recognizer<LexerATNSimulator>
         listener.syntaxError(recognizer, nil, _tokenStartLine, _tokenStartCharPositionInLine, msg, e)
     }
 
-    public func getErrorDisplay(s: String) -> String {
+    public func getErrorDisplay(_ s: String) -> String {
         let buf: StringBuilder = StringBuilder()
         for c: Character in s.characters {
             buf.append(getErrorDisplay(c))
@@ -418,7 +419,7 @@ public class Lexer: Recognizer<LexerATNSimulator>
         return buf.toString()
     }
 
-    public func getErrorDisplay(c: Character) -> String {
+    public func getErrorDisplay(_ c: Character) -> String {
         var s: String = String(c)  // String.valueOf(c as Character);
         if c.integerValue == CommonToken.EOF {
             s = "<EOF>"
@@ -439,7 +440,7 @@ public class Lexer: Recognizer<LexerATNSimulator>
         return s
     }
 
-    public func getCharErrorDisplay(c: Character) -> String {
+    public func getCharErrorDisplay(_ c: Character) -> String {
         let s: String = getErrorDisplay(c)
         return "'\(s)'"
     }
@@ -451,7 +452,7 @@ public class Lexer: Recognizer<LexerATNSimulator>
      */
     //public func recover(re : RecognitionException) {
 
-    public func recover(re: AnyObject) throws {
+    public func recover(_ re: AnyObject) throws {
         //System.out.println("consuming char "+(char)input.LA(1)+" during recovery");
         //re.printStackTrace();
         // TODO: Do we lose character or line position information?

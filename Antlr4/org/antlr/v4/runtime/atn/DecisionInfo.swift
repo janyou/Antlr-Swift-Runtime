@@ -250,17 +250,21 @@ public class DecisionInfo: CustomStringConvertible {
 
 
     public var description: String {
-        return "{" +
-                "decision=" + String(decision) +
-                ", contextSensitivities=" + String(contextSensitivities.count) +
-                ", errors=" + String(errors.count) +
-                ", ambiguities=" + String(ambiguities.count) +
-                ", SLL_lookahead=" + String(SLL_TotalLook) +
-                ", SLL_ATNTransitions=" + String(SLL_ATNTransitions) +
-                ", SLL_DFATransitions=" + String(SLL_DFATransitions) +
-                ", LL_Fallback=" + String(LL_Fallback) +
-                ", LL_lookahead=" + String(LL_TotalLook) +
-                ", LL_ATNTransitions=" + String(LL_ATNTransitions) + "}"
+        let desc: StringBuilder = StringBuilder()
+        desc.append("{")
+        desc.append("decision=\(decision)")
+        desc.append(", contextSensitivities=\(contextSensitivities.count)")
+        desc.append(", errors=\(errors.count)")
+        desc.append(", ambiguities=\(ambiguities.count)")
+        desc.append(", SLL_lookahead=\(SLL_TotalLook)")
+        desc.append(", SLL_ATNTransitions=\(SLL_ATNTransitions)")
+        desc.append(", SLL_DFATransitions=\(SLL_DFATransitions)")
+        desc.append(", LL_Fallback=\(LL_Fallback)")
+        desc.append(", LL_lookahead=\(LL_TotalLook)")
+        desc.append(", LL_ATNTransitions=\(LL_ATNTransitions)")
+        desc.append("}")
+        
+        return desc.toString()
     }
 
 }

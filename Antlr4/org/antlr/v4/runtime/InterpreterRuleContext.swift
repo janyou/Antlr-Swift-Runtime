@@ -76,14 +76,14 @@ public class InterpreterRuleContext: ParserRuleContext {
      *  stack to a {@link org.antlr.v4.runtime.InterpreterRuleContext} tree.
      *  Return {@link null} if {@code ctx} is null.
      */
-    public static func fromParserRuleContext(ctx: ParserRuleContext?) -> InterpreterRuleContext? {
-        if ctx == nil {
-            return nil
+    public static func fromParserRuleContext(_ ctx: ParserRuleContext?) -> InterpreterRuleContext? {
+        guard let ctx = ctx else {
+             return nil
         }
         let dup: InterpreterRuleContext = InterpreterRuleContext()
-        dup.copyFrom(ctx!)
-        dup.ruleIndex = ctx!.getRuleIndex()
-        dup.parent = fromParserRuleContext(ctx!.getParent() as? ParserRuleContext)
+        dup.copyFrom(ctx)
+        dup.ruleIndex = ctx.getRuleIndex()
+        dup.parent = fromParserRuleContext(ctx.getParent() as? ParserRuleContext)
         return dup
     }
 }

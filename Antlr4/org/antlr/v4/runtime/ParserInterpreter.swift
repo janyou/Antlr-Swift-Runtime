@@ -127,14 +127,13 @@ public class ParserInterpreter: Parser {
 
         // identify the ATN states where pushNewRecursionContext() must be called
         self.statesNeedingLeftRecursionContext = try! BitSet(atn.states.count)
-        for state: ATNState? in atn.states {
-            if !(state is StarLoopEntryState) {
-                continue
+        for  state in atn.states {
+            if let state = state as? StarLoopEntryState {
+                if state.precedenceRuleDecision {
+                    try! self.statesNeedingLeftRecursionContext.set(state.stateNumber)
+                }
             }
 
-            if (state as! StarLoopEntryState).precedenceRuleDecision {
-                try! self.statesNeedingLeftRecursionContext.set(state!.stateNumber)
-            }
         }
         try super.init(input)
         // get atn simulator that knows how to do predictions
@@ -170,7 +169,7 @@ public class ParserInterpreter: Parser {
     }
 
     /** Begin parsing at startRuleIndex */
-    public func parse(startRuleIndex: Int) throws -> ParserRuleContext {
+    public func parse(_ startRuleIndex: Int) throws -> ParserRuleContext {
         let startRuleStartState: RuleStartState = atn.ruleToStartState[startRuleIndex]
 
         let rootContext: InterpreterRuleContext = InterpreterRuleContext(nil, ATNState.INVALID_STATE_NUMBER, startRuleIndex)
@@ -202,9 +201,9 @@ public class ParserInterpreter: Parser {
 
             default:
                 do {
-                    try    self.visitState(p)
+                    try self.visitState(p)
                 }
-                 catch ANTLRException.Recognition(let e) {
+                 catch ANTLRException.recognition(let e) {
                     setState(self.atn.ruleToStopState[p.ruleIndex!].stateNumber)
                     getContext()!.exception = e
                     getErrorHandler().reportError(self, e)
@@ -217,7 +216,7 @@ public class ParserInterpreter: Parser {
     }
 
     override
-    public func enterRecursionRule(localctx: ParserRuleContext, _ state: Int, _ ruleIndex: Int, _ precedence: Int) throws {
+    public func enterRecursionRule(_ localctx: ParserRuleContext, _ state: Int, _ ruleIndex: Int, _ precedence: Int) throws {
         let pair: (ParserRuleContext?, Int) = (_ctx, localctx.invokingState)
         _parentContextStack.push(pair)
         try super.enterRecursionRule(localctx, state, ruleIndex, precedence)
@@ -227,7 +226,7 @@ public class ParserInterpreter: Parser {
         return atn.states[getState()]
     }
 
-    internal func visitState(p: ATNState) throws {
+    internal func visitState(_ p: ATNState) throws {
         var altNum: Int
         if p.getNumberOfTransitions() > 1 {
             try getErrorHandler().sync(self)
@@ -279,9 +278,9 @@ public class ParserInterpreter: Parser {
             let ruleIndex: Int = ruleStartState.ruleIndex!
             let ctx: InterpreterRuleContext = InterpreterRuleContext(_ctx, p.stateNumber, ruleIndex)
             if ruleStartState.isPrecedenceRule {
-                try    enterRecursionRule(ctx, ruleStartState.stateNumber, ruleIndex, (transition as! RuleTransition).precedence)
+                try enterRecursionRule(ctx, ruleStartState.stateNumber, ruleIndex, (transition as! RuleTransition).precedence)
             } else {
-                try    enterRule(ctx, transition.target.stateNumber, ruleIndex)
+                try enterRule(ctx, transition.target.stateNumber, ruleIndex)
             }
             break
 
@@ -289,7 +288,7 @@ public class ParserInterpreter: Parser {
             let predicateTransition: PredicateTransition = transition as! PredicateTransition
             if try !sempred(_ctx!, predicateTransition.ruleIndex, predicateTransition.predIndex) {
 
-                throw try ANTLRException.Recognition(e: FailedPredicateException(self))
+                throw try ANTLRException.recognition(e: FailedPredicateException(self))
 
             }
 
@@ -303,20 +302,20 @@ public class ParserInterpreter: Parser {
         case Transition.PRECEDENCE:
             if !precpred(_ctx!, (transition as! PrecedencePredicateTransition).precedence) {
 
-                throw try ANTLRException.Recognition(e: FailedPredicateException(self, "precpred(_ctx,\((transition as! PrecedencePredicateTransition).precedence))"))
+                throw try ANTLRException.recognition(e: FailedPredicateException(self, "precpred(_ctx,\((transition as! PrecedencePredicateTransition).precedence))"))
 
             }
             break
 
         default:
-            throw ANTLRError.UnsupportedOperation(msg: "Unrecognized ATN transition type.")
+            throw ANTLRError.unsupportedOperation(msg: "Unrecognized ATN transition type.")
 
         }
 
         setState(transition.target.stateNumber)
     }
 
-    internal func visitRuleStopState(p: ATNState) throws {
+    internal func visitRuleStopState(_ p: ATNState) throws {
         let ruleStartState: RuleStartState = atn.ruleToStartState[p.ruleIndex!]
         if ruleStartState.isPrecedenceRule {
             let parentContext: (ParserRuleContext?, Int) = _parentContextStack.pop()
@@ -370,7 +369,7 @@ public class ParserInterpreter: Parser {
      *
      *  @since 4.5.1
      */
-    public func addDecisionOverride(decision: Int, _ tokenIndex: Int, _ forcedAlt: Int) {
+    public func addDecisionOverride(_ decision: Int, _ tokenIndex: Int, _ forcedAlt: Int) {
         overrideDecision = decision
         overrideDecisionInputIndex = tokenIndex
         overrideDecisionAlt = forcedAlt

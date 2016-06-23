@@ -46,24 +46,26 @@ public class Parser: Recognizer<ParserATNSimulator> {
             self.host = host
         }
 
-        public func enterEveryRule(ctx: ParserRuleContext) throws {
-
-            try print("enter   " + host.getRuleNames()[ctx.getRuleIndex()] +
-                    ", LT(1)=" + host._input.LT(1)!.getText()!)
+        public func enterEveryRule(_ ctx: ParserRuleContext) throws {
+            let ruleName = host.getRuleNames()[ctx.getRuleIndex()]
+            let lt1 = try host._input.LT(1)!.getText()!
+            print("enter   \(ruleName), LT(1)=\(lt1)")
         }
 
 
-        public func visitTerminal(node: TerminalNode) {
+        public func visitTerminal(_ node: TerminalNode) {
             print("consume \(node.getSymbol()) rule \(host.getRuleNames()[host._ctx!.getRuleIndex()])")
         }
 
 
-        public func visitErrorNode(node: ErrorNode) {
+        public func visitErrorNode(_ node: ErrorNode) {
         }
 
 
-        public func exitEveryRule(ctx: ParserRuleContext) throws {
-            try    print("exit    " + host.getRuleNames()[ctx.getRuleIndex()] + ", LT(1)=" + host._input.LT(1)!.getText()!)
+        public func exitEveryRule(_ ctx: ParserRuleContext) throws {
+            let ruleName = host.getRuleNames()[ctx.getRuleIndex()]
+            let lt1 = try host._input.LT(1)!.getText()!
+            print("exit    \(ruleName), LT(1)=\(lt1)")
         }
     }
 
@@ -73,19 +75,19 @@ public class Parser: Recognizer<ParserATNSimulator> {
         public static let INSTANCE: TrimToSizeListener = TrimToSizeListener()
 
 
-        public func enterEveryRule(ctx: ParserRuleContext) {
+        public func enterEveryRule(_ ctx: ParserRuleContext) {
         }
 
 
-        public func visitTerminal(node: TerminalNode) {
+        public func visitTerminal(_ node: TerminalNode) {
         }
 
 
-        public func visitErrorNode(node: ErrorNode) {
+        public func visitErrorNode(_ node: ErrorNode) {
         }
 
 
-        public func exitEveryRule(ctx: ParserRuleContext) {
+        public func exitEveryRule(_ ctx: ParserRuleContext) {
             //TODO: check necessary
 //			if (ctx.children is ArrayList) {
 //				(ctx.children as ArrayList<?>).trimToSize();
@@ -100,9 +102,9 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * @see org.antlr.v4.runtime.atn.ATNDeserializationOptions#isGenerateRuleBypassTransitions()
      */
     //private let bypassAltsAtnCache : Dictionary<String, ATN> =
-    //	WeakHashMap<String, ATN>();
-    private let bypassAltsAtnCache: NSMapTable = NSMapTable.weakToWeakObjectsMapTable()
-    //	WeakHashMap<String, ATN>();
+    //	WeakHashMap<String, ATN>();  MapTable<NSString, ATN>
+    
+    private let bypassAltsAtnCache: HashMap<String, ATN> = HashMap<String, ATN>()
     /**
      * The error handling strategy for the parser. The default value is a new
      * instance of {@link org.antlr.v4.runtime.DefaultErrorStrategy}.
@@ -185,9 +187,9 @@ public class Parser: Recognizer<ParserATNSimulator> {
         _precedenceStack.clear()
         _precedenceStack.push(0)
 
-        let interpreter: ATNSimulator? = _interp   //  getInterpreter();
-        if interpreter != nil {
-            interpreter!.reset()
+        //  getInterpreter();
+        if let interpreter = _interp {
+            interpreter.reset()
         }
     }
 
@@ -209,7 +211,8 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * {@code ttype} and the error strategy could not recover from the
      * mismatched symbol
      *///; RecognitionException
-    public func match(ttype: Int) throws -> Token {
+    @discardableResult
+    public func match(_ ttype: Int) throws -> Token {
         var t: Token = try getCurrentToken()
         if t.getType() == ttype {
             _errHandler.reportMatch(self)
@@ -242,6 +245,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * a wildcard and the error strategy could not recover from the mismatched
      * symbol
      *///; RecognitionException
+    @discardableResult
     public func matchWildcard() throws -> Token {
         var t: Token = try getCurrentToken()
         if t.getType() > 0 {
@@ -274,7 +278,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * {@link org.antlr.v4.runtime.ParserRuleContext#children} list. Contexts are then not candidates
      * for garbage collection.</p>
      */
-    public func setBuildParseTree(buildParseTrees: Bool) {
+    public func setBuildParseTree(_ buildParseTrees: Bool) {
         self._buildParseTrees = buildParseTrees
     }
 
@@ -296,7 +300,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * @param trimParseTrees {@code true} to trim the capacity of the {@link org.antlr.v4.runtime.ParserRuleContext#children}
      * list to its size after a rule is parsed.
      */
-    public func setTrimParseTree(trimParseTrees: Bool) {
+    public func setTrimParseTree(_ trimParseTrees: Bool) {
         if trimParseTrees {
             if getTrimParseTree() {
                 return
@@ -355,7 +359,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
      *
      * @throws NullPointerException if {@code} listener is {@code null}
      */
-    public func addParseListener(listener: ParseTreeListener) {
+    public func addParseListener(_ listener: ParseTreeListener) {
         if _parseListeners == nil {
             _parseListeners = Array<ParseTreeListener>()
         }
@@ -374,13 +378,11 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * @param listener the listener to remove
      */
 
-    public func removeParseListener(listener: ParseTreeListener?) {
+    public func removeParseListener(_ listener: ParseTreeListener?) {
         if _parseListeners != nil {
-
             if !_parseListeners!.filter({ $0 === listener }).isEmpty {
                 _parseListeners = _parseListeners!.filter({
                     $0 !== listener
-
                 })
                 if _parseListeners!.isEmpty {
                     _parseListeners = nil
@@ -410,10 +412,10 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * @see #addParseListener
      */
     public func triggerEnterRuleEvent() throws {
-        if _parseListeners != nil && _ctx != nil {
-            for listener: ParseTreeListener in _parseListeners! {
-                try listener.enterEveryRule(_ctx!)
-                _ctx!.enterRule(listener)
+        if let _parseListeners = _parseListeners, _ctx = _ctx {
+            for listener: ParseTreeListener in _parseListeners {
+                try listener.enterEveryRule(_ctx)
+                _ctx.enterRule(listener)
             }
         }
     }
@@ -425,12 +427,12 @@ public class Parser: Recognizer<ParserATNSimulator> {
      */
     public func triggerExitRuleEvent() throws {
         // reverse order walk of listeners
-        if _parseListeners != nil && _ctx != nil {
-            var i: Int = _parseListeners!.count - 1
+        if let _parseListeners = _parseListeners, _ctx = _ctx {
+            var i: Int = _parseListeners.count - 1
             while i >= 0 {
-                let listener: ParseTreeListener = _parseListeners![i]
-                _ctx!.exitRule(listener)
-                try  listener.exitEveryRule(_ctx!)
+                let listener: ParseTreeListener = _parseListeners[i]
+                _ctx.exitRule(listener)
+                try  listener.exitEveryRule(_ctx)
                 i -= 1
             }
         }
@@ -454,7 +456,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
 
     /** Tell our token source and error strategy about a new way to create tokens. */
     override
-    public func setTokenFactory(factory: TokenFactory) {
+    public func setTokenFactory(_ factory: TokenFactory) {
         //<AnyObject>
         _input.getTokenSource().setTokenFactory(factory)
     }
@@ -470,7 +472,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
     public func getATNWithBypassAlts() -> ATN {
         let serializedAtn: String = getSerializedATN()
 
-        var result: ATN? = bypassAltsAtnCache[serializedAtn] as? ATN
+        var result: ATN? = bypassAltsAtnCache[serializedAtn]
         synced(bypassAltsAtnCache) {
             [unowned self] in
             if result == nil {
@@ -496,15 +498,15 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * String id = m.get("ID");
      * </pre>
      */
-    public func compileParseTreePattern(pattern: String, _ patternRuleIndex: Int) throws -> ParseTreePattern {
-        if (getTokenStream() != nil) {
-            let tokenSource: TokenSource = getTokenStream()!.getTokenSource()
+    public func compileParseTreePattern(_ pattern: String, _ patternRuleIndex: Int) throws -> ParseTreePattern {
+        if let tokenStream = getTokenStream() {
+            let tokenSource: TokenSource = tokenStream.getTokenSource()
             if tokenSource is Lexer {
                 let lexer: Lexer = tokenSource as! Lexer
                 return try compileParseTreePattern(pattern, patternRuleIndex, lexer)
             }
         }
-        throw ANTLRError.UnsupportedOperation(msg: "Parser can't discover a lexer to use")
+        throw ANTLRError.unsupportedOperation(msg: "Parser can't discover a lexer to use")
 
     }
 
@@ -512,7 +514,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * The same as {@link #compileParseTreePattern(String, int)} but specify a
      * {@link org.antlr.v4.runtime.Lexer} rather than trying to deduce it from this parser.
      */
-    public func compileParseTreePattern(pattern: String, _ patternRuleIndex: Int,
+    public func compileParseTreePattern(_ pattern: String, _ patternRuleIndex: Int,
                                         _ lexer: Lexer) throws -> ParseTreePattern {
         let m: ParseTreePatternMatcher = ParseTreePatternMatcher(lexer, self)
         return try m.compile(pattern, patternRuleIndex)
@@ -523,7 +525,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
         return _errHandler
     }
 
-    public func setErrorHandler(handler: ANTLRErrorStrategy) {
+    public func setErrorHandler(_ handler: ANTLRErrorStrategy) {
         self._errHandler = handler
     }
 
@@ -533,7 +535,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
     }
 
     override
-    public final func setInputStream(input: IntStream) throws {
+    public final func setInputStream(_ input: IntStream) throws {
         try setTokenStream(input as! TokenStream)
     }
 
@@ -542,7 +544,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
     }
 
     /** Set the token stream and reset the parser. */
-    public func setTokenStream(input: TokenStream) throws {
+    public func setTokenStream(_ input: TokenStream) throws {
         //TODO self._input = nil;
         self._input = nil;
         try reset()
@@ -557,11 +559,11 @@ public class Parser: Recognizer<ParserATNSimulator> {
         return try _input.LT(1)!
     }
 
-    public final func notifyErrorListeners(msg: String) throws {
+    public final func notifyErrorListeners(_ msg: String) throws {
         try notifyErrorListeners(getCurrentToken(), msg, nil)
     }
 
-    public func notifyErrorListeners(offendingToken: Token, _ msg: String,
+    public func notifyErrorListeners(_ offendingToken: Token, _ msg: String,
                                      _ e: AnyObject?) {
         _syntaxErrors += 1
         var line: Int = -1
@@ -594,24 +596,29 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * {@link org.antlr.v4.runtime.tree.ParseTreeListener#visitErrorNode} is called on any parse
      * listeners.
      */
+    @discardableResult
     public func consume() throws -> Token {
         let o: Token = try getCurrentToken()
         if o.getType() != Parser.EOF {
             try getInputStream()!.consume()
         }
-        let hasListener: Bool = _parseListeners != nil && !_parseListeners!.isEmpty && _ctx != nil
+        guard let _ctx = _ctx else {
+            return o
+        }
+        let hasListener: Bool = _parseListeners != nil && !_parseListeners!.isEmpty
+        
         if _buildParseTrees || hasListener {
             if _errHandler.inErrorRecoveryMode(self) {
-                let node: ErrorNode = _ctx!.addErrorNode(o)
-                if _parseListeners != nil {
-                    for listener: ParseTreeListener in _parseListeners! {
+                let node: ErrorNode = _ctx.addErrorNode(o)
+                if let _parseListeners = _parseListeners {
+                    for listener: ParseTreeListener in _parseListeners {
                         listener.visitErrorNode(node)
                     }
                 }
             } else {
-                let node: TerminalNode = _ctx!.addChild(o)
-                if _parseListeners != nil {
-                    for listener: ParseTreeListener in _parseListeners! {
+                let node: TerminalNode = _ctx.addChild(o)
+                if let _parseListeners = _parseListeners {
+                    for listener: ParseTreeListener in _parseListeners {
                         listener.visitTerminal(node)
                     }
                 }
@@ -621,10 +628,10 @@ public class Parser: Recognizer<ParserATNSimulator> {
     }
 
     internal func addContextToParseTree() {
-        let parent: ParserRuleContext? = _ctx!.parent as? ParserRuleContext
+        
         // add current context to parent if we have a parent
-        if parent != nil {
-            parent!.addChild(_ctx!)
+        if let parent = _ctx?.parent as? ParserRuleContext {
+            parent.addChild(_ctx!)
         }
     }
 
@@ -632,7 +639,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * Always called by generated parsers upon entry to a rule. Access field
      * {@link #_ctx} get the current context.
      */
-    public func enterRule(localctx: ParserRuleContext, _ state: Int, _ ruleIndex: Int) throws {
+    public func enterRule(_ localctx: ParserRuleContext, _ state: Int, _ ruleIndex: Int) throws {
         setState(state)
         _ctx = localctx
         _ctx!.start = try _input.LT(1)
@@ -642,23 +649,25 @@ public class Parser: Recognizer<ParserATNSimulator> {
     }
 
     public func exitRule() throws {
-        _ctx!.stop = try _input.LT(-1)
+        guard let ctx = _ctx else {
+            return
+        }
+        ctx.stop = try _input.LT(-1)
         // trigger event on _ctx, before it reverts to parent
         if _parseListeners != nil {
             try triggerExitRuleEvent()
         }
-        setState(_ctx!.invokingState)
-        _ctx = _ctx!.parent as? ParserRuleContext
+        setState(ctx.invokingState)
+        _ctx = ctx.parent as? ParserRuleContext
     }
 
-    public func enterOuterAlt(localctx: ParserRuleContext, _ altNum: Int) throws {
+    public func enterOuterAlt(_ localctx: ParserRuleContext, _ altNum: Int) throws {
         // if we have new localctx, make sure we replace existing ctx
         // that is previous child of parse tree
         if _buildParseTrees && _ctx! !== localctx {
-            let parent: ParserRuleContext? = _ctx!.parent as? ParserRuleContext
-            if parent != nil {
-                parent!.removeLastChild()
-                parent!.addChild(localctx)
+            if let parent = _ctx?.parent as? ParserRuleContext {
+                parent.removeLastChild()
+                parent.addChild(localctx)
             }
         }
         _ctx = localctx
@@ -686,11 +695,11 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * {@link #enterRecursionRule(org.antlr.v4.runtime.ParserRuleContext, int, int, int)} instead.
      */
     ////@Deprecated
-    public func enterRecursionRule(localctx: ParserRuleContext, _ ruleIndex: Int) throws {
+    public func enterRecursionRule(_ localctx: ParserRuleContext, _ ruleIndex: Int) throws {
         try enterRecursionRule(localctx, getATN().ruleToStartState[ruleIndex].stateNumber, ruleIndex, 0)
     }
 
-    public func enterRecursionRule(localctx: ParserRuleContext, _ state: Int, _ ruleIndex: Int, _ precedence: Int) throws {
+    public func enterRecursionRule(_ localctx: ParserRuleContext, _ state: Int, _ ruleIndex: Int, _ precedence: Int) throws {
         setState(state)
         _precedenceStack.push(precedence)
         _ctx = localctx
@@ -703,7 +712,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
     /** Like {@link #enterRule} but for recursive rules.
      *  Make the current context the child of the incoming localctx.
      */
-    public func pushNewRecursionContext(localctx: ParserRuleContext, _ state: Int, _ ruleIndex: Int) throws {
+    public func pushNewRecursionContext(_ localctx: ParserRuleContext, _ state: Int, _ ruleIndex: Int) throws {
         let previous: ParserRuleContext = _ctx!
         previous.parent = localctx
         previous.invokingState = state
@@ -720,16 +729,16 @@ public class Parser: Recognizer<ParserATNSimulator> {
         }
     }
 
-    public func unrollRecursionContexts(_parentctx: ParserRuleContext?) throws {
+    public func unrollRecursionContexts(_ _parentctx: ParserRuleContext?) throws {
         _precedenceStack.pop()
         _ctx!.stop = try _input.LT(-1)
         let retctx: ParserRuleContext = _ctx! // save current ctx (return value)
 
         // unroll so _ctx is as it was before call to recursive method
         if _parseListeners != nil {
-            while _ctx! !== _parentctx {
+            while let ctxWrap = _ctx where ctxWrap !== _parentctx {
                 try  triggerExitRuleEvent()
-                _ctx = _ctx!.parent as? ParserRuleContext
+                _ctx = ctxWrap.parent as? ParserRuleContext
             }
         } else {
             _ctx = _parentctx
@@ -744,13 +753,13 @@ public class Parser: Recognizer<ParserATNSimulator> {
         }
     }
 
-    public func getInvokingContext(ruleIndex: Int) -> ParserRuleContext? {
+    public func getInvokingContext(_ ruleIndex: Int) -> ParserRuleContext? {
         var p: ParserRuleContext? = _ctx
-        while p != nil {
-            if p!.getRuleIndex() == ruleIndex {
-                return p
+        while let pWrap = p {
+            if pWrap.getRuleIndex() == ruleIndex {
+                return pWrap
             }
-            p = p!.parent as? ParserRuleContext
+            p = pWrap.parent as? ParserRuleContext
         }
         return nil
     }
@@ -759,16 +768,16 @@ public class Parser: Recognizer<ParserATNSimulator> {
         return _ctx
     }
 
-    public func setContext(ctx: ParserRuleContext) {
+    public func setContext(_ ctx: ParserRuleContext) {
         _ctx = ctx
     }
 
     override
-    public func precpred(localctx: RuleContext?, _ precedence: Int) -> Bool {
+    public func precpred(_ localctx: RuleContext?, _ precedence: Int) -> Bool {
         return precedence >= _precedenceStack.peek()
     }
 
-    public func inContext(context: String) -> Bool {
+    public func inContext(_ context: String) -> Bool {
         // TODO: useful in parser?
         return false
     }
@@ -896,7 +905,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * @return {@code true} if {@code symbol} can follow the current state in
      * the ATN, otherwise {@code false}.
      */
-    public func isExpectedToken(symbol: Int) throws -> Bool {
+    public func isExpectedToken(_ symbol: Int) throws -> Bool {
 //   		return getInterpreter().atn.nextTokens(_ctx);
         let atn: ATN = getInterpreter().atn
         var ctx: ParserRuleContext? = _ctx
@@ -910,15 +919,15 @@ public class Parser: Recognizer<ParserATNSimulator> {
             return false
         }
 
-        while ctx != nil && ctx!.invokingState >= 0 && following.contains(CommonToken.EPSILON) {
-            let invokingState: ATNState = atn.states[ctx!.invokingState]!
+        while let ctxWrap = ctx where ctxWrap.invokingState >= 0 && following.contains(CommonToken.EPSILON) {
+            let invokingState: ATNState = atn.states[ctxWrap.invokingState]!
             let rt: RuleTransition = invokingState.transition(0) as! RuleTransition
             following = try  atn.nextTokens(rt.followState)
             if following.contains(symbol) {
                 return true
             }
 
-            ctx = ctx!.parent as? ParserRuleContext
+            ctx = ctxWrap.parent as? ParserRuleContext
         }
 
         if following.contains(CommonToken.EPSILON) && symbol == CommonToken.EOF {
@@ -947,7 +956,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
     }
 
     /** Get a rule's index (i.e., {@code RULE_ruleName} field) or -1 if not found. */
-    public func getRuleIndex(ruleName: String) -> Int {
+    public func getRuleIndex(_ ruleName: String) -> Int {
         let ruleIndex: Int? = getRuleIndexMap()[ruleName]
         if ruleIndex != nil {
             return ruleIndex!
@@ -970,19 +979,19 @@ public class Parser: Recognizer<ParserATNSimulator> {
         return getRuleInvocationStack(_ctx)
     }
 
-    public func getRuleInvocationStack(p: RuleContext?) -> Array<String> {
+    public func getRuleInvocationStack(_ p: RuleContext?) -> Array<String> {
         var p = p
         var ruleNames: [String] = getRuleNames()
         var stack: Array<String> = Array<String>()
-        while p != nil {
+        while let pWrap = p {
             // compute what follows who invoked us
-            let ruleIndex: Int = p!.getRuleIndex()
+            let ruleIndex: Int = pWrap.getRuleIndex()
             if ruleIndex < 0 {
                 stack.append("n/a")
             } else {
                 stack.append(ruleNames[ruleIndex])
             }
-            p = p!.parent
+            p = pWrap.parent
         }
         return stack
     }
@@ -990,11 +999,14 @@ public class Parser: Recognizer<ParserATNSimulator> {
     /** For debugging and other purposes. */
     public func getDFAStrings() -> Array<String> {
         var s: Array<String> = Array<String>()
-        synced(_interp!.decisionToDFA) {
+        guard let _interp = _interp  else {
+            return s
+        }
+        synced(_interp.decisionToDFA) {
             [unowned self] in
  
-            for d in 0..<self._interp!.decisionToDFA.count {
-                let dfa: DFA = self._interp!.decisionToDFA[d]
+            for d in 0..<_interp.decisionToDFA.count {
+                let dfa: DFA = _interp.decisionToDFA[d]
                 s.append(dfa.toString(self.getVocabulary()))
             }
 
@@ -1004,12 +1016,15 @@ public class Parser: Recognizer<ParserATNSimulator> {
 
     /** For debugging and other purposes. */
     public func dumpDFA() {
-        synced(_interp!.decisionToDFA) {
+        guard let _interp = _interp  else {
+            return
+        }
+        synced(_interp.decisionToDFA) {
             [unowned self] in
             var seenOne: Bool = false
 
-            for d in 0..<self._interp!.decisionToDFA.count {
-                let dfa: DFA = self._interp!.decisionToDFA[d]
+            for d in 0..<_interp.decisionToDFA.count {
+                let dfa: DFA = _interp.decisionToDFA[d]
                 if !dfa.states.isEmpty {
                     if seenOne {
                         print("")
@@ -1039,7 +1054,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
     /**
      * @since 4.3
      */
-    public func setProfile(profile: Bool) {
+    public func setProfile(_ profile: Bool) {
         let interp: ParserATNSimulator = getInterpreter()
         let saveMode: PredictionMode = interp.getPredictionMode()
         if profile {
@@ -1059,7 +1074,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
     /** During a parse is sometimes useful to listen in on the rule entry and exit
      *  events as well as token matches. This is for quick and dirty debugging.
      */
-    public func setTrace(trace: Bool) {
+    public func setTrace(_ trace: Bool) {
         if !trace {
             removeParseListener(_tracer)
             _tracer = nil

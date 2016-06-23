@@ -38,7 +38,7 @@ public class Interval: Hashable {
     public static let INVALID: Interval = Interval(-1, -2)
 
     //static var cache: Dictionary<Int, Interval> = Dictionary<Int, Interval>()
-    static var cache: Array<Interval?> = Array<Interval?>(count: INTERVAL_POOL_MAX_VALUE + 1, repeatedValue: nil)
+    static var cache: Array<Interval?> = Array<Interval?>(repeating: nil, count: INTERVAL_POOL_MAX_VALUE + 1)
     // new; Interval[INTERVAL_POOL_MAX_VALUE+1];
 
     public var a: Int
@@ -60,7 +60,7 @@ public class Interval: Hashable {
      *  Interval object with a..a in it.  On Java.g4, 218623 IntervalSets
      *  have a..a (set with 1 element).
      */
-    public static func of(a: Int, _ b: Int) -> Interval {
+    public static func of(_ a: Int, _ b: Int) -> Interval {
         // cache just a..a
         if a != b || a < 0 || a > INTERVAL_POOL_MAX_VALUE {
             return Interval(a, b)
@@ -90,51 +90,51 @@ public class Interval: Hashable {
         return hash
     }
     /** Does this start completely before other? Disjoint */
-    public func startsBeforeDisjoint(other: Interval) -> Bool {
+    public func startsBeforeDisjoint(_ other: Interval) -> Bool {
         return self.a < other.a && self.b < other.a
     }
 
     /** Does this start at or before other? Nondisjoint */
-    public func startsBeforeNonDisjoint(other: Interval) -> Bool {
+    public func startsBeforeNonDisjoint(_ other: Interval) -> Bool {
         return self.a <= other.a && self.b >= other.a
     }
 
     /** Does this.a start after other.b? May or may not be disjoint */
-    public func startsAfter(other: Interval) -> Bool {
+    public func startsAfter(_ other: Interval) -> Bool {
         return self.a > other.a
     }
 
     /** Does this start completely after other? Disjoint */
-    public func startsAfterDisjoint(other: Interval) -> Bool {
+    public func startsAfterDisjoint(_ other: Interval) -> Bool {
         return self.a > other.b
     }
 
     /** Does this start after other? NonDisjoint */
-    public func startsAfterNonDisjoint(other: Interval) -> Bool {
+    public func startsAfterNonDisjoint(_ other: Interval) -> Bool {
         return self.a > other.a && self.a <= other.b // this.b>=other.b implied
     }
 
     /** Are both ranges disjoint? I.e., no overlap? */
-    public func disjoint(other: Interval) -> Bool {
+    public func disjoint(_ other: Interval) -> Bool {
         return startsBeforeDisjoint(other) || startsAfterDisjoint(other)
     }
 
     /** Are two intervals adjacent such as 0..41 and 42..42? */
-    public func adjacent(other: Interval) -> Bool {
+    public func adjacent(_ other: Interval) -> Bool {
         return self.a == other.b + 1 || self.b == other.a - 1
     }
 
-    public func properlyContains(other: Interval) -> Bool {
+    public func properlyContains(_ other: Interval) -> Bool {
         return other.a >= self.a && other.b <= self.b
     }
 
     /** Return the interval computed from combining this and other */
-    public func union(other: Interval) -> Interval {
+    public func union(_ other: Interval) -> Interval {
         return Interval.of(min(a, other.a), max(b, other.b))
     }
 
     /** Return the interval in common between this and o */
-    public func intersection(other: Interval) -> Interval {
+    public func intersection(_ other: Interval) -> Interval {
         return Interval.of(max(a, other.a), min(b, other.b))
     }
 
@@ -143,7 +143,7 @@ public class Interval: Hashable {
      *  within this, which would result in two disjoint intervals
      *  instead of the single one returned by this method.
      */
-    public func differenceNotProperlyContained(other: Interval) -> Interval? {
+    public func differenceNotProperlyContained(_ other: Interval) -> Interval? {
         var diff: Interval? = nil
         // other.a to left of this.a (or same)
         if other.startsBeforeNonDisjoint(self) {

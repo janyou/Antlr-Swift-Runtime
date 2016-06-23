@@ -96,7 +96,7 @@ public protocol TokenSource: class {
      *
      * @param factory The {@link org.antlr.v4.runtime.TokenFactory} to use for creating tokens.
      */
-    func setTokenFactory(factory: TokenFactory)
+    func setTokenFactory(_ factory: TokenFactory)
 
     /**
      * Gets the {@link org.antlr.v4.runtime.TokenFactory} this token source is currently using for

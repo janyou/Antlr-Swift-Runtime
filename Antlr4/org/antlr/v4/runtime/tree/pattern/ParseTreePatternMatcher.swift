@@ -138,16 +138,16 @@ public class ParseTreePatternMatcher {
      * @exception IllegalArgumentException if {@code start} is {@code null} or empty.
      * @exception IllegalArgumentException if {@code stop} is {@code null} or empty.
      */
-    public func setDelimiters(start: String, _ stop: String, _ escapeLeft: String) throws {
+    public func setDelimiters(_ start: String, _ stop: String, _ escapeLeft: String) throws {
         //start == nil ||
         if start.isEmpty {
-            throw ANTLRError.IllegalArgument(msg: "start cannot be null or empty")
+            throw ANTLRError.illegalArgument(msg: "start cannot be null or empty")
             // RuntimeException("start cannot be null or empty")
             //throwException() /* throw IllegalArgumentException("start cannot be null or empty"); */
         }
         //stop == nil ||
         if stop.isEmpty {
-            throw ANTLRError.IllegalArgument(msg: "stop cannot be null or empty")
+            throw ANTLRError.illegalArgument(msg: "stop cannot be null or empty")
             //RuntimeException("stop cannot be null or empty")
 
             //throwException() /* throw IllegalArgumentException("stop cannot be null or empty"); */
@@ -159,7 +159,7 @@ public class ParseTreePatternMatcher {
     }
 
     /** Does {@code pattern} matched as rule {@code patternRuleIndex} match {@code tree}? */
-    public func matches(tree: ParseTree, _ pattern: String, _ patternRuleIndex: Int) throws -> Bool {
+    public func matches(_ tree: ParseTree, _ pattern: String, _ patternRuleIndex: Int) throws -> Bool {
         let p: ParseTreePattern = try compile(pattern, patternRuleIndex)
         return try matches(tree, p)
     }
@@ -167,7 +167,7 @@ public class ParseTreePatternMatcher {
     /** Does {@code pattern} matched as rule patternRuleIndex match tree? Pass in a
      *  compiled pattern instead of a string representation of a tree pattern.
      */
-    public func matches(tree: ParseTree, _ pattern: ParseTreePattern) throws -> Bool {
+    public func matches(_ tree: ParseTree, _ pattern: ParseTreePattern) throws -> Bool {
         let labels: MultiMap<String, ParseTree> = MultiMap<String, ParseTree>()
         let mismatchedNode: ParseTree? = try matchImpl(tree, pattern.getPatternTree(), labels)
         return mismatchedNode == nil
@@ -178,7 +178,7 @@ public class ParseTreePatternMatcher {
      * {@code tree} and return a {@link org.antlr.v4.runtime.tree.pattern.ParseTreeMatch} object that contains the
      * matched elements, or the node at which the match failed.
      */
-    public func match(tree: ParseTree, _ pattern: String, _ patternRuleIndex: Int) throws -> ParseTreeMatch {
+    public func match(_ tree: ParseTree, _ pattern: String, _ patternRuleIndex: Int) throws -> ParseTreeMatch {
         let p: ParseTreePattern = try compile(pattern, patternRuleIndex)
         return try match(tree, p)
     }
@@ -190,7 +190,7 @@ public class ParseTreePatternMatcher {
      * string representation of a tree pattern.
      */
 
-    public func match(tree: ParseTree, _ pattern: ParseTreePattern) throws -> ParseTreeMatch {
+    public func match(_ tree: ParseTree, _ pattern: ParseTreePattern) throws -> ParseTreeMatch {
         let labels: MultiMap<String, ParseTree> = MultiMap<String, ParseTree>()
         let mismatchedNode: ParseTree? = try matchImpl(tree, pattern.getPatternTree(), labels)
         return ParseTreeMatch(tree, pattern, labels, mismatchedNode)
@@ -200,7 +200,7 @@ public class ParseTreePatternMatcher {
      * For repeated use of a tree pattern, compile it to a
      * {@link org.antlr.v4.runtime.tree.pattern.ParseTreePattern} using this method.
      */
-    public func compile(pattern: String, _ patternRuleIndex: Int) throws -> ParseTreePattern {
+    public func compile(_ pattern: String, _ patternRuleIndex: Int) throws -> ParseTreePattern {
         let tokenList: Array<Token> = try tokenize(pattern)
         let tokenSrc: ListTokenSource = ListTokenSource(tokenList)
         let tokens: CommonTokenStream = CommonTokenStream(tokenSrc)
@@ -230,7 +230,7 @@ public class ParseTreePatternMatcher {
 
         // Make sure tree pattern compilation checks for a complete parse
         if try tokens.LA(1) != CommonToken.EOF {
-            throw ANTLRError.IllegalState(msg: "Tree pattern compilation doesn't check for a complete parse")
+            throw ANTLRError.illegalState(msg: "Tree pattern compilation doesn't check for a complete parse")
             // RuntimeException("Tree pattern compilation doesn't check for a complete parse")
             //throw ANTLRException.StartRuleDoesNotConsumeFullPattern
             //throwException() /* throw StartRuleDoesNotConsumeFullPattern(); */
@@ -269,7 +269,7 @@ public class ParseTreePatternMatcher {
      * algorithm used by the implementation, and may be overridden.
      */
 
-    internal func matchImpl(tree: ParseTree,
+    internal func matchImpl(_ tree: ParseTree,
                             _ patternTree: ParseTree,
                             _ labels: MultiMap<String, ParseTree>) throws -> ParseTree? {
 
@@ -312,14 +312,13 @@ public class ParseTreePatternMatcher {
             let r2: ParserRuleContext = patternTree as! ParserRuleContext
             var mismatchedNode: ParseTree? = nil
             // (expr ...) and <expr>
-            let ruleTagToken: RuleTagToken? = getRuleTagToken(r2)
-            if ruleTagToken != nil {
+            if let ruleTagToken = getRuleTagToken(r2) {
                 //var m : ParseTreeMatch? = nil;
                 if r1.getRuleContext().getRuleIndex() == r2.getRuleContext().getRuleIndex() {
                     // track label->list-of-nodes for both rule name and label (if any)
-                    labels.map(ruleTagToken!.getRuleName(), tree)
-                    if ruleTagToken!.getLabel() != nil {
-                        labels.map(ruleTagToken!.getLabel()!, tree)
+                    labels.map(ruleTagToken.getRuleName(), tree)
+                    if ruleTagToken.getLabel() != nil {
+                        labels.map(ruleTagToken.getLabel()!, tree)
                     }
                 } else {
                     if mismatchedNode == nil {
@@ -356,7 +355,7 @@ public class ParseTreePatternMatcher {
     }
 
     /** Is {@code t} {@code (expr <expr>)} subtree? */
-    internal func getRuleTagToken(t: ParseTree) -> RuleTagToken? {
+    internal func getRuleTagToken(_ t: ParseTree) -> RuleTagToken? {
         if t is RuleNode {
             let r: RuleNode = t as! RuleNode
             if r.getChildCount() == 1 && r.getChild(0) is TerminalNode {
@@ -370,7 +369,7 @@ public class ParseTreePatternMatcher {
         return nil
     }
 
-    public func tokenize(pattern: String) throws -> Array<Token> {
+    public func tokenize(_ pattern: String) throws -> Array<Token> {
         // split pattern into chunks: sea (raw input) and islands (<ID>, <expr>)
         let chunks: Array<Chunk> = try split(pattern)
 
@@ -381,25 +380,25 @@ public class ParseTreePatternMatcher {
                 let tagChunk: TagChunk = chunk as! TagChunk
                 // add special rule token or conjure up new token from name
                 let firstStr = String(tagChunk.getTag()[0])
-                if firstStr.lowercaseString != firstStr {
+                if firstStr.lowercased() != firstStr {
                     //if ( Character.isUpperCase(tagChunk.getTag().charAt(0)) ) {
                     let ttype: Int = parser.getTokenType(tagChunk.getTag())
                     if ttype == CommonToken.INVALID_TYPE {
-                        throw ANTLRError.IllegalArgument(msg: "Unknown token " + tagChunk.getTag() + " in pattern: " + pattern)
+                        throw ANTLRError.illegalArgument(msg: "Unknown token " + tagChunk.getTag() + " in pattern: " + pattern)
                     }
                     let t: TokenTagToken = TokenTagToken(tagChunk.getTag(), ttype, tagChunk.getLabel())
                     tokens.append(t)
                 } else {
-                    if firstStr.uppercaseString != firstStr {
+                    if firstStr.uppercased() != firstStr {
                         // if ( Character.isLowerCase(tagChunk.getTag().charAt(0)) ) {
                         let ruleIndex: Int = parser.getRuleIndex(tagChunk.getTag())
                         if ruleIndex == -1 {
-                            throw ANTLRError.IllegalArgument(msg: "Unknown rule " + tagChunk.getTag() + " in pattern: " + pattern)
+                            throw ANTLRError.illegalArgument(msg: "Unknown rule " + tagChunk.getTag() + " in pattern: " + pattern)
                         }
                         let ruleImaginaryTokenType: Int = parser.getATNWithBypassAlts().ruleToTokenType[ruleIndex]
                         tokens.append(RuleTagToken(tagChunk.getTag(), ruleImaginaryTokenType, tagChunk.getLabel()))
                     } else {
-                        throw ANTLRError.IllegalArgument(msg: "invalid tag: " + tagChunk.getTag() + " in pattern: " + pattern)
+                        throw ANTLRError.illegalArgument(msg: "invalid tag: " + tagChunk.getTag() + " in pattern: " + pattern)
                     }
                 }
             } else {
@@ -419,7 +418,7 @@ public class ParseTreePatternMatcher {
     }
 
     /** Split {@code <ID> = <e:expr> ;} into 4 chunks for tokenizing by {@link #tokenize}. */
-    public func split(pattern: String) throws -> Array<Chunk> {
+    public func split(_ pattern: String) throws -> Array<Chunk> {
         var p: Int = 0
         let n: Int = pattern.length
         var chunks: Array<Chunk> = Array<Chunk>()
@@ -450,17 +449,17 @@ public class ParseTreePatternMatcher {
         }
 
         if starts.count > stops.count {
-            throw ANTLRError.IllegalArgument(msg: "unterminated tag in pattern: " + pattern)
+            throw ANTLRError.illegalArgument(msg: "unterminated tag in pattern: " + pattern)
         }
 
         if starts.count < stops.count {
-            throw ANTLRError.IllegalArgument(msg: "missing start tag in pattern: " + pattern)
+            throw ANTLRError.illegalArgument(msg: "missing start tag in pattern: " + pattern)
         }
 
         let ntags: Int = starts.count
         for i in 0..<ntags {
             if starts[i] != stops[i] {
-                throw ANTLRError.IllegalArgument(msg: "tag delimiters out of order in pattern: " + pattern)
+                throw ANTLRError.illegalArgument(msg: "tag delimiters out of order in pattern: " + pattern)
 
             }
         }

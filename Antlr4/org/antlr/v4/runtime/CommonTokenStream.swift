@@ -92,12 +92,12 @@ public class CommonTokenStream: BufferedTokenStream {
     }
 
     override
-    internal func adjustSeekIndex(i: Int) throws -> Int {
+    internal func adjustSeekIndex(_ i: Int) throws -> Int {
         return try nextTokenOnChannel(i, channel)
     }
 
     override
-    internal func LB(k: Int) throws -> Token? {
+    internal func LB(_ k: Int) throws -> Token? {
         if k == 0 || (p - k) < 0 {
             return nil
         }
@@ -117,7 +117,7 @@ public class CommonTokenStream: BufferedTokenStream {
     }
 
     override
-    public func LT(k: Int) throws -> Token? {
+    public func LT(_ k: Int) throws -> Token? {
         //System.out.println("enter LT("+k+")");
         try lazyInit()
         if k == 0 {

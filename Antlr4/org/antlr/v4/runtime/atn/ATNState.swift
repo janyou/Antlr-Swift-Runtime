@@ -172,11 +172,11 @@ public class ATNState: Hashable, CustomStringConvertible {
         return transitions.count
     }
     
-    public final func addTransition(e: Transition) {
+    public final func addTransition(_ e: Transition) {
         addTransition(transitions.count, e)
     }
     
-    public final func addTransition(index: Int, _ e: Transition) {
+    public final func addTransition(_ index: Int, _ e: Transition) {
         if transitions.isEmpty {
             epsilonOnlyTransitions = e.isEpsilon()
         } else {
@@ -186,21 +186,21 @@ public class ATNState: Hashable, CustomStringConvertible {
                 epsilonOnlyTransitions = false
             }
         }
-        transitions.insert(e, atIndex: index)
+        transitions.insert(e, at: index)
         
     }
     
-    public final func transition(i: Int) -> Transition {
+    public final func transition(_ i: Int) -> Transition {
         return transitions[i]
     }
     
-    public final func setTransition(i: Int, _ e: Transition) {
+    public final func setTransition(_ i: Int, _ e: Transition) {
         transitions[i] = e
     }
     
-    public final func removeTransition(index: Int) -> Transition {
+    public final func removeTransition(_ index: Int) -> Transition {
         
-        return transitions.removeAtIndex(index)
+        return transitions.remove(at: index)
     }
     
     public func getStateType() -> Int {
@@ -212,7 +212,7 @@ public class ATNState: Hashable, CustomStringConvertible {
         return epsilonOnlyTransitions
     }
     
-    public final func setRuleIndex(ruleIndex: Int) {
+    public final func setRuleIndex(_ ruleIndex: Int) {
         self.ruleIndex = ruleIndex
     }
 }

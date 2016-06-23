@@ -58,7 +58,7 @@ public final class LexerMoreAction: LexerAction, CustomStringConvertible {
      */
     override
     public func getActionType() -> LexerActionType {
-        return LexerActionType.MORE
+        return LexerActionType.more
     }
 
     /**
@@ -76,7 +76,7 @@ public final class LexerMoreAction: LexerAction, CustomStringConvertible {
      * <p>This action is implemented by calling {@link org.antlr.v4.runtime.Lexer#more}.</p>
      */
     override
-    public func execute(lexer: Lexer) {
+    public func execute(_ lexer: Lexer) {
         lexer.more()
     }
 

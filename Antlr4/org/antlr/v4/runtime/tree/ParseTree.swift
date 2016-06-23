@@ -49,7 +49,7 @@ public class ParseTree: SyntaxTree, CustomStringConvertible , CustomDebugStringC
 
     /** The {@link org.antlr.v4.runtime.tree.ParseTreeVisitor} needs a double dispatch method. */
 
-    public func accept<T>(visitor: ParseTreeVisitor<T>) -> T? {
+    public func accept<T>(_ visitor: ParseTreeVisitor<T>) -> T? {
         RuntimeException(" must overriden !")
         fatalError()
     }
@@ -65,7 +65,7 @@ public class ParseTree: SyntaxTree, CustomStringConvertible , CustomDebugStringC
     /** Specialize toStringTree so that it can print out more information
      * 	based upon the parser.
      */
-    public func toStringTree(parser: Parser) -> String {
+    public func toStringTree(_ parser: Parser) -> String {
         RuntimeException(" must overriden !")
         return ""
 
@@ -88,7 +88,7 @@ public class ParseTree: SyntaxTree, CustomStringConvertible , CustomDebugStringC
         fatalError()
     }
 
-    public func getChild(i: Int) -> Tree? {
+    public func getChild(_ i: Int) -> Tree? {
         RuntimeException(" must overriden !")
         fatalError()
     }

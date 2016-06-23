@@ -56,7 +56,7 @@ public final class PrecedencePredicateTransition: AbstractPredicateTransition, C
     }
 
     override
-    public func matches(symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
+    public func matches(_ symbol: Int, _ minVocabSymbol: Int, _ maxVocabSymbol: Int) -> Bool {
         return false
     }
 

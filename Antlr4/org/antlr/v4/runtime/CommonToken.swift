@@ -119,9 +119,9 @@ public class CommonToken: WritableToken {
         self.channel = channel
         self.start = start
         self.stop = stop
-        if source.0 != nil {
-            self.line = source.0!.getLine()
-            self.charPositionInLine = source.0!.getCharPositionInLine()
+        if let tsource = source.0 {
+            self.line = tsource.getLine()
+            self.charPositionInLine = tsource.getCharPositionInLine()
         }
     }
 
@@ -176,7 +176,7 @@ public class CommonToken: WritableToken {
     }
 
 
-    public func setLine(line: Int) {
+    public func setLine(_ line: Int) {
         self.line = line
     }
 
@@ -186,16 +186,17 @@ public class CommonToken: WritableToken {
             return text!
         }
 
-        let input: CharStream? = getInputStream()
-        if input == nil {
-            return nil
+        if let input = getInputStream() {
+            let n: Int = input.size()
+            if start < n && stop < n {
+                return input.getText(Interval.of(start, stop))
+            } else {
+                return "<EOF>"
+            }
         }
-        let n: Int = input!.size()
-        if start < n && stop < n {
-            return input!.getText(Interval.of(start, stop))
-        } else {
-            return "<EOF>"
-        }
+        
+        return nil
+        
     }
 
     /**
@@ -208,7 +209,7 @@ public class CommonToken: WritableToken {
      * of the token.
      */
 
-    public func setText(text: String) {
+    public func setText(_ text: String) {
         self.text = text
     }
 
@@ -222,7 +223,7 @@ public class CommonToken: WritableToken {
     }
 
 
-    public func setCharPositionInLine(charPositionInLine: Int) {
+    public func setCharPositionInLine(_ charPositionInLine: Int) {
         self.charPositionInLine = charPositionInLine
     }
 
@@ -232,12 +233,12 @@ public class CommonToken: WritableToken {
     }
 
 
-    public func setChannel(channel: Int) {
+    public func setChannel(_ channel: Int) {
         self.channel = channel
     }
 
 
-    public func setType(type: Int) {
+    public func setType(_ type: Int) {
         self.type = type
     }
 
@@ -246,7 +247,7 @@ public class CommonToken: WritableToken {
         return start
     }
 
-    public func setStartIndex(start: Int) {
+    public func setStartIndex(_ start: Int) {
         self.start = start
     }
 
@@ -255,7 +256,7 @@ public class CommonToken: WritableToken {
         return stop
     }
 
-    public func setStopIndex(stop: Int) {
+    public func setStopIndex(_ stop: Int) {
         self.stop = stop
     }
 
@@ -265,7 +266,7 @@ public class CommonToken: WritableToken {
     }
 
 
-    public func setTokenIndex(index: Int) {
+    public func setTokenIndex(_ index: Int) {
         self.index = index
     }
 
@@ -284,18 +285,21 @@ public class CommonToken: WritableToken {
         if channel > 0 {
             channelStr = "channel=\(channel)"
         }
-        var txt: String? = getText()
-        if txt != nil {
-            txt = txt!.replaceAll("\n", replacement: "\\n")
-            txt = txt!.replaceAll("\r", replacement: "\\r")
-            txt = txt!.replaceAll("\t", replacement: "\\t")
+        var txt: String
+        if let tokenText = getText() {
+            txt = tokenText.replaceAll("\n", replacement: "\\n")
+            txt = txt.replaceAll("\r", replacement: "\\r")
+            txt = txt.replaceAll("\t", replacement: "\\t")
         } else {
             txt = "<no text>"
         }
-
-
-
-        return "[@\(getTokenIndex()),\(start):\(stop)='\(txt!)',<\(type)>\(channelStr),\(line):\(getCharPositionInLine())]"
+        let desc: StringBuilder = StringBuilder()
+        desc.append("[@\(getTokenIndex()),")
+        desc.append("\(start):\(stop)='\(txt)',")
+        desc.append("<\(type)>\(channelStr),")
+        desc.append("\(line):\(getCharPositionInLine())]")
+   
+        return desc.toString()
     }
 
     public var visited: Bool {

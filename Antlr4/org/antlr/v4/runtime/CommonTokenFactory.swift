@@ -90,7 +90,7 @@ public class CommonTokenFactory: TokenFactory {
     }
 
 
-    public func create(source: (TokenSource?, CharStream?), _ type: Int, _ text: String?,
+    public func create(_ source: (TokenSource?, CharStream?), _ type: Int, _ text: String?,
                        _ channel: Int, _ start: Int, _ stop: Int,
                        _ line: Int, _ charPositionInLine: Int) -> Token {
         let t: CommonToken = CommonToken(source, type, channel, start, stop)
@@ -99,8 +99,8 @@ public class CommonTokenFactory: TokenFactory {
         if text != nil {
             t.setText(text!)
         } else {
-            if copyText && source.1 != nil {
-                t.setText(source.1!.getText(Interval.of(start, stop)))
+            if let cStream = source.1 where copyText {
+                t.setText(cStream.getText(Interval.of(start, stop)))
             }
         }
 
@@ -108,7 +108,7 @@ public class CommonTokenFactory: TokenFactory {
     }
 
 
-    public func create(type: Int, _ text: String) -> Token {
+    public func create(_ type: Int, _ text: String) -> Token {
         return CommonToken(type, text)
     }
 }

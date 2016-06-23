@@ -87,7 +87,7 @@ public final class LexerCustomAction: LexerAction {
      */
 
     public override func getActionType() -> LexerActionType {
-        return LexerActionType.CUSTOM
+        return LexerActionType.custom
     }
 
     /**
@@ -113,7 +113,7 @@ public final class LexerCustomAction: LexerAction {
      * appropriate rule and action indexes.</p>
      */
     override
-    public func execute(lexer: Lexer) throws {
+    public func execute(_ lexer: Lexer) throws {
         try lexer.action(nil, ruleIndex, actionIndex)
     }
 

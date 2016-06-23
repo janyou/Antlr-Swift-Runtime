@@ -9,8 +9,8 @@
 import Foundation
 
 public enum LookupDictionaryType: Int {
-    case Lookup = 0
-    case Ordered
+    case lookup = 0
+    case ordered
 }
 
 public struct LookupDictionary {
@@ -18,12 +18,12 @@ public struct LookupDictionary {
 //    private var cache: HashMap<Int, [ATNConfig]> = HashMap<Int, [ATNConfig]>()
 //   
     private var cache: HashMap<Int, ATNConfig> = HashMap<Int, ATNConfig>()
-    public init(type: LookupDictionaryType = LookupDictionaryType.Lookup) {
+    public init(type: LookupDictionaryType = LookupDictionaryType.lookup) {
         self.type = type
     }
 
-    private func hash(config: ATNConfig) -> Int {
-        if type == LookupDictionaryType.Lookup {
+    private func hash(_ config: ATNConfig) -> Int {
+        if type == LookupDictionaryType.lookup {
 
             var hashCode: Int = 7
             hashCode = 31 * hashCode + config.state.stateNumber
@@ -37,8 +37,8 @@ public struct LookupDictionary {
         }
     }
 
-    private func equal(lhs: ATNConfig, _ rhs: ATNConfig) -> Bool {
-        if type == LookupDictionaryType.Lookup {
+    private func equal(_ lhs: ATNConfig, _ rhs: ATNConfig) -> Bool {
+        if type == LookupDictionaryType.lookup {
             if lhs === rhs {
                 return true
             }
@@ -76,7 +76,7 @@ public struct LookupDictionary {
 //        return config
 //
 //    }
-        public mutating func getOrAdd(config: ATNConfig) -> ATNConfig {
+        public mutating func getOrAdd(_ config: ATNConfig) -> ATNConfig {
     
             let h = hash(config)
     
@@ -107,7 +107,7 @@ public struct LookupDictionary {
 //        return false
 //
 //    }
-    public func contains(config: ATNConfig) -> Bool {
+    public func contains(_ config: ATNConfig) -> Bool {
         
         let h = hash(config)
         if let _ = cache[h] {

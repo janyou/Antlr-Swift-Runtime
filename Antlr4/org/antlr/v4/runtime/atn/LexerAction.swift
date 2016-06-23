@@ -79,7 +79,7 @@ public class LexerAction: Hashable {
      *
      * @param lexer The lexer instance.
      */
-    public func execute(lexer: Lexer) throws {
+    public func execute(_ lexer: Lexer) throws {
         RuntimeException(" must overriden ")
     }
 
