@@ -12,11 +12,11 @@ func errPrint(_ msg: String) {
     fputs(msg + "\n", __stderrp)
 }
 
-func +(lhs: String, rhs: Int) -> String {
+public func +(lhs: String, rhs: Int) -> String {
     return lhs + String(rhs)
 }
 
-func +(lhs: Int, rhs: String) -> String {
+public func +(lhs: Int, rhs: String) -> String {
     return String(lhs) + rhs
 }
 

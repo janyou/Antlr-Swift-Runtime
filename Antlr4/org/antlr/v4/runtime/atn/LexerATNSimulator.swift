@@ -82,10 +82,10 @@ public class LexerATNSimulator: ATNSimulator {
     internal var startIndex: Int = -1
     
     /** line number 1..n within the input */
-    internal var line: Int = 1
+    public var line: Int = 1
     
     /** The index of the character relative to the beginning of the line 0..n-1 */
-    internal var charPositionInLine: Int = 0
+    public var charPositionInLine: Int = 0
     
     public final var decisionToDFA: [DFA]
     internal var mode: Int = Lexer.DEFAULT_MODE

@@ -61,6 +61,7 @@
  */
 
 public class BailErrorStrategy: DefaultErrorStrategy {
+    public override init(){}
     /** Instead of recovering from exception {@code e}, re-throw it wrapped
      *  in a {@link org.antlr.v4.runtime.misc.ParseCancellationException} so it is not caught by the
      *  rule function catches.  Use {@link Exception#getCause()} to get the

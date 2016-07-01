@@ -1,4 +1,4 @@
-// Generated from Hello.g4 by ANTLR 4.5.1
+// Generated from /Users/janyou/OSXWorks/AntlrSwift/AntlrSwiftTarget/out/production/AntlrSwiftTarget/grammar/Hello.g4 by ANTLR 4.5.1
 import Antlr4
 
 public class HelloParser: Parser {
@@ -103,6 +103,9 @@ public class HelloParser: Parser {
 	public func r() throws -> RContext {
 		var _localctx: RContext = RContext(_ctx, getState())
 		try enterRule(_localctx, 0, HelloParser.RULE_r)
+		defer {
+	    		try! exitRule()
+	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
 		 	setState(2)
@@ -116,9 +119,7 @@ public class HelloParser: Parser {
 			_errHandler.reportError(self, re)
 			try _errHandler.recover(self, re)
 		}
-		defer {
-			try! exitRule()
-		 }
+
 		return _localctx
 	}
 
