@@ -1,4 +1,4 @@
-// Generated from /Users/janyou/OSXWorks/AntlrSwift/AntlrSwiftTarget/out/production/AntlrSwiftTarget/grammar/Hello.g4 by ANTLR 4.5.1
+// Generated from Hello.g4 by ANTLR 4.5.1
 
 import Antlr4
 
