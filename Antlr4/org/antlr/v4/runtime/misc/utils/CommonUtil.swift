@@ -20,11 +20,11 @@ func +(lhs: Int, rhs: String) -> String {
     return String(lhs) + rhs
 }
 
-func +(lhs: String, rhs: Token) -> String {
+public func +(lhs: String, rhs: Token) -> String {
     return lhs + rhs.description
 }
 
-func +(lhs: Token, rhs: String) -> String {
+public func +(lhs: Token, rhs: String) -> String {
     return lhs.description + rhs
 }
 

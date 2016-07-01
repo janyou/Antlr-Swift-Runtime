@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ANTLRError: ErrorProtocol {
+public enum ANTLRError: ErrorProtocol {
     case nullPointer(msg:String)
     case unsupportedOperation(msg:String)
     case indexOutOfBounds(msg:String)

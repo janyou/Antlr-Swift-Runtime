@@ -167,7 +167,7 @@ public class Interval: Hashable {
     }
 
 
-    var description: String {
+   public var description: String {
         return "\(a)..\(b)"
     }
 }

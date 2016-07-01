@@ -175,13 +175,17 @@ public class LexerActionExecutor: Hashable {
     public func execute(_ lexer: Lexer, _ input: CharStream, _ startIndex: Int) throws {
         var requiresSeek: Bool = false
         var stopIndex: Int = input.index()
+        defer {
+            if requiresSeek {
+                try! input.seek(stopIndex)
+            }
+        }
         //try {
         for var lexerAction: LexerAction in self.lexerActions {
-            var runLexerAction: LexerAction
-            if lexerAction is LexerIndexedCustomAction {
-                var offset: Int = (lexerAction as! LexerIndexedCustomAction).getOffset()
+            if let runLexerAction = lexerAction as? LexerIndexedCustomAction {
+                let offset: Int = runLexerAction.getOffset()
                 try input.seek(startIndex + offset)
-                lexerAction = (lexerAction as! LexerIndexedCustomAction).getAction()
+                lexerAction = runLexerAction.getAction()
                 requiresSeek = (startIndex + offset) != stopIndex
             } else {
                 if lexerAction.isPositionDependent() {
@@ -193,11 +197,7 @@ public class LexerActionExecutor: Hashable {
             try lexerAction.execute(lexer)
         }
         //}
-        defer {
-            if requiresSeek {
-                try! input.seek(stopIndex)
-            }
-        }
+
     }
 
 
