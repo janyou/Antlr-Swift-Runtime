@@ -36,7 +36,7 @@ public class LexerATNConfig: ATNConfig {
      */
     private let lexerActionExecutor: LexerActionExecutor?
 
-    private let passedThroughNonGreedyDecision: Bool
+    fileprivate let passedThroughNonGreedyDecision: Bool
 
     public init(_ state: ATNState,
                 _ alt: Int,

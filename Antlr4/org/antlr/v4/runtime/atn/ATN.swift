@@ -184,7 +184,7 @@ public class ATN {
         try expected.addAll(following)
         try expected.remove(CommonToken.EPSILON)
         
-        while let ctxWrap = ctx where ctxWrap.invokingState >= 0 && following.contains(CommonToken.EPSILON) {
+        while let ctxWrap = ctx , ctxWrap.invokingState >= 0 && following.contains(CommonToken.EPSILON) {
             let invokingState: ATNState = states[ctxWrap.invokingState]!
             let rt: RuleTransition = invokingState.transition(0) as! RuleTransition
             following = try nextTokens(rt.followState)

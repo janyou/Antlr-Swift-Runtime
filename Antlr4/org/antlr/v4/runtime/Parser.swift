@@ -35,7 +35,7 @@
 
 import Foundation
 
-public class Parser: Recognizer<ParserATNSimulator> {
+open class Parser: Recognizer<ParserATNSimulator> {
     public static let EOF: Int = -1
     public static var ConsoleError = true
     //false
@@ -412,7 +412,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
      * @see #addParseListener
      */
     public func triggerEnterRuleEvent() throws {
-        if let _parseListeners = _parseListeners, _ctx = _ctx {
+        if let _parseListeners = _parseListeners, let _ctx = _ctx {
             for listener: ParseTreeListener in _parseListeners {
                 try listener.enterEveryRule(_ctx)
                 _ctx.enterRule(listener)
@@ -427,7 +427,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
      */
     public func triggerExitRuleEvent() throws {
         // reverse order walk of listeners
-        if let _parseListeners = _parseListeners, _ctx = _ctx {
+        if let _parseListeners = _parseListeners, let _ctx = _ctx {
             var i: Int = _parseListeners.count - 1
             while i >= 0 {
                 let listener: ParseTreeListener = _parseListeners[i]
@@ -449,14 +449,14 @@ public class Parser: Recognizer<ParserATNSimulator> {
     }
 
     override
-    public func getTokenFactory() -> TokenFactory {
+    open func getTokenFactory() -> TokenFactory {
         //<AnyObject>
         return _input.getTokenSource().getTokenFactory()
     }
 
     /** Tell our token source and error strategy about a new way to create tokens. */
     override
-    public func setTokenFactory(_ factory: TokenFactory) {
+    open func setTokenFactory(_ factory: TokenFactory) {
         //<AnyObject>
         _input.getTokenSource().setTokenFactory(factory)
     }
@@ -530,7 +530,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
     }
 
     override
-    public func getInputStream() -> IntStream? {
+    open func getInputStream() -> IntStream? {
         return getTokenStream()
     }
 
@@ -736,7 +736,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
 
         // unroll so _ctx is as it was before call to recursive method
         if _parseListeners != nil {
-            while let ctxWrap = _ctx where ctxWrap !== _parentctx {
+            while let ctxWrap = _ctx , ctxWrap !== _parentctx {
                 try  triggerExitRuleEvent()
                 _ctx = ctxWrap.parent as? ParserRuleContext
             }
@@ -773,8 +773,8 @@ public class Parser: Recognizer<ParserATNSimulator> {
     }
 
     override
-    public func precpred(_ localctx: RuleContext?, _ precedence: Int) -> Bool {
-        return precedence >= _precedenceStack.peek()
+    open func precpred(_ localctx: RuleContext?, _ precedence: Int) -> Bool {
+        return precedence >= _precedenceStack.peek()!
     }
 
     public func inContext(_ context: String) -> Bool {
@@ -919,7 +919,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
             return false
         }
 
-        while let ctxWrap = ctx where ctxWrap.invokingState >= 0 && following.contains(CommonToken.EPSILON) {
+        while let ctxWrap = ctx , ctxWrap.invokingState >= 0 && following.contains(CommonToken.EPSILON) {
             let invokingState: ATNState = atn.states[ctxWrap.invokingState]!
             let rt: RuleTransition = invokingState.transition(0) as! RuleTransition
             following = try  atn.nextTokens(rt.followState)
@@ -1002,7 +1002,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
         guard let _interp = _interp  else {
             return s
         }
-        synced(_interp.decisionToDFA) {
+        synced(_interp.decisionToDFA as AnyObject) {
             [unowned self] in
  
             for d in 0..<_interp.decisionToDFA.count {
@@ -1019,7 +1019,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
         guard let _interp = _interp  else {
             return
         }
-        synced(_interp.decisionToDFA) {
+        synced(_interp.decisionToDFA as AnyObject) {
             [unowned self] in
             var seenOne: Bool = false
 
@@ -1043,7 +1043,7 @@ public class Parser: Recognizer<ParserATNSimulator> {
     }
 
     override
-    public func getParseInfo() -> ParseInfo? {
+    open func getParseInfo() -> ParseInfo? {
         let interp: ParserATNSimulator? = getInterpreter()
         if interp is ProfilingATNSimulator {
             return ParseInfo(interp as! ProfilingATNSimulator)

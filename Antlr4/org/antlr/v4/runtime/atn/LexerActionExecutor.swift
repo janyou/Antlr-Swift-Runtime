@@ -47,12 +47,12 @@
 
 public class LexerActionExecutor: Hashable {
 
-    private final var lexerActions: [LexerAction]
+    fileprivate final var lexerActions: [LexerAction]
     /**
      * Caches the result of {@link #hashCode} since the hash code is an element
      * of the performance-critical {@link org.antlr.v4.runtime.atn.LexerATNConfig#hashCode} operation.
      */
-    private final var hashCode: Int
+    fileprivate final var hashCode: Int
 
     /**
      * Constructs an executor for a sequence of {@link org.antlr.v4.runtime.atn.LexerAction} actions.

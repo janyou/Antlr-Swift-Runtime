@@ -148,7 +148,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
                 if (e is FailedPredicateException) {
                     reportFailedPredicate(recognizer, e as! FailedPredicateException);
                 } else {
-                    errPrint("unknown recognition error type: " + String(e.dynamicType));
+                    errPrint("unknown recognition error type: " + String(describing: type(of: e)));
                     let re = (e as! RecognitionException<ParserATNSimulator>)
                     recognizer.notifyErrorListeners(re.getOffendingToken(), re.message ?? "", e);
                 }
@@ -170,7 +170,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
 //						   ", lastErrorIndex="+
 //						   lastErrorIndex+
 //						   ", states="+lastErrorStates);
-        if let lastErrorStates = lastErrorStates where
+        if let lastErrorStates = lastErrorStates ,
           lastErrorIndex == getTokenStream(recognizer).index() &&
           lastErrorStates.contains(recognizer.getState()) {
             // uh oh, another error at same token index and previously-visited
@@ -745,7 +745,7 @@ public class DefaultErrorStrategy: ANTLRErrorStrategy {
         let atn: ATN = recognizer.getInterpreter().atn
         var ctx: RuleContext? = recognizer._ctx
         let recoverSet: IntervalSet = try IntervalSet()
-        while  let ctxWrap = ctx where ctxWrap.invokingState >= 0 {
+        while  let ctxWrap = ctx , ctxWrap.invokingState >= 0 {
             // compute what follows who invoked us
             let invokingState: ATNState = atn.states[ctxWrap.invokingState]!
             let rt: RuleTransition = invokingState.transition(0) as! RuleTransition

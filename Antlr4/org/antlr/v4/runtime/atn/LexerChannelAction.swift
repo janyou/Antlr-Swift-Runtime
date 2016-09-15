@@ -39,7 +39,7 @@
  */
 
 public final class LexerChannelAction: LexerAction, CustomStringConvertible {
-    private let channel: Int
+    fileprivate let channel: Int
 
     /**
      * Constructs a new {@code channel} action with the specified channel value.

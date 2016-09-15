@@ -30,8 +30,8 @@
  */
 
 
-public class RuleNode: ParseTree {
-    public func getRuleContext() -> RuleContext {
+open class RuleNode: ParseTree {
+    open func getRuleContext() -> RuleContext {
         RuntimeException(" must overriden !")
         fatalError()
     }

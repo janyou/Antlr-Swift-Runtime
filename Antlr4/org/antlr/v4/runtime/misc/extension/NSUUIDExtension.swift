@@ -28,7 +28,7 @@ extension UUID {
     private func digits(_ val: Int64, _ digits: Int) -> String {
         let hi = Int64(1) << Int64(digits * 4)
         let intLiteral = hi | (val & (hi - 1))
-        let s: String = String(Character(UnicodeScalar(UInt32(intLiteral))))
+        let s: String = String(Character(UnicodeScalar(UInt32(intLiteral))!))
         return s[1 ..< s.length]
         // return s.substringFromIndex(1)
     }

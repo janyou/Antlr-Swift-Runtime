@@ -613,7 +613,7 @@ public class TokenStreamRewriter {
         if start < 0 {
             start = 0
         }
-        guard let rewrites = programs[programName] where !rewrites.isEmpty else {
+        guard let rewrites = programs[programName] , !rewrites.isEmpty else {
              return try tokens.getText(interval) // no instructions to execute
         }
  

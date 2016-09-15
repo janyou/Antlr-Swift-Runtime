@@ -229,7 +229,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
     /** {@inheritDoc} */
 
     public func complement(_ vocabulary: IntSet?) throws -> IntSet? {
-        guard let vocabulary = vocabulary where !vocabulary.isNil()  else {
+        guard let vocabulary = vocabulary , !vocabulary.isNil()  else {
             return nil  // nothing in common with null set
         }
         var vocabularyIS: IntervalSet
@@ -245,7 +245,7 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
 
 
     public func subtract(_ a: IntSet?) throws -> IntSet {
-        guard let a = a where !a.isNil() else {
+        guard let a = a , !a.isNil() else {
             return try IntervalSet(self)
         }
         if let a = a as? IntervalSet {
@@ -265,13 +265,13 @@ public class IntervalSet: IntSet, Hashable, CustomStringConvertible {
 
     public func subtract(_ left: IntervalSet?, _ right: IntervalSet?) throws -> IntervalSet {
  
-        guard let left = left where !left.isNil() else {
+        guard let left = left , !left.isNil() else {
             return try IntervalSet()
         }
 
         let result: IntervalSet = try IntervalSet(left)
 
-        guard let right = right where !right.isNil() else {
+        guard let right = right , !right.isNil() else {
             // right set has no elements; just return the copy of the current set
             return result
         }

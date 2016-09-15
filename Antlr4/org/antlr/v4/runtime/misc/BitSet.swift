@@ -67,12 +67,12 @@ public class BitSet: Hashable, CustomStringConvertible {
     /**
     * The internal field corresponding to the serialField "bits".
     */
-    private var words: [Int64]
+    fileprivate var words: [Int64]
 
     /**
     * The number of words in the logical size of this BitSet.
     */
-    private var wordsInUse: Int = 0
+    fileprivate var wordsInUse: Int = 0
     //transient
 
     /**
@@ -96,7 +96,7 @@ public class BitSet: Hashable, CustomStringConvertible {
     /**
     * Every public method must preserve these invariants.
     */
-    private func checkInvariants() {
+    fileprivate func checkInvariants() {
         assert((wordsInUse == 0 || words[wordsInUse - 1] != 0), "Expected: (wordsInUse==0||words[wordsInUse-1]!=0)")
         assert((wordsInUse >= 0 && wordsInUse <= words.count), "Expected: (wordsInUse>=0&&wordsInUse<=words.length)")
         // print("\(wordsInUse),\(words.count),\(words[wordsInUse])")

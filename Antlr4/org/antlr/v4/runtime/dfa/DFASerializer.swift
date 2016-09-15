@@ -64,7 +64,7 @@ public class DFASerializer: CustomStringConvertible {
             }
             for i in 0..<n {
                 let t: DFAState? = s.edges![i]
-                if let t = t where t.stateNumber != Int.max {
+                if let t = t , t.stateNumber != Int.max {
                     buf.append(getStateString(s))
                     let label: String = getEdgeLabel(i)
                     buf.append("-")

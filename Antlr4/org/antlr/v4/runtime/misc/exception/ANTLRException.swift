@@ -9,7 +9,7 @@
 
 import Foundation
 
-public enum ANTLRException: ErrorProtocol {
+public enum ANTLRException: Error {
     case cannotInvokeStartRule
     case recognition(e:AnyObject)
 }

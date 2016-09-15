@@ -45,8 +45,8 @@
  */
 
 public final class LexerCustomAction: LexerAction {
-    private let ruleIndex: Int
-    private let actionIndex: Int
+    fileprivate let ruleIndex: Int
+    fileprivate let actionIndex: Int
 
     /**
      * Constructs a custom lexer action with the specified rule and action

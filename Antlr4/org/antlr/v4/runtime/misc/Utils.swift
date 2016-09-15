@@ -86,7 +86,7 @@ public class Utils {
     }
 
     public static func readFile2String(_ fileName: String, _ encoding: String.Encoding = String.Encoding.utf8) -> String {
-        let path = Bundle.main().pathForResource(fileName, ofType: nil)
+        let path = Bundle.main.path(forResource: fileName, ofType: nil)
         if path == nil {
             return ""
         }

@@ -191,12 +191,12 @@ public class Trees {
     public static func _findAllNodes(_ t: ParseTree,
                                     _ index: Int, _ findTokens: Bool, _ nodes: inout Array<ParseTree>) {
         // check this node (the root) first
-        if let tnode = t as? TerminalNode where findTokens {
+        if let tnode = t as? TerminalNode , findTokens {
             if tnode.getSymbol()!.getType() == index {
                 nodes.append(t)
             }
         } else {
-            if let ctx = t as? ParserRuleContext where !findTokens {
+            if let ctx = t as? ParserRuleContext , !findTokens {
                 if ctx.getRuleIndex() == index {
                     nodes.append(t)
                 }

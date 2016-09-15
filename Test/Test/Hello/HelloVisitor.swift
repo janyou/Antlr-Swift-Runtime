@@ -8,14 +8,14 @@ import Antlr4
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
-public class HelloVisitor<T>: ParseTreeVisitor<T> {
+open class HelloVisitor<T>: ParseTreeVisitor<T> {
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#r}.
 	- Parameters:
 	  - ctx: the parse tree
 	- returns: the visitor result
 	 */
-	public func visitR(_ ctx: HelloParser.RContext) -> T{
+	open func visitR(_ ctx: HelloParser.RContext) -> T{
 	 	fatalError(#function + " must be overridden")
 	}
 

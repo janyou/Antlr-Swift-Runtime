@@ -259,7 +259,7 @@
 * the input.</p>
 */
 
-public class ParserATNSimulator: ATNSimulator {
+open class ParserATNSimulator: ATNSimulator {
     public let debug: Bool = false
     public let debug_list_atn_decisions: Bool = false
     public let dfa_debug: Bool = false
@@ -309,18 +309,18 @@ public class ParserATNSimulator: ATNSimulator {
     }
     
     override
-    public func reset() {
+    open func reset() {
     }
     
     override
-    public func clearDFA() {
+    open func clearDFA() {
         //for var d: Int = 0; d < decisionToDFA.count; d++ {
         for d in 0..<decisionToDFA.count {
             decisionToDFA[d] = DFA(atn.getDecisionState(d)!, d)
         }
     }
     
-    public func adaptivePredict(_ input: TokenStream, _ decision: Int,
+    open func adaptivePredict(_ input: TokenStream, _ decision: Int,
         _ outerContext: ParserRuleContext?) throws -> Int {
         var outerContext = outerContext
             if debug || debug_list_atn_decisions {
@@ -567,7 +567,7 @@ public class ParserATNSimulator: ATNSimulator {
      */
    func getExistingTargetState(_ previousD: DFAState, _ t: Int) -> DFAState? {
         var edges: [DFAState?]? = previousD.edges
-        if edges == nil || (t + 1) < 0 || (t + 1) >= edges?.count {
+        if edges == nil || (t + 1) < 0 || (t + 1) >= (edges!.count) {
             return nil
         }
         
@@ -1498,7 +1498,7 @@ public class ParserATNSimulator: ATNSimulator {
                             closureBusy.insert(c)
                         }
                         
-                        if let _dfa = _dfa where _dfa.isPrecedenceDfa() {
+                        if let _dfa = _dfa , _dfa.isPrecedenceDfa() {
                             let outermostPrecedenceReturn: Int = (t as! EpsilonTransition).outermostPrecedenceReturn()
                             if outermostPrecedenceReturn == _dfa.atnStartState.ruleIndex {
                                 c.setPrecedenceFilterSuppressed(true)
@@ -1533,7 +1533,7 @@ public class ParserATNSimulator: ATNSimulator {
     }
     
     
-    public func getRuleName(_ index: Int) -> String {
+    open func getRuleName(_ index: Int) -> String {
         if index >= 0  {
             return parser.getRuleNames()[index]
         }

@@ -323,7 +323,7 @@ public class BufferedTokenStream: TokenStream {
         var filteredTokens: Array<Token> = Array<Token>()
         for i in start...stop {
             let t: Token = tokens[i]
-            if let types = types where !types.contains(t.getType()) {
+            if let types = types , !types.contains(t.getType()) {
             }else {
                 filteredTokens.append(t)
             }
@@ -534,7 +534,7 @@ public class BufferedTokenStream: TokenStream {
 
 
     public func getText(_ start: Token?, _ stop: Token?) throws -> String {
-        if let start = start, stop = stop {
+        if let start = start, let stop = stop {
             return try getText(Interval.of(start.getTokenIndex(), stop.getTokenIndex()))
         }
 

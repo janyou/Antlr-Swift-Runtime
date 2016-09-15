@@ -33,7 +33,7 @@
 
 /** "dup" of ParserInterpreter */
 
-public class LexerATNSimulator: ATNSimulator {
+open class LexerATNSimulator: ATNSimulator {
     public static let debug: Bool = false
     public let dfa_debug: Bool = false
     
@@ -110,14 +110,14 @@ public class LexerATNSimulator: ATNSimulator {
             super.init(atn, sharedContextCache)
     }
     
-    public func copyState(_ simulator: LexerATNSimulator) {
+    open func copyState(_ simulator: LexerATNSimulator) {
         self.charPositionInLine = simulator.charPositionInLine
         self.line = simulator.line
         self.mode = simulator.mode
         self.startIndex = simulator.startIndex
     }
     
-    public func match(_ input: CharStream, _ mode: Int) throws -> Int {
+    open func match(_ input: CharStream, _ mode: Int) throws -> Int {
         LexerATNSimulator.match_calls += 1
         self.mode = mode
         var mark: Int = input.mark()
@@ -140,7 +140,7 @@ public class LexerATNSimulator: ATNSimulator {
     }
     
     override
-    public func reset() {
+    open func reset() {
         prevAccept.reset()
         startIndex = -1
         line = 1
@@ -149,7 +149,7 @@ public class LexerATNSimulator: ATNSimulator {
     }
     
     override
-    public func clearDFA() {
+    open func clearDFA() {
  
         for d in 0..<decisionToDFA.count {
             decisionToDFA[d] = DFA(atn.getDecisionState(d)!, d)
@@ -395,7 +395,7 @@ public class LexerATNSimulator: ATNSimulator {
             self.line = line
             self.charPositionInLine = charPos
             //TODO: CHECK
-            if let lexerActionExecutor = lexerActionExecutor, recog = recog {
+            if let lexerActionExecutor = lexerActionExecutor, let recog = recog {
                 try    lexerActionExecutor.execute(recog, input, startIndex)
             }
     }
@@ -461,7 +461,7 @@ public class LexerATNSimulator: ATNSimulator {
                 }
             }
             
-            if let configContext = config.context where !configContext.isEmpty() {
+            if let configContext = config.context , !configContext.isEmpty() {
                 let length = configContext.size()
                 for i in 0..<length {
                     if configContext.getReturnState(i) != PredictionContext.EMPTY_RETURN_STATE {

@@ -15,7 +15,7 @@ extension Character {
         return Int(String(self)) ?? 0
     }
     public init(integerLiteral value: IntegerLiteralType) {
-        self = Character(UnicodeScalar(value))
+        self = Character(UnicodeScalar(value)!)
     }
     var utf8Value: UInt8 {
         for s in String(self).utf8 {

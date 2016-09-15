@@ -53,7 +53,7 @@
  *  satisfy the superclass interface.
  */
 
-public class ParserRuleContext: RuleContext {
+open class ParserRuleContext: RuleContext {
     public var visited = false
     /** If we are debugging or building a parse tree for a visitor,
      *  we need to track all of the tokens and rule invocations associated
@@ -99,7 +99,7 @@ public class ParserRuleContext: RuleContext {
     /** COPY a ctx (I'm deliberately not using copy constructor) to avoid
      *  confusion with creating node with parent. Does not copy children.
      */
-    public func copyFrom(_ ctx: ParserRuleContext) {
+    open func copyFrom(_ ctx: ParserRuleContext) {
         self.parent = ctx.parent
         self.invokingState = ctx.invokingState
 
@@ -113,15 +113,15 @@ public class ParserRuleContext: RuleContext {
 
     // Double dispatch methods for listeners
 
-    public func enterRule(_ listener: ParseTreeListener) {
+    open func enterRule(_ listener: ParseTreeListener) {
     }
 
-    public func exitRule(_ listener: ParseTreeListener) {
+    open func exitRule(_ listener: ParseTreeListener) {
     }
 
     /** Does not set parent link; other add methods do that */
     @discardableResult
-    public func addChild(_ t: TerminalNode) -> TerminalNode {
+    open func addChild(_ t: TerminalNode) -> TerminalNode {
         if children == nil {
             children = Array<ParseTree>()
         }
@@ -129,7 +129,7 @@ public class ParserRuleContext: RuleContext {
         return t
     }
     @discardableResult
-    public func addChild(_ ruleInvocation: RuleContext) -> RuleContext {
+    open func addChild(_ ruleInvocation: RuleContext) -> RuleContext {
         if children == nil {
             children = Array<ParseTree>()
         }
@@ -141,7 +141,7 @@ public class ParserRuleContext: RuleContext {
      *  we entered a rule. If we have # label, we will need to remove
      *  generic ruleContext object.
       */
-    public func removeLastChild() {
+    open func removeLastChild() {
             children?.removeLast()
             //children.remove(children.size()-1);
     }
@@ -151,14 +151,14 @@ public class ParserRuleContext: RuleContext {
 //		states.add(s);
 //	}
 
-    public func addChild(_ matchedToken: Token) -> TerminalNode {
+    open func addChild(_ matchedToken: Token) -> TerminalNode {
         let t: TerminalNodeImpl = TerminalNodeImpl(matchedToken)
         addChild(t)
         t.parent = self
         return t
     }
     @discardableResult
-    public func addErrorNode(_ badToken: Token) -> ErrorNode {
+    open func addErrorNode(_ badToken: Token) -> ErrorNode {
         let t: ErrorNode = ErrorNode(badToken)
         addChild(t)
         t.parent = self
@@ -167,20 +167,20 @@ public class ParserRuleContext: RuleContext {
 
     override
     /** Override to make type more specific */
-    public func getParent() -> Tree? {
+    open func getParent() -> Tree? {
         return super.getParent()
     }
 
     override
-    public func getChild(_ i: Int) -> Tree? {
-        guard let children = children where i >= 0 && i < children.count else {
+    open func getChild(_ i: Int) -> Tree? {
+        guard let children = children , i >= 0 && i < children.count else {
             return nil
         }
         return children[i]
     }
 
-    public func getChild<T:ParseTree>(_ ctxType: T.Type, i: Int) -> T? {
-        guard let children = children where i >= 0 && i < children.count else {
+    open func getChild<T:ParseTree>(_ ctxType: T.Type, i: Int) -> T? {
+        guard let children = children , i >= 0 && i < children.count else {
             return nil
         }
         var j: Int = -1 // what element have we found with ctxType?
@@ -196,8 +196,8 @@ public class ParserRuleContext: RuleContext {
         return nil
     }
 
-    public func getToken(_ ttype: Int, _ i: Int) -> TerminalNode? {
-        guard let children = children where i >= 0 && i < children.count else {
+    open func getToken(_ ttype: Int, _ i: Int) -> TerminalNode? {
+        guard let children = children , i >= 0 && i < children.count else {
             return nil
         }
         var j: Int = -1 // what token with ttype have we found?
@@ -216,7 +216,7 @@ public class ParserRuleContext: RuleContext {
         return nil
     }
 
-    public func getTokens(_ ttype: Int) -> Array<TerminalNode> {
+    open func getTokens(_ ttype: Int) -> Array<TerminalNode> {
         if children == nil {
             return Array<TerminalNode>()
         }
@@ -242,12 +242,12 @@ public class ParserRuleContext: RuleContext {
         return tokens!
     }
 
-    public func getRuleContext<T:ParserRuleContext>(_ ctxType: T.Type, _ i: Int) -> T? {
+    open func getRuleContext<T:ParserRuleContext>(_ ctxType: T.Type, _ i: Int) -> T? {
 
         return getChild(ctxType, i: i)
     }
 
-    public func getRuleContexts<T:ParserRuleContext>(_ ctxType: T.Type) -> Array<T> {
+    open func getRuleContexts<T:ParserRuleContext>(_ ctxType: T.Type) -> Array<T> {
 
         guard let children = children  else {
             return Array<T>()//Collections.emptyList();
@@ -263,13 +263,13 @@ public class ParserRuleContext: RuleContext {
     }
 
     override
-    public func getChildCount() -> Int {
+    open func getChildCount() -> Int {
         return children != nil ? children!.count : 0
     }
 
     override
-    public func getSourceInterval() -> Interval {
-        guard let start = start,stop = stop else {
+    open func getSourceInterval() -> Interval {
+        guard let start = start,let stop = stop else {
              return Interval.INVALID
         }
         return Interval.of(start.getTokenIndex(), stop.getTokenIndex())
@@ -280,7 +280,7 @@ public class ParserRuleContext: RuleContext {
      * Note that the range from start to stop is inclusive, so for rules that do not consume anything
      * (for example, zero length or error productions) this token may exceed stop.
      */
-    public func getStart() -> Token? {
+    open func getStart() -> Token? {
         return start
     }
     /**
@@ -288,12 +288,12 @@ public class ParserRuleContext: RuleContext {
      * Note that the range from start to stop is inclusive, so for rules that do not consume anything
      * (for example, zero length or error productions) this token may precede start.
      */
-    public func getStop() -> Token? {
+    open func getStop() -> Token? {
         return stop
     }
 
     /** Used for rule context info debugging during parse-time, not so much for ATN debugging */
-    public func toInfoString(_ recognizer: Parser) -> String {
+    open func toInfoString(_ recognizer: Parser) -> String {
         var rules: Array<String> = recognizer.getRuleInvocationStack(self)
         // Collections.reverse(rules);
         rules = rules.reversed()

@@ -22,7 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             let textFileName = "TestHello.txt"
             
-            if let textFilePath = Bundle.main().pathForResource(textFileName, ofType: nil) {
+            if let textFilePath = Bundle.main.path(forResource: textFileName, ofType: nil) {
                 let lexer =  HelloLexer(ANTLRFileStream(textFilePath))
                 let tokens =  CommonTokenStream(lexer)
                 let parser = try HelloParser(tokens)

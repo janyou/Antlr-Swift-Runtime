@@ -96,7 +96,7 @@ public class DiagnosticErrorListener: BaseErrorListener {
             let conflictingAlts: BitSet = try getConflictingAlts(ambigAlts, configs)
             let text: String = try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
             
-            let message: String = NSString(format: format, decision, conflictingAlts.description, text) as String
+            let message: String = NSString(format: format as NSString, decision, conflictingAlts.description, text) as String
             try recognizer.notifyErrorListeners(message)
     }
     
@@ -110,7 +110,7 @@ public class DiagnosticErrorListener: BaseErrorListener {
             let format: String = "reportAttemptingFullContext d=%@, input='%@'"
             let decision: String = getDecisionDescription(recognizer, dfa)
             let text: String = try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
-            let message: String = NSString(format: format, decision, text) as String
+            let message: String = NSString(format: format as NSString, decision, text) as String
             try recognizer.notifyErrorListeners(message)
     }
     
@@ -124,7 +124,7 @@ public class DiagnosticErrorListener: BaseErrorListener {
             let format: String = "reportContextSensitivity d=%@, input='%@'"
             let decision: String = getDecisionDescription(recognizer, dfa)
             let text: String = try recognizer.getTokenStream()!.getText(Interval.of(startIndex, stopIndex))
-            let message: String = NSString(format: format, decision, text) as String
+            let message: String = NSString(format: format as NSString, decision, text) as String
             try recognizer.notifyErrorListeners(message)
     }
     

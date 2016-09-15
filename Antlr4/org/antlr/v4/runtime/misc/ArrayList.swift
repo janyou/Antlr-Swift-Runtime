@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class ArrayList<T>: ArrayLiteralConvertible  {
+public final class ArrayList<T>: ExpressibleByArrayLiteral  {
     private var array: Array<T>
     public init(slice: ArraySlice<T>) {
         array = Array<T>()

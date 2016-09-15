@@ -30,7 +30,7 @@
  */
 
 
-public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
+open class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
     public override init() {
         super.init()
 
@@ -43,7 +43,7 @@ public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
      * specified tree.</p>
      */
 
-    public override func visit(_ tree: ParseTree) -> T? {
+    open override func visit(_ tree: ParseTree) -> T? {
         return tree.accept(self)
     }
 
@@ -63,7 +63,7 @@ public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
      * method to behave properly in respect to the specific algorithm in use.</p>
      */
 
-    public override func visitChildren(_ node: RuleNode) -> T? {
+    open override func visitChildren(_ node: RuleNode) -> T? {
         var result: T? = defaultResult()
         let n: Int = node.getChildCount()
 
@@ -87,7 +87,7 @@ public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
      * {@link #defaultResult defaultResult}.</p>
      */
 
-    public override func visitTerminal(_ node: TerminalNode) -> T? {
+    open override func visitTerminal(_ node: TerminalNode) -> T? {
         return defaultResult()
     }
 
@@ -98,7 +98,7 @@ public class AbstractParseTreeVisitor<T>: ParseTreeVisitor<T> {
      * {@link #defaultResult defaultResult}.</p>
      */
     override
-    public func visitErrorNode(_ node: ErrorNode) -> T? {
+    open func visitErrorNode(_ node: ErrorNode) -> T? {
         return defaultResult()
     }
 

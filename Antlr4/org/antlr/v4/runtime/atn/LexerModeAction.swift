@@ -40,7 +40,7 @@
  */
 
 public final class LexerModeAction: LexerAction, CustomStringConvertible {
-    private final var mode: Int
+    fileprivate final var mode: Int
 
     /**
      * Constructs a new {@code mode} action with the specified mode value.

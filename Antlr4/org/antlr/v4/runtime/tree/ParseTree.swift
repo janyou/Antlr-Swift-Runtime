@@ -39,7 +39,7 @@
  */
 //public protocol ParseTree : SyntaxTree {
 
-public class ParseTree: SyntaxTree, CustomStringConvertible , CustomDebugStringConvertible  {
+open class ParseTree: SyntaxTree, CustomStringConvertible , CustomDebugStringConvertible  {
 
     // the following methods narrow the return type; they are not additional methods
 
@@ -49,7 +49,7 @@ public class ParseTree: SyntaxTree, CustomStringConvertible , CustomDebugStringC
 
     /** The {@link org.antlr.v4.runtime.tree.ParseTreeVisitor} needs a double dispatch method. */
 
-    public func accept<T>(_ visitor: ParseTreeVisitor<T>) -> T? {
+    open func accept<T>(_ visitor: ParseTreeVisitor<T>) -> T? {
         RuntimeException(" must overriden !")
         fatalError()
     }
@@ -58,59 +58,59 @@ public class ParseTree: SyntaxTree, CustomStringConvertible , CustomDebugStringC
      *  off-channel tokens (if any) so won't return whitespace and
      *  comments if they are sent to parser on hidden channel.
      */
-    public func getText() -> String {
+    open func getText() -> String {
         RuntimeException(" must overriden !")
         return ""
     }
     /** Specialize toStringTree so that it can print out more information
      * 	based upon the parser.
      */
-    public func toStringTree(_ parser: Parser) -> String {
+    open func toStringTree(_ parser: Parser) -> String {
         RuntimeException(" must overriden !")
         return ""
 
     }
 
 
-    public func getSourceInterval() -> Interval {
+    open func getSourceInterval() -> Interval {
         RuntimeException(" must overriden !")
         fatalError()
     }
 
 
-    public func getParent() -> Tree? {
+    open func getParent() -> Tree? {
         RuntimeException(" must overriden !")
         fatalError()
     }
 
-    public func getPayload() -> AnyObject {
+    open func getPayload() -> AnyObject {
         RuntimeException(" must overriden !")
         fatalError()
     }
 
-    public func getChild(_ i: Int) -> Tree? {
-        RuntimeException(" must overriden !")
-        fatalError()
-    }
-
-
-    public func getChildCount() -> Int {
-        RuntimeException(" must overriden !")
-        fatalError()
-    }
-
-    public func toStringTree() -> String {
+    open func getChild(_ i: Int) -> Tree? {
         RuntimeException(" must overriden !")
         fatalError()
     }
 
 
-    public var description: String {
+    open func getChildCount() -> Int {
+        RuntimeException(" must overriden !")
+        fatalError()
+    }
+
+    open func toStringTree() -> String {
+        RuntimeException(" must overriden !")
+        fatalError()
+    }
+
+
+    open var description: String {
         RuntimeException(" must overriden !")
         fatalError()
     }
     
-    public var debugDescription: String {
+    open var debugDescription: String {
         RuntimeException(" must overriden !")
         fatalError()
     }

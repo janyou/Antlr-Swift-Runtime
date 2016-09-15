@@ -99,7 +99,7 @@ public class CommonTokenFactory: TokenFactory {
         if text != nil {
             t.setText(text!)
         } else {
-            if let cStream = source.1 where copyText {
+            if let cStream = source.1 , copyText {
                 t.setText(cStream.getText(Interval.of(start, stop)))
             }
         }

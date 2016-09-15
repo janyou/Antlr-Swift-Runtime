@@ -27,9 +27,8 @@ public func +(lhs: String, rhs: Token) -> String {
 public func +(lhs: Token, rhs: String) -> String {
     return lhs.description + rhs
 }
-
-infix operator >>> { associativity right precedence 160 }
-
+infix operator >>>  : BitwiseShiftPrecedence
+//infix operator >>> { associativity right precedence 160 }
 func >>>(lhs: Int32, rhs: Int32) -> Int32 {
     let left = UInt32(bitPattern: lhs)
     let right = UInt32(bitPattern: rhs) % 32
@@ -45,7 +44,7 @@ func >>>(lhs: Int64, rhs: Int64) -> Int64 {
 }
 
 func >>>(lhs: Int, rhs: Int) -> Int {
-    let numberOfBits: UInt = sizeof(UInt) == sizeof(UInt64) ? 64 : 32
+    let numberOfBits: UInt = MemoryLayout<UInt>.size == MemoryLayout<UInt64>.size ? 64 : 32
     
     let left = UInt(bitPattern: lhs)
     let right = UInt(bitPattern: rhs) % numberOfBits
@@ -68,7 +67,7 @@ public func intChar2String(_ i: Int) -> String {
 public func log(_ message: String = "", file: String = #file, function: String = #function, lineNum: Int = #line) {
 
     // #if DEBUG
-    print("FILE: \(URL(fileURLWithPath: file).pathComponents!.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)")
+    print("FILE: \(URL(fileURLWithPath: file).pathComponents.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)")
     //   #else
     // do nothing
     //   #endif
@@ -77,7 +76,7 @@ public func log(_ message: String = "", file: String = #file, function: String =
 
 public func RuntimeException(_ message: String = "", file: String = #file, function: String = #function, lineNum: Int = #line) {
     // #if DEBUG
-    let info = "FILE: \(URL(fileURLWithPath: file).pathComponents!.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)"
+    let info = "FILE: \(URL(fileURLWithPath: file).pathComponents.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)"
     //   #else
     // let info = "FILE: \(NSURL(fileURLWithPath: file).pathComponents!.last!),FUNC: \(function), LINE: \(lineNum) MESSAGE: \(message)"
     //   #endif

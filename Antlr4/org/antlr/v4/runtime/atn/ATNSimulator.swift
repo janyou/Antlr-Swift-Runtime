@@ -32,7 +32,7 @@
 
 import Foundation
 
-public class ATNSimulator {
+open class ATNSimulator {
     /**
      * @deprecated Use {@link org.antlr.v4.runtime.atn.ATNDeserializer#SERIALIZED_VERSION} instead.
      */
@@ -94,7 +94,7 @@ public class ATNSimulator {
         self.sharedContextCache = sharedContextCache
     }
 
-    public func reset() {
+    open func reset() {
         RuntimeException(" must overriden ")
     }
 
@@ -109,15 +109,15 @@ public class ATNSimulator {
      *
      * @since 4.3
      */
-    public func clearDFA() throws {
+    open func clearDFA() throws {
         throw ANTLRError.unsupportedOperation(msg: "This ATN simulator does not support clearing the DFA. ")
     }
 
-    public func getSharedContextCache() -> PredictionContextCache? {
+    open func getSharedContextCache() -> PredictionContextCache? {
         return sharedContextCache
     }
 
-    public func getCachedContext(_ context: PredictionContext) -> PredictionContext {
+    open func getCachedContext(_ context: PredictionContext) -> PredictionContext {
         if sharedContextCache == nil {
             return context
         }

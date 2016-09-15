@@ -9,12 +9,12 @@ import Antlr4
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
-public class HelloBaseVisitor<T>: AbstractParseTreeVisitor<T> {
+open class HelloBaseVisitor<T>: AbstractParseTreeVisitor<T> {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	public func visitR(_ ctx: HelloParser.RContext) -> T? { return visitChildren(ctx) }
+	open func visitR(_ ctx: HelloParser.RContext) -> T? { return visitChildren(ctx) }
 }

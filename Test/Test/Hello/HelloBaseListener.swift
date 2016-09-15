@@ -8,43 +8,43 @@ import Antlr4
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class HelloBaseListener: HelloListener {
+open class HelloBaseListener: HelloListener {
     public init() { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	public func enterR(_ ctx: HelloParser.RContext) { }
+	open func enterR(_ ctx: HelloParser.RContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	public func exitR(_ ctx: HelloParser.RContext) { }
+	open func exitR(_ ctx: HelloParser.RContext) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	 public func enterEveryRule(_ ctx: ParserRuleContext) { }
+	open func enterEveryRule(_ ctx: ParserRuleContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	 public func exitEveryRule(_ ctx: ParserRuleContext) { }
+	open func exitEveryRule(_ ctx: ParserRuleContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	public func visitTerminal(_ node: TerminalNode) { }
+	open func visitTerminal(_ node: TerminalNode) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	public func visitErrorNode(_ node: ErrorNode) { }
+	open func visitErrorNode(_ node: ErrorNode) { }
 }

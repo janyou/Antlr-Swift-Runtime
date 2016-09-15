@@ -111,7 +111,7 @@ public class Vocabulary: Hashable {
     * the display names of tokens.
     */
     public static func fromTokenNames(_ tokenNames: [String?]?) -> Vocabulary {
-        guard let tokenNames = tokenNames where tokenNames.count > 0  else {
+        guard let tokenNames = tokenNames , tokenNames.count > 0  else {
             return EMPTY_VOCABULARY
         }
 
@@ -187,7 +187,8 @@ public class Vocabulary: Hashable {
     }
 
     public var hashValue: Int {
-        return unsafeAddress(of: self).hashValue
+        return Unmanaged.passUnretained(self).toOpaque().hashValue
+//        return unsafeAddress(of: self).hashValue
     }
 
 }

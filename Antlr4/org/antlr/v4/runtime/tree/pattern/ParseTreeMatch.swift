@@ -96,7 +96,7 @@ public class ParseTreeMatch: CustomStringConvertible {
      */
 
     public func get(_ label: String) -> ParseTree? {
-        if let parseTrees = labels.get(label) where parseTrees.count > 0 {
+        if let parseTrees = labels.get(label) , parseTrees.count > 0 {
             return parseTrees[parseTrees.count - 1]   // return last if multiple
         } else {
             return nil

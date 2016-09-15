@@ -81,7 +81,7 @@
 *  @see org.antlr.v4.runtime.ParserRuleContext
 */
 
-public class RuleContext: RuleNode {
+open class RuleContext: RuleNode {
     public static let EMPTY: ParserRuleContext = ParserRuleContext()
 
     /** What context invoked this rule? */
@@ -104,7 +104,7 @@ public class RuleContext: RuleNode {
         self.invokingState = invokingState
     }
 
-    public func depth() -> Int {
+    open func depth() -> Int {
         var n: Int = 0
         var p: RuleContext? = self
         while let pWrap = p {
@@ -117,29 +117,29 @@ public class RuleContext: RuleNode {
     /** A context is empty if there is no invoking state; meaning nobody called
      *  current context.
      */
-    public func isEmpty() -> Bool {
+    open func isEmpty() -> Bool {
         return invokingState == -1
     }
 
     // satisfy the ParseTree / SyntaxTree interface
 
     override
-    public func getSourceInterval() -> Interval {
+    open func getSourceInterval() -> Interval {
         return Interval.INVALID
     }
 
     override
-    public func getRuleContext() -> RuleContext {
+    open func getRuleContext() -> RuleContext {
         return self
     }
 
     override
-    public func getParent() -> Tree? {
+    open func getParent() -> Tree? {
         return parent
     }
 
     override
-    public func getPayload() -> AnyObject {
+    open func getPayload() -> AnyObject {
         return self
     }
 
@@ -151,7 +151,7 @@ public class RuleContext: RuleNode {
      *  method.
      */
 
-    public override func getText() -> String {
+    open override func getText() -> String {
         let length = getChildCount()
         if length == 0 {
             return ""
@@ -165,21 +165,21 @@ public class RuleContext: RuleNode {
         return builder.toString()
     }
 
-    public func getRuleIndex() -> Int {
+    open func getRuleIndex() -> Int {
         return -1
     }
 
 
-    public override func getChild(_ i: Int) -> Tree? {
+    open override func getChild(_ i: Int) -> Tree? {
         return nil
     }
 
 
-    public override func getChildCount() -> Int {
+    open override func getChildCount() -> Int {
         return 0
     }
 
-    public override func accept<T>(_ visitor: ParseTreeVisitor<T>) -> T? {
+    open override func accept<T>(_ visitor: ParseTreeVisitor<T>) -> T? {
         return visitor.visitChildren(self)
     }
 
@@ -232,7 +232,7 @@ public class RuleContext: RuleNode {
      *  We have to know the recognizer so we can get rule names.
      */
 
-    public override func toStringTree(_ recog: Parser) -> String {
+    open override func toStringTree(_ recog: Parser) -> String {
         return Trees.toStringTree(self, recog)
     }
 
@@ -244,17 +244,17 @@ public class RuleContext: RuleNode {
     }
 
 
-    public override func toStringTree() -> String {
+    open override func toStringTree() -> String {
         let info: Array<String>? = nil
         return toStringTree(info)
     }
-    public override var description: String {
+    open override var description: String {
         let p1: Array<String>? = nil
         let p2: RuleContext? = nil
         return toString(p1, p2)
     }
     
-     public override var debugDescription: String {
+     open override var debugDescription: String {
          return description
     }
 
@@ -267,17 +267,17 @@ public class RuleContext: RuleNode {
     }
 
     // recog null unless ParserRuleContext, in which case we use subclass toString(...)
-    public func toString<T:ATNSimulator>(_ recog: Recognizer<T>?, _ stop: RuleContext) -> String {
+    open func toString<T:ATNSimulator>(_ recog: Recognizer<T>?, _ stop: RuleContext) -> String {
         let ruleNames: [String]? = recog != nil ? recog!.getRuleNames() : nil
         let ruleNamesList: Array<String>? = ruleNames ?? nil
         return toString(ruleNamesList, stop)
     }
 
-    public func toString(_ ruleNames: Array<String>?, _ stop: RuleContext?) -> String {
+    open func toString(_ ruleNames: Array<String>?, _ stop: RuleContext?) -> String {
         let buf: StringBuilder = StringBuilder()
         var p: RuleContext? = self
         buf.append("[")
-        while let pWrap = p where pWrap !== stop {
+        while let pWrap = p , pWrap !== stop {
             if ruleNames == nil {
                 if !pWrap.isEmpty() {
                     buf.append(pWrap.invokingState)
@@ -300,7 +300,7 @@ public class RuleContext: RuleNode {
         return buf.toString()
     }
 
-    public func castdown<T>(_ subType: T.Type) -> T {
+    open func castdown<T>(_ subType: T.Type) -> T {
         return self as! T
     }
 

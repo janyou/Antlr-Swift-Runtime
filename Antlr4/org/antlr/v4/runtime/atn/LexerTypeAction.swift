@@ -39,7 +39,7 @@
  */
 
 public class LexerTypeAction: LexerAction, CustomStringConvertible {
-    private final var type: Int
+    fileprivate final var type: Int
 
     /**
      * Constructs a new {@code type} action with the specified token type value.

@@ -46,8 +46,8 @@
  */
 
 public final class LexerIndexedCustomAction: LexerAction {
-    private let offset: Int
-    private let action: LexerAction
+    fileprivate let offset: Int
+    fileprivate let action: LexerAction
 
     /**
      * Constructs a new indexed custom action by associating a character offset

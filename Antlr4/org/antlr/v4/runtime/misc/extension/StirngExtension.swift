@@ -24,7 +24,8 @@ public extension String {
     }
  
     func replaceAll(_ from: String, replacement: String) -> String {
-        return self.replacingOccurrences(of: from, with: replacement, options: NSString.CompareOptions.literalSearch, range: nil)
+    
+        return self.replacingOccurrences(of: from, with: replacement, options: NSString.CompareOptions.literal, range: nil)
     }
 
     func contains(_ find: String) -> Bool {
@@ -52,7 +53,7 @@ public extension String {
     func indexOf(_ target: String, startIndex: Int) -> Int {
 
         let startRange = self.characters.index(self.startIndex, offsetBy: startIndex)
-        let range = self.range(of: target, options: NSString.CompareOptions.literalSearch, range: startRange..<self.endIndex)
+        let range = self.range(of: target, options: NSString.CompareOptions.literal, range: startRange..<self.endIndex)
  
         if let range = range {
 
@@ -150,7 +151,7 @@ extension String {
         //    decodeNumeric("20ac", 16) --> "€"
         func decodeNumeric(_ string: String, base: Int32) -> Character? {
             let code = UInt32(strtoul(string, nil, base))
-            return Character(UnicodeScalar(code))
+            return Character(UnicodeScalar(code)!)
         }
 
         // Decode the HTML character entity to the corresponding

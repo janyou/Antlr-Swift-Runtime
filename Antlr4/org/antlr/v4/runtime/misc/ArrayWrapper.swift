@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class ArrayWrapper<T: Hashable>: ArrayLiteralConvertible, Hashable  {
+public final class ArrayWrapper<T: Hashable>: ExpressibleByArrayLiteral, Hashable  {
     public var array: Array<T>
     public init(slice: ArraySlice<T>) {
         array = Array<T>()

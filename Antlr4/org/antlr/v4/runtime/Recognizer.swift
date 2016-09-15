@@ -31,7 +31,7 @@
 
 import Foundation
 
-public class Recognizer<ATNInterpreter:ATNSimulator> {
+open class Recognizer<ATNInterpreter:ATNSimulator> {
     //public  static let EOF: Int = -1
     //TODO: WeakKeyDictionary NSMapTable Dictionary MapTable<Vocabulary,HashMap<String, Int>>
     private let tokenTypeMapCache = HashMap<Vocabulary,Dictionary<String, Int>>()
@@ -53,12 +53,12 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
      * @deprecated Use {@link #getVocabulary()} instead.
      */
     ////@Deprecated
-    public func getTokenNames() -> [String?]? {
+    open func getTokenNames() -> [String?]? {
         RuntimeException(#function + " must be overridden")
         return []
     }
 
-    public func getRuleNames() -> [String] {
+    open func getRuleNames() -> [String] {
         RuntimeException(#function + " must be overridden")
         return []
     }
@@ -71,7 +71,7 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
      * vocabulary used by the grammar.
      */
 
-    public func getVocabulary() -> Vocabulary {
+    open func getVocabulary() -> Vocabulary {
         return Vocabulary.fromTokenNames(getTokenNames())
     }
 
@@ -148,7 +148,7 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
      * <p>For interpreters, we don't know their serialized ATN despite having
      * created the interpreter from it.</p>
      */
-    public func getSerializedATN() -> String {
+    open func getSerializedATN() -> String {
         RuntimeException("there is no serialized ATN")
         fatalError()
         ///throw  ANTLRError.UnsupportedOperation /* throw UnsupportedOperationException("there is no /serialized ATN"); */
@@ -157,7 +157,7 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
     /** For debugging and other purposes, might want the grammar name.
      *  Have ANTLR generate an implementation for this method.
      */
-    public func getGrammarFileName() -> String {
+    open func getGrammarFileName() -> String {
         RuntimeException(#function + " must be overridden")
         return ""
     }
@@ -167,7 +167,7 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
      *
      * @return The {@link org.antlr.v4.runtime.atn.ATN} used by the recognizer for prediction.
      */
-    public func getATN() -> ATN {
+    open func getATN() -> ATN {
         RuntimeException(#function + " must be overridden")
         fatalError()
     }
@@ -177,7 +177,7 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
      *
      * @return The ATN interpreter used by the recognizer for prediction.
      */
-    public func getInterpreter() -> ATNInterpreter {
+    open func getInterpreter() -> ATNInterpreter {
         return _interp
     }
 
@@ -186,7 +186,7 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
      *
      * @since 4.3
      */
-    public func getParseInfo() -> ParseInfo? {
+    open func getParseInfo() -> ParseInfo? {
         return nil
     }
 
@@ -196,14 +196,14 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
      * @param interpreter The ATN interpreter used by the recognizer for
      * prediction.
      */
-    public func setInterpreter(_ interpreter: ATNInterpreter) {
+    open func setInterpreter(_ interpreter: ATNInterpreter) {
         _interp = interpreter
     }
 
     /** What is the error header, normally line/character position information? */
     //public func getErrorHeader(e : RecognitionException
 
-    public func getErrorHeader(_ e: AnyObject) -> String {
+    open func getErrorHeader(_ e: AnyObject) -> String {
         let line: Int = (e as! RecognitionException).getOffendingToken().getLine()
         let charPositionInLine: Int = (e as! RecognitionException).getOffendingToken().getCharPositionInLine()
         return "line " + String(line) + ":" + String(charPositionInLine)
@@ -223,7 +223,7 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
      * {@link org.antlr.v4.runtime.DefaultErrorStrategy#getTokenErrorDisplay}.
      */
     ////@Deprecated
-    public func getTokenErrorDisplay(_ t: Token?) -> String {
+    open func getTokenErrorDisplay(_ t: Token?) -> String {
         guard let t = t else {
             return "<no token>"
         }
@@ -247,12 +247,12 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
     /**
      * @exception NullPointerException if {@code listener} is {@code null}.
      */
-    public func addErrorListener(_ listener: ANTLRErrorListener) {
+    open func addErrorListener(_ listener: ANTLRErrorListener) {
 
         _listeners.append(listener)
     }
 
-    public func removeErrorListener(_ listener: ANTLRErrorListener) {
+    open func removeErrorListener(_ listener: ANTLRErrorListener) {
         _listeners = _listeners.filter() {
             $0 !== listener
         }
@@ -260,30 +260,30 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
         // _listeners.removeObject(listener);
     }
 
-    public func removeErrorListeners() {
+    open func removeErrorListeners() {
         _listeners.removeAll()
     }
 
 
-    public func getErrorListeners() -> Array<ANTLRErrorListener> {
+    open func getErrorListeners() -> Array<ANTLRErrorListener> {
         return _listeners
     }
 
-    public func getErrorListenerDispatch() -> ANTLRErrorListener {
+    open func getErrorListenerDispatch() -> ANTLRErrorListener {
         return ProxyErrorListener(getErrorListeners())
     }
 
     // subclass needs to override these if there are sempreds or actions
     // that the ATN interp needs to execute
-    public func sempred(_ _localctx: RuleContext?, _ ruleIndex: Int, _ actionIndex: Int) throws -> Bool {
+    open func sempred(_ _localctx: RuleContext?, _ ruleIndex: Int, _ actionIndex: Int) throws -> Bool {
         return true
     }
 
-    public func precpred(_ localctx: RuleContext?, _ precedence: Int) throws -> Bool {
+    open func precpred(_ localctx: RuleContext?, _ precedence: Int) throws -> Bool {
         return true
     }
 
-    public func action(_ _localctx: RuleContext?, _ ruleIndex: Int, _ actionIndex: Int) throws {
+    open func action(_ _localctx: RuleContext?, _ ruleIndex: Int, _ actionIndex: Int) throws {
     }
 
     public final func getState() -> Int {
@@ -303,25 +303,25 @@ public class Recognizer<ATNInterpreter:ATNSimulator> {
 //		if ( traceATNStates ) _ctx.trace(atnState);
     }
 
-    public func getInputStream() -> IntStream? {
+    open func getInputStream() -> IntStream? {
         RuntimeException(#function + "Must be overridden")
         fatalError()
     }
 
 
-    public func setInputStream(_ input: IntStream) throws {
+    open func setInputStream(_ input: IntStream) throws {
         RuntimeException(#function + "Must be overridden")
 
     }
 
 
-    public func getTokenFactory() -> TokenFactory {
+    open func getTokenFactory() -> TokenFactory {
         RuntimeException(#function + "Must be overridden")
         fatalError()
     }
 
 
-    public func setTokenFactory(_ input: TokenFactory) {
+    open func setTokenFactory(_ input: TokenFactory) {
         RuntimeException(#function + "Must be overridden")
 
     }

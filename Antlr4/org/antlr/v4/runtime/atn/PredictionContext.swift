@@ -598,7 +598,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
         
         var nodes: Array<PredictionContext> = getAllContextNodes(context!)
         
-        nodes.sort(isOrderedBefore: { $0.id > $1.id })
+        nodes.sort(by: { $0.id > $1.id })
         
         
         for current: PredictionContext in nodes {
@@ -748,7 +748,7 @@ public class PredictionContext: Hashable, CustomStringConvertible {
                                            _ visited: HashMap<PredictionContext, PredictionContext>) {
         //if (context == nil || visited.keys.contains(context!)) {
         
-        guard let context = context where visited[context] == nil else {
+        guard let context = context , visited[context] == nil else {
             return
         }
         visited[context] = context
@@ -839,7 +839,8 @@ public class PredictionContext: Hashable, CustomStringConvertible {
     }
     
     public var description: String {
-        return String(PredictionContext.self) + "@" + String(unsafeAddress(of: self).hashValue)
+        
+        return String(describing: PredictionContext.self) + "@" + String(Unmanaged.passUnretained(self).toOpaque().hashValue)
     }
 }
 

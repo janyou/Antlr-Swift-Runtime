@@ -229,7 +229,7 @@ public class LL1Analyzer {
         var n: Int = s.getNumberOfTransitions()
         for i in 0..<n {
             var t: Transition = s.transition(i)
-            if t.dynamicType === RuleTransition.self {
+            if type(of: t) === RuleTransition.self {
                 if try calledRuleStack.get((t as! RuleTransition).target.ruleIndex!) {
                     continue
                 }
@@ -255,7 +255,7 @@ public class LL1Analyzer {
                     if t.isEpsilon() {
                         try _LOOK(t.target, stopState, ctx, look, &lookBusy, calledRuleStack, seeThruPreds, addEOF)
                     } else {
-                        if t.dynamicType === WildcardTransition.self {
+                        if type(of: t) === WildcardTransition.self {
                             try look.addAll(IntervalSet.of(CommonToken.MIN_USER_TOKEN_TYPE, atn.maxTokenType))
                         } else {
 

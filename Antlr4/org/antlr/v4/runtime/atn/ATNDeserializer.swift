@@ -119,7 +119,7 @@ public class ATNDeserializer {
             return false
         }
 
-        return ATNDeserializer.SUPPORTED_UUIDS.index(of: actualUuid) >= featureIndex
+        return ATNDeserializer.SUPPORTED_UUIDS.index(of: actualUuid)! >= featureIndex
     }
 
 

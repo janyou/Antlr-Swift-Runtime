@@ -133,7 +133,7 @@ public class DFA: CustomStringConvertible {
 
         }
 
-        guard let s0 = s0,edges = s0.edges where precedence >= 0 else {
+        guard let s0 = s0,let edges = s0.edges , precedence >= 0 else {
             return
         }
         // synchronization on s0 here is ok. when the DFA is turned into a
