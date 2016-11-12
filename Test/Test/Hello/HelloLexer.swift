@@ -1,4 +1,4 @@
-// Generated from Hello.g4 by ANTLR 4.5.1
+// Generated from Hello.g4 by ANTLR 4.5.3
 import Antlr4
 
 open class HelloLexer: Lexer {
@@ -59,7 +59,7 @@ open class HelloLexer: Lexer {
     }
 
 	public override init(_ input: CharStream) {
-	    RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION)
+	    RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION)
 		super.init(input)
 		_interp = LexerATNSimulator(self, HelloLexer._ATN, HelloLexer._decisionToDFA, HelloLexer._sharedContextCache)
 	}
