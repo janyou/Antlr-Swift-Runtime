@@ -11,7 +11,7 @@ Upgrage to support Xcode 8
 #### Main change
 Serialize ATN to json string.  
  
-you can see `Test` project example(open AntlrSwift.xcworkspace)  
+you can run `Test` project example(open AntlrSwift.xcworkspace)  
 
 #### [Run Runtime Testsuite](https://github.com/janyou/ANTLR-Swift-Target/blob/master/RuntimeTestsuite.md)
 
