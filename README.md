@@ -1,5 +1,7 @@
 
 # ANTLR v4.5.3 Swift Runtime
+*This project has been merged into [antlr](https://github.com/antlr/antlr4), no longer updated.*
+
 Upgrage to support Xcode 8
 
 (v4.5.1.4 for Xcode 7.3.1)
